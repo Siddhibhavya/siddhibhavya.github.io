@@ -1,0 +1,46 @@
+rules_version = '2';
+
+// Security rules for the shared Guest Gallery.
+// Publish them in the Firebase console: Firestore Database > Rules (see SETUP.md).
+// They are PUBLIC on purpose: security comes from what they allow, not from hiding them.
+//
+// What a visitor's browser may do:
+//   - READ the newest cards that are not hidden (at most 50 per request; the site asks for 16).
+//   - CREATE one card, but only if it is exactly the right shape: 5 fields, a known colour,
+//     a name of 28 characters or fewer with no links or email addresses, a small WebP/JPEG picture
+//     (70,000 characters at most), the server's own timestamp, and hidden = false.
+//   - NOTHING ELSE. Nobody can edit a card, delete a card, un-hide a card, or touch any other collection.
+// You (the project owner) are not limited by these rules: in the console you can set hidden to true or delete a card.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function validCard() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['color', 'name', 'img', 't', 'hidden'])
+          && d.keys().hasAll(['color', 'name', 'img', 't', 'hidden'])
+          && d.color in ['#bb3739', '#ff9a00', '#249343', '#2c2696']
+          && d.name is string
+          && d.name.size() <= 28
+          && !d.name.lower().matches('.*(https?:|www\\.|\\.com|\\.net|\\.org|@).*')
+          && d.img is string
+          && d.img.size() > 200
+          && d.img.size() <= 70000
+          && d.img.matches('data:image/(webp|jpeg);base64,.*')
+          && d.t == request.time
+          && d.hidden == false;
+    }
+
+    match /cards/{cardId} {
+      allow get: if resource.data.hidden == false;
+      allow list: if resource.data.hidden == false && request.query.limit <= 50;
+      allow create: if cardId.matches('[A-Za-z0-9]{20}') && validCard();
+      allow update, delete: if false;
+    }
+
+    // everything else is closed
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

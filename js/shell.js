@@ -485,8 +485,17 @@
     sidebar.className = 'sidebar'; sidebar.id = 'sidebar'; sidebar.setAttribute('aria-label', 'Site navigation');
     sidebar.innerHTML = sidebarHTML();
     layout.insertBefore(sidebar, layout.firstChild);
-    if (store.get('siddhi.enter')) { sidebar.classList.add('enter'); body.classList.add('entering'); }   // arriving from the guest thank-you: the sidebar glides back in
     return sidebar;
+  }
+
+  /* arriving from the landing page (Skip Intro) or the Thank You screen, which both slide away upward: the whole page rises into place from below.
+     body.entering (css/shell/layout.css) lasts only as long as the animation. */
+  function markArrival(layout) {
+    if (!store.get('siddhi.enter')) return;
+    body.classList.add('entering');
+    const done = () => body.classList.remove('entering');
+    layout.addEventListener('animationend', (e) => { if (e.target === layout) done(); });
+    setTimeout(done, 1600);                                              // safety net
   }
 
   function mountFooter(layout) {
@@ -504,6 +513,7 @@
     guard('scaling', fit);                                    // sets body.compact before the sidebar exists, so a small screen never flashes it open
 
     const sidebar = noSidebar ? null : guard('sidebar markup', () => mountSidebar(layout));
+    if (!noSidebar) guard('arrival', () => markArrival(layout));
     store.del('siddhi.enter');                                // the arrival flag is single-use
     guard('footer markup', () => mountFooter(layout));
 

@@ -21,5 +21,8 @@ body[data-fit='screen'] .stage-wrap { flex: none; }
 body[data-fit='screen'] .stage { animation: fade-in 0.5s ease both; }
 @keyframes fade-in { from { opacity: 0; } }
 
-/* arriving from the thank-you screen: the page settles in behind the sidebar's glide (see sidebar.css) */
-body.entering .stage-wrap { animation: fade-in 0.7s 0.25s ease both; }
+/* arriving from the landing page's Skip Intro or from the Thank You screen (both slide away upward): the page rises into place from below.
+   js/shell.js sets body.entering for the length of the animation only (overflow is hidden meanwhile, so no scrollbar flickers). */
+body.entering { overflow: hidden; }
+body.entering .layout { animation: page-rise 0.9s var(--ease-out) both; }
+@keyframes page-rise { from { translate: 0 100vh; } }

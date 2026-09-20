@@ -47,6 +47,7 @@ Plain **HTML, CSS and JavaScript**. There's no framework, no bundler and no buil
 - **The Figma layout scales to any screen.** Every page is laid out on a fixed design canvas (1448px wide) using the exact numbers from Figma, then scaled down proportionally to fit the window — so the spacing and type keep the same ratios on a laptop as on a big monitor. On small screens (under 900px) the sidebar turns into a drawer: a little star button says *Index* and slides the card out.
 - **The koi are p5.js.** The background fish are a p5.js sketch (loaded from a CDN). One swims across the landing page; a quieter one lives in the footer and wakes up when you hover it.
 - **In-place page navigation.** Moving between My Work, About, Side Quests and the Guest Gallery doesn't reload the page. A small script fetches the next page and swaps just the content, so the sidebar and footer stay put and the highlight pill glides to its new spot. If anything goes wrong, it quietly falls back to a normal page load.
+- **A shared Guest Gallery, with no server of my own.** Cards are saved to Google's free Firebase Firestore straight from the browser (more below). It's the only online service the site talks to, and the site still works without it.
 - **Sensible structure.** CSS is split into a `shell/` folder (the frame around every page) and a `pages/` folder (one file per page), tied together by one `css/site.css`. Each script does one job and runs on its own, so if one breaks the rest of the site keeps working.
 
 ```
@@ -54,16 +55,30 @@ index.html, home.html, about.html, …   the pages
 css/        site.css (the one stylesheet) + shell/ + pages/
 js/         one script per job (shell, chat, guest, about, landing, koi …)
 assets/     images, fonts, cursors, audio, video
+firebase/   the Firestore security rules + setup steps for the shared gallery
 ```
 
 ## The interactions I'm proudest of
 
 - **The gooey Index ⇄ Siddhi LM tab.** The sidebar's folder tab isn't a picture — it's drawn in SVG and melts from one side to the other like liquid when you switch tabs (a blur + contrast trick, animated by hand so the leading edge shoots ahead and the trailing edge catches up).
-- **Welcome Aboard.** Draw a card, sign it on the line, pick a colour and press *Create*. Then everything happens in one unbroken take: the cards slide, two strings (a thick green one and a thin orange one, traced from my Figma frames) are pulled across the screen, "Thank You" rises, the strings are fed off to the right, and you're gently returned to the main site.
+- **Welcome Aboard.** Draw a card, sign it on the line, pick a colour and press *Create*. Then everything happens in one unbroken take: the cards slide, two strings (a thick green one and a thin orange one, traced from my Figma frames) are pulled across the screen, "Thank You" rises, the strings are fed off to the right, and you're gently returned to the main site. Your card then joins the shared Guest Gallery for everyone to see.
 - **Things you can move on About.** The stars, the fish-bone patch and the dino can be picked up and thrown — they slide, bounce off the edges and tilt as you drag. Tap one and it spins or wobbles. (A little pill tells you this the first time you scroll.)
 - **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Syncletter, yellow for NearU, blue for NCFE, red for *Are they Driving?* — that follows you around.
 
 Also: the default cursor is a little white star, and it glows on the dark parts of the site.
+
+## The shared Guest Gallery
+
+Every card a guest makes goes on one wall that everyone sees, using Firebase Firestore on the free plan — no server of my own, no accounts to sign up for.
+
+- **Saving.** When someone presses *Create*, the drawing is shrunk to a small WebP (about 10–40 KB, so it fits the free plan) and saved as one Firestore document: colour, signature, picture, time, and a `hidden` flag. It happens quietly in the background, after the strings have left, so it never touches the animation.
+- **Showing.** The gallery loads the newest 16 cards that aren't hidden.
+- **Moderation, without an approval queue.** Cards go up straight away. If one shouldn't be there, I flip its `hidden` flag to `true` in the Firebase console and it disappears for everybody.
+- **Keeping it friendly.** A small word filter checks the typed signature (rude words, links, emails, phone numbers) before saving *and* again before showing.
+- **Security.** The Firebase settings in `js/firebase-config.js` aren't secrets — they only say which project to use. What protects the data is `firebase/firestore.rules`: a visitor can *add* one correctly-shaped card (size limits, allowed colours, a real server timestamp, `hidden` must start false) and that's all. Nobody can edit or delete a card, and no other data is reachable. There are no passwords or keys anywhere in this repo.
+- **If Firebase is unreachable** (or not set up), the gallery just shows each visitor their own cards.
+
+Setting it up from scratch is in [`firebase/SETUP.md`](firebase/SETUP.md).
 
 ## How SiddhiLM works
 
@@ -95,13 +110,14 @@ Then open <http://localhost:5173>.
 
 - **Text and links** — `js/config.js` holds my tagline, links and the project blurbs.
 - **Chatbot answers** — add or edit entries in `js/bank.js` (each is a question, some alternate wordings, and an `a` answer; add `img: [{ src, alt }]` for pictures).
+- **Taking a card down** — Firebase console → Firestore → `cards` → the card → set `hidden` to `true`.
 - **Pictures, video, fonts** — drop them into `assets/`.
 - **Look and feel** — the CSS file for that page in `css/pages/`, or `css/shell/` for the sidebar and footer. Change a rule where it lives rather than adding another lower down.
 - **Publishing** — the site is hosted on GitHub Pages straight from the `main` branch. I commit, push, and it's live within a couple of minutes.
 
 ## A few honest notes
 
-- Guest cards are saved in each visitor's own browser, so at the moment you'll see your own cards (plus a few seeds), not everyone's. A shared wall would need a small backend — it's on my list.
+- The shared gallery runs on the free plan, so if it ever gets very busy Firebase may pause it until the next day — the gallery then quietly shows each visitor their own cards.
 - Case studies and a résumé PDF are on their way.
 
 Thanks for visiting the museum. 🌟

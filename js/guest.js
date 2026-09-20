@@ -1,9 +1,10 @@
 /* Guest pages: the Guest Gallery (guest-gallery.html) and the Welcome Aboard drawing page (guest-book.html).
    The "Create" choreography (strings, sliding cards, Thank You) lives in js/guest-anim.js and plugs in as SiddhiGuest.play.
 
-   PERSISTENCE: cards are stored in this browser's localStorage. That means each visitor sees their own cards plus the four seed cards —
-   it is NOT shared between visitors yet. To make it a real shared wall, swap Store.load()/Store.add() for calls to a small backend of your
-   choice (same card shape: { id, color, name, img (PNG data URL), t }).
+   PERSISTENCE: when js/firebase-config.js is filled in, cards are SHARED — Create saves a compressed copy to Firebase Firestore
+   (js/guest-remote.js) and the gallery shows the newest 16 that are not hidden. Every card is also kept in this browser's localStorage, which is
+   what the gallery falls back to if Firebase isn't set up or can't be reached (so each visitor then sees their own cards plus four blank seeds).
+   Signatures go through the word filter (js/wordfilter.js) before saving and again before showing.
 
    Contents: 1 Constants + Store · 2 Card component · 3 Gallery page · 4 Drawing page · 5 Boot */
 (function () {
@@ -57,27 +58,50 @@
     return el;
   }
 
-  /* the cream veil, then the main website (the sidebar glides back in: shell.js reads siddhi.enter) */
+  /* the Thank You screen slides straight up and out of the window (the main website then rises into place from below — see body.entering in css/shell/layout.css).
+     If the card is still being shared it waits for that (at most 4 s) so it is never lost. */
   function goHome() {
-    const veil = document.createElement('div');
-    veil.className = 'gb-veil'; document.body.appendChild(veil);
+    document.documentElement.style.overflow = 'hidden';                                                // no scrollbar flashing while it moves
     const go = () => { try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ } location.href = ROOT + 'home.html'; };
-    veil.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, easing: 'ease', fill: 'forwards' }).finished.then(go, go);
+    const saved = Guest.finishSharing ? Guest.finishSharing() : Promise.resolve();                    // normally already done
+    const away = 'translateY(calc(-100vh - 420px))';                                                   // the screen plus the footer below it
+    const ms = reduce ? 1 : 850;
+    const slides = [$('.layout'), $('.footer')].filter(Boolean).map((el) =>
+      el.animate([{ transform: 'translateY(0)' }, { transform: away }], { duration: ms, easing: 'cubic-bezier(0.55, 0, 0.35, 1)', fill: 'forwards' }).finished.catch(() => {}));
+    // a tab in the background doesn't run animations, so don't wait for them forever: leave a moment after the slide should have ended
+    const slid = Promise.race([Promise.all(slides), new Promise((done) => setTimeout(done, ms + 300))]);
+    Promise.all([slid, saved]).then(go, go);
   }
 
   /* what js/guest-anim.js needs from this file (and it adds .play) */
   const Guest = window.SiddhiGuest = window.SiddhiGuest || {};
   Object.assign(Guest, { $, reduce, cardEl, goHome });
+  const Remote = Guest.remote && Guest.remote.enabled ? Guest.remote : null;   // null = the shared gallery isn't set up: everything stays per-browser
+  const Words = window.SiddhiWords || null;
+  const tidyName = (c) => (Words && c.name && !Words.isClean(c.name) ? Object.assign({}, c, { name: '' }) : c);   // a rude name that slipped through is shown as a blank signature
+  const withSeeds = (list) => list.concat(SEEDS).slice(0, Math.max(4, list.length));                             // always at least four cards on the wall
 
   /* ------------------------------------------------------------------ 3 · Gallery page */
   function initGallery() {
     const stage = $('#gallery');
-    const list = Store.display();
+    if (!Remote) { renderGallery(stage, Store.display()); return; }
+    const hit = Remote.cached(16);                                       // fetched a moment ago: no need to ask again
+    if (hit) { renderGallery(stage, withSeeds(hit.map(tidyName))); return; }
+    renderGallery(stage, SEEDS.slice());                                 // four blank cards while the shared ones arrive
+    Remote.latest(16).then(
+      (shared) => { if (stage.isConnected) renderGallery(stage, withSeeds(shared.map(tidyName)), true); },
+      (err) => { console.warn('[gallery] could not load the shared cards, showing this browser\'s own:', err && err.message); if (stage.isConnected) renderGallery(stage, Store.display(), true); }
+    );
+  }
+
+  function renderGallery(stage, list, fresh) {
+    stage.querySelectorAll('.gc').forEach((el) => el.remove());
     const GY = -221.167, PY = 46.755;                                    // the gallery page's grid: horizontal lines every 46.755px from y -221.17
     const X = [[83, 580], [77, 581]];                                   // Figma x (minus the 356px sidebar), tiny hand-placed offsets
     list.forEach((c, i) => {
       const row = Math.floor(i / 2), col = i % 2;
       const el = cardEl(c, 'gallery');
+      if (fresh) el.classList.add('fresh');
       el.style.left = X[row % 2][col] + 'px';
       const top = 234 + row * 350;
       el.style.top = top + 'px';
@@ -92,8 +116,50 @@
     if (window.SiddhiShell) window.SiddhiShell.fit();
   }
 
+  /* Welcome Aboard: the stars and fish-bone patches are placed at random on every visit, in the margins around the card. Each one is put where it is
+     furthest from the ones already placed, and stars are kept well apart from each other (fish may sit closer). If the space is ever too tight the
+     gaps shrink a little until everything fits; if that still fails the Figma positions are simply left alone. */
+  function scatterDecor() {
+    const items = [...document.querySelectorAll('.gb-decor .dc')].map((el) => {
+      const num = (n) => parseFloat(el.style.getPropertyValue(n));
+      const fish = el.classList.contains('fish'), w = num('--w'), h = num('--h');
+      return { el, fish, w, h, r: (fish ? 0.35 : 0.42) * Math.max(w, h) };                            // r = how much room it really takes up
+    }).sort((a, b) => a.fish - b.fish);                                                                // stars first: they are the pickiest
+    if (!items.length) return;
+    const W = 1448, H = 1024, BOX = { x0: 330, y0: 20, x1: 1118, y1: 985 };                            // the card, title and controls: keep clear of it
+    const outsideBox = (x, y) => Math.hypot(Math.max(BOX.x0 - x, 0, x - BOX.x1), Math.max(BOX.y0 - y, 0, y - BOX.y1));
+    const gap = (a, b) => (a.fish || b.fish ? 40 : 110);
+    const rand = (a, b) => a + Math.random() * (b - a);
+    for (let squeeze = 1, round = 0; round < 8; round++, squeeze *= 0.9) {
+      const placed = []; let ok = true;
+      for (const it of items) {
+        let best = null;
+        for (let k = 0; k < 400 && (!best || k < 120); k++) {                                          // sample until it has a good few valid spots, keep the roomiest
+          const x = rand(-it.w * 0.12, W + it.w * 0.12), y = rand(-it.h * 0.12, H + it.h * 0.12);
+          if (outsideBox(x, y) < it.r - 20) continue;
+          let room = Infinity;
+          for (const p of placed) room = Math.min(room, Math.hypot(p.x - x, p.y - y) - (p.it.r + it.r + gap(p.it, it)) * squeeze);
+          if (room < 0) continue;
+          if (!best || room > best.room) best = { x, y, room };
+        }
+        if (!best) { ok = false; break; }
+        placed.push({ it, x: best.x, y: best.y });
+      }
+      if (!ok) continue;
+      for (const { it, x, y } of placed) {
+        const s = it.el.style;
+        s.setProperty('--cx', x.toFixed(1)); s.setProperty('--cy', y.toFixed(1));
+        s.setProperty('--r', (it.fish ? rand(0, 360) : rand(-35, 35)).toFixed(1) + 'deg');
+        s.setProperty('--ex', Math.max(0.6, Math.min(1.2, Math.abs(x - W / 2) / 500)) * (x < W / 2 ? -1 : 1));   // when Create is pressed each one slides off the nearest way
+        s.setProperty('--ey', ((y - H / 2) / (H / 2)).toFixed(2));
+      }
+      return;
+    }
+  }
+
   /* ------------------------------------------------------------------ 4 · Drawing page */
   function initBook() {
+    try { scatterDecor(); } catch (err) { console.warn('[guest] could not scatter the decorations:', err); }
     const pad = $('#pad'), ctx = pad.getContext('2d');
     const card = $('#gbCard'), sig = $('#sig'), create = $('#create'), hint = $('#hint');
     const W = 641.927, H = 421.067;
@@ -150,20 +216,33 @@
       document.querySelectorAll('.gb-swatch').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
     }));
 
+    // the newest shared cards, fetched now so they are ready to slide past when Create is pressed (3 reads on the free plan)
+    if (Remote) Remote.latest(3).then((l) => { Guest.recent = l.map(tidyName); }, () => { /* the strip then uses this browser's own cards */ });
+
+    const shake = () => { if (!reduce) card.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(0)' }], { duration: 380, easing: 'ease-out' }); };
+
     // Create: save the card, then play the choreography (or, if that file is missing, just go home)
     create.addEventListener('click', () => {
       if (busy) return;
-      if (!dirty) {
-        hint.textContent = 'Draw something first — anything!';
-        if (!reduce) card.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(0)' }], { duration: 380, easing: 'ease-out' });
-        return;
-      }
+      if (!dirty) { hint.textContent = 'Draw something first — anything!'; shake(); return; }
+      const name = sig.value.trim().slice(0, 28);
+      if (Words && !Words.isClean(name)) { hint.textContent = 'Let’s keep the signature friendly — try another name!'; shake(); return; }
       busy = true;
       const out = document.createElement('canvas'); out.width = 642; out.height = 421;
       const o = out.getContext('2d'); o.fillStyle = '#fff'; o.fillRect(0, 0, 642, 421); o.drawImage(pad, 0, 0, 642, 421);
-      const mine = { id: 'g' + Date.now(), color, name: sig.value.trim().slice(0, 28), img: out.toDataURL('image/png'), t: Date.now() };
-      const past = Store.everyone().slice(0, 3);                       // the previous three, read before adding ours
+      const mine = { id: 'g' + Date.now(), color, name, img: out.toDataURL('image/png'), t: Date.now() };
+      const past = (Guest.recent && Guest.recent.length ? Guest.recent.concat(SEEDS) : Store.everyone()).slice(0, 3);   // the previous three, read before adding ours
       Store.add(mine);
+      // Share it — but not while the animation is running (shrinking the drawing takes ~80 ms of work, which could nudge a frame). It starts once
+      // the strings have left and only "Thank You" is on screen (7 s in), or earlier if the visitor leaves / the page is about to go home.
+      // A failure is not shown to the visitor: their own copy is already saved on this browser.
+      if (Remote) {
+        let sharing = null;
+        const startShare = () => sharing || (sharing = Remote.add(mine).catch((err) => console.warn('[gallery] the card was not shared:', err && err.message)));
+        Guest.finishSharing = () => Promise.race([startShare(), new Promise((done) => setTimeout(done, 4000))]);   // goHome() waits for this, at most 4 s
+        setTimeout(startShare, 7000);
+        document.addEventListener('visibilitychange', () => { if (document.hidden) startShare(); });
+      }
       if (typeof Guest.play === 'function') Guest.play(mine, past, card); else goHome();
     });
   }

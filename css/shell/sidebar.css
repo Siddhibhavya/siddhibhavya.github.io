@@ -1,6 +1,6 @@
 /* ==================================================================
    SHELL · SIDEBAR — the Index / Siddhi LM card (js/shell.js builds the markup).
-   Contents: 1 Frame · 2 Cream panel + folder tab · 3 Panes · 4 Index pane · 5 Explore nav · 6 Connect links · 7 Leaving / arriving
+   Contents: 1 Frame · 2 Cream panel + folder tab · 3 Panes · 4 Index pane · 5 Explore nav · 6 Connect links · 7 Leaving
    The 356px-wide design canvas is scaled by --sb-s. Small screens turn it into a drawer: see compact.css.
 ================================================================== */
 
@@ -120,7 +120,5 @@
 .connect-links a:nth-child(4) { width: 75px; }
 .connect-links a:hover { color: var(--maroon); }
 
-/* ---------- 7 · Leaving / arriving (the Welcome Aboard pages) ---------- */
+/* ---------- 7 · Leaving (the Welcome Aboard pages) ---------- */
 .sidebar.gb-out { transform: translateX(-112%); }                       /* Create pressed: the card slides away */
-.sidebar.enter { animation: sb-in 0.9s var(--ease-out) both; }           /* back from the thank-you screen: it glides in */
-@keyframes sb-in { from { transform: translateX(-112%); } }
