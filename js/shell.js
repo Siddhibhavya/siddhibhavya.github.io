@@ -30,6 +30,7 @@
 
   /* ------------------------------------------------------------------ 2 · Scaling */
   const COMPACT_W = 900, COMPACT_H = 760;
+  const ONE_COL_W = 760;                                                // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b")
   function fit() {
     const vw = root.clientWidth, vh = window.innerHeight;
     // Everything is drawn on a 1448-wide design. On smaller windows it shrinks proportionally (never grows),
@@ -37,6 +38,7 @@
     const u = Math.min(1, vw / 1448);
     const compact = vw < COMPACT_W;                                       // small screens: no side column — a star "Index" button brings the card out
     body.classList.toggle('compact', compact);
+    body.classList.toggle('one-col', vw < ONE_COL_W && !!document.querySelector('.home-wrap'));   // read first: it changes the stage's width below
     if (!compact && body.classList.contains('sb-open')) body.classList.remove('sb-open');
     // compact: the card is a shorter design (760 tall: small avatar, no bio) and is sized to the window, leaving room for the close star
     const sb = compact ? Math.max(0.5, Math.min(1, (vw - (vw < 560 ? 64 : 100)) / 356, vh / COMPACT_H)) : Math.max(0.3, Math.min(u, vh / 1024));
@@ -45,7 +47,8 @@
     root.style.setProperty('--fs', Math.max(0.3, u).toFixed(4));
     const main = document.querySelector('.main');
     if (main) {
-      const sw = body.dataset.sidebar === 'none' ? 1448 : 1092;            // pages without a sidebar use the full 1448 frame
+      const stageEl = main.querySelector('.stage');
+      const sw = body.dataset.sidebar === 'none' ? 1448 : (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 480 for the one-column Home)
       let ss = Math.min(1, main.clientWidth / sw);
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / 1024);   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
