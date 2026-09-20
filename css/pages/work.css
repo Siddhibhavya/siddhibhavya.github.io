@@ -1,7 +1,7 @@
 /* ==================================================================
    PAGE · WORK (home.html) — the project cards, plus the case-study placeholder pages (work/*.html).
    Coordinates are the Figma numbers (stage = frame x − 356).
-   Contents: 1 Card · 2 Card contents · 3 Hover details · 4 Page (lower cards grow the beige area) · 5 Case-study placeholders
+   Contents: 1 Card · 2 Card contents · 3 Hover details · 4 Page (lower cards grow the beige area) · 4b One column on phones · 5 Case-study placeholders
 ================================================================== */
 
 /* ---------- 1 · Card ----------
@@ -66,6 +66,16 @@
    hovering a lower card grows the beige area (and moves the footer down) so the card never slides under the footer */
 .home-wrap { --sh: 1024px; transition: height 0.55s var(--ease-out); }
 .home-wrap:has(.card.low:hover), .home-wrap:has(.card.low:focus-visible) { --sh: 1116px; }
+
+/* ---------- 4b · One column on phones and small tablets (< 760px wide) ----------
+   js/shell.js sets body.one-col (Home only). The stage becomes a narrow 480px canvas — so it is scaled up far less than the two-column 1092px one —
+   and the four cards stack in their reading order, each 505px below the last. The eye doodles are spread down the column. */
+body.one-col { --stage-w: 480px; }
+body.one-col .home-wrap,
+body.one-col .home-wrap:has(.card.low:hover),
+body.one-col .home-wrap:has(.card.low:focus-visible) { --sh: 2110px; }        /* room for the last card to open on hover */
+body.one-col .card { left: 21.5px; top: calc(36px + var(--n, 0) * 505px); }
+body.one-col .eye { left: calc((var(--cx) * 0.44 - 59.5) * 1px); top: calc((var(--cy) * 2 - 29) * 1px); }
 
 /* ---------- 5 · Case-study placeholders (work/*.html) until the full pages arrive ---------- */
 .stub-eyebrow { position: absolute; left: 90px; top: 150px; font-size: 20px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--brown); }

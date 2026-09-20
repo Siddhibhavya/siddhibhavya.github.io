@@ -3,7 +3,10 @@
    The sidebar is fixed top-to-bottom while long pages scroll, and lets go when the footer arrives (sticky inside .layout).
    Also here: the two page "modes" set on <body> — data-sidebar="none" and data-fit="screen" (the Welcome Aboard pages).
 ================================================================== */
+/* the footer sits at the end of the screen even when a page is shorter than the window (no empty cream underneath it) */
+body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 .layout {
+  flex: 1 0 auto;
   position: relative;
   display: flex;
   align-items: flex-start;
