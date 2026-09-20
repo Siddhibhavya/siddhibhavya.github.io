@@ -142,7 +142,7 @@
         <svg class="gb-trail gb-trail-o" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
         <svg class="gb-trail gb-trail-g" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
         <h2 class="ov-title">Welcome Aboard</h2>
-        <p class="ov-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">digital gallery</span>!</p>
+        <p class="ov-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">guest gallery</span>!</p>
         <div class="ov-strip"></div>
         <p class="ov-thanks" role="status" tabindex="-1">Thank You<br>for contributing!</p>
       </div>`;
