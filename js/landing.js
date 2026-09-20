@@ -5,6 +5,7 @@
   'use strict';
   const stage = document.querySelector('.intro-stage');
   if (!stage) return;
+  if (/index\.html$/.test(location.pathname)) history.replaceState(history.state, '', location.pathname.replace(/index\.html$/, '') + location.search + location.hash);   // tidy address: / instead of /index.html
 
   /* ---- fit to window (contain) ------------------------------------------------ */
   const root = document.documentElement;
@@ -46,9 +47,9 @@
     if (leaving) return;
     leaving = true;
     const href = a.getAttribute('href');
-    try { if (/home\.html$/.test(href)) sessionStorage.setItem('siddhi.enter', '1'); } catch (err) { /* ignore */ }
+    try { if (/home(\.html)?$/.test(href)) sessionStorage.setItem('siddhi.enter', '1'); } catch (err) { /* ignore */ }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { location.href = href; return; }
-    if (!/guest-book\.html$/.test(href)) { leave(href, QUICK_MS, false); return; }
+    if (!/guest-book(\.html)?$/.test(href)) { leave(href, QUICK_MS, false); return; }
     const started = tune.play();                                      // the rise starts the moment the sound does, so they stay together
     if (started && started.then) started.then(() => leave(href, GUEST_MS, true), () => leave(href, QUICK_MS, false)); else leave(href, GUEST_MS, true);
   }));

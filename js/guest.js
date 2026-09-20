@@ -62,7 +62,7 @@
      If the card is still being shared it waits for that (at most 4 s) so it is never lost. */
   function goHome() {
     document.documentElement.style.overflow = 'hidden';                                                // no scrollbar flashing while it moves
-    const go = () => { try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ } location.href = ROOT + 'home.html'; };
+    const go = () => { try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ } location.href = ROOT + 'home'; };
     const saved = Guest.finishSharing ? Guest.finishSharing() : Promise.resolve();                    // normally already done
     const away = 'translateY(calc(-100vh - 420px))';                                                   // the screen plus the footer below it
     const ms = reduce ? 1 : 850;

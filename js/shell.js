@@ -23,7 +23,8 @@
   const guard = (name, fn) => { try { return fn(); } catch (err) { console.error('[shell] ' + name + ' failed:', err); return null; } };
 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const hrefOf = (item) => (item.href ? R + item.href : '#lm');
+  const pretty = (h) => h.replace(/\.html(?=$|[?#])/, '');                 // links are written without .html (GitHub Pages serves /about as about.html)
+  const hrefOf = (item) => (item.href ? R + pretty(item.href) : '#lm');
   const lk = (u) => (/^(https?:|mailto:|#)/.test(u) ? u : R + u);
   const links = () => Object.fromEntries(Object.entries(SITE.links).map(([k, v]) => [k, lk(v)]));   // SITE.links with paths made relative to this page
 
@@ -136,7 +137,7 @@
       <a href="${L.linkedin}" target="_blank" rel="noopener">Linkedin</a><a href="${L.resume}" target="_blank" rel="noopener">Resume</a>
     </div>
     <div class="footer-col footer-nav">${nav}</div>
-    <a class="footer-space" href="${R}index.html"><img src="${R}assets/ui/star-back.svg" alt=""><span>Back to space</span></a>
+    <a class="footer-space" href="${R || './'}"><img src="${R}assets/ui/star-back.svg" alt=""><span>Back to space</span></a>
   </div>
 </div>`;
   }
@@ -261,8 +262,8 @@
         m.actions.forEach((a) => {
           const link = document.createElement(a.tab || a.ask ? 'button' : 'a');
           link.textContent = a.label;
-          if (a.raw) { link.href = lk(a.raw); if (/^https?:/.test(a.raw)) { link.target = '_blank'; link.rel = 'noopener'; } }
-          else if (a.href) link.href = R + a.href;
+          if (a.raw) { link.href = lk(a.raw); if (/^https?:/.test(a.raw)) { link.target = '_blank'; link.rel = 'noopener'; } if (/^mailto:/.test(a.raw)) link.dataset.action = 'email'; }   // Email opens the address pop-up (copy / Gmail), like the sidebar's
+          else if (a.href) link.href = R + pretty(a.href);
           if (a.tab) { link.type = 'button'; link.addEventListener('click', () => setTab(a.tab)); }
           if (a.ask) { link.type = 'button'; link.addEventListener('click', () => send(a.ask)); }      // a tappable suggested question
           row.appendChild(link);
@@ -311,7 +312,8 @@
      footer stay mounted, the highlight pill glides to the new item, the content cross-fades. Anything else
      (case studies, Welcome Aboard, modified clicks, failures) falls back to a normal navigation.
      To add a page to this list, also load its page script (js/about.js, js/quests.js, js/guest.js …) on every page in the list. */
-  const PAGE_ID = { 'home.html': 'work', 'about.html': 'about', 'side-quests.html': 'quests', 'guest-gallery.html': 'gallery' };   // file -> data-page
+  const PAGE_ID = { 'home': 'work', 'about': 'about', 'side-quests': 'quests', 'guest-gallery': 'gallery' };   // page name (the address without .html) -> data-page
+  const nameOf = (pathname) => pathname.split('/').pop().replace(/\.html$/, '');
   const PJAX_PAGES = new Set(Object.keys(PAGE_ID));
   const PILL_TOP = { work: 500, about: 573, quests: 641, lm: 709, gallery: 778 };   // Figma pill tops (keep in sync with sidebar.css .nav-item[data-nav])
 
@@ -336,7 +338,7 @@
     const targetOf = (a) => {
       if (!a || a.target || a.hasAttribute('download') || a.dataset.action) return null;
       let u; try { u = new URL(a.href, location.href); } catch (e) { return null; }
-      if (u.origin !== location.origin || !PJAX_PAGES.has(u.pathname.split('/').pop())) return null;
+      if (u.origin !== location.origin || !PJAX_PAGES.has(nameOf(u.pathname))) return null;
       return u;
     };
 
@@ -344,7 +346,7 @@
       if (busy) return;
       busy = true;
       const main = document.querySelector('.main');
-      setActive(sidebar, PAGE_ID[u.pathname.split('/').pop()]);       // instant feedback: the pill moves on click, before the fetch returns
+      setActive(sidebar, PAGE_ID[nameOf(u.pathname)]);       // instant feedback: the pill moves on click, before the fetch returns
       try {
         const res = await fetch(u.href, { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -354,7 +356,10 @@
 
         const pageId = doc.body.dataset.page;
         setActive(sidebar, pageId);                                    // the pill starts gliding straight away
-        if (!reduce) await main.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(6px)' }], { duration: 170, easing: 'ease-in', fill: 'forwards' }).finished;
+        if (!reduce) await Promise.race([   // (a tab in the background doesn't run animations, so never wait for one for more than a moment)
+          main.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(6px)' }], { duration: 170, easing: 'ease-in', fill: 'forwards' }).finished,
+          new Promise((done) => setTimeout(done, 300))
+        ]);
 
         body.dataset.page = pageId;
         if (doc.body.dataset.fit) body.dataset.fit = doc.body.dataset.fit; else delete body.dataset.fit;
@@ -380,7 +385,7 @@
       if (u.pathname === location.pathname) { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); return; }
       go(u, true);
     });
-    window.addEventListener('popstate', () => { const u = new URL(location.href); if (PJAX_PAGES.has(u.pathname.split('/').pop())) go(u, false); else location.reload(); });
+    window.addEventListener('popstate', () => { const u = new URL(location.href); if (PJAX_PAGES.has(nameOf(u.pathname))) go(u, false); else location.reload(); });
     history.replaceState({ shell: 1 }, '', location.href);
     setActive(sidebar, page);
     requestAnimationFrame(() => requestAnimationFrame(() => sidebar.classList.add('ready')));   // enable the pill's transition after first paint
@@ -403,13 +408,21 @@
     const open = (a) => {
       close();
       anchor = a;
-      pop = document.createElement('a');
-      pop.className = 'email-pop'; pop.href = SITE.links.email; pop.textContent = address;
-      pop.setAttribute('aria-label', 'Write to ' + address);
-      pop.addEventListener('click', () => {                       // the button opens the mail app, and copies the address for webmail users
+      pop = document.createElement('div');
+      pop.className = 'email-pop';
+      const addr = document.createElement('a');                    // the address: opens the mail app, and copies itself for anyone without one
+      addr.className = 'email-addr'; addr.href = SITE.links.email; addr.textContent = address;
+      addr.setAttribute('aria-label', 'Write to ' + address);
+      addr.addEventListener('click', () => {
         try { navigator.clipboard.writeText(address); } catch (e) { /* ignore */ }
         pop.classList.add('copied'); setTimeout(close, 1400);
       });
+      const gmail = document.createElement('a');                   // or write it straight away in Gmail, address already filled in
+      gmail.className = 'email-gmail'; gmail.textContent = 'Gmail'; gmail.target = '_blank'; gmail.rel = 'noopener';
+      gmail.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(address);
+      gmail.setAttribute('aria-label', 'Write to ' + address + ' in Gmail');
+      gmail.addEventListener('click', () => setTimeout(close, 250));
+      pop.append(addr, gmail);
       document.body.appendChild(pop);
       place();
     };
@@ -505,7 +518,14 @@
     window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };   // the koi sketch (js/koi.js) reads this when p5 starts
   }
 
+  /* Tidy address: someone who arrives on /home.html (an old link or bookmark) sees /home in the address bar. Both work on GitHub Pages. */
+  function cleanAddress() {
+    const p = location.pathname, tidy = p.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
+    if (tidy !== p) history.replaceState(history.state, '', tidy + location.search + location.hash);
+  }
+
   function boot() {
+    guard('address', cleanAddress);
     if (body.dataset.shell === 'none') { fit(); window.addEventListener('resize', fit); return; }
 
     const layout = document.querySelector('.layout');
@@ -529,7 +549,7 @@
     document.querySelectorAll('[data-action="lm"]').forEach((a) => a.addEventListener('click', (e) => {
       e.preventDefault();
       if (sb) { if (drawer && body.classList.contains('compact')) drawer.open(); else window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); sb.setTab('lm'); }
-      else { store.set('siddhi.tab', 'lm'); location.href = R + 'home.html'; }
+      else { store.set('siddhi.tab', 'lm'); location.href = R + 'home'; }
     }));
 
     guard('email pop-up', initEmailPop);
