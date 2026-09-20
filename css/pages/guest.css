@@ -82,6 +82,8 @@ body.book-phone .gb-create { left: 604px; width: 240px; height: 66px; font-size:
 body.book-phone .gb-hint { top: 1152px; font-size: 26px; }
 body.book-phone .gb-skip { top: 1204px; font-size: 29px; }
 body.book-phone .dc { scale: 0.55; }
+/* the Create animation on a phone or portrait tablet shows only the middle of its wide scene (js/guest-anim.js): Thank You is sized and centred to fit it */
+.gb-ov-stage.narrow .ov-thanks { left: 724px; font-size: var(--thanks-fs, 64px); text-align: center; transform: translate(-50%, -50%); }
 
 /* ---------- 3 · Buttons (Create on the drawing page, "more" on the gallery) ---------- */
 .gb-create, .gb-more {

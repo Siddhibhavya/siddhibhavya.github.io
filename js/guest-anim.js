@@ -135,7 +135,6 @@
   function play(mine, past, card) {
     const layout = $('.layout'), sidebar = $('#sidebar'), main = $('#main');
     const title = $('.gb-title'), sub = $('.gb-sub'), paper = $('.gb-paper');
-    const narrow = window.matchMedia('(max-width: 559px)').matches;
 
     const ov = document.createElement('div');
     ov.className = 'gb-ov';
@@ -151,27 +150,24 @@
     const ovStage = $('.gb-ov-stage', ov), trailG = $('.gb-trail-g path', ov), trailO = $('.gb-trail-o path', ov), trailOsvg = $('.gb-trail-o', ov), thanks = $('.ov-thanks', ov), strip = $('.ov-strip', ov);
     const titleEl = $('.ov-title', ov), subEl = $('.ov-sub', ov);
     if (window.SiddhiHighlight) window.SiddhiHighlight.scan(subEl, { instant: true });                // the highlights come along, already drawn, so nothing pops when the subtitle glides away
-    // the whole scene is one full screen: contained in the window, centred
-    const W = layout.clientWidth, H = layout.clientHeight, s = Math.min(1, W / 1448, H / 1024);
+    // the whole scene is one full screen: contained in the window, centred. On a phone or a portrait tablet the wide scene can't be shrunk to the width of the
+    // screen (everything would be tiny) — it is fitted to the height instead and only the middle of it is seen: Thank You is drawn to fit that (guest.css) and the
+    // strip of cards is shifted so that our card lands in the middle of the screen, with the other cards sliding in from the right.
+    const W = layout.clientWidth, H = layout.clientHeight, NARROW = W < 900;
+    const s = NARROW ? Math.min(1, H / 1024, W / 640) : Math.min(1, W / 1448, H / 1024);
+    const SX = NARROW ? 724 - (SLOTS[0].x + CARD.w / 2) : 0;         // the strip's shift to the right, in stage px
+    if (NARROW) { ovStage.classList.add('narrow'); ovStage.style.setProperty('--thanks-fs', Math.min(128, Math.floor((W / s) * 0.8 / 7.7)) + 'px'); }   // the two lines are about 7.7 em wide
     ovStage.style.setProperty('--ov-s', s);
     ovStage.style.setProperty('--ov-x', (W - 1448 * s) / 2 + 'px');
     ovStage.style.setProperty('--ov-y', (H - 1024 * s) / 2 + 'px');
 
-    if (reduce || narrow) {                                          // no choreography: straight to the thank-you
+    if (reduce) {                                                    // reduced motion: no choreography, straight to the thank-you, everything simply appears
       main.style.transition = 'opacity .3s'; main.style.opacity = '0';
       if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
       strip.remove(); titleEl.remove(); subEl.remove();
-      // the two strings draw themselves on from their tail (a CSS transition on the dash, so no per-frame script work), the orange one a beat behind,
-      // while Thank You rises. With reduced motion everything simply appears.
-      const drawOn = (path, delay) => {
-        path.setAttribute('d', polyD(path === trailG ? KEYS_G[2] : KEYS_O[2])); path.setAttribute('pathLength', '1');
-        path.style.strokeDasharray = '1 2'; path.style.strokeDashoffset = reduce ? '0' : '1';
-        if (!reduce) requestAnimationFrame(() => requestAnimationFrame(() => { path.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.45, 0, 0.3, 1) ' + delay + 's'; path.style.strokeDashoffset = '0'; }));
-      };
-      drawOn(trailG, 0.35); drawOn(trailO, 0.5);
-      thanks.style.translate = reduce ? '0 0' : '0 26px';
-      thanks.style.transition = reduce ? 'opacity .3s' : 'opacity .7s ease .55s, translate .8s cubic-bezier(0.22, 1, 0.36, 1) .55s';
-      requestAnimationFrame(() => requestAnimationFrame(() => { thanks.style.opacity = '1'; thanks.style.translate = '0 0'; }));
+      trailG.setAttribute('d', polyD(KEYS_G[2])); trailO.setAttribute('d', polyD(KEYS_O[2]));
+      thanks.style.transition = 'opacity .3s';
+      requestAnimationFrame(() => requestAnimationFrame(() => { thanks.style.opacity = '1'; }));
       setTimeout(goHome, HOLD);
       return;
     }
@@ -188,16 +184,16 @@
     [mineEl, ...others].forEach((el, i) => { el.style.left = SLOTS[i].x + 'px'; el.style.top = SLOTS[i].y + 'px'; strip.appendChild(el); });
     const paperMine = $('.gc-paper', mineEl), sigMine = $('.gc-sig', mineEl);
     const rightEdge = (W / s + 1448) / 2 + 30;                       // just past the right end of the screen, in stage px
-    const fromRight = others.map((_, i) => rightEdge - SLOTS[i + 1].x);
+    const fromRight = others.map((_, i) => rightEdge - SX - SLOTS[i + 1].x);
 
     const apply = (elapsed) => {
       const t = Math.max(0, elapsed);                                // rAF timestamps can precede our start time by a hair
       const x = Math.min(1, t / T), f = outC(t / FLIGHT);
       // the strip slides the whole time (already moving while our card lands in it) and simply slides out of the screen
       const kk = EXIT_K * sine(t / SLIDE_MS);
-      strip.style.transform = `translate(${STEP[0] * kk}px, ${kk <= 1 ? STEP[1] * kk : STEP[1] * (1 + 0.25 * (kk - 1))}px)`;
+      strip.style.transform = `translate(${STEP[0] * kk + SX}px, ${kk <= 1 ? STEP[1] * kk : STEP[1] * (1 + 0.25 * (kk - 1))}px)`;
       // our card scales down from the drawing pad into slot 1
-      Object.assign(mineEl.style, { left: lerp(c0.x, SLOTS[0].x, f) + 'px', top: lerp(c0.y, SLOTS[0].y, f) + 'px', width: lerp(c0.w, CARD.w, f) + 'px', height: lerp(c0.h, CARD.h, f) + 'px' });
+      Object.assign(mineEl.style, { left: lerp(c0.x - SX, SLOTS[0].x, f) + 'px', top: lerp(c0.y, SLOTS[0].y, f) + 'px', width: lerp(c0.w, CARD.w, f) + 'px', height: lerp(c0.h, CARD.h, f) + 'px' });
       Object.assign(paperMine.style, { left: lerp(p0.x - c0.x, CARD.pl, f) + 'px', top: lerp(p0.y - c0.y, CARD.pt, f) + 'px', width: lerp(p0.w, CARD.pw, f) + 'px', height: lerp(p0.h, CARD.ph, f) + 'px' });
       sigMine.style.opacity = String(sm(0.4, 1, f));
       // the previous three start sliding from the very end of the screen, one after another
