@@ -5,15 +5,19 @@
 
 /* ---------- 1 · The pop-up "button" that shows the email address over the word "Email" ---------- */
 .email-pop {
-  position: fixed; z-index: 200; padding: 7px 16px; border-radius: 22px;
+  position: fixed; z-index: 200; display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: 22px;
   background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--card);
-  font: 500 14px/1.2 var(--font-ui); white-space: nowrap; text-transform: none;
+  font: 500 15px/1.2 var(--font-ui); white-space: nowrap; text-transform: none;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   transform-origin: 50% 50%; animation: pop-in 0.28s var(--ease-out) both;
   transition: background-color 0.2s ease, transform 0.2s var(--ease-out), opacity 0.18s ease;
 }
 .email-pop:hover { background: #8f4a59; transform: translateY(-1px); }
 .email-pop.out { opacity: 0; transform: scale(0.92); pointer-events: none; }
+.email-pop a { color: inherit; }
+.email-pop a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.email-gmail { padding-left: 12px; border-left: 2px solid rgba(255, 237, 219, 0.45); }   /* a divider between the address and "Gmail" */
+.email-pop.copied .email-gmail { display: none; }
 .email-pop.copied::after { content: ' \2014 copied'; opacity: 0.85; }
 @keyframes pop-in { from { opacity: 0; transform: scale(0.8); } }
 
