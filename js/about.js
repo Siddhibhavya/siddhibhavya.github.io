@@ -120,6 +120,7 @@
     guard('video', initVideo);
     guard('drag', initDrag);
     guard('hint', initHint);
+    guard('highlight', () => window.SiddhiHighlight && window.SiddhiHighlight.scan(document));      // the marker on "Siddhi" in the title
   }
   init();
   (window.SiddhiPages = window.SiddhiPages || {}).about = init;        // re-run after an in-place page swap

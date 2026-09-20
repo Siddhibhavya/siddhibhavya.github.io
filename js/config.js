@@ -26,29 +26,29 @@ window.SITE = {
     {
       id: 'syncletter', title: 'Syncletter', tag: 'Product Design', href: 'work/syncletter.html',
       blurb: 'Syncletter translates corporate jargon and idioms — helping users understand what a message means, how urgent it is, and how to reply.',
-      role: 'Design , dev', team: '', time: 'July 2026- August 2026'
+      role: 'Design, Dev', team: '', time: 'July 2026 – August 2026'
     },
     {
       id: 'nearu', title: 'NearU', tag: 'User Experience', href: 'work/nearu.html',
       blurb: 'How might we build a trusted, hyperlocal buying culture within campus communities, so student makers can be discovered by the buyers right around them instead of scattered, informal channels?',
-      role: 'Design , Prototyping, Research', team: 'Siddhi Bhavya, Ridhi Lakhina', time: 'May 2026- October 2026'
+      role: 'Design, Prototyping, Research', team: 'Siddhi Bhavya, Ridhi Lakhina', time: 'May 2026 – October 2026'
     },
     {
-      id: 'ncfe', title: 'NCFE - Redesign', tag: 'Accessibility', href: 'work/ncfe-redesign.html',
+      id: 'ncfe', title: 'NCFE – Redesign', tag: 'Accessibility', href: 'work/ncfe-redesign.html',
       blurb: 'How might we help people with low financial awareness find and trust reliable financial guidance, when it’s currently buried behind poor navigation and no clear starting point?',
-      role: 'Design , Prototyping, Research', team: '', time: 'April 2026- July 2026'
+      role: 'Design , Prototyping, Research', team: '', time: 'April 2026 – July 2026'
     },
     {
       id: 'driving', title: 'Are they Driving?', tag: 'Data and Narratives', href: 'work/are-they-driving.html',
-      blurb: 'What prompts my home, Kalahandi to have the higher deaths than injuries from driving accidents?',
-      role: 'Design , Research', team: '', time: 'June 2026- Ongoing.'
+      blurb: 'What prompts my home, Kalahandi, to have more deaths than injuries from driving accidents?',
+      role: 'Design, Research', team: '', time: 'June 2026 – Ongoing'
     }
   ],
 
   about: {
-    lead: 'I am a designer who believes in user centricity, accessibility and efficiency. I thrive on creating experiences that make lives easier, probing for the best solution.',
+    lead: 'I am a designer who believes in user centricity, accessibility, and efficiency. I thrive on creating experiences that make lives easier, probing for the best solution.',
     interests: 'Art, apps, games, woodworking, and a chaotic love affair with robotics.',
-    outside: 'Outside that… you may find me like a tinker-fairy: I create, read, skateboard, tinkering with something new or probably doing photosynthesis like a plant.'
+    outside: 'Outside that… you may find me like a tinker-fairy: I create, read, skateboard, tinker with something new, or probably do photosynthesis like a plant.'
   },
 
   // Optional: a URL of your own server that answers { message, history, system } with { text }. Leave empty to use only the question bank (js/bank.js).
@@ -58,7 +58,7 @@ window.SITE = {
 
   sideQuests: [
     'Maybe stop focusing?', 'Album of weird sounds', 'Cross the pond (game)',
-    'I Once Modelled for Paradyes', 'Abstract Paintings?', 'Clicking pictures in VR',
+    'I once modelled for Paradyes', 'Abstract paintings?', 'Clicking pictures in VR',
     'I fried my brain', 'Baskets are my favourite', 'Sword(?)', 'El Gatto'
   ]
 };

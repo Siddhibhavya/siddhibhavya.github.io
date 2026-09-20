@@ -19,7 +19,7 @@ body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100
 body[data-sidebar='none'] { --stage-w: 1448px; }
 
 /* Welcome Aboard pages are exactly one screen: the content fits the window and only the footer scrolls */
-body[data-fit='screen'] .main { height: 100vh; min-height: 0; display: flex; align-items: center; overflow: hidden; }
+body[data-fit='screen'] .main { height: 100vh; height: 100dvh; min-height: 0; display: flex; align-items: center; overflow: hidden; }
 body[data-fit='screen'] .stage-wrap { flex: none; }
 body[data-fit='screen'] .stage { animation: fade-in 0.5s ease both; }
 @keyframes fade-in { from { opacity: 0; } }

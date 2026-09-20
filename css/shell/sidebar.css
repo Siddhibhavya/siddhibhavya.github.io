@@ -64,7 +64,7 @@
 }
 .role {
   position: absolute; left: 168px; top: 275px; transform: translateX(-50%);
-  font-size: 18px; line-height: 1.18; color: rgba(127, 87, 68, 0.7); text-transform: uppercase; white-space: nowrap;
+  font-size: 18px; line-height: 1.18; color: rgba(127, 87, 68, 0.7); white-space: nowrap;
 }
 .bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
 
@@ -107,7 +107,7 @@
 .connect { position: absolute; left: 0; width: 356px; bottom: 60px; height: 96px; }
 .connect-title {
   position: absolute; left: 175.5px; top: 14px; transform: translate(-50%, -50%);
-  font-size: 24px; line-height: 1.18; color: var(--brown); text-transform: uppercase; white-space: nowrap;
+  font-size: 24px; line-height: 1.18; color: var(--brown); white-space: nowrap;
 }
 .connect-links {
   position: absolute; left: 59px; top: 45px; width: 239px; height: 51px;

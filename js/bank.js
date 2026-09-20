@@ -286,6 +286,16 @@ window.SIDDHI_BANK = {
     {"id":"design-deep-dive-65","cat":"Design deep-dive","q":"What is a design trend you love and one you are tired of?","alts":["What trends are you following?","What is overrated in design?"],"a":""},
     {"id":"design-deep-dive-66","cat":"Design deep-dive","q":"What is the future of interaction design?","alts":["Where is design going?","What will designers do in ten years?"],"a":""},
     {"id":"q-mu9dnbbxr0u","cat":"About me","q":"Who is Siddhi?","alts":[],"a":"Siddhi an interaction designer/ Multidisciplinary designer. She works with user centricity, accessibility and  Human Computer interaction. She loves art , design and creating! "},
-    {"id":"q-mu9gf2a4ykd","cat":"About me","q":"What is SiddhiLM","alts":[],"a":"Siddhi LM is a chatbot who talks on my behalf! Siddhi!  It can answer almost anything about me! Try it!"}
+    {"id":"q-mu9dne376kn","cat":"About me","q":"Do you like Shiv?","alts":[],"a":"Sure but this is a secret-"},
+    {"id":"q-mu9dnlq05p6","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9dnmd0pcf","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9dnmiggw2","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9dnmp15ig","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9dnmv8vpf","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9fczii412","cat":"Say hello","q":"","alts":[],"a":""},
+    {"id":"q-mu9gf2a4ykd","cat":"About me","q":"What is SiddhiLM","alts":[],"a":"Siddhi LM is a chatbot who talks on my behalf! Siddhi!  It can answer almost anything about me! Try it!"},
+    {"id":"q-mu9in2ie4xa","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9in3x26lr","cat":"About me","q":"","alts":[],"a":""},
+    {"id":"q-mu9in839084","cat":"About me","q":"","alts":[],"a":""}
   ]
 };
