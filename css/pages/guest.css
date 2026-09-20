@@ -92,7 +92,7 @@ body.book-phone .dc { scale: 0.55; }
   transition: transform 0.35s var(--ease-out), background-color 0.25s ease;
 }
 .gb-create { left: 637.5px; top: calc(897px + var(--pdy, 0px)); width: 173px; height: 48px; }
-.gb-more { left: 393.2px; top: 947.7px; width: 258px; height: 46.76px; }   /* one grid row tall, centred on the same vertical line as the title; js/guest.js snaps its top to a grid line */
+.gb-more { left: 393.2px; top: 199.63px; width: 258px; height: 46.76px; }   /* one grid row tall, sitting on a grid line just above the cards, centred on the same vertical line as the title */
 .gb-create:hover, .gb-more:hover { transform: translateY(-2px); background: #8f4a59; }
 
 /* ---------- 4 · Cards (the gallery + the strip in the create animation) ---------- */
