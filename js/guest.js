@@ -190,7 +190,7 @@
   /* ------------------------------------------------------------------ 4 · Drawing page */
   function initBook() {
     try { scatterDecor(); } catch (err) { console.warn('[guest] could not scatter the decorations:', err); }
-    if (window.SiddhiHighlight) window.SiddhiHighlight.scan(document);                                 // the marker on "drawing" and "digital gallery"
+    if (window.SiddhiHighlight) window.SiddhiHighlight.scan(document);                                 // the marker on "drawing" and "guest gallery"
     const pad = $('#pad'), ctx = pad.getContext('2d');
     const card = $('#gbCard'), sig = $('#sig'), create = $('#create'), hint = $('#hint'), skip = $('#skip');
     const W = 641.927, H = 421.067;
