@@ -490,7 +490,7 @@
 
   /* Work cards: over a case study the cursor becomes a coloured "View case study" pill (colour = the card's, data-cs) */
   function initCaseCursor() {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (!window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches) return;
     const pill = document.createElement('div');
     pill.className = 'cs-cursor'; pill.setAttribute('aria-hidden', 'true');
     pill.innerHTML = '<svg viewBox="0 0 41.71 19.27" width="41" height="19" fill="none"><path d="M21.7172 7.38518C6.35654 8.87304 5.8737 18.2341 5.8737 18.2341L40.3816 17.1377C40.3816 17.1377 37.0779 5.89732 21.7172 7.38518Z" stroke="#fff" stroke-width="2"/><ellipse cx="22.3934" cy="11.4674" rx="5.50658" ry="4.2" fill="#fff"/><g stroke="#fff"><path d="M0 9.2L7.4 13.9"/><path d="M18.9 0.1L19.7 8"/><path d="M40.7 4.7L34.4 10.6"/><path d="M31.4 0.2L27.9 7.3"/><path d="M8.1 2.7L12.2 10.6"/></g></svg><span>View case study</span>';
