@@ -37,7 +37,8 @@
   ];
 
   /* ------------------------------------------------------------------ 3 · String maths */
-  const BODY_N = 301, LEAD_N = 24, LEAD_LEN = 900;      // samples along the line; straight lead-in/out so it reaches any screen edge
+  const PHONE = window.matchMedia('(max-width: 759px)').matches;                   // phones do the same shape with about half the points: far less work per frame
+  const BODY_N = PHONE ? 150 : 301, LEAD_N = PHONE ? 12 : 24, LEAD_LEN = 900;      // samples along the line; straight lead-in/out so it reaches any screen edge
   const lerp = (a, b, f) => a + (b - a) * f;
   const unit = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
   const bez = (a, b, c, d, w) => { const u = 1 - w; return [u * u * u * a[0] + 3 * u * u * w * b[0] + 3 * u * w * w * c[0] + w * w * w * d[0], u * u * u * a[1] + 3 * u * u * w * b[1] + 3 * u * w * w * c[1] + w * w * w * d[1]]; };
@@ -45,7 +46,13 @@
   const sine = (x) => -(Math.cos(Math.PI * Math.min(1, Math.max(0, x))) - 1) / 2;
   const outC = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
   const sm = (a, b, x) => { const v = Math.min(1, Math.max(0, (x - a) / (b - a))); return v * v * (3 - 2 * v); };
-  const polyD = (pts) => 'M' + pts.map((q) => q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('L');
+  const polyD = (pts) => {                                          // a smooth curve through the points: quadratic curves between the mid-points of neighbours (no visible corners)
+    const n = pts.length, f = (v) => v.toFixed(1);
+    if (n < 3) return 'M' + pts.map((q) => f(q[0]) + ' ' + f(q[1])).join('L');
+    let d = 'M' + f(pts[0][0]) + ' ' + f(pts[0][1]);
+    for (let i = 1; i < n - 1; i++) d += 'Q' + f(pts[i][0]) + ' ' + f(pts[i][1]) + ' ' + f((pts[i][0] + pts[i + 1][0]) / 2) + ' ' + f((pts[i][1] + pts[i + 1][1]) / 2);
+    return d + 'L' + f(pts[n - 1][0]) + ' ' + f(pts[n - 1][1]);
+  };
 
   /* A Figma path (absolute cubic Beziers) -> [tail ... head] points, tail = the left end. The three states of a line don't all run the same way
      in Figma and don't have the same number of segments, so every line is resampled evenly by arc length: point i of one state then corresponds
@@ -136,13 +143,14 @@
         <svg class="gb-trail gb-trail-o" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
         <svg class="gb-trail gb-trail-g" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
         <h2 class="ov-title">Welcome Aboard</h2>
-        <p class="ov-sub">Draw yourself a little drawing! exhibit in my digital gallery!.</p>
+        <p class="ov-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">digital gallery</span>!</p>
         <div class="ov-strip"></div>
         <p class="ov-thanks" role="status" tabindex="-1">Thank You<br>for contributing!</p>
       </div>`;
     layout.appendChild(ov);
     const ovStage = $('.gb-ov-stage', ov), trailG = $('.gb-trail-g path', ov), trailO = $('.gb-trail-o path', ov), trailOsvg = $('.gb-trail-o', ov), thanks = $('.ov-thanks', ov), strip = $('.ov-strip', ov);
     const titleEl = $('.ov-title', ov), subEl = $('.ov-sub', ov);
+    if (window.SiddhiHighlight) window.SiddhiHighlight.scan(subEl, { instant: true });                // the highlights come along, already drawn, so nothing pops when the subtitle glides away
     // the whole scene is one full screen: contained in the window, centred
     const W = layout.clientWidth, H = layout.clientHeight, s = Math.min(1, W / 1448, H / 1024);
     ovStage.style.setProperty('--ov-s', s);
@@ -153,8 +161,17 @@
       main.style.transition = 'opacity .3s'; main.style.opacity = '0';
       if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
       strip.remove(); titleEl.remove(); subEl.remove();
-      trailG.setAttribute('d', polyD(KEYS_G[2])); trailO.setAttribute('d', polyD(KEYS_O[2]));
-      thanks.style.transition = 'opacity .3s'; requestAnimationFrame(() => { thanks.style.opacity = '1'; });
+      // the two strings draw themselves on from their tail (a CSS transition on the dash, so no per-frame script work), the orange one a beat behind,
+      // while Thank You rises. With reduced motion everything simply appears.
+      const drawOn = (path, delay) => {
+        path.setAttribute('d', polyD(path === trailG ? KEYS_G[2] : KEYS_O[2])); path.setAttribute('pathLength', '1');
+        path.style.strokeDasharray = '1 2'; path.style.strokeDashoffset = reduce ? '0' : '1';
+        if (!reduce) requestAnimationFrame(() => requestAnimationFrame(() => { path.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.45, 0, 0.3, 1) ' + delay + 's'; path.style.strokeDashoffset = '0'; }));
+      };
+      drawOn(trailG, 0.35); drawOn(trailO, 0.5);
+      thanks.style.translate = reduce ? '0 0' : '0 26px';
+      thanks.style.transition = reduce ? 'opacity .3s' : 'opacity .7s ease .55s, translate .8s cubic-bezier(0.22, 1, 0.36, 1) .55s';
+      requestAnimationFrame(() => requestAnimationFrame(() => { thanks.style.opacity = '1'; thanks.style.translate = '0 0'; }));
       setTimeout(goHome, HOLD);
       return;
     }

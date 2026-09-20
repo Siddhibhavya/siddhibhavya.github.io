@@ -2,7 +2,7 @@
    PAGES · GUEST — Welcome Aboard (guest-book.html) + the Guest Gallery (guest-gallery.html).
    Coordinates are Figma numbers. Welcome Aboard is one full 1448×1024 screen (data-sidebar="none" data-fit="screen"),
    its content sits in .gb-content; the gallery is a normal shell page (stage x = Figma x − 356).
-   Contents: 1 Welcome Aboard · 2 Colour box · 3 Buttons · 4 Cards · 5 Create animation overlay · 6 Leaving
+   Contents: 1 Welcome Aboard (1b: on phones) · 2 Colour box · 3 Buttons · 4 Cards · 5 Create animation overlay · 6 Leaving
 ================================================================== */
 
 /* ---------- 1 · Welcome Aboard (the drawing page) ---------- */
@@ -12,27 +12,30 @@
 .gb-title { position: absolute; left: 724px; top: 62px; transform: translate(-50%, -50%); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; }
 .gb-sub { position: absolute; left: 724px; top: 114px; transform: translate(-50%, -50%); font-size: 24px; line-height: 1.18; color: rgba(0, 0, 0, 0.8); white-space: nowrap; }   /* 20% lighter, on both pages */
 
-.gb-card { position: absolute; left: 336px; top: 184px; width: 776px; height: 450.395px; background: #bb3739; border-radius: 10px; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); transition: background-color 0.3s ease; }
+.gb-card { position: absolute; left: 336px; top: 184px; width: 776px; height: var(--card-h, 450.395px); background: #bb3739; border-radius: 10px; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); transition: background-color 0.3s ease; }
 .gb-paper { position: absolute; left: 18.28px; top: 14.66px; width: 641.927px; height: 421.067px; background: #fff; border-radius: 10px; overflow: hidden; }
 .gb-paper canvas { display: block; touch-action: none; cursor: crosshair; }
 
 /* the word "Signature" stays as the label; what you type goes ON the line, in Blank Script */
-.gb-siglabel { position: absolute; left: 414px; top: 684px; font-size: 20px; line-height: 1.18; color: var(--ink); pointer-events: none; transition: opacity 0.25s ease; }
+.gb-siglabel { position: absolute; left: 414px; top: calc(684px + var(--pdy, 0px)); font-size: 20px; line-height: 1.18; color: var(--ink); pointer-events: none; transition: opacity 0.25s ease; }
 .gb-siglabel.dim { opacity: 0.3; }
 .gb-sig {
-  position: absolute; left: 413px; top: 692px; width: 622px; height: 54px; padding: 0 10px 1px; border: 0; background: transparent; outline-offset: -2px;
+  position: absolute; left: 413px; top: calc(692px + var(--pdy, 0px)); width: 622px; height: 54px; padding: 0 10px 1px; border: 0; background: transparent; outline-offset: -2px;
   font-family: var(--font-script); font-size: 42px; line-height: 54px; letter-spacing: 0.01em; color: var(--ink); caret-color: var(--maroon);
 }
 .gb-sig::placeholder { color: transparent; opacity: 1; }
-.gb-line { position: absolute; left: 413px; top: 746px; width: 622px; height: 2px; }
+.gb-line { position: absolute; left: 413px; top: calc(746px + var(--pdy, 0px)); width: 622px; height: 2px; }
 
-.gb-colorlabel { position: absolute; left: 516px; top: 800px; transform: translate(-50%, -50%); font-size: 20px; line-height: 1.18; color: var(--ink); white-space: nowrap; }
-.gb-swatches { position: absolute; left: 0; top: 770px; }
+.gb-colorlabel { position: absolute; left: 516px; top: calc(800px + var(--pdy, 0px)); transform: translate(-50%, -50%); font-size: 20px; line-height: 1.18; color: var(--ink); white-space: nowrap; }
+.gb-swatches { position: absolute; left: 0; top: calc(770px + var(--pdy, 0px)); }
 .gb-swatch { position: absolute; top: 0; width: 60px; height: 60px; border-radius: 50%; transition: transform 0.3s var(--ease-out), box-shadow 0.25s ease; }
 .gb-swatch:hover { transform: scale(1.07); }
 .gb-swatch[aria-checked='true'] { box-shadow: 0 0 0 4px var(--cream), 0 0 0 7px var(--ink); }
 
-.gb-hint { position: absolute; left: 724px; top: 962px; transform: translateX(-50%); font-size: 14px; color: var(--brown); white-space: nowrap; }
+.gb-hint { position: absolute; left: 724px; top: calc(962px + var(--pdy, 0px)); transform: translateX(-50%); font-size: 14px; color: var(--brown); white-space: nowrap; }
+/* the plain text link under Create: straight to the main site (js/guest.js slides the page away first) */
+.gb-skip { position: absolute; left: 724px; top: calc(990px + var(--pdy, 0px)); transform: translateX(-50%); font-size: 16px; line-height: 1.2; color: var(--maroon); white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; transition: color 0.2s ease; }
+.gb-skip:hover, .gb-skip:focus-visible { color: #8f4a59; }
 
 /* ---------- 2 · Colour box ----------
    pen colours, an eraser and three pen sizes, in the empty right border of the drawing card (card 776 wide, paper ends at 660) */
@@ -53,13 +56,40 @@
 .gb-size:hover { background: #f1e7e0; }
 .gb-size.is-on { background: #e6d8ce; }
 
+/* ---------- 2b · Welcome Aboard on phones (< 760px wide; js/shell.js sets body.book-phone) ----------
+   The desktop design is 1448px wide, so on a phone it was shrunk to a quarter and the art board became tiny. Here the stage is a narrower, taller
+   720 x 1190 canvas: the art board is about twice as big, the pens sit in a row under it, and everything below moves down by 140px (--pdy).
+   .gb-content is pulled 364px left so the page's centre line (724) lands on the middle of the narrow stage (360). */
+body.book-phone { --stage-w: 720px; }
+body.book-phone .stage-wrap { --sh: 1250px !important; }
+body.book-phone .gb-content { left: -364px; height: 1250px; --pdy: 174px; --card-h: 624px; }
+body.book-phone .gb-sub { width: 620px; white-space: normal; text-align: center; top: 130px; }
+body.book-phone .gb-card { left: 379px; width: 690px; }
+body.book-phone .gb-paper { left: 24px; }
+/* pens in one row under the paper, big enough for a finger (52px of design = ~28px on screen, plus the space around each) */
+body.book-phone .gb-tools {
+  left: 24px; top: 452px; width: 642px; height: 148px; padding: 12px 22px;
+  grid-template-columns: repeat(8, 52px); grid-template-rows: 52px 2px 50px; gap: 10px 0; justify-content: space-between; align-content: space-between;
+}
+body.book-phone .gb-pen { width: 52px; height: 52px; }
+body.book-phone .gb-eraser svg { width: 26px; height: 26px; }
+body.book-phone .gb-sizes { justify-content: center; gap: 34px; }
+body.book-phone .gb-size { width: 46px; height: 50px; }
+/* the words under the card are larger, so they are still readable once the 720px canvas is scaled to the phone */
+body.book-phone .gb-siglabel, body.book-phone .gb-colorlabel { font-size: 27px; }
+body.book-phone .gb-colorlabel { left: 486px; }                                   /* keeps clear of the first colour swatch */
+body.book-phone .gb-create { left: 604px; width: 240px; height: 66px; font-size: 32px; border-radius: 14px; }
+body.book-phone .gb-hint { top: 1152px; font-size: 26px; }
+body.book-phone .gb-skip { top: 1204px; font-size: 29px; }
+body.book-phone .dc { scale: 0.55; }
+
 /* ---------- 3 · Buttons (Create on the drawing page, "more" on the gallery) ---------- */
 .gb-create, .gb-more {
   position: absolute; display: flex; align-items: center; justify-content: center;
   background: var(--maroon); color: var(--cream); border-radius: 10px; font-size: 24px; line-height: 1;
   transition: transform 0.35s var(--ease-out), background-color 0.25s ease;
 }
-.gb-create { left: 637.5px; top: 897px; width: 173px; height: 48px; }
+.gb-create { left: 637.5px; top: calc(897px + var(--pdy, 0px)); width: 173px; height: 48px; }
 .gb-more { left: 393.2px; top: 947.7px; width: 258px; height: 46.76px; }   /* one grid row tall, centred on the same vertical line as the title; js/guest.js snaps its top to a grid line */
 .gb-create:hover, .gb-more:hover { transform: translateY(-2px); background: #8f4a59; }
 
@@ -87,7 +117,7 @@
 /* ---------- 5 · The create-animation overlay ----------
    a 1448×1024 stage that sits over sidebar + main; js/guest-anim.js drives it */
 .gb-ov { position: absolute; inset: 0; z-index: 50; pointer-events: none; overflow: hidden; }
-.gb-ov-stage { position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; transform-origin: 0 0; transform: translate(var(--ov-x, 0px), var(--ov-y, 0px)) scale(var(--ov-s, 1)); }
+.gb-ov-stage { will-change: transform; position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; transform-origin: 0 0; transform: translate(var(--ov-x, 0px), var(--ov-y, 0px)) scale(var(--ov-s, 1)); }
 .ov-strip { position: absolute; inset: 0; will-change: transform; }
 .gb-trail { position: absolute; left: 0; top: 0; overflow: visible; }
 .gb-trail path { fill: none; stroke: var(--trail); stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; }
@@ -97,6 +127,8 @@
 .ov-thanks { position: absolute; left: 167px; top: 487px; transform: translateY(-50%); font-size: 128px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; opacity: 0; outline: none; }
 
 /* ---------- 6 · Leaving ---------- */
+/* the main page, waiting invisibly below the screen to slide up together with the Thank You screen (js/guest.js, preloadHome / goHome) */
+.gb-peek { position: fixed; left: 0; top: 0; z-index: 60; width: 100%; height: 100vh; height: 100dvh; border: 0; background: var(--cream); pointer-events: none; transform: translateY(200vh); }
 .gb-leaving .gb-ctl { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
 /* Create pressed: the decorations slide off with the page */
 .gb-leaving .dc { translate: calc(var(--ex, 0) * 900px) calc(var(--ey, 0) * 420px); transition: translate 1s cubic-bezier(0.55, 0, 0.85, 0.4); }

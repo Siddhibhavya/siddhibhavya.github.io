@@ -58,19 +58,39 @@
     return el;
   }
 
-  /* the Thank You screen slides straight up and out of the window (the main website then rises into place from below — see body.entering in css/shell/layout.css).
+  /* The main website, loaded invisibly just below the screen while Thank You is showing, so that when the time comes the two slide up TOGETHER: Thank You
+     leaves through the top while the main page rises into view underneath it, like one long page being scrolled. When the slide ends the real page
+     opens and is identical to what is on screen, so there is no jump. */
+  let peek = null;
+  function preloadHome() {
+    if (peek) return peek.ready;
+    const f = document.createElement('iframe');
+    f.className = 'gb-peek'; f.src = ROOT + 'home'; f.title = ''; f.tabIndex = -1; f.inert = true; f.setAttribute('aria-hidden', 'true');
+    const ready = new Promise((ok) => { f.addEventListener('load', () => ok(true), { once: true }); setTimeout(() => ok(false), 5000); });
+    document.body.appendChild(f);
+    peek = { f, ready };
+    return ready;
+  }
+
+  /* Thank You (and the footer under it) slides up and away while the preloaded main page slides up into place. If the visitor is on a very slow connection
+     and the main page isn't ready after a moment, it falls back to sliding away alone (and the main page then rises into place when it opens).
      If the card is still being shared it waits for that (at most 4 s) so it is never lost. */
-  function goHome() {
+  async function goHome() {
     document.documentElement.style.overflow = 'hidden';                                                // no scrollbar flashing while it moves
-    const go = () => { try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ } location.href = ROOT + 'home'; };
+    window.scrollTo(0, 0);
     const saved = Guest.finishSharing ? Guest.finishSharing() : Promise.resolve();                    // normally already done
-    const away = 'translateY(calc(-100vh - 420px))';                                                   // the screen plus the footer below it
-    const ms = reduce ? 1 : 850;
-    const slides = [$('.layout'), $('.footer')].filter(Boolean).map((el) =>
-      el.animate([{ transform: 'translateY(0)' }, { transform: away }], { duration: ms, easing: 'cubic-bezier(0.55, 0, 0.35, 1)', fill: 'forwards' }).finished.catch(() => {}));
+    const layout = $('.layout'), footer = $('.footer');
+    const loaded = await Promise.race([preloadHome(), new Promise((no) => setTimeout(() => no(false), reduce ? 0 : 1200))]);
+    const D = Math.round(layout.offsetHeight + (footer ? footer.offsetHeight : 0));                    // the whole Thank You page: the screen plus the footer below it
+    const ms = reduce ? 1 : 850, ease = 'cubic-bezier(0.55, 0, 0.35, 1)';
+    const slide = (el, from, to) => el.animate([{ transform: 'translateY(' + from + 'px)' }, { transform: 'translateY(' + to + 'px)' }], { duration: ms, easing: ease, fill: 'forwards' }).finished.catch(() => {});
+    const moves = [layout, footer].filter(Boolean).map((el) => slide(el, 0, -D));
+    if (loaded) moves.push(slide(peek.f, D - 1, 0));                                                    // the main page comes up from just below, meeting Thank You's bottom edge
+    else try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ }               // no main page ready: it rises into place after it opens instead
     // a tab in the background doesn't run animations, so don't wait for them forever: leave a moment after the slide should have ended
-    const slid = Promise.race([Promise.all(slides), new Promise((done) => setTimeout(done, ms + 300))]);
-    Promise.all([slid, saved]).then(go, go);
+    const slid = Promise.race([Promise.all(moves), new Promise((done) => setTimeout(done, ms + 300))]);
+    await Promise.all([slid, saved]);
+    location.href = ROOT + 'home';
   }
 
   /* what js/guest-anim.js needs from this file (and it adds .play) */
@@ -120,13 +140,24 @@
      furthest from the ones already placed, and stars are kept well apart from each other (fish may sit closer). If the space is ever too tight the
      gaps shrink a little until everything fits; if that still fails the Figma positions are simply left alone. */
   function scatterDecor() {
+    const phone = document.body.classList.contains('book-phone');
+    const PS = phone ? 0.55 : 1;                                                                       // on a phone the decorations are drawn smaller (css: body.book-phone .dc)
     const items = [...document.querySelectorAll('.gb-decor .dc')].map((el) => {
       const num = (n) => parseFloat(el.style.getPropertyValue(n));
       const fish = el.classList.contains('fish'), w = num('--w'), h = num('--h');
-      return { el, fish, w, h, r: (fish ? 0.35 : 0.42) * Math.max(w, h) };                            // r = how much room it really takes up
+      return { el, fish, w, h, r: (fish ? 0.35 : 0.42) * Math.max(w, h) * PS };                            // r = how much room it really takes up
     }).sort((a, b) => a.fish - b.fish);                                                                // stars first: they are the pickiest
     if (!items.length) return;
-    const W = 1448, H = 1024, BOX = { x0: 330, y0: 20, x1: 1118, y1: 985 };                            // the card, title and controls: keep clear of it
+    // the area they may be placed in, and the part of it to keep clear (the card, title and controls). Desktop: the whole 1448x1024 screen. Phone: the whole
+    // visible screen — which is taller than the narrow stage, so there is room above the title and below the button — in the page's own design coordinates.
+    let X0 = 0, X1 = 1448, Y0 = 0, Y1 = 1024, BOX = { x0: 330, y0: 20, x1: 1118, y1: 985 };
+    if (phone) {
+      const stageEl = document.querySelector('.stage'), mainEl = document.querySelector('.main'), sr = stageEl.getBoundingClientRect(), mr = mainEl.getBoundingClientRect();
+      const k = sr.width / stageEl.offsetWidth || 1, off = 364;                                        // the content is shifted 364px left of the stage in phone mode
+      X0 = off + (mr.left - sr.left) / k; X1 = off + (mr.right - sr.left) / k; Y0 = (mr.top - sr.top) / k; Y1 = (mr.bottom - sr.top) / k;
+      BOX = { x0: off + 6, y0: 20, x1: off + 714, y1: 1240 };
+    }
+    const W = X1 - X0, H = Y1 - Y0, CX = (X0 + X1) / 2, CY = (Y0 + Y1) / 2;
     const outsideBox = (x, y) => Math.hypot(Math.max(BOX.x0 - x, 0, x - BOX.x1), Math.max(BOX.y0 - y, 0, y - BOX.y1));
     const gap = (a, b) => (a.fish || b.fish ? 40 : 110);
     const rand = (a, b) => a + Math.random() * (b - a);
@@ -135,7 +166,7 @@
       for (const it of items) {
         let best = null;
         for (let k = 0; k < 400 && (!best || k < 120); k++) {                                          // sample until it has a good few valid spots, keep the roomiest
-          const x = rand(-it.w * 0.12, W + it.w * 0.12), y = rand(-it.h * 0.12, H + it.h * 0.12);
+          const x = rand(X0 - it.w * 0.12 * PS, X1 + it.w * 0.12 * PS), y = rand(Y0 - it.h * 0.12 * PS, Y1 + it.h * 0.12 * PS);
           if (outsideBox(x, y) < it.r - 20) continue;
           let room = Infinity;
           for (const p of placed) room = Math.min(room, Math.hypot(p.x - x, p.y - y) - (p.it.r + it.r + gap(p.it, it)) * squeeze);
@@ -150,8 +181,8 @@
         const s = it.el.style;
         s.setProperty('--cx', x.toFixed(1)); s.setProperty('--cy', y.toFixed(1));
         s.setProperty('--r', (it.fish ? rand(0, 360) : rand(-35, 35)).toFixed(1) + 'deg');
-        s.setProperty('--ex', Math.max(0.6, Math.min(1.2, Math.abs(x - W / 2) / 500)) * (x < W / 2 ? -1 : 1));   // when Create is pressed each one slides off the nearest way
-        s.setProperty('--ey', ((y - H / 2) / (H / 2)).toFixed(2));
+        s.setProperty('--ex', Math.max(0.6, Math.min(1.2, Math.abs(x - CX) / 500)) * (x < CX ? -1 : 1));   // when Create is pressed each one slides off the nearest way
+        s.setProperty('--ey', ((y - CY) / (H / 2)).toFixed(2));
       }
       return;
     }
@@ -160,8 +191,9 @@
   /* ------------------------------------------------------------------ 4 · Drawing page */
   function initBook() {
     try { scatterDecor(); } catch (err) { console.warn('[guest] could not scatter the decorations:', err); }
+    if (window.SiddhiHighlight) window.SiddhiHighlight.scan(document);                                 // the marker on "drawing" and "digital gallery"
     const pad = $('#pad'), ctx = pad.getContext('2d');
-    const card = $('#gbCard'), sig = $('#sig'), create = $('#create'), hint = $('#hint');
+    const card = $('#gbCard'), sig = $('#sig'), create = $('#create'), hint = $('#hint'), skip = $('#skip');
     const W = 641.927, H = 421.067;
     let color = SWATCH.red, dirty = false, busy = false;
 
@@ -219,6 +251,13 @@
     // the newest shared cards, fetched now so they are ready to slide past when Create is pressed (3 reads on the free plan)
     if (Remote) Remote.latest(3).then((l) => { Guest.recent = l.map(tidyName); }, () => { /* the strip then uses this browser's own cards */ });
 
+    // "Go to main site": leaves the same way the Thank You screen does (slides up, the main page rises in) — unless Create is already under way
+    if (skip) skip.addEventListener('click', (e) => {
+      if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;                       // let a new-tab click do its own thing
+      e.preventDefault();
+      if (!busy) { busy = true; goHome(); }
+    });
+
     const shake = () => { if (!reduce) card.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(0)' }], { duration: 380, easing: 'ease-out' }); };
 
     // Create: save the card, then play the choreography (or, if that file is missing, just go home)
@@ -243,6 +282,7 @@
         setTimeout(startShare, 7000);
         document.addEventListener('visibilitychange', () => { if (document.hidden) startShare(); });
       }
+      setTimeout(preloadHome, 7200);                                                                    // once the strings have left: get the main page ready underneath, for the slide up
       if (typeof Guest.play === 'function') Guest.play(mine, past, card); else goHome();
     });
   }

@@ -12,14 +12,14 @@ body:not([data-fit='screen']) .main {
   --gk: 1.3625; --gx: -375.6; --gy: -17.5;
   background-image: url(../../assets/decor/grid-tile.svg);
   background-size: calc(34.79px * var(--gk) * var(--stage-s, 1)) calc(34.74px * var(--gk) * var(--stage-s, 1));
-  background-position: calc(var(--stage-m, 0px) + var(--gx) * var(--stage-s, 1) * 1px) calc(var(--gy) * var(--stage-s, 1) * 1px);
+  background-position: calc(var(--stage-m, 0px) + var(--gx) * var(--stage-s, 1) * 1px) calc(var(--top-gap, 0px) + var(--gy) * var(--stage-s, 1) * 1px);   /* --top-gap: the phone's top strip, see shell/compact.css */
 }
 body[data-page='work'] .main { --gk: 1.0833; --gx: -66.17; --gy: -15.67; }
 body[data-page='quests'] .main { --gk: 1.3458; --gx: -356.79; --gy: -85.17; }
 body[data-page='gallery'] .main { --gk: 1.3458; --gx: -273.79; --gy: -221.17; }
 /* About: Figma stacks two grid pictures of slightly different size (an upper one, then a larger one from y 1390). Where they meet their
    vertical lines are up to 30px apart, which showed as a stair-step across the page. So the upper grid simply continues down the whole page. */
-body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; }
+body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; background-image: url(../../assets/decor/grid-tile-soft.svg); }   /* the About paper is fainter: lines at 15% instead of 25% */
 
 /* ---------- 2 · Decorations ---------- */
 .dc { position: absolute; left: calc((var(--cx) - var(--w) / 2) * 1px); top: calc((var(--cy) - var(--h) / 2) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); rotate: var(--r, 0deg); pointer-events: none; }

@@ -11,19 +11,23 @@
 .about-title {
   /* two rows tall, centred on the vertical line 19 across (also the middle of the text block below); its baseline is on grid line 3 (y 124.5) */
   position: absolute; left: 164.5px; top: 57.1px; width: 721px; text-align: center; white-space: nowrap;
-  font-family: var(--font-serif); font-size: 64px; line-height: 94.67px; font-weight: 400; text-transform: uppercase; color: var(--ink);
+  font-family: var(--font-serif); font-size: 64px; line-height: 94.67px; font-weight: 400; color: var(--ink);
 }
-/* the paragraphs' left edge is on vertical line 11. The first block is 9 rows, so the second continues on the same lines. */
-.about-p1, .about-p2 { position: absolute; left: 145.79px; font-size: 24px; line-height: 47.33px; text-transform: uppercase; color: var(--ink); }
+/* the paragraphs' left edge is on vertical line 11. The first block is 8 rows (in normal case), so the second continues on the same lines. */
+.about-p1, .about-p2 { position: absolute; left: 145.79px; font-size: 24px; line-height: 47.33px; color: var(--ink); }
 .about-p1 { top: 138.83px; width: 764px; text-align: justify; }      /* baselines on lines 5, 6 … (first, blank, line on line 4) */
 .about-p1 p { margin: 0; }
-.about-p2 { top: 564.83px; width: 794px; white-space: pre-wrap; }
+.about-p2 { top: 517.47px; width: 794px; white-space: pre-wrap; }   /* 138.83 + 8 rows x 47.33: right under the first block, still on the grid lines */
+
+/* the orange arc's line runs off the top of the screen. On phones the page starts 64px lower (the top strip, shell/compact.css), so the arc is stretched
+   upward by exactly that much, keeping its bottom where it was, and its line still leaves through the top edge instead of stopping in mid-air. */
+body.compact .dc-arc { transform-origin: 50% 100%; transform: scaleY(calc(1 + 64 / (939.38 * var(--stage-s, 1)))); }
 
 /* ---------- 2 · Frames, photos, captions ---------- */
 .frame { background: var(--pill); border: 9px solid var(--maroon); border-radius: 20px; box-shadow: var(--shd) rgba(0, 0, 0, 0.25); }
 .photo { border-radius: 10px; overflow: hidden; background: #d9d9d9; }
 .photo img, .photo video { width: 100%; height: 100%; object-fit: cover; }
-.cap { display: flex; align-items: center; justify-content: center; font-size: 24px; line-height: 1.18; text-transform: capitalize; text-align: center; white-space: nowrap; color: rgba(14, 3, 20, 0.8); }
+.cap { display: flex; align-items: center; justify-content: center; font-size: 24px; line-height: 1.18; text-align: center; white-space: nowrap; color: rgba(14, 3, 20, 0.8); }
 .cap.dark { color: #000; }
 .cap.right { justify-content: flex-end; text-align: right; white-space: normal; color: rgba(14, 3, 20, 0.84); }
 .cap.side { color: rgba(14, 3, 20, 0.73); }

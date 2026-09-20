@@ -14,7 +14,7 @@
   width: calc(356px * var(--sb-s)); height: calc(var(--sb-h) * var(--sb-s));
   transform: translateX(-112%); visibility: hidden; animation: none;
   transition: transform 0.6s var(--ease-out), visibility 0s linear 0.6s;
-  --nav-dy: -241px;                                     /* index pane: avatar sits beside the name, the bio is dropped */
+  --nav-dy: -159px;                                     /* index pane: avatar sits beside the name, the bio sits under them, the explore box follows */
 }
 .compact.sb-open .sidebar { transform: none; visibility: visible; transition-delay: 0s; }
 .compact .sb-inner { border-radius: 0 0 18px 0; }
@@ -25,25 +25,42 @@
 .compact .avatar-photo { left: 26.6px; top: 90.8px; width: 85.9px; height: 78px; }
 .compact .name { left: 112px; top: 88px; width: auto; text-align: left; font-size: 27px; }
 .compact .role { left: 112px; top: 128px; transform: none; font-size: 13px; }
-.compact .bio { display: none; }
+.compact .bio { left: 30px; top: 170px; width: 294px; font-size: 15px; line-height: 1.32; color: rgba(53, 35, 26, 0.86); }
 .compact .connect { bottom: 36px; }
+
+/* a strip at the top of every page (not Welcome Aboard) is kept free for the menu circle (left) and the Resume pill (right), so neither covers a title;
+   decor.css shifts the graph paper down by the same amount so it stays lined up with the content */
+body.compact:not([data-fit='screen']) .main { --top-gap: 64px; padding-top: var(--top-gap); }
 
 /* the dark scrim behind the open drawer */
 .compact .sb-scrim { display: block; position: fixed; inset: 0; z-index: 85; background: rgba(25, 5, 35, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
 .compact.sb-open .sb-scrim { opacity: 1; pointer-events: auto; }
 .compact.sb-open { overflow: hidden; }
 
-/* the star "Index" button (turns into a close star while the drawer is open) */
+/* the menu button: a small circle in the corner (so it never covers the page's words). The star and a hamburger take turns inside it (js/shell.js toggles
+   .as-menu every few seconds); with the card open it shows a cross. Now and then a label slides out beside it for 2 seconds (.sb-note). */
+.sb-note { display: none; }
 .compact .sb-toggle {
-  display: flex; align-items: center; gap: 8px; position: fixed; left: 12px; top: 12px; z-index: 95;
-  padding: 9px 17px 9px 13px; border-radius: 26px;
+  display: flex; align-items: center; justify-content: center; position: fixed; left: 12px; top: 12px; z-index: 95;
+  width: 46px; height: 46px; padding: 0; border-radius: 50%;
   background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--cream);
-  font: 500 14px/1 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
   box-shadow: 0 6px 16px rgba(25, 5, 35, 0.32);
   transition: left 0.6s var(--ease-out), background-color 0.2s ease, transform 0.25s var(--ease-out);
 }
 .compact .sb-toggle:hover { background: #8f4a59; transform: translateY(-1px); }
-.compact .sb-toggle svg { flex: none; transition: transform 0.7s var(--ease-out); }
-.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) + 12px); padding: 9px 11px; }
-.compact.sb-open .sb-toggle span { display: none; }
-.compact.sb-open .sb-toggle svg { transform: rotate(225deg) scale(1.05); }
+.compact .sb-toggle .ic { position: absolute; flex: none; transition: opacity 0.35s ease, transform 0.55s var(--ease-out); }
+.compact .sb-toggle .ic-menu, .compact .sb-toggle .ic-close { opacity: 0; transform: rotate(-90deg) scale(0.55); }
+.compact .sb-toggle.as-menu .ic-star { opacity: 0; transform: rotate(90deg) scale(0.55); }
+.compact .sb-toggle.as-menu .ic-menu { opacity: 1; transform: none; }
+.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) + 12px); }
+.compact.sb-open .sb-toggle .ic-star, .compact.sb-open .sb-toggle .ic-menu { opacity: 0; transform: rotate(90deg) scale(0.55); }
+.compact.sb-open .sb-toggle .ic-close { opacity: 1; transform: none; }
+
+.compact .sb-note {
+  display: flex; align-items: center; position: fixed; left: 66px; top: 12px; z-index: 94; height: 46px; padding: 0 18px 0 16px; border-radius: 23px;
+  background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--cream);
+  font: 500 14px/1 var(--font-ui); white-space: nowrap; box-shadow: 0 6px 16px rgba(25, 5, 35, 0.28);
+  opacity: 0; transform: translateX(-14px) scale(0.94); transform-origin: 0 50%; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.45s var(--ease-out);
+}
+.compact .sb-note.on { opacity: 1; transform: none; }

@@ -29,8 +29,8 @@
   const links = () => Object.fromEntries(Object.entries(SITE.links).map(([k, v]) => [k, lk(v)]));   // SITE.links with paths made relative to this page
 
   /* ------------------------------------------------------------------ 2 · Scaling */
-  const COMPACT_W = 900, COMPACT_H = 760;
-  const ONE_COL_W = 760;                                                // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b")
+  const COMPACT_W = 900, COMPACT_H = 830;
+  const ONE_COL_W = 760;                                                // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b") and Welcome Aboard gets its phone layout (css/pages/guest.css)
   function fit() {
     const vw = root.clientWidth, vh = window.innerHeight;
     // Everything is drawn on a 1448-wide design. On smaller windows it shrinks proportionally (never grows),
@@ -38,7 +38,8 @@
     const u = Math.min(1, vw / 1448);
     const compact = vw < COMPACT_W;                                       // small screens: no side column — a star "Index" button brings the card out
     body.classList.toggle('compact', compact);
-    body.classList.toggle('one-col', vw < ONE_COL_W && !!document.querySelector('.home-wrap'));   // read first: it changes the stage's width below
+    body.classList.toggle('one-col', vw < ONE_COL_W && !!document.querySelector('.home-wrap'));   // read first: they change the stage's size below
+    body.classList.toggle('book-phone', vw < ONE_COL_W && body.dataset.fit === 'screen');
     if (!compact && body.classList.contains('sb-open')) body.classList.remove('sb-open');
     // compact: the card is a shorter design (760 tall: small avatar, no bio) and is sized to the window, leaving room for the close star
     const sb = compact ? Math.max(0.5, Math.min(1, (vw - (vw < 560 ? 64 : 100)) / 356, vh / COMPACT_H)) : Math.max(0.3, Math.min(u, vh / 1024));
@@ -48,9 +49,9 @@
     const main = document.querySelector('.main');
     if (main) {
       const stageEl = main.querySelector('.stage');
-      const sw = body.dataset.sidebar === 'none' ? 1448 : (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 480 for the one-column Home)
+      const sw = (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 1448 for Welcome Aboard, 480 for the one-column Home, 720 for Welcome Aboard on a phone)
       let ss = Math.min(1, main.clientWidth / sw);
-      if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / 1024);   // welcome-aboard pages fit one full screen
+      if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
       root.style.setProperty('--stage-m', Math.max(0, (main.clientWidth - sw * ss) / 2).toFixed(1) + 'px');   // where the stage starts inside the main column (it is centred when the window is wider than the design)
     }
@@ -112,7 +113,7 @@
     <button type="button" class="lm-clear">Clear chat</button>
     <div class="lm-nav"><div class="lm-nav-grid">${quick}</div></div>
     <div class="lm-thread" aria-live="polite">
-      <p class="lm-greet">Hey there;<br>This is SiddhiLM</p>
+      <p class="lm-greet">Hey there!<br>This is SiddhiLM.</p>
       <div class="lm-suggest">
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What’s your favorite project?</span></button>
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>Tell me about your side projects?</span></button>
@@ -133,7 +134,7 @@
     return `
 <div class="footer-koi" id="footer-koi" aria-hidden="true"></div>
 <div class="footer-inner">
-  <p class="footer-tag">Great Ideas are yet to be built.<br>Why not with you?</p>
+  <p class="footer-tag">Great ideas are yet to be built.<br>Why not with you?</p>
   <div class="footer-links">
     <div class="footer-col footer-contact">
       <a href="${L.email}" data-action="email">Email</a><a href="${L.instagram}" target="_blank" rel="noopener">Instagram</a>
@@ -266,7 +267,7 @@
           const link = document.createElement(a.tab || a.ask ? 'button' : 'a');
           link.textContent = a.label;
           if (a.raw) { link.href = lk(a.raw); if (/^https?:/.test(a.raw)) { link.target = '_blank'; link.rel = 'noopener'; } if (/^mailto:/.test(a.raw)) link.dataset.action = 'email'; }   // Email opens the address pop-up (copy / Gmail), like the sidebar's
-          else if (a.href) link.href = R + pretty(a.href);
+          else if (a.href) { link.href = R + pretty(a.href); if (/^work\//.test(pretty(a.href))) { link.target = '_blank'; link.rel = 'noopener'; } }   // case studies open in a new tab
           if (a.tab) { link.type = 'button'; link.addEventListener('click', () => setTab(a.tab)); }
           if (a.ask) { link.type = 'button'; link.addEventListener('click', () => send(a.ask)); }      // a tappable suggested question
           row.appendChild(link);
@@ -443,15 +444,21 @@
   function initDrawer(sidebar) {
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'sb-toggle'; btn.setAttribute('aria-controls', 'sidebar'); btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<svg viewBox="0 0 26.43 24.6" width="20" height="19" aria-hidden="true"><path fill="currentColor" d="M13.2138 0L13.7383 2.4682C14.7637 7.29346 18.6375 10.9996 23.5034 11.8106L26.4276 12.298L22.4183 13.348C18.1231 14.473 14.8 17.8777 13.7797 22.199L13.2138 24.596L12.5773 22.0499C11.5172 17.8095 8.2352 14.4808 4.01012 13.3609L0 12.298L2.91569 11.8062C7.72009 10.9958 11.5576 7.3609 12.6271 2.60748L13.2138 0Z"/></svg><span>Index</span>';
+    // three icons stacked in one small circle: the star and the hamburger take turns; while the card is open it shows a cross
+    btn.innerHTML =
+      '<svg class="ic ic-star" viewBox="0 0 26.43 24.6" width="22" height="21" aria-hidden="true"><path fill="currentColor" d="M13.2138 0L13.7383 2.4682C14.7637 7.29346 18.6375 10.9996 23.5034 11.8106L26.4276 12.298L22.4183 13.348C18.1231 14.473 14.8 17.8777 13.7797 22.199L13.2138 24.596L12.5773 22.0499C11.5172 17.8095 8.2352 14.4808 4.01012 13.3609L0 12.298L2.91569 11.8062C7.72009 10.9958 11.5576 7.3609 12.6271 2.60748L13.2138 0Z"/></svg>' +
+      '<svg class="ic ic-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' +
+      '<svg class="ic ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+    const note = document.createElement('div');                       // the little label that slides out of the corner now and then
+    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & Siddhi LM';
     const scrim = document.createElement('div');
     scrim.className = 'sb-scrim';
-    document.body.append(scrim, btn);
+    document.body.append(scrim, btn, note);
     const set = (on) => {
       body.classList.toggle('sb-open', on);
       btn.setAttribute('aria-expanded', String(on));
-      btn.setAttribute('aria-label', on ? 'Close the index' : 'Open the index');
-      btn.querySelector('span').textContent = on ? 'Close' : 'Index';
+      btn.setAttribute('aria-label', on ? 'Close the menu' : 'Open the menu');
+      if (on) note.classList.remove('on');
     };
     set(false);
     btn.addEventListener('click', () => set(!body.classList.contains('sb-open')));
@@ -461,7 +468,24 @@
       const a = e.target.closest && e.target.closest('a[href]');
       if (a && !a.dataset.action && !a.getAttribute('href').startsWith('mailto:')) setTimeout(() => set(false), 120);
     });
+
+    if (!reduce) {                                                    // the star and the hamburger take turns; every so often the label appears for 2 seconds
+      setInterval(() => { if (!body.classList.contains('sb-open') && !document.hidden) btn.classList.toggle('as-menu'); }, 3200);
+      const remind = (delay) => setTimeout(() => {
+        if (body.classList.contains('compact') && !body.classList.contains('sb-open') && !document.hidden) { note.classList.add('on'); setTimeout(() => note.classList.remove('on'), 2000); }
+        remind(18000 + Math.random() * 14000);                          // then again some 18–32 seconds later
+      }, delay);
+      remind(1600);
+    }
     return { open: () => set(true), close: () => set(false) };
+  }
+
+  /* "Resume": a pill in the top-right corner of every main-site page, always in reach */
+  function mountResume() {
+    const a = document.createElement('a');
+    a.className = 'resume-pill'; a.href = links().resume; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = '<svg viewBox="0 0 16 18" width="13" height="15" aria-hidden="true"><path d="M3 1h7l4 4v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z M10 1v4h4 M5 9h6 M5 12h6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg><span>Resume</span>';
+    document.body.appendChild(a);
   }
 
   /* Work cards: over a case study the cursor becomes a coloured "View case study" pill (colour = the card's, data-cs) */
@@ -555,6 +579,7 @@
       else { store.set('siddhi.tab', 'lm'); location.href = R + 'home'; }
     }));
 
+    if (!noSidebar) guard('resume pill', mountResume);
     guard('email pop-up', initEmailPop);
     guard('scaling', fit);
     window.addEventListener('resize', fit);

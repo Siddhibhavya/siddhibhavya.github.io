@@ -30,7 +30,7 @@
           </div>
 
           <h1 class="gb-title">Welcome Aboard</h1>
-          <p class="gb-sub">Draw yourself a little drawing! exhibit in my digital gallery!.</p>
+          <p class="gb-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">digital gallery</span>!</p>
 
           <div class="gb-card" id="gbCard">
             <div class="gb-paper"><canvas id="pad" aria-label="Drawing pad — draw with your mouse, finger or pen"></canvas></div>
@@ -56,8 +56,8 @@
           <input class="gb-sig gb-ctl" id="sig" type="text" aria-label="Signature — type it on the line" maxlength="28" autocomplete="off" spellcheck="false">
           <img class="gb-line gb-ctl" src="assets/guest/signature-line.svg" alt="" width="622" height="2">
 
-          <span class="gb-colorlabel gb-ctl">Card Color</span>
-          <div class="gb-swatches gb-ctl" role="radiogroup" aria-label="Card color">
+          <span class="gb-colorlabel gb-ctl">Card colour</span>
+          <div class="gb-swatches gb-ctl" role="radiogroup" aria-label="Card colour">
             <button class="gb-swatch" role="radio" aria-checked="true"  data-color="red"    style="left:596px;background:#bb3739" aria-label="Red"></button>
             <button class="gb-swatch" role="radio" aria-checked="false" data-color="orange" style="left:704px;background:#ff9a00" aria-label="Orange"></button>
             <button class="gb-swatch" role="radio" aria-checked="false" data-color="green"  style="left:812px;background:#249343" aria-label="Green"></button>
@@ -66,6 +66,7 @@
 
           <button class="gb-create gb-ctl" id="create" type="button">Create</button>
           <p class="gb-hint gb-ctl" id="hint" role="status"></p>
+          <a class="gb-skip gb-ctl" id="skip" href="home">Go to main site</a>
 
           </div>
         </div>
@@ -78,6 +79,7 @@
   <script src="js/bank.js"></script>
   <script src="js/chat.js"></script>
   <script src="js/shell.js"></script>
+  <script src="js/highlight.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/wordfilter.js"></script>
   <script src="js/guest-remote.js"></script>
