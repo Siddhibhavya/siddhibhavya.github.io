@@ -469,13 +469,13 @@
       if (a && !a.dataset.action && !a.getAttribute('href').startsWith('mailto:')) setTimeout(() => set(false), 120);
     });
 
-    if (!reduce) {                                                    // the star and the hamburger take turns; every so often the label appears for 2 seconds
+    if (!reduce) {                                                    // the star and the hamburger take turns; the label appears for 2 seconds as soon as the page opens, then every so often
       setInterval(() => { if (!body.classList.contains('sb-open') && !document.hidden) btn.classList.toggle('as-menu'); }, 3200);
       const remind = (delay) => setTimeout(() => {
         if (body.classList.contains('compact') && !body.classList.contains('sb-open') && !document.hidden) { note.classList.add('on'); setTimeout(() => note.classList.remove('on'), 2000); }
         remind(18000 + Math.random() * 14000);                          // then again some 18–32 seconds later
       }, delay);
-      remind(1600);
+      remind(600);                                                  // the first time is right as the page opens
     }
     return { open: () => set(true), close: () => set(false) };
   }
