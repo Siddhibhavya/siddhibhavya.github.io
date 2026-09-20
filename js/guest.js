@@ -117,22 +117,21 @@
   function renderGallery(stage, list, fresh) {
     stage.querySelectorAll('.gc').forEach((el) => el.remove());
     const GY = -221.167, PY = 46.755;                                    // the gallery page's grid: horizontal lines every 46.755px from y -221.17
+    const Y0 = 234 + PY;                                                // the cards start one grid row lower, to make room for the "Create something!" button above them
     const X = [[83, 580], [77, 581]];                                   // Figma x (minus the 356px sidebar), tiny hand-placed offsets
     list.forEach((c, i) => {
       const row = Math.floor(i / 2), col = i % 2;
       const el = cardEl(c, 'gallery');
       if (fresh) el.classList.add('fresh');
       el.style.left = X[row % 2][col] + 'px';
-      const top = 234 + row * 350;
+      const top = Y0 + row * 350;
       el.style.top = top + 'px';
       const line = GY + Math.round((top + 285 - GY) / PY) * PY;         // the signature line lies on the nearest grid line; the name sits on it
       el.style.setProperty('--ly', (line - top - 0.5).toFixed(2) + 'px');
       stage.appendChild(el);
     });
-    const rows = Math.ceil(list.length / 2), want = 234 + rows * 350 + 10;
-    const btnTop = GY + Math.round((want - GY) / PY) * PY;               // the button sits on a grid line
-    $('.gb-more').style.top = btnTop.toFixed(2) + 'px';
-    stage.closest('.stage-wrap').style.setProperty('--sh', Math.ceil(btnTop + 46.76 + 32) + 'px');
+    const rows = Math.ceil(list.length / 2);
+    stage.closest('.stage-wrap').style.setProperty('--sh', Math.ceil(Y0 + (rows - 1) * 350 + 395) + 'px');
     if (window.SiddhiShell) window.SiddhiShell.fit();
   }
 
