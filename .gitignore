@@ -1,0 +1,24 @@
+# Things that live on my machine only — not part of the published site
+
+# my local tools (the question-bank editor, the site checker, dev notes)
+tools/
+
+# the original koi sketch and other source material / Figma exports
+Background/
+_source/
+
+# editor + assistant settings, local dev server, backups
+.claude/
+
+# temporary / junk files
+*.tmp
+*.temp
+*.bak
+*.log
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+node_modules/

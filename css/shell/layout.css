@@ -1,0 +1,25 @@
+/* ==================================================================
+   SHELL · LAYOUT — [ sticky sidebar | main ] then a full-width footer.
+   The sidebar is fixed top-to-bottom while long pages scroll, and lets go when the footer arrives (sticky inside .layout).
+   Also here: the two page "modes" set on <body> — data-sidebar="none" and data-fit="screen" (the Welcome Aboard pages).
+================================================================== */
+.layout {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  overflow-x: clip;
+  background: var(--cream);
+}
+.main { position: relative; flex: 1 1 0; min-width: 0; min-height: 100vh; }
+
+/* pages without a sidebar (Welcome Aboard) use the whole 1448 frame; content is re-centred on it (Figma x − 178) */
+body[data-sidebar='none'] { --stage-w: 1448px; }
+
+/* Welcome Aboard pages are exactly one screen: the content fits the window and only the footer scrolls */
+body[data-fit='screen'] .main { height: 100vh; min-height: 0; display: flex; align-items: center; overflow: hidden; }
+body[data-fit='screen'] .stage-wrap { flex: none; }
+body[data-fit='screen'] .stage { animation: fade-in 0.5s ease both; }
+@keyframes fade-in { from { opacity: 0; } }
+
+/* arriving from the thank-you screen: the page settles in behind the sidebar's glide (see sidebar.css) */
+body.entering .stage-wrap { animation: fade-in 0.7s 0.25s ease both; }

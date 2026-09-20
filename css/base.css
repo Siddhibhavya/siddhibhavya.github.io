@@ -1,0 +1,103 @@
+/* ==================================================================
+   BASE — design tokens, reset, the design-space "stage", fonts, cursors.
+   Loaded first by every page (through css/site.css or css/intro.css).
+   Contents: 1 Tokens · 2 Reset · 3 Stage · 4 Placement primitives · 5 Fonts · 6 Cursors · 7 Motion preference
+================================================================== */
+
+/* ---------- 1 · Tokens ----------
+   Every colour is lifted straight from the Figma file. Do not "tune" them: landing + footer plum is #190523 (not black). */
+:root {
+  --plum: #190523;
+  --cream: #ffece1;
+  --sidebar: rgba(119, 51, 68, 0.93);
+  --maroon: #7f404e;
+  --maroon-edge: #a6747b;
+  --pill: #f5e9e2;
+  --ink: #0e0314;
+  --card: #ffeddb;
+  --card-edge: rgba(127, 64, 78, 0.7);
+  --brown: #7f5744;
+  --brown-soft: rgba(53, 35, 26, 0.7);
+  --trail: #075e54;
+
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Ancizar Serif', 'Iowan Old Style', Georgia, serif;
+  --font-script: 'Blank Script', var(--font-serif);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-sine: cubic-bezier(0.37, 0, 0.63, 1);
+
+  /* set from JS (js/shell.js, fit()) so the fixed 1448px design scales to any viewport */
+  --sb-s: 1;
+  --sb-h: 1024px;
+  --stage-s: 1;
+}
+
+/* ---------- 2 · Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; cursor: url(../assets/ui/cursor-star.svg) 16 16, auto; }   /* cursor: see section 6 */
+
+body {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, canvas, video { display: block; max-width: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; }
+input { font: inherit; color: inherit; }
+ul { list-style: none; }
+
+:focus-visible { outline: 2px solid var(--maroon); outline-offset: 3px; border-radius: 6px; }
+.footer :focus-visible, .landing :focus-visible { outline-color: #fff; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- 3 · The stage ----------
+   A design-space stage: children are positioned with the exact Figma numbers. .stage is 1092px wide (frame width 1448 minus
+   the 356px sidebar) and is scaled down when the window is narrower — never up. */
+.stage-wrap { position: relative; width: 100%; height: calc(var(--sh) * var(--stage-s)); }
+.stage {
+  position: absolute; top: 0; left: 0;
+  width: var(--stage-w, 1092px); height: var(--sh);
+  transform: scale(var(--stage-s));
+  transform-origin: 0 0;
+  margin-left: max(0px, calc((100% - var(--stage-w, 1092px) * var(--stage-s)) / 2));
+}
+
+/* ---------- 4 · Placement primitives ----------
+   Figma exports every layer as a centre point + size + rotation. --cx/--cy are the layer centre in stage px (frame x − 356),
+   --w/--h its size, --r its rotation. */
+.rc {
+  position: absolute;
+  left: calc((var(--cx) - var(--w) / 2) * 1px); top: calc((var(--cy) - var(--h) / 2) * 1px);
+  width: calc(var(--w) * 1px); height: calc(var(--h) * 1px);
+  transform: rotate(var(--r, 0deg));
+}
+.shadow-fixed { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+
+/* ---------- 5 · Fonts ----------
+   Inter + Ancizar Serif come from Google Fonts (linked in each page's <head>). Blank Script is Siddhi's own font. */
+@font-face { font-family: 'Blank Script'; src: url(../assets/fonts/BlankScript.otf) format('opentype'); font-display: swap; }
+
+/* ---------- 6 · Cursors ---------- */
+/* a white star: set on <html> in section 2, and here on everything clickable */
+a, button, label, summary, select, [role='button'], [role='radio'], [role='tab'] { cursor: url(../assets/ui/cursor-star.svg) 16 16, pointer; }
+input[type='text'], textarea { cursor: text; }
+
+/* on the dark pages (landing, footer) the star glows: a soft, diffuse white halo around it */
+body.landing, body.landing a, .footer, .footer a, .footer button { cursor: url(../assets/ui/cursor-star-glow.svg) 36 36, pointer; }
+
+/* ---------- 7 · Motion preference ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

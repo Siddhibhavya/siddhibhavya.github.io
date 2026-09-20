@@ -1,0 +1,33 @@
+/* ==================================================================
+   DECOR — the Figma "little designs": the graph-paper grid, stars, fish-bone patches, the dino, eye doodles.
+   Contents: 1 Graph-paper grid · 2 Decorations (--cx --cy --w --h --r) · 3 Arc + eyes
+================================================================== */
+
+/* ---------- 1 · Graph-paper grid ----------
+   The Figma grid picture (cell 34.79 × 34.74 at scale 1, 1px lines at 25% black), scaled and placed differently on every page so that
+   the content sits on its lines. It is a repeating tile, so it never runs out.
+     --gk  scale of the tile         --gx / --gy  stage px where the first vertical / horizontal line falls
+   Change a page's grid by changing only its three numbers below. Welcome Aboard pages (data-fit="screen") have no grid. */
+body:not([data-fit='screen']) .main {
+  --gk: 1.3625; --gx: -375.6; --gy: -17.5;
+  background-image: url(../../assets/decor/grid-tile.svg);
+  background-size: calc(34.79px * var(--gk) * var(--stage-s, 1)) calc(34.74px * var(--gk) * var(--stage-s, 1));
+  background-position: calc(var(--stage-m, 0px) + var(--gx) * var(--stage-s, 1) * 1px) calc(var(--gy) * var(--stage-s, 1) * 1px);
+}
+body[data-page='work'] .main { --gk: 1.0833; --gx: -66.17; --gy: -15.67; }
+body[data-page='quests'] .main { --gk: 1.3458; --gx: -356.79; --gy: -85.17; }
+body[data-page='gallery'] .main { --gk: 1.3458; --gx: -273.79; --gy: -221.17; }
+/* About: Figma stacks two grid pictures of slightly different size (an upper one, then a larger one from y 1390). Where they meet their
+   vertical lines are up to 30px apart, which showed as a stair-step across the page. So the upper grid simply continues down the whole page. */
+body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; }
+
+/* ---------- 2 · Decorations ---------- */
+.dc { position: absolute; left: calc((var(--cx) - var(--w) / 2) * 1px); top: calc((var(--cy) - var(--h) / 2) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); rotate: var(--r, 0deg); pointer-events: none; }
+.dc img { position: absolute; max-width: none; }
+.dc.fish { overflow: hidden; }
+.dc.fish img { left: 0; top: -47.23%; width: 100%; height: 286.01%; }
+.dc.dino img { left: 0; top: 0; width: 100%; height: 100%; transform: scaleY(-1); object-fit: cover; }
+
+/* ---------- 3 · Arc + eyes ---------- */
+.dc-arc { position: absolute; max-width: none; pointer-events: none; }
+.eye { position: absolute; left: calc((var(--cx) - 59.5) * 1px); top: calc((var(--cy) - 29) * 1px); width: 123.952px; height: 62px; margin: -2px 0 0 -2.08px; rotate: var(--r, 0deg); color: var(--c); pointer-events: none; z-index: 0; overflow: visible; }

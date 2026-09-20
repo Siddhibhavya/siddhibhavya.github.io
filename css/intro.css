@@ -1,0 +1,6 @@
+/* ==================================================================
+   LANDING STYLESHEET — linked only by index.html (the landing page has no sidebar, footer or inner-page styles).
+   See css/site.css for the stylesheet every other page links.
+================================================================== */
+@import url("base.css");
+@import url("pages/landing.css");

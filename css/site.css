@@ -1,0 +1,25 @@
+/* ==================================================================
+   SITE STYLESHEET — the ONE file every inner page links (home, about, side quests, guest pages, case studies).
+   It only lists the parts, in cascade order. Pages never link the parts directly, so a page can't forget one.
+
+   Order matters where two rules have the same weight, so add new files at the END of their group:
+     1 base      tokens, reset, stage, fonts, cursors
+     2 shell     the frame around every page: layout, sidebar, chat, footer, small-screen drawer, floating widgets
+     3 pages     one file per page; decor.css is shared by several pages and comes before the pages that build on it
+   The landing page (index.html) links css/intro.css instead.
+   Run `node tools/check.js` after editing — it checks every @import exists and every url() resolves.
+================================================================== */
+@import url("base.css");
+
+@import url("shell/layout.css");
+@import url("shell/sidebar.css");
+@import url("shell/chat.css");
+@import url("shell/footer.css");
+@import url("shell/compact.css");
+@import url("shell/widgets.css");
+
+@import url("pages/work.css");
+@import url("pages/decor.css");
+@import url("pages/guest.css");
+@import url("pages/quests.css");
+@import url("pages/about.css");

@@ -1,0 +1,75 @@
+/* ==================================================================
+   PAGE · WORK (home.html) — the project cards, plus the case-study placeholder pages (work/*.html).
+   Coordinates are the Figma numbers (stage = frame x − 356).
+   Contents: 1 Card · 2 Card contents · 3 Hover details · 4 Page (lower cards grow the beige area) · 5 Case-study placeholders
+================================================================== */
+
+/* ---------- 1 · Card ----------
+   Rest: tilted, 437×437.  Hover/focus: straighten, grow, reveal role / team / timeline. */
+.card {
+  position: absolute; left: var(--x); top: var(--y); z-index: 1;
+  display: block; width: 437.04px; height: 437.04px;
+  background: var(--card); border: 5px solid var(--card-edge); border-radius: 20px; overflow: hidden;
+  color: var(--ink);
+  transform: rotate(var(--r)); transform-origin: 50% 218.5px;
+  transition: transform 0.6s var(--ease-out), height 0.55s var(--ease-out), box-shadow 0.45s ease;
+}
+.card.is-featured { box-shadow: -6px 5px 6px rgba(0, 0, 0, 0.25); }   /* solid, like the other cards */
+.card:hover, .card:focus-visible {
+  z-index: 10; height: var(--hh); transform: rotate(0deg) scale(1.02);
+  box-shadow: -8px 10px 20px rgba(0, 0, 0, 0.28);
+}
+.card:focus-visible { outline-offset: 6px; }
+
+/* ---------- 2 · Card contents ---------- */
+/* children are placed from the card's border-box corner */
+.card-in { position: absolute; left: -5px; top: -5px; }
+.card-in > * { position: absolute; }
+
+.media { display: block; overflow: hidden; border-radius: 15px; background: #d9d9d9; }
+.media img { width: 100%; height: 100%; object-fit: cover; }
+.media.road img { position: absolute; left: -15.45px; top: -332.4px; width: 454px; height: 1006px; max-width: none; object-fit: fill; }
+
+.phone { left: 113.83px; top: 38.57px; width: 200.94px; height: 255.43px; overflow: hidden; filter: drop-shadow(-9px 0 3.7px rgba(0, 0, 0, 0.53)); }
+.phone img { position: absolute; left: -0.05%; top: 0; height: 100%; width: 121.71%; }
+.glyph { left: 286.3px; top: 213.8px; width: 74px; height: 71px; }
+
+/* the three floating pills: ±4px, slow sine drift, each on its own phase */
+.pill {
+  display: flex; align-items: center; justify-content: center;
+  background: #faf2e9; border: 1px solid #033530; border-radius: 28px; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 12px; line-height: 1; color: #7a5c47; white-space: nowrap;
+  animation: levitate 5.4s var(--ease-sine) infinite; animation-delay: var(--d, 0s);
+}
+@keyframes levitate { 0%, 100% { transform: translateY(0); } 25% { transform: translateY(-4px); } 75% { transform: translateY(4px); } }
+
+.tag {
+  left: var(--tl); top: var(--tt); width: var(--tw); height: 21px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--maroon); border: 2px solid var(--maroon-edge); border-radius: 28px; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 12px; line-height: 1; color: var(--card); white-space: nowrap;
+}
+.title { left: 24.4px; top: 308.6px; font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 22px; color: var(--ink); white-space: nowrap; }
+.desc { left: 26.3px; top: 341.8px; width: 381px; font-size: 15px; line-height: 1.22; color: var(--brown); }
+.desc.justify { text-align: justify; }
+
+/* ---------- 3 · Hover details (role / team / timeline) ---------- */
+.meta { left: 21.3px; top: 426.5px; width: 400px; opacity: 0; transition: opacity 0.3s ease; }
+.card:hover .meta, .card:focus-visible .meta { opacity: 1; transition-delay: 0.16s; }
+.meta .rule { display: block; height: 1px; background: rgba(127, 87, 68, 0.55); }
+.meta .row { position: relative; display: flex; margin-top: 12px; font-size: 13px; line-height: 19px; color: var(--brown); }
+.meta .row:first-of-type { margin-top: 10px; }
+.meta .row b { flex: none; width: 173px; padding-left: 18px; font-weight: 500; }
+.meta .row span { flex: 1; }
+
+/* ---------- 4 · Page ----------
+   hovering a lower card grows the beige area (and moves the footer down) so the card never slides under the footer */
+.home-wrap { --sh: 1024px; transition: height 0.55s var(--ease-out); }
+.home-wrap:has(.card.low:hover), .home-wrap:has(.card.low:focus-visible) { --sh: 1116px; }
+
+/* ---------- 5 · Case-study placeholders (work/*.html) until the full pages arrive ---------- */
+.stub-eyebrow { position: absolute; left: 90px; top: 150px; font-size: 20px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--brown); }
+.stub-title { position: absolute; left: 90px; top: 190px; font-size: 72px; line-height: 1.1; font-weight: 400; color: var(--ink); }
+.stub-copy { position: absolute; left: 90px; top: 310px; width: 720px; font-size: 24px; line-height: 1.4; color: var(--ink); }
+.stub-soon { position: absolute; left: 90px; top: 520px; font-family: var(--font-serif); font-size: 28px; color: var(--maroon); }
+.stub-back { position: absolute; left: 90px; top: 590px; font-size: 20px; font-weight: 500; color: var(--maroon); border-bottom: 2px solid var(--maroon-edge); }

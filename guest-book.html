@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siddhi — Welcome Aboard</title>
+  <meta name="description" content="Draw yourself a little drawing and exhibit it in Siddhi's digital gallery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="gallery" data-root="" data-fit="screen" data-sidebar="none">
+  <div class="layout">
+    <main class="main" id="main">
+      <div class="stage-wrap" style="--sh:1024px">
+        <div class="stage">
+          <div class="gb-content">
+
+          <div class="gb-decor" aria-hidden="true">
+<span class="dc" aria-hidden="true" style="--cx:1407;--cy:913.5;--w:270;--h:263;--r:0deg;--ex:1;--ey:1"><img src="assets/decor/9a824.svg" alt="" style="left:0.86%;top:2.21%;width:94.58%;height:90.2%"></span>
+<span class="dc" aria-hidden="true" style="--cx:220;--cy:231.5;--w:270;--h:263;--r:0deg;--ex:-1;--ey:-0.4"><img src="assets/decor/9a824.svg" alt="" style="left:0.86%;top:2.21%;width:94.58%;height:90.2%"></span>
+<span class="dc" aria-hidden="true" style="--cx:286.5;--cy:746;--w:193;--h:188;--r:0deg;--ex:-1;--ey:0.5"><img src="assets/decor/864f8.svg" alt="" style="left:0.22%;top:3.09%;width:94.38%;height:90.1%"></span>
+<span class="dc" aria-hidden="true" style="--cx:1271.5;--cy:137;--w:193;--h:188;--r:-17.45deg;--ex:1;--ey:-1"><img src="assets/decor/10e4c.svg" alt="" style="left:0.22%;top:3.09%;width:94.38%;height:90.1%"></span>
+<span class="dc" aria-hidden="true" style="--cx:59.5;--cy:28.5;--w:211;--h:199;--r:0deg;--ex:-1;--ey:-1"><img src="assets/decor/834b4.svg" alt="" style="left:0.61%;top:2.69%;width:94.04%;height:90.46%"></span>
+<span class="dc fish" aria-hidden="true" style="--cx:1298.19;--cy:632.33;--w:221.56;--h:103.25;--r:129.04deg;--ex:1;--ey:0.3"><img src="assets/decor/a371c.png" alt=""></span>
+<span class="dc fish" aria-hidden="true" style="--cx:194.88;--cy:515.56;--w:221.56;--h:103.25;--r:72.05deg;--ex:-1;--ey:0"><img src="assets/decor/a371c.png" alt=""></span>
+<span class="dc fish" aria-hidden="true" style="--cx:29.88;--cy:934.56;--w:221.56;--h:103.25;--r:129.04deg;--ex:-1;--ey:1"><img src="assets/decor/a371c.png" alt=""></span>
+<span class="dc fish" aria-hidden="true" style="--cx:1159.88;--cy:32.56;--w:221.56;--h:103.25;--r:129.04deg;--ex:1;--ey:-1"><img src="assets/decor/a371c.png" alt=""></span>
+          </div>
+
+          <h1 class="gb-title">Welcome Aboard</h1>
+          <p class="gb-sub">Draw yourself a little drawing! exhibit in my digital gallery!.</p>
+
+          <div class="gb-card" id="gbCard">
+            <div class="gb-paper"><canvas id="pad" aria-label="Drawing pad — draw with your mouse, finger or pen"></canvas></div>
+            <div class="gb-tools" role="group" aria-label="Pen colour and size">
+              <button class="gb-pen is-on" type="button" data-c="#0e0314" style="--c:#0e0314" aria-label="Black pen" aria-pressed="true"></button>
+              <button class="gb-pen" type="button" data-c="#7f404e" style="--c:#7f404e" aria-label="Maroon pen" aria-pressed="false"></button>
+              <button class="gb-pen" type="button" data-c="#bb3739" style="--c:#bb3739" aria-label="Red pen" aria-pressed="false"></button>
+              <button class="gb-pen" type="button" data-c="#ff9a00" style="--c:#ff9a00" aria-label="Orange pen" aria-pressed="false"></button>
+              <button class="gb-pen" type="button" data-c="#f2c230" style="--c:#f2c230" aria-label="Yellow pen" aria-pressed="false"></button>
+              <button class="gb-pen" type="button" data-c="#249343" style="--c:#249343" aria-label="Green pen" aria-pressed="false"></button>
+              <button class="gb-pen" type="button" data-c="#2c2696" style="--c:#2c2696" aria-label="Blue pen" aria-pressed="false"></button>
+              <button class="gb-pen gb-eraser" type="button" data-c="erase" aria-label="Eraser" aria-pressed="false" title="Eraser"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M3 13.2 10.6 3.8a1.6 1.6 0 0 1 2.3-.2l3.5 2.9a1.6 1.6 0 0 1 .2 2.3L10 17H6.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 10.5l5 4.2M9.5 17H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+              <i class="gb-sep"></i>
+              <div class="gb-sizes">
+                <button class="gb-size" type="button" data-w="2" aria-label="Thin pen" aria-pressed="false"><i style="--d:4px"></i></button>
+                <button class="gb-size is-on" type="button" data-w="4" aria-label="Medium pen" aria-pressed="true"><i style="--d:8px"></i></button>
+                <button class="gb-size" type="button" data-w="9" aria-label="Thick pen" aria-pressed="false"><i style="--d:14px"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <label class="gb-siglabel gb-ctl" for="sig">Signature</label>
+          <input class="gb-sig gb-ctl" id="sig" type="text" aria-label="Signature — type it on the line" maxlength="28" autocomplete="off" spellcheck="false">
+          <img class="gb-line gb-ctl" src="assets/guest/signature-line.svg" alt="" width="622" height="2">
+
+          <span class="gb-colorlabel gb-ctl">Card Color</span>
+          <div class="gb-swatches gb-ctl" role="radiogroup" aria-label="Card color">
+            <button class="gb-swatch" role="radio" aria-checked="true"  data-color="red"    style="left:622px;background:#bb3739" aria-label="Red"></button>
+            <button class="gb-swatch" role="radio" aria-checked="false" data-color="orange" style="left:730px;background:#ff9a00" aria-label="Orange"></button>
+            <button class="gb-swatch" role="radio" aria-checked="false" data-color="green"  style="left:838px;background:#249343" aria-label="Green"></button>
+            <button class="gb-swatch" role="radio" aria-checked="false" data-color="blue"   style="left:946px;background:#2c2696" aria-label="Blue"></button>
+          </div>
+
+          <button class="gb-create gb-ctl" id="create" type="button">Create</button>
+          <p class="gb-hint gb-ctl" id="hint" role="status"></p>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/bank.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/guest.js"></script>
+  <script src="js/guest-anim.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.min.js"></script>
+  <script src="js/koi.js"></script>
+</body>
+</html>

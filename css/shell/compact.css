@@ -1,0 +1,49 @@
+/* ==================================================================
+   SHELL · COMPACT — small screens (< 900px wide, set by js/shell.js as body.compact).
+   No side column: a star "INDEX" button brings the Index / Siddhi LM card out as a drawer over the page (scrim behind it).
+   On phones the card is a shorter design (760 tall: small avatar beside the name, no bio).
+   These rules come after sidebar.css and win by the extra .compact class — keep the load order in css/site.css.
+================================================================== */
+.sb-toggle, .sb-scrim { display: none; }
+.compact .layout { display: block; }
+.compact .main { min-height: 0; }                       /* no tall empty space under the content */
+
+/* the card becomes a drawer */
+.compact .sidebar {
+  position: fixed; left: 0; top: 0; z-index: 90;
+  width: calc(356px * var(--sb-s)); height: calc(var(--sb-h) * var(--sb-s));
+  transform: translateX(-112%); visibility: hidden; animation: none;
+  transition: transform 0.6s var(--ease-out), visibility 0s linear 0.6s;
+  --nav-dy: -241px;                                     /* index pane: avatar sits beside the name, the bio is dropped */
+}
+.compact.sb-open .sidebar { transform: none; visibility: visible; transition-delay: 0s; }
+.compact .sb-inner { border-radius: 0 0 18px 0; }
+.compact .sb-body { border-radius: 0 0 12px 8px; }
+
+/* the shorter index pane */
+.compact .avatar-ring { left: 30px; top: 84px; width: 70px; height: 70px; }
+.compact .avatar-photo { left: 26.6px; top: 90.8px; width: 85.9px; height: 78px; }
+.compact .name { left: 112px; top: 88px; width: auto; text-align: left; font-size: 27px; }
+.compact .role { left: 112px; top: 128px; transform: none; font-size: 13px; }
+.compact .bio { display: none; }
+.compact .connect { bottom: 36px; }
+
+/* the dark scrim behind the open drawer */
+.compact .sb-scrim { display: block; position: fixed; inset: 0; z-index: 85; background: rgba(25, 5, 35, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.compact.sb-open .sb-scrim { opacity: 1; pointer-events: auto; }
+.compact.sb-open { overflow: hidden; }
+
+/* the star "Index" button (turns into a close star while the drawer is open) */
+.compact .sb-toggle {
+  display: flex; align-items: center; gap: 8px; position: fixed; left: 12px; top: 12px; z-index: 95;
+  padding: 9px 17px 9px 13px; border-radius: 26px;
+  background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--cream);
+  font: 500 14px/1 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(25, 5, 35, 0.32);
+  transition: left 0.6s var(--ease-out), background-color 0.2s ease, transform 0.25s var(--ease-out);
+}
+.compact .sb-toggle:hover { background: #8f4a59; transform: translateY(-1px); }
+.compact .sb-toggle svg { flex: none; transition: transform 0.7s var(--ease-out); }
+.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) + 12px); padding: 9px 11px; }
+.compact.sb-open .sb-toggle span { display: none; }
+.compact.sb-open .sb-toggle svg { transform: rotate(225deg) scale(1.05); }
