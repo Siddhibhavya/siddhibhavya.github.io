@@ -1,0 +1,48 @@
+/* ==================================================================
+   PAGE · ABOUT (about.html)
+   Contents: 1 Text on the grid · 2 Frames, photos, captions · 3 Books, board, vinyl · 4 Movable stars / patches / dino
+   The grid itself (and its numbers) is in decor.css.
+================================================================== */
+
+/* ---------- 1 · Text on the grid ----------
+   The page's grid has lines every 47.33px down from y −17.5 and every 47.40px across from x −375.6. Text is set like writing on ruled paper:
+   every text line is exactly one grid row tall (47.33px) and positioned so its BASELINE sits on a line (Inter 24px puts its baseline 32px
+   below the top of a line box; the Ancizar title, 94.67px tall, puts it 66.4px down). */
+.about-title {
+  /* two rows tall, centred on the vertical line 19 across (also the middle of the text block below); its baseline is on grid line 3 (y 124.5) */
+  position: absolute; left: 164.5px; top: 57.1px; width: 721px; text-align: center; white-space: nowrap;
+  font-family: var(--font-serif); font-size: 64px; line-height: 94.67px; font-weight: 400; text-transform: uppercase; color: var(--ink);
+}
+/* the paragraphs' left edge is on vertical line 11. The first block is 9 rows, so the second continues on the same lines. */
+.about-p1, .about-p2 { position: absolute; left: 145.79px; font-size: 24px; line-height: 47.33px; text-transform: uppercase; color: var(--ink); }
+.about-p1 { top: 138.83px; width: 764px; text-align: justify; }      /* baselines on lines 5, 6 … (first, blank, line on line 4) */
+.about-p1 p { margin: 0; }
+.about-p2 { top: 564.83px; width: 794px; white-space: pre-wrap; }
+
+/* ---------- 2 · Frames, photos, captions ---------- */
+.frame { background: var(--pill); border: 9px solid var(--maroon); border-radius: 20px; box-shadow: var(--shd) rgba(0, 0, 0, 0.25); }
+.photo { border-radius: 10px; overflow: hidden; background: #d9d9d9; }
+.photo img, .photo video { width: 100%; height: 100%; object-fit: cover; }
+.cap { display: flex; align-items: center; justify-content: center; font-size: 24px; line-height: 1.18; text-transform: capitalize; text-align: center; white-space: nowrap; color: rgba(14, 3, 20, 0.8); }
+.cap.dark { color: #000; }
+.cap.right { justify-content: flex-end; text-align: right; white-space: normal; color: rgba(14, 3, 20, 0.84); }
+.cap.side { color: rgba(14, 3, 20, 0.73); }
+
+/* ---------- 3 · Books, board, vinyl ---------- */
+.book { filter: drop-shadow(var(--dx) var(--dy) 4px rgba(0, 0, 0, 0.25)); }
+.book img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }   /* whole cover, no crop */
+.board { overflow: hidden; }
+.board img { position: absolute; height: 137.73%; left: -60.46%; top: -18.09%; width: 229.34%; }
+.vinyl img { width: 100%; height: 100%; animation: vinyl-spin 20s linear infinite; }
+@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+
+/* ---------- 4 · The stars, the fish-bone patch and the dino can be picked up and moved around (js/about.js) ----------
+   --tx / --ty are the drag offset, --tilt leans it into the direction it is pulled; a tap makes it spin / wobble. */
+.dc.drag {
+  pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; will-change: translate, rotate;
+  translate: var(--tx, 0px) var(--ty, 0px); rotate: calc(var(--r, 0deg) + var(--tilt, 0deg));
+  transition: scale 0.25s var(--ease-out), filter 0.25s ease, rotate 0.5s var(--ease-out);
+}
+.dc.drag img { pointer-events: none; -webkit-user-drag: none; }
+.dc.drag:hover { scale: 1.06; }
+.dc.drag.grabbing { scale: 1.14; filter: drop-shadow(0 10px 10px rgba(25, 5, 35, 0.35)); transition: scale 0.15s ease, filter 0.15s ease, rotate 0.25s var(--ease-out); }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siddhi — Interaction Designer</title>
+  <meta name="description" content="Siddhi Bhavya — a designer tinkering at the intersection of human-computer interaction, accessibility, and efficiency.">
+  <meta name="theme-color" content="#190523">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500&display=swap">
+  <link rel="stylesheet" href="css/intro.css">
+</head>
+<body class="landing" data-page="landing" data-shell="none">
+  <!-- koi-fish background (js/koi.js) on the Figma plum #190523 -->
+  <div class="koi" id="koi" aria-hidden="true"></div>
+
+  <main class="intro">
+    <div class="intro-stage">
+      <!-- orbit ring: Figma "Ellipse 1", rotated −20.59° about its centre -->
+      <div class="orbit-rot" aria-hidden="true">
+        <img class="orbit-img" src="assets/landing/orbit.svg" alt="" width="772.28" height="269.078">
+      </div>
+
+      <!-- stars 1, 2a, 2b sit on the ring and orbit it; 4 and 2c are free-floating -->
+      <img class="star" data-orbit src="assets/landing/star-1.svg" alt="" style="--cx:374.37;--cy:683.43;--w:101;--h:94;--rot:21.87deg">
+      <img class="star" data-orbit src="assets/landing/star-2.svg" alt="" style="--cx:1051.35;--cy:370.33;--w:66.156;--h:61.571;--rot:26.56deg">
+      <img class="star" data-orbit src="assets/landing/star-2.svg" alt="" style="--cx:860.35;--cy:619.33;--w:66.156;--h:61.571;--rot:26.56deg">
+      <img class="star twinkle" src="assets/landing/star-4.svg" alt="" style="--cx:1105.96;--cy:619;--w:66.156;--h:61.571;--rot:-7.82deg">
+      <img class="star twinkle t2" src="assets/landing/star-2.svg" alt="" style="--cx:331.35;--cy:285.33;--w:66.156;--h:61.571;--rot:26.56deg">
+
+      <img class="wordmark" src="assets/landing/siddhi.svg" alt="SIDDHI" width="640" height="140">
+
+      <p class="hello">Welcome to my <span class="script">museum</span></p>
+      <p class="thisis">I am your host...</p>
+
+      <a class="btn" style="top:783px" href="guest-book.html">Be my Guest</a>
+      <a class="btn" style="top:876px" href="home.html">Skip Intro</a>
+    </div>
+  </main>
+
+  <script>window.KOI_CONFIG = { mount: '#koi', bg: [25, 5, 35], hoverOnly: false };</script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.min.js"></script>
+  <script src="js/koi.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

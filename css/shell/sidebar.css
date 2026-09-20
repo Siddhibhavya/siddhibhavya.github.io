@@ -1,0 +1,126 @@
+/* ==================================================================
+   SHELL · SIDEBAR — the Index / Siddhi LM card (js/shell.js builds the markup).
+   Contents: 1 Frame · 2 Cream panel + folder tab · 3 Panes · 4 Index pane · 5 Explore nav · 6 Connect links · 7 Leaving / arriving
+   The 356px-wide design canvas is scaled by --sb-s. Small screens turn it into a drawer: see compact.css.
+================================================================== */
+
+/* ---------- 1 · Frame ---------- */
+.sidebar {
+  position: sticky; top: 0; z-index: 40;
+  flex: none;
+  width: calc(356px * var(--sb-s));
+  height: 100vh;
+  transition: transform 0.7s var(--ease-out);
+}
+.sb-inner {
+  position: absolute; left: 0; top: 0;
+  width: 356px; height: var(--sb-h);
+  transform: scale(var(--sb-s)); transform-origin: 0 0;
+  background: var(--sidebar);
+  box-shadow: 7px 4px 18.7px rgba(0, 0, 0, 0.25);
+  font-family: var(--font-ui); font-weight: 500;
+  overflow: visible;
+}
+
+/* ---------- 2 · Cream panel + folder tab (drawn as SVG so the tab can go gooey) ---------- */
+.sb-top { position: absolute; left: 0; top: 0; width: 356px; height: 160px; overflow: visible; pointer-events: none; }
+.sb-static, .sb-goo-group { transition: opacity 90ms linear; }
+.sb-goo-group { opacity: 0; }
+.sb-body {
+  position: absolute; left: 6px; right: 12px; top: 150px; bottom: 12px;      /* 6px = the slim burgundy line on the left */
+  background: var(--cream); border-radius: 0 0 8px 8px;
+}
+
+.sb-tab { position: absolute; top: 12px; width: 143px; height: 54px; z-index: 3; }
+.sb-tab[data-tab='index'] { left: 6px; width: 149px; }
+.sb-tab[data-tab='lm'] { left: 201px; }
+.sb-tab span {
+  position: absolute; white-space: nowrap; font-size: 16px; line-height: 1.18;
+  transition: left 0.45s var(--ease-out), top 0.45s var(--ease-out), color 0.35s ease;
+}
+/* label positions are the Figma coordinates minus the tab origin */
+.sb-tab[data-tab='index'] span { left: 50px; top: 12px; color: #000; }
+.sb-tab[data-tab='lm'] span { left: 32px; top: 12px; color: #fff; }
+/* same baseline in both states — only the colours swap */
+.sidebar[data-tab='lm'] .sb-tab[data-tab='index'] span { color: var(--cream); }
+.sidebar[data-tab='lm'] .sb-tab[data-tab='lm'] span { color: var(--ink); }
+
+/* ---------- 3 · Panes ---------- */
+.pane {
+  position: absolute; inset: 0 3px 0 -3px; z-index: 2;      /* content re-centred on the slimmer left line */
+  transition: opacity 0.32s ease, transform 0.55s var(--ease-out), visibility 0s linear 0.32s;
+}
+.sidebar[data-tab='index'] .pane-lm { opacity: 0; transform: translateX(28px); visibility: hidden; pointer-events: none; }
+.sidebar[data-tab='lm'] .pane-index { opacity: 0; transform: translateX(-28px); visibility: hidden; pointer-events: none; }
+.sidebar[data-tab='index'] .pane-index, .sidebar[data-tab='lm'] .pane-lm { transition-delay: 0.08s, 0.08s, 0s; }
+
+/* ---------- 4 · Index pane ---------- */
+.avatar-ring { position: absolute; left: 99px; top: 84px; width: 124px; height: 124px; }
+.avatar-photo { position: absolute; left: 93px; top: 96px; width: 152px; height: 138px; overflow: hidden; pointer-events: none; }
+.avatar-photo img { position: absolute; height: 191.63%; left: -39.34%; top: -34.51%; width: 174.04%; }
+.name {
+  position: absolute; left: 64px; top: 234px; width: 191px; text-align: center; white-space: nowrap;
+  font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.18; color: var(--ink);
+}
+.role {
+  position: absolute; left: 168px; top: 275px; transform: translateX(-50%);
+  font-size: 18px; line-height: 1.18; color: rgba(127, 87, 68, 0.7); text-transform: uppercase; white-space: nowrap;
+}
+.bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
+
+/* ---------- 5 · Explore nav ---------- */
+.explore-box {
+  position: absolute; left: 26px; top: calc(421px + var(--nav-dy, 0px)); width: 298px; height: 419px;
+  background: var(--maroon); border-radius: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.explore-title {
+  position: absolute; left: 98px; top: calc(449px + var(--nav-dy, 0px)); transform: translate(-50%, -50%);
+  font-size: 24px; line-height: 1.18; color: var(--cream); white-space: nowrap;
+}
+.nav-item {
+  position: absolute; left: 38px; z-index: 1; width: 273px; height: 41px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  border-radius: 10px; font-size: 24px; line-height: 1.18; color: var(--cream); white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.nav-item:hover { background: rgba(245, 233, 226, 0.14); }
+.nav-item .arrow { width: 0; height: 24.48px; margin-left: -16px; opacity: 0; transition: width 0.4s var(--ease-out), margin-left 0.4s var(--ease-out), opacity 0.3s ease; }
+.nav-item.is-active { color: var(--ink); }
+.nav-item.is-active:hover { background: transparent; }
+.nav-item.is-active .arrow { width: 21.17px; margin-left: 0; opacity: 1; }
+/* one pill that glides between items (the items themselves stay transparent) */
+.nav-pill {
+  position: absolute; left: 38px; top: calc(500px + var(--nav-dy, 0px)); width: 273px; height: 41px; border-radius: 10px;
+  background: var(--pill); pointer-events: none; transition: opacity 0.3s ease;
+}
+.sidebar.ready .nav-pill { transition: top 0.6s var(--ease-out), opacity 0.3s ease; }
+.nav-pill.is-hidden { opacity: 0; }
+/* the Figma pill tops (js/shell.js keeps the same numbers in PILL_TOP) */
+.nav-item[data-nav='work'] { top: calc(500px + var(--nav-dy, 0px)); }
+.nav-item[data-nav='about'] { top: calc(573px + var(--nav-dy, 0px)); }
+.nav-item[data-nav='quests'] { top: calc(641px + var(--nav-dy, 0px)); }
+.nav-item[data-nav='lm'] { top: calc(709px + var(--nav-dy, 0px)); }
+.nav-item[data-nav='gallery'] { top: calc(778px + var(--nav-dy, 0px)); }
+
+/* ---------- 6 · Connect links ---------- */
+.connect { position: absolute; left: 0; width: 356px; bottom: 60px; height: 96px; }
+.connect-title {
+  position: absolute; left: 175.5px; top: 14px; transform: translate(-50%, -50%);
+  font-size: 24px; line-height: 1.18; color: var(--brown); text-transform: uppercase; white-space: nowrap;
+}
+.connect-links {
+  position: absolute; left: 59px; top: 45px; width: 239px; height: 51px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-content: space-between;
+  font-size: 16px; line-height: 1.18; color: var(--brown-soft); text-transform: capitalize;
+}
+.connect-links a { flex: none; width: 88px; transition: color 0.2s ease; }
+.connect-links a:nth-child(1) { width: 76px; }
+.connect-links a:nth-child(2) { text-align: center; }
+.connect-links a:nth-child(4) { width: 75px; }
+.connect-links a:hover { color: var(--maroon); }
+
+/* ---------- 7 · Leaving / arriving (the Welcome Aboard pages) ---------- */
+.sidebar.gb-out { transform: translateX(-112%); }                       /* Create pressed: the card slides away */
+.sidebar.enter { animation: sb-in 0.9s var(--ease-out) both; }           /* back from the thank-you screen: it glides in */
+@keyframes sb-in { from { transform: translateX(-112%); } }

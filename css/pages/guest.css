@@ -1,0 +1,103 @@
+/* ==================================================================
+   PAGES · GUEST — Welcome Aboard (guest-book.html) + the Guest Gallery (guest-gallery.html).
+   Coordinates are Figma numbers. Welcome Aboard is one full 1448×1024 screen (data-sidebar="none" data-fit="screen"),
+   its content sits in .gb-content; the gallery is a normal shell page (stage x = Figma x − 356).
+   Contents: 1 Welcome Aboard · 2 Colour box · 3 Buttons · 4 Cards · 5 Create animation overlay · 6 Leaving + veil
+================================================================== */
+
+/* ---------- 1 · Welcome Aboard (the drawing page) ---------- */
+.gb-content { position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; }
+
+/* .gb-title / .gb-sub are also used by the gallery, which positions them inline */
+.gb-title { position: absolute; left: 700.5px; top: 62px; transform: translate(-50%, -50%); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; }
+.gb-sub { position: absolute; left: 723.5px; top: 114px; transform: translate(-50%, -50%); font-size: 24px; line-height: 1.18; color: #000; white-space: nowrap; }
+
+.gb-card { position: absolute; left: 383px; top: 184px; width: 776px; height: 450.395px; background: #bb3739; border-radius: 10px; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); transition: background-color 0.3s ease; }
+.gb-paper { position: absolute; left: 18.28px; top: 14.66px; width: 641.927px; height: 421.067px; background: #fff; border-radius: 10px; overflow: hidden; }
+.gb-paper canvas { display: block; touch-action: none; cursor: crosshair; }
+
+/* the word "Signature" stays as the label; what you type goes ON the line, in Blank Script */
+.gb-siglabel { position: absolute; left: 450px; top: 684px; font-size: 20px; line-height: 1.18; color: var(--ink); pointer-events: none; transition: opacity 0.25s ease; }
+.gb-siglabel.dim { opacity: 0.3; }
+.gb-sig {
+  position: absolute; left: 449px; top: 692px; width: 622px; height: 54px; padding: 0 10px 1px; border: 0; background: transparent; outline-offset: -2px;
+  font-family: var(--font-script); font-size: 42px; line-height: 54px; letter-spacing: 0.01em; color: var(--ink); caret-color: var(--maroon);
+}
+.gb-sig::placeholder { color: transparent; opacity: 1; }
+.gb-line { position: absolute; left: 449px; top: 746px; width: 622px; height: 2px; }
+
+.gb-colorlabel { position: absolute; left: 542px; top: 800px; transform: translate(-50%, -50%); font-size: 20px; line-height: 1.18; color: var(--ink); white-space: nowrap; }
+.gb-swatches { position: absolute; left: 0; top: 770px; }
+.gb-swatch { position: absolute; top: 0; width: 60px; height: 60px; border-radius: 50%; transition: transform 0.3s var(--ease-out), box-shadow 0.25s ease; }
+.gb-swatch:hover { transform: scale(1.07); }
+.gb-swatch[aria-checked='true'] { box-shadow: 0 0 0 4px var(--cream), 0 0 0 7px var(--ink); }
+
+.gb-hint { position: absolute; left: 787.5px; top: 962px; transform: translateX(-50%); font-size: 14px; color: var(--brown); white-space: nowrap; }
+
+/* ---------- 2 · Colour box ----------
+   pen colours, an eraser and three pen sizes, in the empty right border of the drawing card (card 776 wide, paper ends at 660) */
+.gb-tools {
+  position: absolute; left: 673px; top: 8px; width: 90px; height: 384px; padding: 12px 8px 12px;      /* a little higher, and stopping a little short of the bottom of the paper */
+  display: grid; grid-template-columns: 36px 36px; grid-template-rows: repeat(4, 36px) 1fr auto; gap: 13px 8px; justify-content: center;
+  background: #fff; border-radius: 10px;
+}
+.gb-pen { width: 36px; height: 36px; border-radius: 50%; background: var(--c, #fff); display: flex; align-items: center; justify-content: center; color: var(--ink); transition: transform 0.25s var(--ease-out), box-shadow 0.2s ease; }
+.gb-pen:hover { transform: scale(1.1); }
+.gb-pen.is-on { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--ink); }
+.gb-eraser svg { width: 19px; height: 19px; }
+.gb-eraser { background: #f1e7e0; }
+.gb-sep { grid-column: 1 / -1; align-self: center; height: 2px; margin: 2px 0; border-radius: 2px; background: rgba(14, 3, 20, 0.12); }
+.gb-sizes { grid-column: 1 / -1; display: flex; justify-content: space-between; }
+.gb-size { width: 26px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease; }
+.gb-size i { display: block; width: var(--d); height: var(--d); border-radius: 50%; background: var(--ink); }
+.gb-size:hover { background: #f1e7e0; }
+.gb-size.is-on { background: #e6d8ce; }
+
+/* ---------- 3 · Buttons (Create on the drawing page, "more" on the gallery) ---------- */
+.gb-create, .gb-more {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  background: var(--maroon); color: var(--cream); border-radius: 10px; font-size: 24px; line-height: 1;
+  transition: transform 0.35s var(--ease-out), background-color 0.25s ease;
+}
+.gb-create { left: 701px; top: 897px; width: 173px; height: 48px; }
+.gb-more { left: 393.2px; top: 947.7px; width: 258px; height: 46.76px; }   /* one grid row tall, centred on the same vertical line as the title; js/guest.js snaps its top to a grid line */
+.gb-create:hover, .gb-more:hover { transform: translateY(-2px); background: #8f4a59; }
+
+/* ---------- 4 · Cards (the gallery + the strip in the create animation) ---------- */
+.gc { position: absolute; border-radius: 10px; }
+.gc-paper { position: absolute; background: #fff; border-radius: 10px; overflow: hidden; }
+.gc-paper img { width: 100%; height: 100%; object-fit: contain; }
+.gc-sig { position: absolute; white-space: nowrap; color: var(--ink); font-weight: 400; line-height: 1.18; }
+.gc-sig.typed { font-family: var(--font-script); letter-spacing: 0.01em; line-height: 1; }   /* a typed signature is set in Blank Script */
+.gc-line { position: absolute; left: 12px; top: var(--ly, 285px); width: 353px; height: 1px; }
+
+/* gallery card. --ly (set by js/guest.js) puts the signature line on the nearest grid line; the name sits on it */
+.gc-gallery { width: 382px; height: 215px; }
+.gc-gallery .gc-paper { left: 9px; top: 7px; width: 316px; height: 201px; }
+.gc-gallery .gc-sig { left: 14px; top: calc(var(--ly, 285px) - 13.8px); font-size: 14px; }      /* baseline just above the signature line */
+.gc-gallery .gc-sig.typed { top: calc(var(--ly, 285px) - 26.6px); font-size: 32px; }
+
+/* strip card (Welcome Aboard: your card lands here with the previous three) */
+.gc-strip { width: 507px; height: 274px; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); }
+.gc-strip .gc-paper { left: 12px; top: 8px; width: 436px; height: 257px; }
+.gc-strip .gc-sig { left: 25px; top: 294px; font-size: 20px; }
+.gc-strip .gc-sig.typed { top: 284px; font-size: 46px; }
+
+/* ---------- 5 · The create-animation overlay ----------
+   a 1448×1024 stage that sits over sidebar + main; js/guest-anim.js drives it */
+.gb-ov { position: absolute; inset: 0; z-index: 50; pointer-events: none; overflow: hidden; }
+.gb-ov-stage { position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; transform-origin: 0 0; transform: translate(var(--ov-x, 0px), var(--ov-y, 0px)) scale(var(--ov-s, 1)); }
+.ov-strip { position: absolute; inset: 0; will-change: transform; }
+.gb-trail { position: absolute; left: 0; top: 0; overflow: visible; }
+.gb-trail path { fill: none; stroke: var(--trail); stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; }
+.gb-trail-o path { stroke: #ff9a00; stroke-width: 10; }
+.ov-title { position: absolute; left: 742.5px; top: 54px; transform: translate(-50%, -50%); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; }
+.ov-sub { position: absolute; left: 723.5px; top: 120px; transform: translate(-50%, -50%); font-size: 24px; line-height: 1.18; color: #000; white-space: nowrap; }
+.ov-thanks { position: absolute; left: 167px; top: 487px; transform: translateY(-50%); font-size: 128px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; opacity: 0; outline: none; }
+
+/* ---------- 6 · Leaving + veil ---------- */
+.gb-leaving .gb-ctl { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+/* Create pressed: the decorations slide off with the page */
+.gb-leaving .dc { translate: calc(var(--ex, 0) * 900px) calc(var(--ey, 0) * 420px); transition: translate 1s cubic-bezier(0.55, 0, 0.85, 0.4); }
+/* the cream veil that covers the screen just before the main website opens */
+.gb-veil { position: fixed; inset: 0; z-index: 100; background: var(--cream); opacity: 0; pointer-events: none; }
