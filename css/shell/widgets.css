@@ -66,7 +66,7 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
 /* ---------- 5 · Highlighter — a yellow-ochre zig-zag marker that draws itself behind a word (js/highlight.js) ----------
    Mark a word with <span class="hl">. The stroke is drawn on from its start by animating the dash, the words on a page take turns (--hl-delay). */
 .hl { position: relative; display: inline-block; z-index: 0; white-space: nowrap; }
-.hl-svg { position: absolute; z-index: -1; overflow: visible; pointer-events: none; opacity: 0.7; }   /* 30% see-through; set on the whole stroke, so overlapping passes don't get darker */
+.hl-svg { position: absolute; z-index: -1; overflow: visible; pointer-events: none; opacity: 0.5; }   /* 50% see-through (lighter, so small text stays easy to read); set on the whole stroke, so overlapping passes don't get darker */
 .hl-svg path { fill: none; stroke: var(--highlight); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 1; }
 .hl.on .hl-svg path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s cubic-bezier(0.45, 0, 0.25, 1) var(--hl-delay, 0.55s); }
 .hl.instant .hl-svg path { transition: none; }
