@@ -48,7 +48,7 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
 
 /* the nudge from the M.I.K.U tab (js/shell.js, initNudge): a small pill under the tab, with a tail pointing up at it. Figma "Ask me questions": 162x43, 13px Inter Medium #f5e9e2 */
 .lm-nudge {
-  position: absolute; left: 182px; top: 66px; z-index: 5; width: 162px; height: 43px; padding-top: 8px;                  /* the top 8px is the tail */
+  position: absolute; left: 150px; top: 42px; z-index: 5; width: 162px; height: 43px; padding-top: 8px;                  /* the top 8px is the tail */
   display: flex; align-items: center; justify-content: center; text-align: center; pointer-events: none;
   font: 500 13px/1 var(--font-ui); color: var(--pill); white-space: nowrap;
   opacity: 0; transform: translateY(-6px); transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
@@ -58,7 +58,7 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
   background: var(--maroon); border: 2px solid var(--maroon-edge); box-shadow: 0 6px 16px rgba(25, 5, 35, 0.28);
 }
 .lm-nudge::after {                                                                                           /* the tail, under the middle of the M.I.K.U tab (x 272) */
-  content: ''; position: absolute; left: 82px; top: 0; width: 16px; height: 9px; background: var(--maroon); clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  content: ''; position: absolute; left: 114px; top: 0; width: 16px; height: 9px; background: var(--maroon); clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 .lm-nudge.on { opacity: 1; transform: none; }
 
