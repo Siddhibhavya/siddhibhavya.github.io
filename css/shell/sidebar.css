@@ -41,8 +41,8 @@
 /* label positions are the Figma coordinates minus the tab origin */
 .sb-tab[data-tab='index'] span { left: 50px; top: 12px; color: #000; }
 .sb-tab[data-tab='lm'] span { left: 32px; top: 12px; color: #fff; }
-/* while MikuPedia is NOT the open tab its label sits 10px further left (it slides across when the tab opens) */
-.sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 22px; }
+/* while MikuPedia is NOT the open tab its label sits 15px further left (it slides across when the tab opens) */
+.sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 17px; }
 /* same baseline in both states — only the colours swap */
 .sidebar[data-tab='lm'] .sb-tab[data-tab='index'] span { color: var(--cream); }
 .sidebar[data-tab='lm'] .sb-tab[data-tab='lm'] span { color: var(--ink); }
