@@ -174,7 +174,7 @@
     <div class="lm-thread" aria-live="polite">
       <div class="lm-intro"><div class="lm-intro-in">
         <p class="lm-greet">Hey there!<br>This is M.I.K.U</p>
-        <p class="lm-info">M.I.K.U is a chatbot created by Siddhi, named after her cat, Miku. I, M.I.K.U, will answer anything about Siddhi. (Well, Siddhi answers them — I am just a cat.)</p>
+        <p class="lm-info">M.I.K.U is a chatbot created by Siddhi, named after her cat, Miku. I, M.I.K.U, will answer anything about Siddhi. (Well, Siddhi answers them. I am just a cat.)</p>
       </div></div>
       <div class="lm-suggest">
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What is M.I.K.U?</span></button>
@@ -392,7 +392,7 @@
       const typing = document.createElement('div');
       typing.className = 'msg bot typing'; typing.innerHTML = '<i></i><i></i><i></i>';
       thread.appendChild(typing); toBottom();
-      const brain = window.SiddhiLM ? window.SiddhiLM.reply(text, log.slice(-8)) : { text: 'My chat brain did not load — try reloading the page, or write to me through the Email link.' };
+      const brain = window.SiddhiLM ? window.SiddhiLM.reply(text, log.slice(-8)) : { text: 'My chat brain did not load. Try reloading the page, or write to me through the Email link.' };
       Promise.resolve(brain).then((r) => {
         setTimeout(() => {
           typing.remove();
