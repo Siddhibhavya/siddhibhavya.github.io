@@ -1,4 +1,4 @@
-/* Shared shell: builds the sidebar (Index / MikuPedia) and footer, scales the design to the window, and runs the small-screen drawer,
+/* Shared shell: builds the sidebar (Index / M.I.K.U) and footer, scales the design to the window, and runs the small-screen drawer,
    the in-place page navigation, the email pop-up and the "View case study" cursor.
    Pages opt in with <body data-page="…" data-root="…">. data-shell="none" skips it (landing). Needs js/config.js (window.SITE) first.
 
@@ -147,7 +147,7 @@
 
   <div role="tablist" aria-label="Sidebar">
     <button class="sb-tab" role="tab" data-tab="index" id="tab-index" aria-controls="pane-index"><span>INDEX</span></button>
-    <button class="sb-tab" role="tab" data-tab="lm" id="tab-lm" aria-controls="pane-lm"><span>MIKUPEDIA</span></button>
+    <button class="sb-tab" role="tab" data-tab="lm" id="tab-lm" aria-controls="pane-lm"><span>M.I.K.U</span></button>
   </div>
 
   <section class="pane pane-index" id="pane-index" role="tabpanel" aria-labelledby="tab-index">
@@ -172,9 +172,10 @@
     <button type="button" class="lm-clear">Clear chat</button>
     <div class="lm-nav"><div class="lm-nav-grid">${quick}</div></div>
     <div class="lm-thread" aria-live="polite">
-      <p class="lm-greet">Hey there!<br>This is MikuPedia.</p>
+      <p class="lm-greet">Hey there!<br>This is M.I.K.U</p>
+      <p class="lm-info">M.I.K.U is a chatbot created by Siddhi, named after her cat, Miku. I, M.I.K.U, will answer anything about Siddhi. (Well, Siddhi answers them — I am just a cat.)</p>
       <div class="lm-suggest">
-        <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What’s your favorite project?</span></button>
+        <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What is M.I.K.U?</span></button>
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>Tell me about your side projects?</span></button>
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What does your design process look like?</span></button>
       </div>
@@ -499,7 +500,7 @@
     window.addEventListener('scroll', place, { passive: true });
   }
 
-  /* Small screens: the side column is replaced by a star "Index" button that brings the Index / MikuPedia card out over the page */
+  /* Small screens: the side column is replaced by a star "Index" button that brings the Index / M.I.K.U card out over the page */
   function initDrawer(sidebar) {
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'sb-toggle'; btn.setAttribute('aria-controls', 'sidebar'); btn.setAttribute('aria-expanded', 'false');
@@ -509,7 +510,7 @@
       '<svg class="ic ic-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' +
       '<svg class="ic ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
     const note = document.createElement('div');                       // the little label that slides out of the corner now and then
-    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & MikuPedia';
+    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & M.I.K.U';
     const scrim = document.createElement('div');
     scrim.className = 'sb-scrim';
     document.body.append(scrim, btn, note);
@@ -631,7 +632,7 @@
     const drawer = sb ? guard('drawer', () => initDrawer(sidebar)) : null;
     guard('case-study cursor', initCaseCursor);
 
-    // "MikuPedia" links (footer, quick links): open the chat tab — or, with no sidebar on this page, open it on the home page
+    // "M.I.K.U" links (footer, quick links): open the chat tab — or, with no sidebar on this page, open it on the home page
     document.querySelectorAll('[data-action="lm"]').forEach((a) => a.addEventListener('click', (e) => {
       e.preventDefault();
       if (sb) { if (drawer && body.classList.contains('compact')) drawer.open(); else window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); sb.setTab('lm'); }

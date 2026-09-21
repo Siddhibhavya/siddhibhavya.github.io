@@ -1,5 +1,5 @@
 /* ==================================================================
-   SHELL · MIKUPEDIA — the chat pane of the sidebar (js/shell.js builds it, js/chat.js answers).
+   SHELL · M.I.K.U — the chat pane of the sidebar (js/shell.js builds it, js/chat.js answers).
    Contents: 1 Header + quick links · 2 Thread · 3 Suggestions · 4 Messages · 5 Input
 ================================================================== */
 
@@ -39,6 +39,9 @@
 .lm-thread::-webkit-scrollbar-thumb { background: rgba(127, 64, 78, 0.5); border-radius: 3px; }
 .lm-thread::-webkit-scrollbar-thumb:hover { background: var(--maroon); }
 .lm-greet { font-family: var(--font-serif); font-weight: 500; font-size: 27px; line-height: 1.18; color: var(--plum); margin-bottom: 16px; flex: none; }
+
+/* the short introduction under the greeting */
+.lm-info { font-size: 15px; line-height: 1.4; color: var(--brown); margin: -4px 0 16px; flex: none; }
 
 /* ---------- 3 · Suggestions ---------- */
 .lm-suggest { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin: 0 0 60px 4px; flex: none; }

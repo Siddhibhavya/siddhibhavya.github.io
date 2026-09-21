@@ -1,5 +1,5 @@
 /* ==================================================================
-   SHELL · SIDEBAR — the Index / MikuPedia card (js/shell.js builds the markup).
+   SHELL · SIDEBAR — the Index / M.I.K.U card (js/shell.js builds the markup).
    Contents: 1 Frame · 2 Cream panel + folder tab · 3 Panes · 4 Index pane · 5 Explore nav · 6 Connect links · 7 Leaving
    The 356px-wide design canvas is scaled by --sb-s. Small screens turn it into a drawer: see compact.css.
 ================================================================== */
@@ -41,7 +41,7 @@
 /* label positions are the Figma coordinates minus the tab origin */
 .sb-tab[data-tab='index'] span { left: 50px; top: 12px; color: #000; }
 .sb-tab[data-tab='lm'] span { left: 32px; top: 12px; color: #fff; }
-/* while MikuPedia is NOT the open tab its label sits 15px further left (it slides across when the tab opens) */
+/* while M.I.K.U is NOT the open tab its label sits 15px further left (it slides across when the tab opens) */
 .sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 17px; }
 /* same baseline in both states — only the colours swap */
 .sidebar[data-tab='lm'] .sb-tab[data-tab='index'] span { color: var(--cream); }
