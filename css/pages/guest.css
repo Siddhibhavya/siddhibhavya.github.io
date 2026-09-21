@@ -121,12 +121,19 @@ body.book-phone .dc { scale: 0.55; }
 .gb-ov { position: absolute; inset: 0; z-index: 50; pointer-events: none; overflow: hidden; }
 .gb-ov-stage { will-change: transform; position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; transform-origin: 0 0; transform: translate(var(--ov-x, 0px), var(--ov-y, 0px)) scale(var(--ov-s, 1)); }
 .ov-strip { position: absolute; inset: 0; will-change: transform; }
+.ov-strip .gc { will-change: transform; transform-origin: center; }
+.ov-strip .gc-paper { backface-visibility: hidden; }
 .gb-trail { position: absolute; left: 0; top: 0; overflow: visible; }
 .gb-trail path { fill: none; stroke: var(--trail); stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; }
 .gb-trail-o path { stroke: #ff9a00; stroke-width: 10; }
 .ov-title { position: absolute; left: 742.5px; top: 54px; transform: translate(-50%, -50%); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; }
 .ov-sub { position: absolute; left: 723.5px; top: 120px; transform: translate(-50%, -50%); font-size: 24px; line-height: 1.18; color: rgba(0, 0, 0, 0.8); white-space: nowrap; }
 .ov-thanks { position: absolute; left: 167px; top: 487px; transform: translateY(-50%); font-size: 128px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; opacity: 0; outline: none; }
+.ov-reveal { display: block; clip-path: inset(0 100% 0 0); padding: 10px 12px 0.08em; margin: -10px -12px -0.08em; }
+.ov-reveal > span { display: block; transform: translateX(-28px); will-change: transform; }
+.ov-char { display: inline-block; will-change: transform; }
+body.gb-playing { overflow: hidden; }
+body.gb-playing > .footer { display: none; }
 
 /* ---------- 6 · Leaving ---------- */
 /* the main page, waiting invisibly below the screen to slide up together with the Thank You screen (js/guest.js, preloadHome / goHome) */
