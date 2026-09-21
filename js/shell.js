@@ -323,6 +323,26 @@
     const persist = () => store.set('siddhi.chat', JSON.stringify(log.slice(-40)));
     const toBottom = () => { thread.scrollTop = thread.scrollHeight; };
 
+    /* A silent looping clip in a polaroid-style frame (the same look as the skateboarding clip on the About page). It plays while it is on screen and pauses when it
+       scrolls away, and a tap pauses / plays it. With "reduce motion" it does not autoplay: it shows the picture and the player's own controls instead. */
+    function videoFrame(im, src) {
+      const fig = document.createElement('figure');
+      fig.className = 'msg-video';
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata'; v.src = src;
+      if (im.poster) v.poster = /^(https?:|data:)/.test(im.poster) ? im.poster : R + im.poster;
+      v.setAttribute('aria-label', (im.alt || 'Video') + ' (silent video)');
+      fig.appendChild(v);
+      if (im.alt) { const cap = document.createElement('figcaption'); cap.textContent = im.alt; fig.appendChild(cap); }
+      if (reduce) v.controls = true;
+      else {
+        const play = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+        new IntersectionObserver(([e]) => { if (e.isIntersecting) play(); else v.pause(); }, { threshold: 0.4 }).observe(v);
+        v.addEventListener('click', () => { if (v.paused) play(); else v.pause(); });
+      }
+      return fig;
+    }
+
     function bubble(m, animate) {
       const el = document.createElement('div');
       el.className = 'msg ' + m.role;
@@ -338,6 +358,7 @@
         box.className = 'msg-imgs' + (m.images.length > 1 ? ' multi' : '');
         m.images.forEach((im) => {
           const src = /^(https?:|data:)/.test(im.src) ? im.src : R + im.src;
+          if (/[.](mp4|webm|mov)([?#]|$)/i.test(im.src)) { box.appendChild(videoFrame(im, src)); return; }   // a video in the bank is shown in a framed player, like the clip on the About page
           const a = document.createElement('a'), img = document.createElement('img');
           a.href = src; a.target = '_blank'; a.rel = 'noopener'; a.title = im.alt || 'Open the picture';
           img.src = src; img.alt = im.alt || ''; img.loading = 'lazy'; img.decoding = 'async';

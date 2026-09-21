@@ -79,6 +79,10 @@
 .msg-imgs a { display: block; overflow: hidden; border-radius: 10px; border: 2px solid rgba(127, 64, 78, 0.28); background: rgba(127, 64, 78, 0.06); }
 .msg-imgs img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: contain; }
 .msg-imgs.multi img { max-height: 200px; object-fit: cover; }
+/* a video answer: a silent looping clip in a polaroid frame, tilted a little, like the skateboarding clip on the About page */
+.msg-video { margin: 4px auto 6px; padding: 8px 8px 6px; width: 78%; max-width: 250px; background: var(--pill); border: 5px solid var(--maroon-edge); border-radius: 14px; box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.22); transform: rotate(-2deg); }
+.msg-video video { display: block; width: 100%; aspect-ratio: 283 / 382; object-fit: cover; border-radius: 8px; background: #d9d9d9; cursor: pointer; }
+.msg-video figcaption { padding-top: 6px; font-size: 14px; line-height: 1.2; text-align: center; color: rgba(14, 3, 20, 0.8); }
 .msg-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .msg-actions a, .msg-actions button {
   font-size: 17px; font-weight: 500; padding: 4px 14px; border-radius: 22px;
