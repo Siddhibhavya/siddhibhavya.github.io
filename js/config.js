@@ -1,4 +1,4 @@
-/* Site content + links. Everything the chat bot ("Siddhi LM") knows comes from here,
+/* Site content + links. Everything the chat bot ("MikuPedia") knows comes from here,
    so keep it factual — the bot never invents anything beyond these fields. */
 window.SITE = {
   name: 'Siddhi Bhavya',
@@ -12,12 +12,12 @@ window.SITE = {
     resume: 'assets/resume/resume.pdf'          // TODO: drop the PDF at this path
   },
 
-  // Sidebar + footer navigation. `lm` opens the Siddhi LM tab instead of navigating.
+  // Sidebar + footer navigation. `lm` opens the MikuPedia tab instead of navigating.
   nav: [
     { id: 'work',    label: 'My Work',       href: 'home.html' },
     { id: 'about',   label: 'About Me',      href: 'about.html' },
     { id: 'quests',  label: 'Side Quests',   href: 'side-quests.html' },
-    { id: 'lm',      label: 'Siddhi LM',     action: 'lm' },
+    { id: 'lm',      label: 'MikuPedia',     action: 'lm' },
     { id: 'gallery', label: 'Guest Gallery', href: 'guest-gallery.html' }
   ],
 

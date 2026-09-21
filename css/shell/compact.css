@@ -1,6 +1,6 @@
 /* ==================================================================
    SHELL · COMPACT — small screens (< 900px wide, set by js/shell.js as body.compact).
-   No side column: a star "INDEX" button brings the Index / Siddhi LM card out as a drawer over the page (scrim behind it).
+   No side column: a star "INDEX" button brings the Index / MikuPedia card out as a drawer over the page (scrim behind it).
    On phones the card is a shorter design (760 tall: small avatar beside the name, no bio).
    These rules come after sidebar.css and win by the extra .compact class — keep the load order in css/site.css.
 ================================================================== */

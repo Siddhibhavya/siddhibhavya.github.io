@@ -1,0 +1,5 @@
+/* ==================================================================
+   404 STYLESHEET — linked only by 404.html (GitHub Pages shows that file for any address that isn't a page).
+================================================================== */
+@import url("base.css");
+@import url("pages/notfound.css");
