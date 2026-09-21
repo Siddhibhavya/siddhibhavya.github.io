@@ -40,6 +40,17 @@
 .lm-thread::-webkit-scrollbar-thumb:hover { background: var(--maroon); }
 .lm-greet { font-family: var(--font-serif); font-weight: 500; font-size: 27px; line-height: 1.18; color: var(--plum); margin-bottom: 16px; flex: none; }
 
+/* the greeting + introduction: they slide up 24px and fade while the visitor types, and their height closes at the same time (a grid row going 1fr -> 0fr),
+   so what is under them glides instead of jumping. They return if the box is emptied; once a message is sent (.has-chat) they stay away until "Clear chat". */
+.lm-intro { display: grid; grid-template-rows: 1fr; flex: none; transition: grid-template-rows 0.4s var(--ease-out), margin-bottom 0.4s var(--ease-out); }
+.lm-intro-in { min-height: 0; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s var(--ease-out); }
+.lm-thread.is-typing .lm-intro, .lm-thread.has-chat .lm-intro { grid-template-rows: 0fr; margin-bottom: -10px; }     /* -10px: the thread's gap under it closes too */
+.lm-thread.is-typing .lm-intro-in, .lm-thread.has-chat .lm-intro-in { opacity: 0; transform: translateY(-24px); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lm-intro, .lm-intro-in { transition: none; }
+  .lm-thread.is-typing .lm-intro-in, .lm-thread.has-chat .lm-intro-in { transform: none; }                             /* just hidden and shown: no slide */
+}
+
 /* the short introduction under the greeting */
 .lm-info { font-size: 15px; line-height: 1.4; color: var(--brown); margin: -4px 0 16px; flex: none; }
 
