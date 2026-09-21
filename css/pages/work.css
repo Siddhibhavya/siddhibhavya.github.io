@@ -62,15 +62,6 @@
 .meta .row b { flex: none; width: 173px; padding-left: 18px; font-weight: 500; }
 .meta .row span { flex: 1; }
 
-/* on a touch screen there is no hover, so no "View case study" cursor: each card wears the same pill in its own colour (--cs), top right over the picture */
-@media (hover: none) {
-  .card::after {
-    content: 'Tap to view case study'; position: absolute; right: 16px; top: 16px; z-index: 2; padding: 11px 20px; border-radius: 32px;
-    background: var(--cs, var(--maroon)); color: #fff; font-size: 17px; line-height: 1.2; white-space: nowrap; box-shadow: 0 6px 16px rgba(25, 5, 35, 0.25); pointer-events: none;
-  }
-  body.cs-on .card::after { display: none; }                      /* a mouse is attached and over a card: the cursor pill does this job */
-}
-
 /* ---------- 4 · Page ----------
    hovering a lower card grows the beige area (and moves the footer down) so the card never slides under the footer */
 .home-wrap { --sh: 1024px; transition: height 0.55s var(--ease-out); }
