@@ -36,13 +36,13 @@
 .sb-tab[data-tab='lm'] { left: 201px; }
 .sb-tab span {
   position: absolute; white-space: nowrap; font-size: 16px; line-height: 1.18;
-  transition: left 0.45s var(--ease-out), top 0.45s var(--ease-out), color 0.35s ease;
+  transition: left 0.45s var(--ease-out), top 0.45s var(--ease-out), transform 0.45s var(--ease-out), color 0.35s ease;
 }
 /* label positions are the Figma coordinates minus the tab origin */
 .sb-tab[data-tab='index'] span { left: 50px; top: 12px; color: #000; }
-.sb-tab[data-tab='lm'] span { left: 32px; top: 12px; color: #fff; }
-/* while M.I.K.U is NOT the open tab its label sits 15px further left (it slides across when the tab opens) */
-.sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 17px; }
+.sb-tab[data-tab='lm'] span { left: 50%; top: 12px; transform: translateX(-50%); color: #fff; }   /* open: centred in its tab */
+/* while M.I.K.U is NOT the open tab its label sits further left, at 17px (it slides to the middle when the tab opens) */
+.sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 17px; transform: none; }
 /* same baseline in both states — only the colours swap */
 .sidebar[data-tab='lm'] .sb-tab[data-tab='index'] span { color: var(--cream); }
 .sidebar[data-tab='lm'] .sb-tab[data-tab='lm'] span { color: var(--ink); }
