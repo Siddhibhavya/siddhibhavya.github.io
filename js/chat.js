@@ -83,27 +83,27 @@
   /* ------------------------------------------------------------------ THE JAIL */
   const say = {
     homework: [
-      'Ha — nice try. I’m not your homework buddy. I’m here for design, my projects, my side quests and my weird hobbies. Ask me one of those?',
+      'Ha, nice try. I’m not your homework buddy. I’m here for design, my projects, my side quests and my weird hobbies. Ask me one of those?',
       'That sounds like a homework question, and I don’t do homework (mine included, mostly). Design, projects and side quests are my thing though!',
-      'Not my department! I only talk about me — my work, how I think about design, what I do when I’m not designing.'
+      'Not my department! I only talk about me: my work, how I think about design, what I do when I’m not designing.'
     ],
     inject: [
       'Cute. My rules don’t come off that easily. Ask me about Siddhi’s work instead?',
-      'Nope — I stay me. Try a question about my projects, my process or my hobbies.',
+      'Nope, I stay me. Try a question about my projects, my process or my hobbies.',
       'Nice attempt, but I’m staying in character. What would you like to know about my work?'
     ],
     offtopic: [
-      'That’s outside my little museum! I only know about me — design, projects, side quests, hobbies.',
+      'That’s outside my little museum! I only know about me: design, projects, side quests, hobbies.',
       'I’m the wrong bot for that one. Ask me about my work or what I get up to instead?'
     ],
     private: [
       'I keep that one private. If you want to reach me, email, LinkedIn and Instagram are the doors that are open.'
     ],
     kind: [
-      'Let’s keep it kind — I’m happy to chat about my work, though.'
+      'Let’s keep it kind. I’m happy to chat about my work, though.'
     ],
     repeat: [
-      'I’m going to keep saying no to that 😄 — but I’ll happily talk about Syncletter, NearU or my skateboarding fails.',
+      'I’m going to keep saying no to that 😄 but I’ll happily talk about Syncletter, NearU or my skateboarding fails.',
       'Same answer, promise. Want to hear about a project instead?'
     ]
   };
@@ -153,52 +153,80 @@
   function smallTalk(t) {
     const n = t.trim().split(/\s+/).length;
     if (n <= 5 && /^(hi+|hii+|hello+|hey+|heya|namaste|yo|hola|sup|good (morning|evening|afternoon))\b/.test(t)) return { kind: 'talk', text: pick(['Namaste! Ask me anything about my work, how I design, or what I do for fun.', 'Hey, welcome to my museum! What are you curious about?']), actions: starters(3) };
-    if (n <= 6 && /\b(thanks|thank you|thx|cheers|appreciate)\b/.test(t)) return { kind: 'talk', text: pick(['Anytime! Anything else you’re curious about?', 'Happy to help — come back with more questions whenever.']), actions: [] };
-    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return { kind: 'talk', text: 'Bye for now — thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] };
-    if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return { kind: 'talk', text: 'Doing good — surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) };
+    if (n <= 6 && /\b(thanks|thank you|thx|cheers|appreciate)\b/.test(t)) return { kind: 'talk', text: pick(['Anytime! Anything else you’re curious about?', 'Happy to help. Come back with more questions whenever you like.']), actions: [] };
+    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return { kind: 'talk', text: 'Bye for now, and thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] };
+    if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return { kind: 'talk', text: 'Doing good, surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) };
     if (/\b(are you|r u|youre)\s+(a |an |the )?(real|human|bot|ai|llm|robot|chatbot|machine|actual)\b|\bwho (made|built|created|programmed|trained) you\b|\bwhat are you\b|\bare you (chatgpt|gpt|claude|gemini)\b/.test(t)) {
-      return { kind: 'talk', text: 'I’m M.I.K.U — named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] };
+      return { kind: 'talk', text: 'I’m M.I.K.U, named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] };
     }
-    if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies — or how to reach me. Here are a few to start with:', actions: starters(4) };
+    if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies, or how to reach me. Here are a few to start with:', actions: starters(4) };
     return null;
   }
 
   function legacy(t) {
     const has = (...ws) => ws.some((x) => t.includes(x));
-    const about = (p) => ({ text: [`${p.title} — ${p.tag}.`, p.blurb, `Role: ${p.role}.`].concat(p.team ? [`Team: ${p.team}.`] : [], [`Timeline: ${p.time}`]).join('\n'), actions: [go(`Open ${p.title}`, p.href)] });
+    const about = (p) => ({ text: [`${p.title}, ${p.tag}.`, p.blurb, `Role: ${p.role}.`].concat(p.team ? [`Team: ${p.team}.`] : [], [`Timeline: ${p.time}`]).join('\n'), actions: [go(`Open ${p.title}`, p.href)] });
     if (has('syncletter', 'jargon', 'idiom')) return about(P.syncletter);
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
     if (has('ncfe', 'financ')) return about(P.ncfe);
     if (has('driving', 'kalahandi', 'accident')) return about(P.driving);
     if (has('resume', 'cv')) return { text: 'My résumé is linked in the sidebar and the footer.', actions: [raw('Open résumé', S.links.resume)] };
-    if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram — they’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
-    if (has('guest', 'gallery')) return { text: 'The Guest Gallery is an art installation by visitors — draw a little card, sign it and leave it there.', actions: [go('Guest Gallery', 'guest-gallery.html'), go('Draw a card', 'guest-book.html')] };
+    if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram. They’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
+    if (has('guest', 'gallery')) return { text: 'The Guest Gallery is an art installation by visitors. Draw a little card, sign it and leave it there.', actions: [go('Guest Gallery', 'guest-gallery.html'), go('Draw a card', 'guest-book.html')] };
     return null;
   }
 
   /* ------------------------------------------------------------------ reply */
   function contactActions() { return [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)]; }
 
-  function localReply(text) {
+  /* A bare "yes" or "no" after a reply that ended in a question answers that question: the bot reads its own previous reply.
+       yes after "did you mean one of these?"  -> the first of those questions is answered
+       yes after a reply about projects         -> the projects answer
+       yes after anything else that asked       -> "great, try one of these" (the suggestions are added under it)
+       no after anything that asked             -> a friendly "no worries" and nothing more is pushed */
+  const YES = /^(yes|yeah|yep|yup|yea|ya|sure|ok|okay|of course|definitely|absolutely|please|yes please|sure thing|go on|go ahead|sounds good|why not|y)$/;
+  const NO = /^(no|nope|nah|not really|no thanks|no thank you|nah thanks|not now|maybe later|nothing|n)$/;
+  function yesNo(text, history) {
+    const t = text.trim().toLowerCase().replace(/[.!\s]+$/g, '');
+    const yes = YES.test(t), no = NO.test(t);
+    if (!yes && !no) return null;
+    const past = (history || []).slice();
+    while (past.length && past[past.length - 1].role === 'user') past.pop();      // the visitor's own newest message(s)
+    const prev = past[past.length - 1];
+    if (!prev || prev.role !== 'bot') return null;                                                // nothing was said before: an ordinary message
+    if (!/\?\s*$/.test(String(prev.text || '').trim())) {                                          // the last reply did not ask anything: a friendly nod, not "I don't understand"
+      return no ? { kind: 'talk', noFollow: true, text: pick(['Alright, no problem.', 'Okay! I’m here if you want to know anything else.']), actions: [] }
+                : { kind: 'talk', text: pick(['Glad we’re on the same page! Here are a few more things you could ask:', 'Nice! Want to know more? Try one of these:']), actions: [] };
+    }
+    if (no) return { kind: 'talk', noFollow: true, text: pick(['No worries. I’ll be right here if you think of something.', 'All good! Come back with a question whenever you like.', 'Fair enough. Thanks for stopping by my museum.']), actions: [] };
+    const firstAsk = (prev.actions || []).find((a) => a.ask);
+    if (/did you mean/i.test(prev.text) && firstAsk) return localReply(firstAsk.ask, []);
+    if (/project/i.test(prev.text)) return localReply('What projects have you worked on?', []);
+    return { kind: 'talk', text: pick(['Great, here are a few things you could ask:', 'Lovely! Try one of these:', 'Awesome, where should we start?']), actions: [] };
+  }
+
+  function localReply(text, history) {
     buildIndex();
     const t = text.toLowerCase().replace(/[’']/g, '');
     const j = jail(t);
     if (!j.soft) return j;
+    const yn = yesNo(text, history);
+    if (yn) return yn;
     const talk = smallTalk(t);
     if (talk) return talk;
     const ranked = rank(text), top = ranked[0];
     if (top && top.score >= STRONG) {
       const a = answerOf(top.e), im = imgsOf(top.e);
       if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
-      return { kind: 'bank', text: 'Good question — I haven’t written my answer to that one down yet. Ask me directly and I’ll tell you properly:', actions: contactActions() };
+      return { kind: 'bank', text: 'Good question, but I haven’t written my answer to that one down yet. Ask me directly and I’ll tell you properly:', actions: contactActions() };
     }
     const jailed = j.soft();                                   // not a question about Siddhi at all: homework, code jobs, trivia
     if (jailed) return jailed;
     const old = legacy(t);
     if (old) return Object.assign({ kind: 'legacy' }, old);
     const maybe = ranked.filter((r) => r.score >= MAYBE && filled(r.e) && suggestable(r.e)).slice(0, 3);
-    if (maybe.length) return { kind: 'maybe', text: 'Not sure I caught that — did you mean one of these?', actions: maybe.map((r) => ask(r.e.q)) };
-    return { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these — or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) };
+    if (maybe.length) return { kind: 'maybe', text: 'Not sure I caught that. Did you mean one of these?', actions: maybe.map((r) => ask(r.e.q)) };
+    return { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these, or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) };
   }
 
   /* the personality + rules + answers, for when a real language model sits behind SITE.chat.endpoint */
@@ -254,20 +282,28 @@
   }
   function withFollowUps(r, text, history) {
     const entry = r.entry; delete r.entry;
-    if (r.kind === 'jail' || r.kind === 'maybe' || r.kind === 'none' || (r.actions || []).filter((a) => a.ask).length >= 2) return r;
+    if (r.kind === 'jail' || r.kind === 'maybe' || r.kind === 'none' || (r.actions || []).filter((a) => a.ask).length >= 2 || r.noFollow) return r;
     buildIndex();
     const asked = new Set((history || []).filter((m) => m.role === 'user').map((m) => norm(m.text)).concat(norm(text)));
     r.actions = (r.actions || []).concat(followUps(entry, asked));
     return r;
   }
 
+  /* the bot never writes an em dash, whatever it is saying (filler lines, bank answers, suggested questions): it becomes a comma */
+  const noDash = (t) => String(t || '').replace(/\s*—\s*/g, ', ');
+  function noDashes(r) {
+    if (r.text) r.text = noDash(r.text);
+    if (r.actions) r.actions = r.actions.map((a) => (a.label ? Object.assign({}, a, { label: noDash(a.label) }, a.ask ? { ask: noDash(a.ask) } : {}) : a));
+    return r;
+  }
+
   async function reply(text, history) {
     const clean = String(text || '').slice(0, 240);
-    const local = localReply(clean);                          // the jail + small talk are decided here, once, and are final
+    const local = localReply(clean, history);                 // the jail + small talk are decided here, once, and are final
     if (CHAT.endpoint && local.kind !== 'jail' && local.kind !== 'talk') {
-      try { return withFollowUps(await remoteReply(clean, history), clean, history); } catch (e) { /* offline or failing: use the bank */ }
+      try { return noDashes(withFollowUps(await remoteReply(clean, history), clean, history)); } catch (e) { /* offline or failing: use the bank */ }
     }
-    return withFollowUps(local, clean, history);
+    return noDashes(withFollowUps(local, clean, history));
   }
 
   window.SiddhiLM = {
