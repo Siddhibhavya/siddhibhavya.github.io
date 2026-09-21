@@ -298,7 +298,7 @@
     sidebar.querySelector('.lm-form').addEventListener('submit', markUsed);
 
     const pill = document.createElement('div');
-    pill.className = 'lm-nudge'; pill.setAttribute('role', 'status'); pill.innerHTML = '<i aria-hidden="true"></i>Ask me questions! :3';
+    pill.className = 'lm-nudge'; pill.setAttribute('role', 'status'); pill.innerHTML = '<span>Ask me questions! :3</span>';
     sidebar.querySelector('.sb-inner').appendChild(pill);                 // inside the scaled card, so it stays lined up with the tab
     const canShow = () => !document.hidden && sidebar.dataset.tab === 'index' && (!body.classList.contains('compact') || body.classList.contains('sb-open'));
     const timer = setInterval(() => {

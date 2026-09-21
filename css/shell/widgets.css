@@ -46,21 +46,19 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
 @keyframes hint-in { from { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.9); } }
 @keyframes hint-out { to { opacity: 0; } }                                        /* a plain fade: it stays where it is */
 
-/* the nudge from the M.I.K.U tab (js/shell.js, initNudge): a small pill under the tab, with a tail pointing up at it, in the same colour as the Index card and its Explore box
-   (--sidebar) with a beige (--cream) outline. Figma "Ask me questions": 162x43, 13px Inter Medium #f5e9e2 */
+/* the nudge from the M.I.K.U tab (js/shell.js, initNudge). Straight from the Figma frame "Ask me questions" (162 x 43): the speech bubble is its exported "Union" picture
+   (assets/ui/nudge-bubble.svg — the Explore box maroon, a beige outline, a tail up towards the tab), with the text centred at (78.5, 28): 13px Inter Medium #f5e9e2.
+   Placed where the frame sits over the Index card in Figma: 75px from the card's left, 50px from its top. */
 .lm-nudge {
-  position: absolute; left: 120px; top: 42px; z-index: 5; width: 162px; height: 43px; padding-top: 8px;                  /* the top 8px is the tail */
-  display: flex; align-items: center; justify-content: center; text-align: center; pointer-events: none;
-  font: 500 13px/1 var(--font-ui); color: var(--pill); white-space: nowrap;
+  position: absolute; left: 75px; top: 50px; z-index: 5; width: 162.068px; height: 42.842px; pointer-events: none;
+  background: url(../../assets/ui/nudge-bubble.svg) -0.5px -1.54px / 163.47px 44.88px no-repeat;
+  filter: drop-shadow(0 4px 6px rgba(25, 5, 35, 0.25));
   opacity: 0; transform: translateY(-6px); transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
 }
-.lm-nudge::before {                                                                                          /* the pill body */
-  content: ''; position: absolute; left: 0; right: 0; top: 8px; bottom: 0; z-index: -1; border-radius: 22px;
-  background: var(--sidebar); border: 2px solid var(--cream); box-shadow: 0 6px 16px rgba(25, 5, 35, 0.28);
+.lm-nudge span {
+  position: absolute; left: 8px; top: 15px; width: 141px; height: 26px; line-height: 26px; text-align: center; white-space: nowrap;
+  font: 500 13px/26px var(--font-ui); color: var(--pill);
 }
-/* the tail = a beige triangle (the <i>) with a smaller one in the pill colour (::after) on top of it, so the outline runs round it and breaks where it joins the body */
-.lm-nudge i { position: absolute; left: 142px; top: -1px; width: 20px; height: 11px; background: var(--cream); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-.lm-nudge::after { content: ''; position: absolute; left: 145px; top: 2px; width: 14px; height: 8px; background: var(--sidebar); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 .lm-nudge.on { opacity: 1; transform: none; }
 
 /* ---------- 4 · Resume pill — top-right corner of every main-site page (js/shell.js) ---------- */
