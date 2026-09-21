@@ -108,9 +108,9 @@
       if (!document.querySelector('.dc.drag')) return;                 // already navigated away
       const pill = document.createElement('div');
       pill.className = 'move-hint'; pill.setAttribute('role', 'status');
-      pill.innerHTML = '<svg viewBox="0 0 26.43 24.6" width="18" height="17" aria-hidden="true"><path fill="currentColor" d="M13.2138 0L13.7383 2.4682C14.7637 7.29346 18.6375 10.9996 23.5034 11.8106L26.4276 12.298L22.4183 13.348C18.1231 14.473 14.8 17.8777 13.7797 22.199L13.2138 24.596L12.5773 22.0499C11.5172 17.8095 8.2352 14.4808 4.01012 13.3609L0 12.298L2.91569 11.8062C7.72009 10.9958 11.5576 7.3609 12.6271 2.60748L13.2138 0Z"/></svg><span>You can move some elements</span>';
+      pill.textContent = 'You can move some elements';
       document.body.appendChild(pill);
-      setTimeout(() => pill.classList.add('out'), 2700);               // 0.35s in, held, 0.3s out: gone after 3 seconds
+      setTimeout(() => pill.classList.add('out'), 2500);               // 0.35s in, held, then a 0.5s fade out: gone after 3 seconds
       setTimeout(() => pill.remove(), 3000);
     };
     window.addEventListener('scroll', onScroll, { passive: true });

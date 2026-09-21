@@ -42,9 +42,25 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
   font: 500 15px/1.2 var(--font-ui); white-space: nowrap; box-shadow: 0 8px 22px rgba(25, 5, 35, 0.3); pointer-events: none;
   animation: hint-in 0.35s var(--ease-out) both;
 }
-.move-hint.out { animation: hint-out 0.3s ease both; }
+.move-hint.out { animation: hint-out 0.5s ease both; }
 @keyframes hint-in { from { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.9); } }
-@keyframes hint-out { to { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(0.95); } }
+@keyframes hint-out { to { opacity: 0; } }                                        /* a plain fade: it stays where it is */
+
+/* the nudge from the M.I.K.U tab (js/shell.js, initNudge): a small pill under the tab, with a tail pointing up at it. Figma "Ask me questions": 162x43, 13px Inter Medium #f5e9e2 */
+.lm-nudge {
+  position: absolute; left: 182px; top: 66px; z-index: 5; width: 162px; height: 43px; padding-top: 8px;                  /* the top 8px is the tail */
+  display: flex; align-items: center; justify-content: center; text-align: center; pointer-events: none;
+  font: 500 13px/1 var(--font-ui); color: var(--pill); white-space: nowrap;
+  opacity: 0; transform: translateY(-6px); transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
+}
+.lm-nudge::before {                                                                                          /* the pill body, in the brand maroon */
+  content: ''; position: absolute; left: 0; right: 0; top: 8px; bottom: 0; z-index: -1; border-radius: 22px;
+  background: var(--maroon); border: 2px solid var(--maroon-edge); box-shadow: 0 6px 16px rgba(25, 5, 35, 0.28);
+}
+.lm-nudge::after {                                                                                           /* the tail, under the middle of the M.I.K.U tab (x 272) */
+  content: ''; position: absolute; left: 82px; top: 0; width: 16px; height: 9px; background: var(--maroon); clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.lm-nudge.on { opacity: 1; transform: none; }
 
 /* ---------- 4 · Resume pill — top-right corner of every main-site page (js/shell.js) ---------- */
 .resume-pill {

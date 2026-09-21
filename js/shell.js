@@ -285,6 +285,32 @@
     return { setTab, getTab: () => state };
   }
 
+  /* A quiet nudge from the M.I.K.U tab: "Ask me questions! :3", shown for 3 seconds — but only if the visitor has not used M.I.K.U (opened its tab or sent a message)
+     during their first 10 minutes on the site, and only while the Index tab is the open one (so on a phone, while the menu card is open). If it still hasn't been
+     used it comes back every further 10 minutes. The clock is the visitor's whole visit (sessionStorage), not one page, so moving between pages doesn't restart it. */
+  function initNudge(sidebar) {
+    const EVERY = 10 * 60 * 1000, SHOW = 3000;
+    let t0 = Number(store.get('siddhi.t0')) || 0;
+    if (!t0) { t0 = Date.now(); store.set('siddhi.t0', String(t0)); }
+    const used = () => store.get('siddhi.miku-used') === '1' || store.get('siddhi.tab') === 'lm' || (store.get('siddhi.chat') || '[]').length > 2;
+    const markUsed = () => store.set('siddhi.miku-used', '1');
+    new MutationObserver(() => { if (sidebar.dataset.tab === 'lm') markUsed(); }).observe(sidebar, { attributes: true, attributeFilter: ['data-tab'] });
+    sidebar.querySelector('.lm-form').addEventListener('submit', markUsed);
+
+    const pill = document.createElement('div');
+    pill.className = 'lm-nudge'; pill.setAttribute('role', 'status'); pill.textContent = 'Ask me questions! :3';
+    sidebar.querySelector('.sb-inner').appendChild(pill);                 // inside the scaled card, so it stays lined up with the tab
+    const canShow = () => !document.hidden && sidebar.dataset.tab === 'index' && (!body.classList.contains('compact') || body.classList.contains('sb-open'));
+    const timer = setInterval(() => {
+      if (used()) { clearInterval(timer); return; }
+      const shown = Number(store.get('siddhi.nudges')) || 0;
+      if (Date.now() < t0 + EVERY * (shown + 1) || !canShow()) return;
+      store.set('siddhi.nudges', String(shown + 1));
+      pill.classList.add('on');
+      setTimeout(() => pill.classList.remove('on'), SHOW - 400);            // 0.4s in, held, 0.4s out: gone after 3 seconds
+    }, 5000);
+  }
+
   /* ------------------------------------------------------------------ 5 · Chat UI (the answers come from js/chat.js -> SiddhiLM.reply) */
   function initChat(sidebar, setTab) {
     const thread = sidebar.querySelector('.lm-thread');
@@ -539,7 +565,7 @@
       setInterval(() => { if (!body.classList.contains('sb-open') && !document.hidden) btn.classList.toggle('as-menu'); }, 3200);
       const remind = (delay) => setTimeout(() => {
         if (body.classList.contains('compact') && !body.classList.contains('sb-open') && !document.hidden) { note.classList.add('on'); setTimeout(() => note.classList.remove('on'), 2000); }
-        remind(18000 + Math.random() * 14000);                          // then again some 18–32 seconds later
+        remind(10 * 60 * 1000);                                         // then again every 10 minutes
       }, delay);
       remind(600);                                                  // the first time is right as the page opens
     }
@@ -633,6 +659,7 @@
     const sb = sidebar ? guard('tabs', () => initSidebar(sidebar)) : null;
     if (sb) {
       guard('chat', () => initChat(sidebar, sb.setTab));
+      guard('nudge', () => initNudge(sidebar));
       guard('page navigation', () => initRouter(sidebar));
     }
     const drawer = sb ? guard('drawer', () => initDrawer(sidebar)) : null;
