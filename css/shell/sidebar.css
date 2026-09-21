@@ -40,7 +40,7 @@
 }
 /* label positions are the Figma coordinates minus the tab origin */
 .sb-tab[data-tab='index'] span { left: 50px; top: 12px; color: #000; }
-.sb-tab[data-tab='lm'] span { left: 50%; top: 12px; transform: translateX(-50%); color: #fff; }   /* open: centred in its tab */
+.sb-tab[data-tab='lm'] span { left: 50%; top: 12px; transform: translateX(-50%); color: #ffece1; }   /* open: centred in its tab */
 /* while M.I.K.U is NOT the open tab its label sits further left, at 17px (it slides to the middle when the tab opens) */
 .sidebar[data-tab='index'] .sb-tab[data-tab='lm'] span { left: 17px; transform: none; }
 /* same baseline in both states — only the colours swap */

@@ -53,7 +53,7 @@
     if (key === bankKey) return;
     bankKey = key; BANK = B.entries; index = [];
     const df = {};
-    BANK.forEach((e, ei) => [e.q].concat(e.alts || []).forEach((v) => {
+    BANK.forEach((e, ei) => /^talk-(not-written|no-match|jail-.*)$/.test(e.id) ? null : [e.q].concat(e.alts || []).forEach((v) => {
       const toks = [...new Set(tokens(v))];
       index.push({ ei, toks });
       toks.forEach((t) => { df[t] = (df[t] || 0) + 1; });
@@ -132,10 +132,11 @@
 
   function jail(t) {
     let hits = +(store.get('siddhi.jail') || 0);
-    const bump = (kind) => { hits += 1; store.set('siddhi.jail', String(hits)); return { kind: 'jail', text: hits >= 4 && hits % 2 === 0 ? pick(say.repeat) : pick(say[kind]), actions: starters(3) }; };
+    const line = (kind) => { const e = BANK.find((x) => x.id === 'talk-jail-' + kind); return e && filled(e) ? answerOf(e) : pick(say[kind]); };   // the wording is in the bank ("Small talk"); this file's lines are the fallback
+    const bump = (kind) => { hits += 1; store.set('siddhi.jail', String(hits)); return { kind: 'jail', text: hits >= 4 && hits % 2 === 0 ? line('repeat') : line(kind), actions: starters(3) }; };
     if (HARD.some((r) => r.test(t))) return bump('inject');
-    if (RUDE.test(t)) return { kind: 'jail', text: pick(say.kind), actions: starters(2) };
-    if (PRIVATE.test(t)) return { kind: 'jail', text: pick(say.private), actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
+    if (RUDE.test(t)) return { kind: 'jail', text: line('kind'), actions: starters(2) };
+    if (PRIVATE.test(t)) return { kind: 'jail', text: line('private'), actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
     return { soft: () => (HOMEWORK.some((r) => r.test(t)) ? bump('homework') : OFFTOPIC.some((r) => r.test(t)) ? bump('offtopic') : null) };
   }
 
@@ -143,28 +144,40 @@
   /* A few questions are answered if someone TYPES them but are never offered as a suggestion, anywhere (starters, follow-ups, "did you mean…"): private in-jokes.
      A question is kept out if its wording matches SECRET below (or its bank entry has "secret": true). Add a word here to keep another one out. */
   const SECRET = /\bshiv\b/i;
-  const suggestable = (e) => !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
+  const suggestable = (e) => !/^talk-/.test(e.id) && !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
 
   const starters = (n) => {
     const pool = BANK.filter((e) => e.starter && suggestable(e)).map((e) => e.q);
     const base = pool.length ? pool : ['What’s your favorite project?', 'Tell me about your side projects?', 'What does your design process look like?'];
     return base.slice().sort(() => Math.random() - 0.5).slice(0, n).map(ask);
   };
+  /* The everyday replies (hello, thanks, bye, how are you, what can I ask, "are you a bot?", "no answer yet", "I don't understand") live in the question bank too,
+     under "Small talk", so they can be reworded or given pictures in the bank editor. A reply written there wins; the wording in this file is only what is
+     used if that entry is missing or blank. `said(id, fallback)` does the swap and keeps the fallback's own buttons (suggested questions) plus any links added in the bank. */
+  function said(id, fallback) {
+    const e = BANK.find((x) => x.id === id);
+    if (!e || !filled(e)) return fallback;
+    return Object.assign({}, fallback, {
+      text: answerOf(e) || fallback.text,
+      images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '' })),
+      actions: (fallback.actions || []).concat((e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))))
+    });
+  }
   function smallTalk(t) {
     const n = t.trim().split(/\s+/).length;
-    if (n <= 5 && /^(hi+|hii+|hello+|hey+|heya|namaste|yo|hola|sup|good (morning|evening|afternoon))\b/.test(t)) return { kind: 'talk', text: pick(['Namaste! Ask me anything about my work, how I design, or what I do for fun.', 'Hey, welcome to my museum! What are you curious about?']), actions: starters(3) };
-    if (n <= 6 && /\b(thanks|thank you|thx|cheers|appreciate)\b/.test(t)) return { kind: 'talk', text: pick(['Anytime! Anything else you’re curious about?', 'Happy to help. Come back with more questions whenever you like.']), actions: [] };
-    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return { kind: 'talk', text: 'Bye for now, and thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] };
-    if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return { kind: 'talk', text: 'Doing good, surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) };
+    if (n <= 5 && /^(hi+|hii+|hello+|hey+|heya|namaste|yo|hola|sup|good (morning|evening|afternoon))\b/.test(t)) return said('talk-hello', { kind: 'talk', text: pick(['Namaste! Ask me anything about my work, how I design, or what I do for fun.', 'Hey, welcome to my museum! What are you curious about?']), actions: starters(3) });
+    if (n <= 6 && /\b(thanks|thank you|thx|cheers|appreciate)\b/.test(t)) return said('talk-thanks', { kind: 'talk', text: pick(['Anytime! Anything else you’re curious about?', 'Happy to help. Come back with more questions whenever you like.']), actions: [] });
+    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return said('talk-bye', { kind: 'talk', text: 'Bye for now, and thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] });
+    if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return said('talk-how-are-you', { kind: 'talk', text: 'Doing good, surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) });
     if (/\b(are you|r u|youre)\s+(a |an |the )?(real|human|bot|ai|llm|robot|chatbot|machine|actual)\b|\bwho (made|built|created|programmed|trained) you\b|\bwhat are you\b|\bare you (chatgpt|gpt|claude|gemini)\b/.test(t)) {
-      return { kind: 'talk', text: 'I’m M.I.K.U, named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] };
+      return said('talk-are-you-a-bot', { kind: 'talk', text: 'I’m M.I.K.U, named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] });
     }
-    if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies, or how to reach me. Here are a few to start with:', actions: starters(4) };
+    if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return said('talk-what-can-you-do', { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies, or how to reach me. Here are a few to start with:', actions: starters(4) });
     return null;
   }
 
   function legacy(t) {
-    const has = (...ws) => ws.some((x) => t.includes(x));
+    const has = (...ws) => ws.some((x) => (x.length <= 3 ? new RegExp(String.raw`\b${x}\b`).test(t) : t.includes(x)));   // short keywords ('cv') must be whole words
     const about = (p) => ({ text: [`${p.title}, ${p.tag}.`, p.blurb, `Role: ${p.role}.`].concat(p.team ? [`Team: ${p.team}.`] : [], [`Timeline: ${p.time}`]).join('\n'), actions: [go(`Open ${p.title}`, p.href)] });
     if (has('syncletter', 'jargon', 'idiom')) return about(P.syncletter);
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
@@ -218,7 +231,7 @@
     if (top && top.score >= STRONG) {
       const a = answerOf(top.e), im = imgsOf(top.e);
       if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
-      return { kind: 'bank', text: 'Good question, but I haven’t written my answer to that one down yet. Ask me directly and I’ll tell you properly:', actions: contactActions() };
+      return said('talk-not-written', { kind: 'bank', text: 'Good question, but I haven’t written my answer to that one down yet. Ask me directly and I’ll tell you properly:', actions: contactActions() });
     }
     const jailed = j.soft();                                   // not a question about Siddhi at all: homework, code jobs, trivia
     if (jailed) return jailed;
@@ -226,7 +239,7 @@
     if (old) return Object.assign({ kind: 'legacy' }, old);
     const maybe = ranked.filter((r) => r.score >= MAYBE && filled(r.e) && suggestable(r.e)).slice(0, 3);
     if (maybe.length) return { kind: 'maybe', text: 'Not sure I caught that. Did you mean one of these?', actions: maybe.map((r) => ask(r.e.q)) };
-    return { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these, or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) };
+    return said('talk-no-match', { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these, or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) });
   }
 
   /* the personality + rules + answers, for when a real language model sits behind SITE.chat.endpoint */
