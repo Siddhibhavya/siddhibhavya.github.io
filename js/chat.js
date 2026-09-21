@@ -41,7 +41,7 @@
   };
   const stem = (w) => (w.length > 4 ? w.replace(/(ies)$/, 'y').replace(/(ing|ed|es|s)$/, '') : w);
   function tokens(text) {
-    return text.replace(/m\.i\.k\.u/gi, 'miku').toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9é+#\s]/g, ' ').split(/\s+/).filter(Boolean)
+    return text.replace(/\bm\.i\.k\.u\b/gi, 'miku').toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9é+#\s]/g, ' ').split(/\s+/).filter(Boolean)
       .map((w) => SYN[w] || SYN[stem(w)] || stem(w)).filter((w) => w && !STOP.has(w));
   }
 
@@ -140,8 +140,13 @@
   }
 
   /* ------------------------------------------------------------------ small talk + fallbacks */
+  /* A few questions are answered if someone TYPES them but are never offered as a suggestion, anywhere (starters, follow-ups, "did you mean…"): private in-jokes.
+     A question is kept out if its wording matches SECRET below (or its bank entry has "secret": true). Add a word here to keep another one out. */
+  const SECRET = /\bshiv\b/i;
+  const suggestable = (e) => !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
+
   const starters = (n) => {
-    const pool = BANK.filter((e) => e.starter).map((e) => e.q);
+    const pool = BANK.filter((e) => e.starter && suggestable(e)).map((e) => e.q);
     const base = pool.length ? pool : ['What’s your favorite project?', 'Tell me about your side projects?', 'What does your design process look like?'];
     return base.slice().sort(() => Math.random() - 0.5).slice(0, n).map(ask);
   };
@@ -191,7 +196,7 @@
     if (jailed) return jailed;
     const old = legacy(t);
     if (old) return Object.assign({ kind: 'legacy' }, old);
-    const maybe = ranked.filter((r) => r.score >= MAYBE && filled(r.e)).slice(0, 3);
+    const maybe = ranked.filter((r) => r.score >= MAYBE && filled(r.e) && suggestable(r.e)).slice(0, 3);
     if (maybe.length) return { kind: 'maybe', text: 'Not sure I caught that — did you mean one of these?', actions: maybe.map((r) => ask(r.e.q)) };
     return { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these — or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) };
   }
@@ -230,7 +235,7 @@
   const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
   const PRACTICE = ['Design & process', 'Skills & tools'];
   function followUps(entry, asked) {
-    const usable = (x) => filled(x) && x !== entry && !asked.has(norm(x.q));
+    const usable = (x) => filled(x) && suggestable(x) && x !== entry && !asked.has(norm(x.q));
     const shuffled = (list) => list.slice().sort(() => Math.random() - 0.5);
     const pool = BANK.filter(usable), taken = new Set();
     const take = (x) => { if (x && !taken.has(x)) { taken.add(x); return x; } return null; };
