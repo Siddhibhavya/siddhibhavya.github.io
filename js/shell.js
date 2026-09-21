@@ -172,8 +172,10 @@
     <button type="button" class="lm-clear">Clear chat</button>
     <div class="lm-nav"><div class="lm-nav-grid">${quick}</div></div>
     <div class="lm-thread" aria-live="polite">
-      <p class="lm-greet">Hey there!<br>This is M.I.K.U</p>
-      <p class="lm-info">M.I.K.U is a chatbot created by Siddhi, named after her cat, Miku. I, M.I.K.U, will answer anything about Siddhi. (Well, Siddhi answers them — I am just a cat.)</p>
+      <div class="lm-intro"><div class="lm-intro-in">
+        <p class="lm-greet">Hey there!<br>This is M.I.K.U</p>
+        <p class="lm-info">M.I.K.U is a chatbot created by Siddhi, named after her cat, Miku. I, M.I.K.U, will answer anything about Siddhi. (Well, Siddhi answers them — I am just a cat.)</p>
+      </div></div>
       <div class="lm-suggest">
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What is M.I.K.U?</span></button>
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>Tell me about your side projects?</span></button>
@@ -288,8 +290,7 @@
     const thread = sidebar.querySelector('.lm-thread');
     const form = sidebar.querySelector('.lm-form');
     const input = form.querySelector('input');
-    const greet = thread.querySelector('.lm-greet');
-    greet.style.marginTop = 'auto';
+    thread.querySelector('.lm-intro').style.marginTop = 'auto';       // the greeting + intro: sits at the bottom while the thread is short
     let log = [], epoch = 0;
     try { log = JSON.parse(store.get('siddhi.chat') || '[]'); } catch (e) { log = []; }
 
@@ -360,13 +361,18 @@
       });
     }
 
-    form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; send(v); });
-    thread.querySelectorAll('.lm-suggest button').forEach((b) => b.addEventListener('click', () => send(b.querySelector('span').textContent)));
+    // the greeting and intro slide up and away as soon as the visitor starts typing (css/shell/chat.css, .is-typing) and come back if the box is emptied
+    // without sending; once something is sent they stay away (.has-chat) until "Clear chat"
+    const syncTyping = () => thread.classList.toggle('is-typing', input.value.length > 0);
+    input.addEventListener('input', syncTyping);
+    form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; send(v); syncTyping(); });
+    thread.querySelectorAll('.lm-suggest button').forEach((b) => b.addEventListener('click', () => { send(b.querySelector('span').textContent); input.value = ''; syncTyping(); }));
 
     sidebar.querySelector('.lm-clear').addEventListener('click', () => {
       epoch++; log = []; persist();
       thread.querySelectorAll('.msg').forEach((m) => m.remove());
       thread.classList.remove('has-chat'); thread.scrollTop = 0;
+      syncTyping();
       input.focus({ preventScroll: true });
     });
   }
