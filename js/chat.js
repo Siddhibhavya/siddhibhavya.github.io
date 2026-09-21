@@ -159,7 +159,7 @@
     if (!e || !filled(e)) return fallback;
     return Object.assign({}, fallback, {
       text: answerOf(e) || fallback.text,
-      images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '' })),
+      images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '' })),
       actions: (fallback.actions || []).concat((e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))))
     });
   }
@@ -230,7 +230,7 @@
     const ranked = rank(text), top = ranked[0];
     if (top && top.score >= STRONG) {
       const a = answerOf(top.e), im = imgsOf(top.e);
-      if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
+      if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
       return said('talk-not-written', { kind: 'bank', text: 'Good question, but I haven’t written my answer to that one down yet. Ask me directly and I’ll tell you properly:', actions: contactActions() });
     }
     const jailed = j.soft();                                   // not a question about Siddhi at all: homework, code jobs, trivia
