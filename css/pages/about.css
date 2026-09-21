@@ -24,7 +24,7 @@
 body.compact .dc-arc { transform-origin: 50% 100%; transform: scaleY(calc(1 + 64 / (939.38 * var(--stage-s, 1)))); }
 
 /* ---------- 2 · Frames, photos, captions ---------- */
-.frame { background: var(--pill); border: 9px solid var(--maroon); border-radius: 20px; box-shadow: var(--shd) rgba(0, 0, 0, 0.25); }
+.frame { background: var(--pill); border: 9px solid var(--maroon-edge); border-radius: 20px; box-shadow: var(--shd) rgba(0, 0, 0, 0.25); }
 .photo { border-radius: 10px; overflow: hidden; background: #d9d9d9; }
 .photo img, .photo video { width: 100%; height: 100%; object-fit: cover; }
 .cap { display: flex; align-items: center; justify-content: center; font-size: 24px; line-height: 1.18; text-align: center; white-space: nowrap; color: rgba(14, 3, 20, 0.8); }

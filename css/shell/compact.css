@@ -5,8 +5,8 @@
    These rules come after sidebar.css and win by the extra .compact class — keep the load order in css/site.css.
 ================================================================== */
 .sb-toggle, .sb-scrim { display: none; }
-.compact .layout { display: block; }
-.compact .main { min-height: 0; }                       /* no tall empty space under the content */
+.compact .layout { display: flex; flex-direction: column; }
+.compact .main { width: 100%; flex: 1 0 auto; }
 
 /* the card becomes a drawer */
 .compact .sidebar {
@@ -30,7 +30,7 @@
 
 /* a strip at the top of every page (not Welcome Aboard) is kept free for the menu circle (left) and the Resume pill (right), so neither covers a title;
    decor.css shifts the graph paper down by the same amount so it stays lined up with the content */
-body.compact:not([data-fit='screen']) .main { --top-gap: 64px; padding-top: var(--top-gap); }
+body.compact:not([data-fit='screen']) .main { --top-gap: 64px; padding-top: var(--top-gap); min-height: 0; }
 
 /* the dark scrim behind the open drawer */
 .compact .sb-scrim { display: block; position: fixed; inset: 0; z-index: 85; background: rgba(25, 5, 35, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }

@@ -72,7 +72,7 @@
     return ready;
   }
 
-  /* Thank You (and the footer under it) slides up and away while the preloaded main page slides up into place. If the visitor is on a very slow connection
+  /* Thank You slides up and away while the preloaded main page slides up into place. If the visitor is on a very slow connection
      and the main page isn't ready after a moment, it falls back to sliding away alone (and the main page then rises into place when it opens).
      If the card is still being shared it waits for that (at most 4 s) so it is never lost. */
   async function goHome() {
@@ -81,10 +81,11 @@
     const saved = Guest.finishSharing ? Guest.finishSharing() : Promise.resolve();                    // normally already done
     const layout = $('.layout'), footer = $('.footer');
     const loaded = await Promise.race([preloadHome(), new Promise((no) => setTimeout(() => no(false), reduce ? 0 : 1200))]);
-    const D = Math.round(layout.offsetHeight + (footer ? footer.offsetHeight : 0));                    // the whole Thank You page: the screen plus the footer below it
-    const ms = reduce ? 1 : 850, ease = 'cubic-bezier(0.55, 0, 0.35, 1)';
+    const playing = document.body.classList.contains('gb-playing');
+    const D = playing ? window.innerHeight : Math.round(layout.offsetHeight + (footer ? footer.offsetHeight : 0));
+    const ms = reduce ? 1 : 1100, ease = 'cubic-bezier(0.65, 0, 0.35, 1)';
     const slide = (el, from, to) => el.animate([{ transform: 'translateY(' + from + 'px)' }, { transform: 'translateY(' + to + 'px)' }], { duration: ms, easing: ease, fill: 'forwards' }).finished.catch(() => {});
-    const moves = [layout, footer].filter(Boolean).map((el) => slide(el, 0, -D));
+    const moves = (playing ? [layout] : [layout, footer]).filter(Boolean).map((el) => slide(el, 0, -D));
     if (loaded) moves.push(slide(peek.f, D - 1, 0));                                                    // the main page comes up from just below, meeting Thank You's bottom edge
     else try { sessionStorage.setItem('siddhi.enter', '1'); } catch (e) { /* ignore */ }               // no main page ready: it rises into place after it opens instead
     // a tab in the background doesn't run animations, so don't wait for them forever: leave a moment after the slide should have ended
@@ -272,16 +273,16 @@
       const past = (Guest.recent && Guest.recent.length ? Guest.recent.concat(SEEDS) : Store.everyone()).slice(0, 3);   // the previous three, read before adding ours
       Store.add(mine);
       // Share it — but not while the animation is running (shrinking the drawing takes ~80 ms of work, which could nudge a frame). It starts once
-      // the strings have left and only "Thank You" is on screen (7 s in), or earlier if the visitor leaves / the page is about to go home.
+      // the cards and strings have left (4.85 s in), or earlier if the visitor leaves / the page is about to go home.
       // A failure is not shown to the visitor: their own copy is already saved on this browser.
       if (Remote) {
         let sharing = null;
         const startShare = () => sharing || (sharing = Remote.add(mine).catch((err) => console.warn('[gallery] the card was not shared:', err && err.message)));
         Guest.finishSharing = () => Promise.race([startShare(), new Promise((done) => setTimeout(done, 4000))]);   // goHome() waits for this, at most 4 s
-        setTimeout(startShare, 7000);
+        setTimeout(startShare, 4850);
         document.addEventListener('visibilitychange', () => { if (document.hidden) startShare(); });
       }
-      setTimeout(preloadHome, 7200);                                                                    // once the strings have left: get the main page ready underneath, for the slide up
+      setTimeout(preloadHome, 4850);                                                                    // once the strings have left: get the main page ready underneath, for the slide up
       if (typeof Guest.play === 'function') Guest.play(mine, past, card); else goHome();
     });
   }

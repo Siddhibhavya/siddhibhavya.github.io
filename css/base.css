@@ -11,11 +11,11 @@
   --cream: #ffece1;
   --sidebar: rgba(119, 51, 68, 0.93);
   --maroon: #7f404e;
-  --maroon-edge: #a6747b;
+  --maroon-edge: rgba(119, 51, 68, 0.93);
   --pill: #f5e9e2;
   --ink: #0e0314;
   --card: #ffeddb;
-  --card-edge: rgba(127, 64, 78, 0.7);
+  --card-edge: var(--maroon-edge);
   --brown: #7f5744;
   --brown-soft: rgba(53, 35, 26, 0.7);
   --trail: #075e54;

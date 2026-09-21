@@ -51,9 +51,9 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
   position: fixed; right: 16px; top: 7px; z-index: 60; display: flex; align-items: center; gap: 8px; padding: 6px 15px 6px 13px; border-radius: 22px;
   background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--card);
   font: 500 15px/1.2 var(--font-ui); white-space: nowrap; box-shadow: 0 6px 18px rgba(25, 5, 35, 0.28);
-  transition: background-color 0.2s ease, transform 0.25s var(--ease-out);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.25s var(--ease-out);
 }
-.resume-pill:hover { background: #8f4a59; transform: translateY(-1px); }
+.resume-pill:hover { background: var(--card); color: var(--maroon); transform: translateY(-1px); }
 .resume-pill svg { flex: none; }
 /* phones: slimmer, inside the strip that is kept free at the top of the page (shell/compact.css), level with the menu circle */
 .compact .resume-pill { right: 12px; top: 15px; padding: 6px 13px 6px 11px; font-size: 14px; }

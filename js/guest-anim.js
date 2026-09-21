@@ -1,9 +1,7 @@
 /* Welcome Aboard: the "Create" choreography (guest-book.html only). Loaded after js/guest.js, which calls SiddhiGuest.play(mine, past, card).
 
-   ONE unbroken timeline: the strip of cards slides, the strings are fed through it, the Thank You rises — nothing stops between "stages".
-   Then both strings are fed out of the screen to the right while Thank You stays, and the main website opens.
-
-   Contents: 1 Timing · 2 The two strings (Figma paths) · 3 String maths · 4 play() · 5 Exit run-out */
+   Cards flip and shrink, then the cards and two broad strings leave together.
+   Thank You reveals from the left, settles with a small bounce, then slides up into Home. */
 (function () {
   'use strict';
   const G = window.SiddhiGuest;
@@ -11,20 +9,19 @@
   const { $, reduce, cardEl, goHome } = G;
 
   /* ------------------------------------------------------------------ 1 · Timing (ms) — change the feel here */
-  const T = 4700;                    // the whole animation
-  const D = 1440;                    // how long each point of a string lags the head (head-to-tail follow-through)
-  const FLIGHT = 620;                // our card flying from the pad into the strip
-  const HOLD = 5000;                 // Thank You stays this long, counted from fully visible, then the main website opens
-  const SLIDE_MS = 3490, EXIT_K = 9.2;   // the strip travels EXIT_K Figma steps (enough to clear the screen) over SLIDE_MS
-  const EXIT_AT = 400, EXIT_MS = 1750;   // after the animation: when the lines start leaving to the right, and how long they take
+  const T = 6450;                    // two extra seconds for strings/cards, then the text and Home
+  const D = 240;                    // gentle follow-through keeps the reference loops clearly defined
+  const FLIGHT = 1100;               // one complete flip as our card shrinks into the strip
+  const HOLD = 1600;                 // reduced-motion reading time before Home
+  const SLIDE_MS = 4850, EXIT_K = 9.2;   // cards and strings finish together
+  const THANKS_MS = 3000;            // reveal while the strings are still in frame
+  const STRING_MS = 2850;            // original path clock, stretched across SLIDE_MS
   const ORANGE_DELAY = 120;          // the orange line follows a beat behind the green one
   const STEP = [-194, 62];           // the strip's slide per Figma step (state 1 -> 2)
   const SLOTS = [{ x: 86, y: 184 }, { x: 470, y: 538 }, { x: 846, y: 192 }, { x: 1230, y: 546 }];   // Figma slots; the 4th is the third "past" card entering at the edge
   const CARD = { w: 507, h: 274, pl: 12, pt: 8, pw: 436, ph: 257 };
 
-  /* ------------------------------------------------------------------ 2 · The two strings
-     Straight from the Figma frames "Drawing gone", "gone 2" and "gone 3" (absolute frame px): a thick green line (16px) and a thinner
-     orange one (10px). Each is three states of ONE line; `off` is the layer's x/y in the frame. If a line is moved in Figma, paste its new path here. */
+  /* Reference Figma curves, including the portions passing behind the cards. */
   const GREEN = [
     { off: [-72, 171.1595916748047], d: 'M0 670.04931640625C0 670.04931640625 392.9632263183594 303.3006896972656 719.5211791992188 624.5504150390625C1046.0791320800781 945.8001403808594 1325 551.8403472900391 945.29931640625 197.66749572753906C565.5986328125 -156.50535583496094 1318 10.34039306640625 1305 343.84033203125C1292 677.3402709960938 1519.5 715.3403930664062 1519.5 629.840576171875' },
     { off: [-13.5, 189.89683532714844], d: 'M1465 148.10317993164062C1422 174.10316467285156 770.1932678222656 -231.46615600585938 918.241943359375 199.3489990234375C1066.2906188964844 630.1641540527344 1014.6979064941406 885.3195495605469 702.1506958007812 586.56982421875C389.6034851074219 287.8200988769531 0 609.1031494140625 0 609.1031494140625' },
@@ -42,12 +39,15 @@
   const lerp = (a, b, f) => a + (b - a) * f;
   const unit = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
   const bez = (a, b, c, d, w) => { const u = 1 - w; return [u * u * u * a[0] + 3 * u * u * w * b[0] + 3 * u * w * w * c[0] + w * w * w * d[0], u * u * u * a[1] + 3 * u * u * w * b[1] + 3 * u * w * w * c[1] + w * w * w * d[1]]; };
-  const cr = (a, b, c, d, u) => 0.5 * (2 * b + (-a + c) * u + (2 * a - 5 * b + 4 * c - d) * u * u + (-a + 3 * b - 3 * c + d) * u * u * u);
-  const sine = (x) => -(Math.cos(Math.PI * Math.min(1, Math.max(0, x))) - 1) / 2;
-  const outC = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+  // Quintic Hermite keeps both velocity and acceleration continuous at the middle shape.
+  const curve = (a, b, c, d, u) => {
+    const v0 = (c - a) / 2, v1 = (d - b) / 2, delta = c - b;
+    return b + v0 * u + u * u * u * ((10 * delta - 6 * v0 - 4 * v1) + u * ((-15 * delta + 8 * v0 + 7 * v1) + u * (6 * delta - 3 * v0 - 3 * v1)));
+  };
+  const stringEase = (x) => { const u = Math.min(1, Math.max(0, x)); return u * u * u * (10 + u * (-15 + 6 * u)); };
   const sm = (a, b, x) => { const v = Math.min(1, Math.max(0, (x - a) / (b - a))); return v * v * (3 - 2 * v); };
   const polyD = (pts) => {                                          // a smooth curve through the points: quadratic curves between the mid-points of neighbours (no visible corners)
-    const n = pts.length, f = (v) => v.toFixed(1);
+    const n = pts.length, f = (v) => v.toFixed(2);
     if (n < 3) return 'M' + pts.map((q) => f(q[0]) + ' ' + f(q[1])).join('L');
     let d = 'M' + f(pts[0][0]) + ' ' + f(pts[0][1]);
     for (let i = 1; i < n - 1; i++) d += 'Q' + f(pts[i][0]) + ' ' + f(pts[i][1]) + ' ' + f((pts[i][0] + pts[i + 1][0]) / 2) + ' ' + f((pts[i][1] + pts[i + 1][1]) / 2);
@@ -57,7 +57,7 @@
   /* A Figma path (absolute cubic Beziers) -> [tail ... head] points, tail = the left end. The three states of a line don't all run the same way
      in Figma and don't have the same number of segments, so every line is resampled evenly by arc length: point i of one state then corresponds
      to point i of the next. */
-  function sampleKey(raw, leadOut) {
+  function sampleKey(raw) {
     const nums = raw.d.match(/-?\d*\.?\d+(?:e-?\d+)?/gi).map(Number), ctl = [];
     for (let i = 0; i < nums.length; i += 2) ctl.push([nums[i] + raw.off[0], nums[i + 1] + raw.off[1]]);
     if (ctl[0][0] > ctl[ctl.length - 1][0]) ctl.reverse();
@@ -76,63 +76,56 @@
       body.push([lerp(dense[k][0], dense[k + 1][0], f), lerp(dense[k][1], dense[k + 1][1], f)]);
     }
     const td = unit(body[0], body[4]), hd = unit(body[BODY_N - 1], body[BODY_N - 5]), out = [];
-    for (let j = LEAD_N; j >= 1; j--) out.push([body[0][0] + td[0] * LEAD_LEN * j / LEAD_N, body[0][1] + td[1] * LEAD_LEN * j / LEAD_N]);
+    const tail = body[0], head = body[BODY_N - 1];
+    const left = [tail[0] - LEAD_LEN, tail[1] + td[1] * 180];
+    const right = [head[0] + LEAD_LEN, head[1] + hd[1] * 180];
+    for (let j = 0; j < LEAD_N; j++) out.push(bez(left, [left[0] + 300, left[1]], [tail[0] + td[0] * 180, tail[1] + td[1] * 180], tail, j / LEAD_N));
     for (const p of body) out.push(p);
-    for (let j = 1; j <= LEAD_N; j++) out.push([body[BODY_N - 1][0] + hd[0] * leadOut * j / LEAD_N, body[BODY_N - 1][1] + hd[1] * leadOut * j / LEAD_N]);
+    for (let j = 1; j <= LEAD_N; j++) out.push(bez(head, [head[0] + hd[0] * 180, head[1] + hd[1] * 180], [right[0] - 300, right[1]], right, j / LEAD_N));
     return out;
   }
-  const keysOf = (states) => states.map((r, i) => sampleKey(r, i === 0 ? 0 : LEAD_LEN));   // state 1 ends inside the screen, so no lead-out yet
+  const keysOf = (states) => states.map((r) => sampleKey(r));
   const KEYS_G = keysOf(GREEN), KEYS_O = keysOf(ORANGE);
   const NP = KEYS_G[0].length;
 
   /* Every point travels the same route through the three states, but starts later the further it is from the head. So where two states don't
      line up (the angles differ) the head goes to the next shape first and the body follows through behind it, instead of the whole line wobbling. */
-  const keyPoint = (KEYS, i, p) => {                                 // Catmull-Rom through the three states: no velocity kink at the middle one
+  const keyPoint = (KEYS, i, p) => {                                 // smooth position, velocity and acceleration through all three states
     const A = KEYS[0][i], B = KEYS[1][i], C = KEYS[2][i];
     const [a, b, c, d, u] = p <= 1 ? [A, A, B, C, p] : [A, B, C, C, p - 1];
-    return [cr(a[0], b[0], c[0], d[0], u), cr(a[1], b[1], c[1], d[1], u)];
+    return [curve(a[0], b[0], c[0], d[0], u), curve(a[1], b[1], c[1], d[1], u)];
   };
-  function stringD(KEYS, t, delay) {
+  function stringD(KEYS, t, delay, exit = 0) {
     const pts = new Array(NP);
     t -= delay;
     for (let i = 0; i < NP; i++) {
-      const tau = Math.min(1, Math.max(0, (t - D * (1 - i / (NP - 1))) / (T - D - delay)));
-      pts[i] = keyPoint(KEYS, i, 2 * sine(tau));
+      const tau = Math.min(1, Math.max(0, (t - D * (1 - i / (NP - 1))) / (STRING_MS - D - delay)));
+      pts[i] = keyPoint(KEYS, i, 2 * stringEase(tau));
     }
-    const front = (1 - Math.pow(1 - Math.min(1, Math.max(0, t) / 2120), 2)) * (NP - 1);   // the line is drawn on from the tail while it is already moving
-    const n = Math.floor(front), seg = pts.slice(0, n + 1);
-    if (n < NP - 1) { const a = pts[n], b = pts[n + 1], f = front - n; seg.push([lerp(a[0], b[0], f), lerp(a[1], b[1], f)]); }
+    // Reveal by distance, not sample index: the long lead-in and dense loops move at the same pace.
+    const lengths = [0];
+    for (let i = 1; i < NP; i++) lengths.push(lengths[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+    const front = stringEase(t / 1150) * lengths[NP - 1];
+    const back = exit * lengths[NP - 1];
+    if (back >= front) return '';
+    const at = (distance) => {
+      let n = 0;
+      while (n < NP - 2 && lengths[n + 1] < distance) n++;
+      const f = (distance - lengths[n]) / (lengths[n + 1] - lengths[n] || 1);
+      return [lerp(pts[n][0], pts[n + 1][0], f), lerp(pts[n][1], pts[n + 1][1], f)];
+    };
+    // The head draws left-to-right; the tail follows along that same continuous curve.
+    const seg = [at(back)];
+    for (let i = 1; i < NP - 1; i++) if (lengths[i] > back && lengths[i] < front) seg.push(pts[i]);
+    seg.push(at(front));
     return polyD(seg);
-  }
-
-  /* ------------------------------------------------------------------ 5 · Exit run-out
-     After the Thank You is in, both lines are fed out of the screen to the right: every point slides further along the line's own path (the final
-     Figma shape), and the path is continued off the right edge, so it leaves like a rope being pulled through. */
-  function runOut(K, limitX) {
-    const ext = K.slice(), hd = unit(K[K.length - 1], K[K.length - 5]);
-    let p = K[K.length - 1];
-    for (let j = 1; j <= 90; j++) {                                  // 9000px of run-out that swings round to point right
-      const b = Math.min(1, j / 5), vx = hd[0] * (1 - b) + b, vy = hd[1] * (1 - b), l = Math.hypot(vx, vy) || 1;
-      p = [p[0] + (vx / l) * 100, p[1] + (vy / l) * 100]; ext.push(p);
-    }
-    const cum = [0];
-    for (let i = 1; i < ext.length; i++) cum.push(cum[i - 1] + Math.hypot(ext[i][0] - ext[i - 1][0], ext[i][1] - ext[i - 1][1]));
-    let last = ext.length - 1; while (last > 0 && ext[last][0] > limitX) last--;
-    return { ext, cum, n: K.length, max: cum[Math.min(ext.length - 1, last + 1)] };   // max = how far to slide until the whole line is off screen
-  }
-  function slide(R, ds) {
-    const pts = new Array(R.n); let j = 0;
-    for (let i = 0; i < R.n; i++) {
-      const sv = R.cum[i] + ds;
-      while (j < R.ext.length - 2 && R.cum[j + 1] < sv) j++;
-      const f = Math.min(1, (sv - R.cum[j]) / (R.cum[j + 1] - R.cum[j] || 1));
-      pts[i] = [lerp(R.ext[j][0], R.ext[j + 1][0], f), lerp(R.ext[j][1], R.ext[j + 1][1], f)];
-    }
-    return polyD(pts);
   }
 
   /* ------------------------------------------------------------------ 4 · play() */
   function play(mine, past, card) {
+    document.body.classList.add('gb-playing');
+    document.documentElement.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
     const layout = $('.layout'), sidebar = $('#sidebar'), main = $('#main');
     const title = $('.gb-title'), sub = $('.gb-sub'), paper = $('.gb-paper');
 
@@ -144,11 +137,22 @@
         <h2 class="ov-title">Welcome Aboard</h2>
         <p class="ov-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">guest gallery</span>!</p>
         <div class="ov-strip"></div>
-        <p class="ov-thanks" role="status" tabindex="-1">Thank You<br>for contributing!</p>
+        <p class="ov-thanks" role="status" tabindex="-1" aria-label="Thank You for contributing!"><span class="ov-reveal" aria-hidden="true"><span>Thank You</span></span><span class="ov-reveal" aria-hidden="true"><span>for contributing!</span></span></p>
       </div>`;
     layout.appendChild(ov);
     const ovStage = $('.gb-ov-stage', ov), trailG = $('.gb-trail-g path', ov), trailO = $('.gb-trail-o path', ov), trailOsvg = $('.gb-trail-o', ov), thanks = $('.ov-thanks', ov), strip = $('.ov-strip', ov);
     const titleEl = $('.ov-title', ov), subEl = $('.ov-sub', ov);
+    const thanksLines = [...thanks.querySelectorAll('.ov-reveal > span')];
+    // Pick each letter's height once, so it bounces smoothly instead of jittering each frame.
+    const thanksChars = thanksLines.map((line) => {
+      const chars = [...line.textContent].map((letter) => {
+        const el = document.createElement('span');
+        el.className = 'ov-char'; el.textContent = letter === ' ' ? '\u00a0' : letter;
+        return { el, height: 5 + Math.floor(Math.random() * 5) };
+      });
+      line.replaceChildren(...chars.map(({ el }) => el));
+      return chars;
+    });
     if (window.SiddhiHighlight) window.SiddhiHighlight.scan(subEl, { instant: true });                // the highlights come along, already drawn, so nothing pops when the subtitle glides away
     // the whole scene is one full screen: contained in the window, centred. On a phone or a portrait tablet the wide scene can't be shrunk to the width of the
     // screen (everything would be tiny) — it is fitted to the height instead and only the middle of it is seen: Thank You is drawn to fit that (guest.css) and the
@@ -165,9 +169,9 @@
       main.style.transition = 'opacity .3s'; main.style.opacity = '0';
       if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
       strip.remove(); titleEl.remove(); subEl.remove();
-      trailG.setAttribute('d', polyD(KEYS_G[2])); trailO.setAttribute('d', polyD(KEYS_O[2]));
-      thanks.style.transition = 'opacity .3s';
-      requestAnimationFrame(() => requestAnimationFrame(() => { thanks.style.opacity = '1'; }));
+      trailOsvg.remove(); trailG.parentNode.remove();
+      thanks.style.opacity = '1';
+      thanksLines.forEach((line) => { line.style.transform = 'translateX(0)'; line.parentNode.style.clipPath = 'inset(0)'; });
       setTimeout(goHome, HOLD);
       return;
     }
@@ -185,46 +189,57 @@
     const paperMine = $('.gc-paper', mineEl), sigMine = $('.gc-sig', mineEl);
     const rightEdge = (W / s + 1448) / 2 + 30;                       // just past the right end of the screen, in stage px
     const fromRight = others.map((_, i) => rightEdge - SX - SLOTS[i + 1].x);
+    const leftEdge = (1448 - W / s) / 2;
+    // Include the final card, overflowing signatures and shadows, even on very wide viewports.
+    const stripRight = Math.max(...[mineEl, ...others].map((el, i) => SLOTS[i].x + Math.max(CARD.w, el.scrollWidth)));
+    const exitSteps = Math.max(EXIT_K, (stripRight + SX - leftEdge + 64) / -STEP[0]);
 
     const apply = (elapsed) => {
       const t = Math.max(0, elapsed);                                // rAF timestamps can precede our start time by a hair
-      const x = Math.min(1, t / T), f = outC(t / FLIGHT);
+      const x = Math.min(1, t / T), f = stringEase(t / FLIGHT);
       // the strip slides the whole time (already moving while our card lands in it) and simply slides out of the screen
-      const kk = EXIT_K * sine(t / SLIDE_MS);
-      strip.style.transform = `translate(${STEP[0] * kk + SX}px, ${kk <= 1 ? STEP[1] * kk : STEP[1] * (1 + 0.25 * (kk - 1))}px)`;
+      const kk = exitSteps * stringEase(t / SLIDE_MS);
+      strip.style.transform = `translate(${STEP[0] * kk + SX}px, ${STEP[1] * (0.25 * kk + 0.75 * (1 - Math.exp(-kk)))}px)`;
       // our card scales down from the drawing pad into slot 1
       Object.assign(mineEl.style, { left: lerp(c0.x - SX, SLOTS[0].x, f) + 'px', top: lerp(c0.y, SLOTS[0].y, f) + 'px', width: lerp(c0.w, CARD.w, f) + 'px', height: lerp(c0.h, CARD.h, f) + 'px' });
       Object.assign(paperMine.style, { left: lerp(p0.x - c0.x, CARD.pl, f) + 'px', top: lerp(p0.y - c0.y, CARD.pt, f) + 'px', width: lerp(p0.w, CARD.pw, f) + 'px', height: lerp(p0.h, CARD.ph, f) + 'px' });
+      mineEl.style.transform = `perspective(1800px) rotateY(${360 * f}deg)`;
       sigMine.style.opacity = String(sm(0.4, 1, f));
       // the previous three start sliding from the very end of the screen, one after another
-      others.forEach((el, i) => { const g = outC((t - 150 - i * 135) / 910); el.style.translate = `${fromRight[i] * (1 - g)}px 0`; });
+      others.forEach((el, i) => { const g = stringEase((t - 180 - i * 160) / 1250); el.style.translate = `${fromRight[i] * (1 - g)}px 0`; });
       // title + subtitle glide left as the sidebar leaves, then fade
       const fo = String(1 - sm(0.12, 0.38, x));
       titleEl.style.translate = `${tdx * (1 - f)}px ${tdy * (1 - f)}px`; titleEl.style.opacity = fo;
       subEl.style.translate = `${sdx * (1 - f)}px ${sdy * (1 - f)}px`; subEl.style.opacity = fo;
-      // thank-you rises while the cards leave
-      const th = sm(0.62, 0.9, x);
-      thanks.style.opacity = String(th); thanks.style.translate = `0 ${26 * (1 - th)}px`;
-      trailG.setAttribute('d', stringD(KEYS_G, t, 0));
-      trailO.setAttribute('d', stringD(KEYS_O, t, ORANGE_DELAY));
+      // Left-to-right reveal, with a staggered 5–9px upward bounce for each character.
+      thanks.style.opacity = '1';
+      thanksLines.forEach((line, i) => {
+        const elapsed = t - THANKS_MS - i * 120;
+        const reveal = stringEase(elapsed / 850);
+        const offset = -28 * (1 - reveal);
+        line.parentNode.style.clipPath = `inset(0 ${100 * (1 - reveal)}% 0 0)`;
+        line.style.transform = `translateX(${offset}px)`;
+        thanksChars[i].forEach(({ el, height }, j) => {
+          const bounce = Math.min(1, Math.max(0, (elapsed - 450 - j * 18) / 420));
+          const lift = bounce === 1 ? 0 : -height * Math.pow(Math.sin(Math.PI * bounce), 2);
+          el.style.transform = `translateY(${lift}px)`;
+        });
+      });
+      const stringTime = Math.min(t / SLIDE_MS, 1) * STRING_MS;
+      const lineExit = stringEase((stringTime - 1350) / (STRING_MS - 1350));
+      trailG.setAttribute('d', stringD(KEYS_G, stringTime, 0, lineExit));
+      trailO.setAttribute('d', stringD(KEYS_O, stringTime, ORANGE_DELAY, lineExit));
+      // Cards and strings finish together while the thank-you remains visible.
+      if (t >= SLIDE_MS) {
+        strip.style.visibility = 'hidden';
+        trailG.parentNode.style.visibility = trailOsvg.style.visibility = 'hidden';
+      }
     };
 
     apply(0);                                                        // paint the first frame before the originals disappear (no flash)
     main.classList.add('gb-leaving');
     card.style.visibility = 'hidden'; title.style.visibility = 'hidden'; sub.style.visibility = 'hidden';
     if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
-
-    const limitX = (W / s + 1448) / 2 + 60;                          // beyond this x (stage px) nothing is on screen
-    const leave = () => {
-      const RG = runOut(KEYS_G[2], limitX), RO = runOut(KEYS_O[2], limitX), t0 = performance.now();
-      const step = (now) => {
-        const ug = Math.min(1, Math.max(0, (now - t0) / EXIT_MS)), uo = Math.min(1, Math.max(0, (now - t0 - 140) / EXIT_MS));   // orange a beat behind
-        trailG.setAttribute('d', slide(RG, RG.max * sine(ug)));
-        trailO.setAttribute('d', slide(RO, RO.max * sine(uo)));
-        if (uo < 1) requestAnimationFrame(step); else { trailOsvg.remove(); trailG.parentNode.remove(); }
-      };
-      requestAnimationFrame(step);
-    };
 
     const start = performance.now();
     const frame = (now) => {
@@ -233,8 +248,8 @@
       if (t < T) return requestAnimationFrame(frame);
       strip.remove(); titleEl.remove(); subEl.remove();
       thanks.focus({ preventScroll: true });
-      setTimeout(leave, EXIT_AT);                                    // the words stay; the lines run out of the screen to the right
-      setTimeout(goHome, HOLD - (T - 0.9 * T));                      // "Thank you" is fully in at 0.9 T; it then stays for HOLD (5 s) before the main website
+      trailOsvg.remove(); trailG.parentNode.remove();
+      goHome();                                                   // bounce has settled; immediately start the upward handoff
     };
     requestAnimationFrame(frame);
   }

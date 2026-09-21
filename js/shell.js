@@ -51,10 +51,67 @@
       const stageEl = main.querySelector('.stage');
       const sw = (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 1448 for Welcome Aboard, 480 for the one-column Home, 720 for Welcome Aboard on a phone)
       let ss = Math.min(1, main.clientWidth / sw);
+      if (compact && body.dataset.page === 'quests' && stageEl) {
+        // Fill the available height and allow horizontal panning on narrow screens.
+        const footerHeight = document.querySelector('.footer')?.offsetHeight || 0;
+        const topGap = parseFloat(getComputedStyle(main).paddingTop) || 0;
+        ss = Math.min(1, Math.max(ss, (vh - footerHeight - topGap) / stageEl.offsetHeight));
+      }
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
       root.style.setProperty('--stage-m', Math.max(0, (main.clientWidth - sw * ss) / 2).toFixed(1) + 'px');   // where the stage starts inside the main column (it is centred when the window is wider than the design)
+      scatterHome(main, stageEl, ss);
     }
+  }
+
+  // Sample the open background, choosing the most widely separated position each time.
+  function scatterHome(main, stage, scale) {
+    if (!stage || !main.querySelector('.home-wrap')) return;
+    const width = main.clientWidth, height = main.clientHeight;
+    const signature = `${width}:${height}:${scale}`;
+    if (main.dataset.doodleSize === signature && main.querySelector('.home-doodles')) return;
+    main.dataset.doodleSize = signature;
+    stage.querySelectorAll('.eye').forEach((el) => el.remove());
+    main.querySelector('.home-doodles')?.remove();
+    const layer = document.createElement('div');
+    layer.className = 'home-doodles';
+    layer.setAttribute('aria-hidden', 'true');
+    const size = Math.max(0.6, scale), radius = 65 * size;
+    const gap = 180 * size, colorGap = gap * 2.1;
+    const margin = (width - stage.offsetWidth * scale) / 2;
+    const top = stage.parentElement.offsetTop;
+    const cards = [...stage.querySelectorAll('.card')].map((el) => ({
+      left: margin + el.offsetLeft * scale,
+      top: top + el.offsetTop * scale,
+      right: margin + (el.offsetLeft + el.offsetWidth) * scale,
+      bottom: top + (el.offsetTop + 437) * scale
+    }));
+    const palette = ['#ff9a00', '#bb3739', '#033530', '#2c2696'];
+    const placed = [];
+    const count = Math.min(32, Math.max(5, Math.round(width * height / 110000)));
+    for (let i = 0; i < count; i++) {
+      let best = null, bestDistance = -1;
+      for (let attempt = 0; attempt < 350; attempt++) {
+        const x = radius + Math.random() * Math.max(0, width - radius * 2);
+        const y = radius + Math.random() * Math.max(0, height - radius * 2);
+        // Let doodles peek from card edges, but never bury their centers under a card.
+        if (cards.some((r) => x > r.left && x < r.right && y > r.top && y < r.bottom)) continue;
+        const distance = Math.min(...placed.map((p) => Math.hypot(x - p.x, y - p.y)));
+        if (distance < gap || distance <= bestDistance) continue;
+        const colors = palette.filter((color) => placed.every((p) => p.color !== color || Math.hypot(x - p.x, y - p.y) >= colorGap));
+        if (!colors.length) continue;
+        best = { x, y, color: colors[Math.floor(Math.random() * colors.length)] };
+        bestDistance = distance;
+      }
+      if (!best) break; // Preserve spacing when the background has no more room.
+      placed.push(best);
+      const eye = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      eye.setAttribute('viewBox', '0 0 123.952 62.0001');
+      eye.innerHTML = '<use href="#eye-star"/>';
+      eye.style.cssText = `left:${best.x}px;top:${best.y}px;width:${124 * size}px;height:${62 * size}px;color:${best.color};rotate:${Math.random() * 100 - 50}deg`;
+      layer.appendChild(eye);
+    }
+    main.prepend(layer);
   }
 
   /* ------------------------------------------------------------------ 3 · Markup */
