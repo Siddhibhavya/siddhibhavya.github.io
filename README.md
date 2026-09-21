@@ -13,7 +13,7 @@ A small museum of my work, with me as the (slightly over-excited) host.
 - **About Me** — who I am, on graph paper, with a few things you're allowed to pick up and throw around.
 - **Side Quests** — a collage of things I made just because.
 - **Guest Gallery** and **Welcome Aboard** — visitors draw a card, sign it, and leave it in my gallery.
-- **SiddhiLM** — a little chatbot that talks the way I do.
+- **MikuPedia** — a little chatbot that answers the way I would (named after my cat, Miku).
 
 ## The design
 
@@ -60,7 +60,7 @@ firebase/   the Firestore security rules + setup steps for the shared gallery
 
 ## The interactions I'm proudest of
 
-- **The gooey Index ⇄ Siddhi LM tab.** The sidebar's folder tab isn't a picture — it's drawn in SVG and melts from one side to the other like liquid when you switch tabs (a blur + contrast trick, animated by hand so the leading edge shoots ahead and the trailing edge catches up).
+- **The gooey Index ⇄ MikuPedia tab.** The sidebar's folder tab isn't a picture — it's drawn in SVG and melts from one side to the other like liquid when you switch tabs (a blur + contrast trick, animated by hand so the leading edge shoots ahead and the trailing edge catches up).
 - **Welcome Aboard.** Draw a card, sign it on the line, pick a colour and press *Create*. Then everything happens in one unbroken take: the cards slide, two strings (a thick green one and a thin orange one, traced from my Figma frames) are pulled across the screen, "Thank You" rises, the strings are fed off to the right, and you're gently returned to the main site. Your card then joins the shared Guest Gallery for everyone to see.
 - **Things you can move on About.** The stars, the fish-bone patch and the dino can be picked up and thrown — they slide, bounce off the edges and tilt as you drag. Tap one and it spins or wobbles. (A little pill tells you this the first time you scroll.)
 - **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Syncletter, yellow for NearU, blue for NCFE, red for *Are they Driving?* — that follows you around.
@@ -80,9 +80,9 @@ Every card a guest makes goes on one wall that everyone sees, using Firebase Fir
 
 Setting it up from scratch is in [`firebase/SETUP.md`](firebase/SETUP.md).
 
-## How SiddhiLM works
+## How MikuPedia works
 
-SiddhiLM lives entirely in your browser. There's **no AI service and nothing is sent anywhere** — it's a bot that talks like me using answers I wrote myself.
+MikuPedia lives entirely in your browser. There's **no AI service and nothing is sent anywhere** — it's a bot that talks like me using answers I wrote myself.
 
 1. **The question bank** (`js/bank.js`) is a big list of questions people might ask me — about design, my projects, hobbies, this website — each with alternate wordings and, if I've written one, my answer (and sometimes pictures).
 2. **Matching.** When you type a message, the bot scores it against every question by shared words, giving rarer words more weight ("Syncletter" counts for more than "the"). A strong match gets my answer; a near match gets a gentle "did you mean…?"; no match gets a friendly "ask me directly" with buttons to reach me.

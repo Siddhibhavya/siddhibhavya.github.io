@@ -1,4 +1,4 @@
-/* Shared shell: builds the sidebar (Index / Siddhi LM) and footer, scales the design to the window, and runs the small-screen drawer,
+/* Shared shell: builds the sidebar (Index / MikuPedia) and footer, scales the design to the window, and runs the small-screen drawer,
    the in-place page navigation, the email pop-up and the "View case study" cursor.
    Pages opt in with <body data-page="…" data-root="…">. data-shell="none" skips it (landing). Needs js/config.js (window.SITE) first.
 
@@ -30,6 +30,7 @@
 
   /* ------------------------------------------------------------------ 2 · Scaling */
   const COMPACT_W = 900, COMPACT_H = 830;
+  const QUESTS_MIN = 0.62;                                              // Side Quests on a phone: the smallest the artwork is drawn (1 = the full 1092px design)
   const ONE_COL_W = 760;                                                // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b") and Welcome Aboard gets its phone layout (css/pages/guest.css)
   function fit() {
     const vw = root.clientWidth, vh = window.innerHeight;
@@ -52,10 +53,11 @@
       const sw = (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 1448 for Welcome Aboard, 480 for the one-column Home, 720 for Welcome Aboard on a phone)
       let ss = Math.min(1, main.clientWidth / sw);
       if (compact && body.dataset.page === 'quests' && stageEl) {
-        // Fill the available height and allow horizontal panning on narrow screens.
+        // The artwork is never shrunk below QUESTS_MIN on a phone: it is bigger than the screen instead, so you scroll down a little and swipe sideways
+        // (css/pages/quests.css lets the page pan). It also fills the available height when that is larger.
         const footerHeight = document.querySelector('.footer')?.offsetHeight || 0;
         const topGap = parseFloat(getComputedStyle(main).paddingTop) || 0;
-        ss = Math.min(1, Math.max(ss, (vh - footerHeight - topGap) / stageEl.offsetHeight));
+        ss = Math.min(1, Math.max(ss, QUESTS_MIN, (vh - footerHeight - topGap) / stageEl.offsetHeight));
       }
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
@@ -145,7 +147,7 @@
 
   <div role="tablist" aria-label="Sidebar">
     <button class="sb-tab" role="tab" data-tab="index" id="tab-index" aria-controls="pane-index"><span>INDEX</span></button>
-    <button class="sb-tab" role="tab" data-tab="lm" id="tab-lm" aria-controls="pane-lm"><span>SIDDHI LM</span></button>
+    <button class="sb-tab" role="tab" data-tab="lm" id="tab-lm" aria-controls="pane-lm"><span>MIKUPEDIA</span></button>
   </div>
 
   <section class="pane pane-index" id="pane-index" role="tabpanel" aria-labelledby="tab-index">
@@ -170,7 +172,7 @@
     <button type="button" class="lm-clear">Clear chat</button>
     <div class="lm-nav"><div class="lm-nav-grid">${quick}</div></div>
     <div class="lm-thread" aria-live="polite">
-      <p class="lm-greet">Hey there!<br>This is SiddhiLM.</p>
+      <p class="lm-greet">Hey there!<br>This is MikuPedia.</p>
       <div class="lm-suggest">
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>What’s your favorite project?</span></button>
         <button type="button"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>Tell me about your side projects?</span></button>
@@ -497,7 +499,7 @@
     window.addEventListener('scroll', place, { passive: true });
   }
 
-  /* Small screens: the side column is replaced by a star "Index" button that brings the Index / Siddhi LM card out over the page */
+  /* Small screens: the side column is replaced by a star "Index" button that brings the Index / MikuPedia card out over the page */
   function initDrawer(sidebar) {
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'sb-toggle'; btn.setAttribute('aria-controls', 'sidebar'); btn.setAttribute('aria-expanded', 'false');
@@ -507,7 +509,7 @@
       '<svg class="ic ic-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' +
       '<svg class="ic ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
     const note = document.createElement('div');                       // the little label that slides out of the corner now and then
-    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & Siddhi LM';
+    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & MikuPedia';
     const scrim = document.createElement('div');
     scrim.className = 'sb-scrim';
     document.body.append(scrim, btn, note);
@@ -629,7 +631,7 @@
     const drawer = sb ? guard('drawer', () => initDrawer(sidebar)) : null;
     guard('case-study cursor', initCaseCursor);
 
-    // "Siddhi LM" links (footer, quick links): open the chat tab — or, with no sidebar on this page, open it on the home page
+    // "MikuPedia" links (footer, quick links): open the chat tab — or, with no sidebar on this page, open it on the home page
     document.querySelectorAll('[data-action="lm"]').forEach((a) => a.addEventListener('click', (e) => {
       e.preventDefault();
       if (sb) { if (drawer && body.classList.contains('compact')) drawer.open(); else window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); sb.setTab('lm'); }

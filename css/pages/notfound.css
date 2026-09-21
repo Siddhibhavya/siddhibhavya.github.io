@@ -1,0 +1,44 @@
+/* ==================================================================
+   PAGE · 404 (404.html) — Figma frame "404 PAGE" (1440×1024, plum). The landing page's orbit ring and stars, the pixel "404", one line of text.
+   The design is laid out in em, where 1em = --u = one Figma pixel at the current window size, so the whole picture scales to any screen with no script.
+   Coordinates below are the Figma numbers minus the top-left of the box (x 250, y 200), which is the part of the frame that has anything in it.
+================================================================== */
+body.notfound { background: var(--plum); color: #fff; overflow: hidden; height: 100vh; height: 100dvh; }
+
+.nf-sky { position: fixed; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }   /* the still star background (js/notfound.js), behind everything */
+
+.nf-stage {
+  --u: min(1.1px, 100vw / 940, 100vh / 860);                          /* never bigger than 1.1x the design; on a phone it fills the width */
+  position: absolute; left: 50%; top: 50%; width: 940em; height: 860em; font-size: var(--u);
+  transform: translate(-50%, -50%);
+}
+.nf-stage > * { position: absolute; }
+
+/* the ring: box 770.682 x 266.836 centred on Figma (698.65, 522.42), turned -20.59deg; the exported picture overhangs the box slightly */
+.nf-orbit { left: 63.31em; top: 188.99em; width: 770.682em; height: 266.836em; transform: rotate(-20.59deg); }
+.nf-orbit img { position: absolute; left: -1.598em; top: -1.307em; width: 772.28em; height: 269.078em; max-width: none; }
+
+/* stars: --cx / --cy is the centre, --w / --h the size, --r the turn (all Figma numbers) */
+.nf-star {
+  left: calc((var(--cx) - var(--w) / 2) * 1em); top: calc((var(--cy) - var(--h) / 2) * 1em);
+  width: calc(var(--w) * 1em); height: calc(var(--h) * 1em); transform: rotate(var(--r)); will-change: transform;
+}
+/* three stars ride the ring (data-orbit: js/notfound.js moves them); the other two stay put and twinkle */
+.nf-star.tw { animation: nf-twinkle 5.2s var(--ease-sine) infinite alternate; }
+.nf-star.tw.b { animation-duration: 6.4s; animation-delay: -2.1s; }
+.nf-star img { width: 100%; height: 100%; max-width: none; }
+@keyframes nf-twinkle { from { opacity: 0.6; scale: 0.92; } to { opacity: 1; scale: 1.06; } }
+
+.nf-404 { left: 189em; top: 170em; width: 489em; height: 227em; max-width: none; }
+
+.nf-text {
+  left: calc(448.5 * var(--u)); top: calc(546 * var(--u)); transform: translate(-50%, -50%); white-space: nowrap; text-align: center;   /* var(--u), not em: this element sets its own font-size, and em in left / top would follow it */
+  font-size: calc(48 * var(--u)); font-weight: 700; font-style: italic; line-height: 2; color: #fff;   
+}
+/* not in the Figma frame: what a 404 page usually says underneath — an apology, what happened, and ways out. Sizes never go below phone-readable. */
+.nf-info { left: 98.5em; top: 606em; width: 700em; text-align: center; color: rgba(255, 255, 255, 0.85); }
+.nf-sorry { font-size: max(18px, 30em); font-weight: 500; line-height: 1.3; color: #fff; }
+.nf-note { margin-top: 0.6em; font-size: max(15px, 22em); line-height: 1.5; }
+.nf-links { margin-top: 1.1em; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4em 1.6em; font-size: max(15px, 22em); font-weight: 500; }
+.nf-links a { text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1.5px; transition: color 0.2s ease; }
+.nf-links a:hover, .nf-links a:focus-visible { color: #fff; }
