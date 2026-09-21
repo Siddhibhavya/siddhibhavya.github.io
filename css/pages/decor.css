@@ -10,8 +10,11 @@
    Change a page's grid by changing only its three numbers below. Welcome Aboard pages (data-fit="screen") have no grid. */
 body:not([data-fit='screen']) .main {
   --gk: 1.3625; --gx: -375.6; --gy: -17.5;
-  --grid-ink: rgba(0, 0, 0, 0.25);
-  --grid-line: calc(1px * var(--gk) * var(--stage-s, 1));
+  --grid-a: 0.25;                                                   /* how dark the lines are (About is fainter, below) */
+  /* When the page is scaled down (phones, tablets) the design's 1px line would become a fraction of a pixel and all but vanish. So a line is never thinner
+     than 1 screen pixel, and it is made a little paler in step with how much thicker than the design it now is (never below 70%). */
+  --grid-line: max(1px, calc(1px * var(--gk) * var(--stage-s, 1)));
+  --grid-ink: rgba(0, 0, 0, calc(var(--grid-a) * max(0.7, min(1, var(--gk) * var(--stage-s, 1)))));
   align-self: stretch;
   min-height: 100vh;
   min-height: 100svh;
@@ -27,7 +30,7 @@ body[data-page='quests'] .main { --gk: 1.3458; --gx: -356.79; --gy: -85.17; }
 body[data-page='gallery'] .main { --gk: 1.3458; --gx: -273.79; --gy: -221.17; }
 /* About: Figma stacks two grid pictures of slightly different size (an upper one, then a larger one from y 1390). Where they meet their
    vertical lines are up to 30px apart, which showed as a stair-step across the page. So the upper grid simply continues down the whole page. */
-body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; --grid-ink: rgba(0, 0, 0, 0.15); }   /* the About paper is fainter: lines at 15% instead of 25% */
+body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; --grid-a: 0.15; }   /* the About paper is fainter: lines at 15% instead of 25% */
 
 /* ---------- 2 · Decorations ---------- */
 .dc { position: absolute; left: calc((var(--cx) - var(--w) / 2) * 1px); top: calc((var(--cy) - var(--h) / 2) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); rotate: var(--r, 0deg); pointer-events: none; }
