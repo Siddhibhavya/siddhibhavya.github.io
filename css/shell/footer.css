@@ -22,6 +22,9 @@
 .footer-space { display: flex; align-items: center; gap: 6px; min-height: 44px; font-size: 18px; line-height: 1.18; color: #fff; }
 .footer-space img { flex: none; width: 26.43px; height: 24.6px; transform: rotate(-7.82deg); margin-right: 5px; transition: transform 0.6s var(--ease-out); }
 .footer-space:hover img { transform: rotate(172deg) scale(1.15); }
+@media (min-width: 1101px) {
+  .footer-inner { min-height: 0; padding: 32px 36px 8px; }
+}
 @media (max-width: 1100px) {
   .footer-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 32px; }
 }
