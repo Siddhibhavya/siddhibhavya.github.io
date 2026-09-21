@@ -1,4 +1,4 @@
-/* MikuPedia — the chat bot (named after Siddhi's cat, Miku). It runs entirely in the browser (no model, no server, nothing that depends on anyone else — it is a set of
+/* M.I.K.U — the chat bot (named after Siddhi's cat, Miku). It runs entirely in the browser (no model, no server, nothing that depends on anyone else — it is a set of
    answers Siddhi wrote, so it is not a language model and it cannot make anything up):
 
      1. THE JAIL      – jailbreaks, "ignore your instructions", homework, coding / writing jobs, general-knowledge
@@ -37,11 +37,11 @@
     projects: 'project', challenges: 'challenge', hardest: 'challenge', difficult: 'challenge', struggle: 'challenge', struggles: 'challenge',
     inspired: 'inspiration', inspires: 'inspiration', inspire: 'inspiration', influence: 'inspiration', influences: 'inspiration', idol: 'inspiration', idols: 'inspiration',
     tea: 'drink', coffee: 'drink', movies: 'movie', films: 'movie', film: 'movie', shows: 'show', series: 'show', anime: 'show', travel: 'trip', traveling: 'trip', travelling: 'trip', trips: 'trip',
-    location: 'live', city: 'live', country: 'live', based: 'live', hometown: 'live', kalahandi: 'live', odisha: 'live'
+    mikupedia: 'miku', location: 'live', city: 'live', country: 'live', based: 'live', hometown: 'live', kalahandi: 'live', odisha: 'live'
   };
   const stem = (w) => (w.length > 4 ? w.replace(/(ies)$/, 'y').replace(/(ing|ed|es|s)$/, '') : w);
   function tokens(text) {
-    return text.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9é+#\s]/g, ' ').split(/\s+/).filter(Boolean)
+    return text.replace(/m\.i\.k\.u/gi, 'miku').toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9é+#\s]/g, ' ').split(/\s+/).filter(Boolean)
       .map((w) => SYN[w] || SYN[stem(w)] || stem(w)).filter((w) => w && !STOP.has(w));
   }
 
@@ -152,7 +152,7 @@
     if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return { kind: 'talk', text: 'Bye for now — thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] };
     if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return { kind: 'talk', text: 'Doing good — surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) };
     if (/\b(are you|r u|youre)\s+(a |an |the )?(real|human|bot|ai|llm|robot|chatbot|machine|actual)\b|\bwho (made|built|created|programmed|trained) you\b|\bwhat are you\b|\bare you (chatgpt|gpt|claude|gemini)\b/.test(t)) {
-      return { kind: 'talk', text: 'I’m MikuPedia — named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and answers with things Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] };
+      return { kind: 'talk', text: 'I’m M.I.K.U — named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] };
     }
     if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies — or how to reach me. Here are a few to start with:', actions: starters(4) };
     return null;
@@ -202,7 +202,7 @@
     const B = window.SIDDHI_BANK || {};
     const qa = BANK.filter((e) => answerOf(e)).map((e) => `Q: ${e.q}\nA: ${Array.isArray(e.a) ? e.a.filter(Boolean).join(' / ') : e.a}`).join('\n\n');
     return [
-      'You are MikuPedia, the chatbot on Siddhi Bhavya’s portfolio site. You speak in the first person, as Siddhi would: warm, curious, a bit playful, plain words, short replies (2–5 sentences).',
+      'You are M.I.K.U, the chatbot on Siddhi Bhavya’s portfolio site. You speak in the first person, as Siddhi would: warm, curious, a bit playful, plain words, short replies (2–5 sentences).',
       B.voice ? 'How Siddhi talks: ' + B.voice : '',
       'You ONLY talk about Siddhi: her design work and process, her projects, side quests, hobbies, studies, and how to contact her.',
       'Use ONLY the answers below. If something is not covered, say you have not written that answer down yet and point to email / LinkedIn / Instagram. Never invent facts, dates, employers or opinions.',
