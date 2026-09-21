@@ -347,21 +347,36 @@
         el.appendChild(box);
         el.classList.add('has-img');
       }
-      if (m.actions && m.actions.length) {
+      const links = (m.actions || []).filter((a) => !a.ask), asks = (m.actions || []).filter((a) => a.ask);
+      if (links.length) {                                             // links and buttons stay inside the bubble…
         const row = document.createElement('div');
         row.className = 'msg-actions';
-        m.actions.forEach((a) => {
+        links.forEach((a) => {
           const link = document.createElement(a.tab || a.ask ? 'button' : 'a');
           link.textContent = a.label;
           if (a.raw) { link.href = lk(a.raw); if (/^https?:/.test(a.raw)) { link.target = '_blank'; link.rel = 'noopener'; } if (/^mailto:/.test(a.raw)) link.dataset.action = 'email'; }   // Email opens the address pop-up (copy / Gmail), like the sidebar's
           else if (a.href) { link.href = R + pretty(a.href); if (/^work\//.test(pretty(a.href))) { link.target = '_blank'; link.rel = 'noopener'; } }   // case studies open in a new tab
           if (a.tab) { link.type = 'button'; link.addEventListener('click', () => setTab(a.tab)); }
-          if (a.ask) { link.type = 'button'; link.addEventListener('click', () => send(a.ask)); }      // a tappable suggested question
           row.appendChild(link);
         });
         el.appendChild(row);
       }
       thread.appendChild(el);
+      thread.querySelectorAll('.lm-follow').forEach((f) => f.remove());        // …and the suggested questions are a list under the newest answer only, styled like the starters
+      if (asks.length && m.role === 'bot') {
+        const list = document.createElement('div');
+        list.className = 'lm-follow';
+        if (!animate) list.style.animation = 'none';
+        asks.forEach((a) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.innerHTML = `<img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span></span>`;
+          b.querySelector('span').textContent = a.label;
+          b.addEventListener('click', () => send(a.ask));
+          list.appendChild(b);
+        });
+        thread.appendChild(list);
+      }
       thread.classList.add('has-chat');
       toBottom();
     }
@@ -372,6 +387,7 @@
       text = text.trim();
       if (!text) return;
       const u = { role: 'user', text }, mine = epoch;
+      thread.querySelectorAll('.lm-follow').forEach((f) => f.remove());        // the old suggestions go as soon as something is asked
       log.push(u); bubble(u, true); persist();
       const typing = document.createElement('div');
       typing.className = 'msg bot typing'; typing.innerHTML = '<i></i><i></i><i></i>';
@@ -396,7 +412,7 @@
 
     sidebar.querySelector('.lm-clear').addEventListener('click', () => {
       epoch++; log = []; persist();
-      thread.querySelectorAll('.msg').forEach((m) => m.remove());
+      thread.querySelectorAll('.msg, .lm-follow').forEach((m) => m.remove());
       thread.classList.remove('has-chat'); thread.scrollTop = 0;
       syncTyping();
       input.focus({ preventScroll: true });

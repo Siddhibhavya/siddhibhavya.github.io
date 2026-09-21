@@ -56,15 +56,17 @@
 
 /* ---------- 3 · Suggestions ---------- */
 .lm-suggest { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin: 0 0 60px 4px; flex: none; }
-.lm-suggest button {
+.lm-suggest button, .lm-follow button {
   display: flex; align-items: center; gap: 9px;
   font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--plum); text-align: left;
   transition: font-weight 0.2s ease, transform 0.25s var(--ease-out);
 }
-.lm-suggest button img { width: 17px; height: 17px; flex: none; transform: rotate(180deg); transition: transform 0.3s var(--ease-out); }   /* stem drops down, head points right at the text */
-.lm-suggest button:hover { font-weight: 400; transform: translateX(3px); }
-.lm-suggest button:hover img { transform: rotate(180deg) translateX(-2px); }
+.lm-suggest button img, .lm-follow button img { width: 17px; height: 17px; flex: none; transform: rotate(180deg); transition: transform 0.3s var(--ease-out); }   /* stem drops down, head points right at the text */
+.lm-suggest button:hover, .lm-follow button:hover { font-weight: 400; transform: translateX(3px); }
+.lm-suggest button:hover img, .lm-follow button:hover img { transform: rotate(180deg) translateX(-2px); }
 .lm-thread.has-chat .lm-suggest { display: none; }
+/* under the newest answer: the same list of suggested questions (js/shell.js, bubble) */
+.lm-follow { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin: 0 0 6px 4px; flex: none; animation: msg-in 0.4s var(--ease-out) 0.15s both; }
 
 /* ---------- 4 · Messages (text, pictures, tappable actions) ---------- */
 .msg { flex: none; max-width: 92%; font-size: 17px; font-weight: 400; line-height: 1.4; padding: 8px 12px; border-radius: 14px; animation: msg-in 0.4s var(--ease-out) both; }
