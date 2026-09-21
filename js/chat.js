@@ -221,29 +221,38 @@
     return { text: String(data.text).slice(0, 1200), actions: data.actions || [], images: data.images || [] };
   }
 
-  /* Follow-up questions: almost every answer ends with three tappable questions to keep the chat going — two from the same topic as the answer just given
-     (so they lead on from it), then the starter questions, then anything else that has a written answer. Only questions that DO have an answer are offered,
-     and never one the visitor has already asked. Replies that already are a list of questions ("did you mean…", the "no" replies) are left as they are. */
+  /* Follow-up questions: almost every answer ends with three suggested questions, listed under it like the starters:
+       1st  a follow-up to the question just answered — the one that comes next to it in the bank (same topic, the ones after it count more than the ones before);
+       2nd  a random one;
+       3rd  one about Siddhi's design practice (the "Design & process" topic, then "Skills & tools").
+     Only questions that DO have an answer are offered, and never one the visitor has already asked. If a slot can't be filled (nothing left in that topic)
+     it is filled from the starter questions, then from anything else. Replies that already are a list of questions ("did you mean…", the "no" replies) are left alone. */
   const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
-  function followUps(entry, asked, n) {
+  const PRACTICE = ['Design & process', 'Skills & tools'];
+  function followUps(entry, asked) {
     const usable = (x) => filled(x) && x !== entry && !asked.has(norm(x.q));
     const shuffled = (list) => list.slice().sort(() => Math.random() - 0.5);
-    // same topic: the questions that come next to this one in the bank are the ones that lead on from it, and the ones after it count more than the ones before
+    const pool = BANK.filter(usable), taken = new Set();
+    const take = (x) => { if (x && !taken.has(x)) { taken.add(x); return x; } return null; };
     const at = entry ? BANK.indexOf(entry) : -1, dist = (x) => { const d = BANK.indexOf(x) - at; return d > 0 ? d : -3 * d; };
-    const same = entry ? BANK.filter((x) => usable(x) && x.cat === entry.cat).sort((p, q) => dist(p) - dist(q)) : [];
-    const out = [], seen = new Set();
-    for (const x of [...same.slice(0, 2), ...shuffled(BANK.filter((x) => usable(x) && x.starter)), ...shuffled(same.slice(2)), ...shuffled(BANK.filter(usable))]) {
-      if (out.length >= n) break;
-      if (!seen.has(x.q)) { seen.add(x.q); out.push(x); }
-    }
-    return out.map((x) => ask(x.q));
+    const starters = shuffled(pool.filter((x) => x.starter));
+    // 1st: leads on from the answer just given
+    const first = take((entry ? pool.filter((x) => x.cat === entry.cat).sort((p, q) => dist(p) - dist(q))[0] : null) || starters[0] || shuffled(pool)[0]);
+    // 3rd: design practice
+    let last = null;
+    for (const cat of PRACTICE) { last = take(shuffled(pool.filter((x) => x.cat === cat && !taken.has(x)))[0]); if (last) break; }
+    // 2nd: random
+    const middle = take(shuffled(pool.filter((x) => !taken.has(x)))[0]);
+    const out = [first, middle, last].filter(Boolean);
+    for (const x of starters.concat(shuffled(pool))) { if (out.length >= 3) break; if (take(x)) out.push(x); }   // a slot that couldn't be filled
+    return out.slice(0, 3).map((x) => ask(x.q));
   }
   function withFollowUps(r, text, history) {
     const entry = r.entry; delete r.entry;
     if (r.kind === 'jail' || r.kind === 'maybe' || r.kind === 'none' || (r.actions || []).filter((a) => a.ask).length >= 2) return r;
     buildIndex();
     const asked = new Set((history || []).filter((m) => m.role === 'user').map((m) => norm(m.text)).concat(norm(text)));
-    r.actions = (r.actions || []).concat(followUps(entry, asked, 3));
+    r.actions = (r.actions || []).concat(followUps(entry, asked));
     return r;
   }
 
@@ -264,3 +273,4 @@
     rank(text) { buildIndex(); return rank(text).slice(0, 5).map((r) => ({ q: r.e.q, score: +r.score.toFixed(2), answered: filled(r.e) })); }
   };
 })();
+ 
