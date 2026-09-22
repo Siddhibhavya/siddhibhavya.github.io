@@ -137,8 +137,8 @@
         <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -13"/>
       </filter>
     </defs>
-    <path class="sb-static" fill="#ffece1" d=""/>
-    <g class="sb-goo-group" fill="#ffece1" filter="url(#sb-goo)">
+    <path class="sb-static" fill="#ffeddb" d=""/>
+    <g class="sb-goo-group" fill="#ffeddb" filter="url(#sb-goo)">
       <rect x="6" y="66" width="338" height="94" rx="8"/>
       <rect class="goo-tab" x="6" y="12" width="149" height="76" rx="8"/>
     </g>
