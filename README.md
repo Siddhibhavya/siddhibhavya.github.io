@@ -9,7 +9,7 @@ Hi! I'm Siddhi — a designer tinkering at the intersection of human-computer in
 A small museum of my work, with me as the (slightly over-excited) host.
 
 - **Landing** — a dark, starry entrance with a koi swimming behind it. Press *Be my Guest* to go through.
-- **My Work** — project cards that straighten up and open out when you hover: Syncletter, NearU, NCFE – Redesign and *Are they Driving?* (The full case studies are still on their way — for now each card opens a short summary.)
+- **My Work** — project cards that straighten up and open out when you hover: ( for now each card opens a short summary.)
 - **About Me** — who I am, on graph paper, with a few things you're allowed to pick up and throw around.
 - **Side Quests** — a collage of things I made just because.
 - **Guest Gallery** and **Welcome Aboard** — visitors draw a card, sign it, and leave it in my gallery.
