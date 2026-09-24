@@ -3,184 +3,674 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Siddhi — NearU</title>
-  <meta name="description" content="How might we build a trusted, hyperlocal buying culture within campus communities, so student makers can be discovered by the buyers right around them instead of scattered, informal channels?">
+  <title>NearU — Case study · Siddhi Bhavya</title>
+  <meta name="description" content="Building NearU: a trusted campus marketplace for student entrepreneurs. A case study in research, interaction design, and campus commerce.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="../css/site.css">
 </head>
-<body data-page="work" data-root="../" data-toc='[{"id":"context","label":"Context"},{"id":"solution","label":"Solution"},{"id":"ideation","label":"Ideation"},{"id":"research","label":"Research"},{"id":"design","label":"Design"},{"id":"onboarding","label":"Onboarding"},{"id":"scope","label":"Scope"}]'>
-  <div class="layout">
-    <main class="main" id="main">
-      <article class="cs-article">
-
-        <p class="cs-eyebrow">Case study</p>
-        <h1 class="cs-title">Building NearU</h1>
-        <p class="cs-role">Designed with <b>Ridhi Lakhina</b>, from an idea conceptualized during our course Business in Design: Introduction. We focused on catering to student hustlers on campus — giving them a common storefront space so they have ease running their business all year round.</p>
-
-        <figure class="cs-hero cs-hero-app">
-          <img src="../assets/work/nearu/screen-feed.png" alt="NearU's feed screen: a grid of student-made products under a search bar and category chips.">
-        </figure>
-
-        <section class="cs-section" id="context">
-          <p class="cs-kicker">Context</p>
-          <h2 class="cs-h2">Student Businesses are unorganised</h2>
-          <p class="cs-p">Student businesses rely on social media and word of mouth to reach buyers. Disappearing listings, scattered conversations, and manual payment checks make buying and selling difficult to manage alongside classes.</p>
-          <p class="cs-p">NearU is a campus marketplace designed to connect student entrepreneurs with buyers at Anant University, making it easier to discover and support student businesses throughout the year.</p>
-        </section>
-
-        <section class="cs-section" id="solution">
-          <p class="cs-kicker">Solution</p>
-          <h2 class="cs-h2">One app, two sides of the same campus economy</h2>
-          <p class="cs-p">Everyone starts on the same account and switches freely between buying and selling — a wishlist and checkout for buyers, a storefront and order tools for sellers.</p>
-          <div class="cs-phones">
-            <div class="cs-phone">
-              <figure><img src="../assets/work/nearu/screen-buyer-wishlist.png" alt="Buyer's cart screen, showing a wishlist with two products and a Pay Now button."></figure>
-              <figcaption>Buyer</figcaption>
-            </div>
-            <div class="cs-phone">
-              <figure><img src="../assets/work/nearu/screen-seller-storefront.png" alt="Seller's storefront screen for Kabir Mehta, a featured maker, with rating and an Add Listing button."></figure>
-              <figcaption>Seller</figcaption>
-            </div>
-          </div>
-          <p class="cs-p">After more research, we reduced the maximalist layout and removed competing visual elements to lower cognitive load — while keeping the color palette to preserve the app's playful, youthful personality. Instead of using color everywhere, we used it intentionally: to highlight key actions, categories, progress, and important decision points. This kept the experience expressive while making the user flow clearer and easier to scan.</p>
-        </section>
-
-        <section class="cs-section" id="ideation">
-          <p class="cs-kicker">Ideation</p>
-          <h2 class="cs-h2">From sketches to a working flow</h2>
-          <p class="cs-p">NearU began with wireframe sketches and early branding explorations, testing how a campus marketplace could look and work. These initial ideas gave us a starting point to investigate student needs and refine the experience.</p>
-          <div class="cs-compare">
-            <figure><img src="../assets/work/nearu/wireframes-first-look.png" alt="Early low-fidelity wireframes for the listing, storefront setup, and profile screens."><figcaption>First look</figcaption></figure>
-            <figure><img src="../assets/work/nearu/wireframes-final-look.png" alt="Refined mid-fidelity wireframes closer to the shipped layout."><figcaption>Final look</figcaption></figure>
-          </div>
-        </section>
-
-        <section class="cs-section" id="research">
-          <p class="cs-kicker">Research</p>
-          <h2 class="cs-h2">How students sell today</h2>
-          <h3 class="cs-h3">Focus and approach</h3>
-          <p class="cs-p">We looked at how students buy and sell within campus — focusing on discovery, trust, and the effort required to manage a small business alongside classes — and looked into the platforms they already use.</p>
-          <p class="cs-p">We interviewed student entrepreneurs and buyers to understand how campus businesses operate beyond fests and occasional stalls: profit margins, goals, material sourcing, connections between student businesses, and buyers' experiences commissioning their peers.</p>
-          <h3 class="cs-h3">Insights</h3>
-          <ul class="cs-list">
-            <li><b>Products are easy to miss.</b> Temporary stories and scattered posts make listings difficult to revisit.</li>
-            <li><b>Trust matters on both sides.</b> Buyers worry about receiving orders; sellers worry about genuine enquiries and payment.</li>
-            <li><b>Every order involves repeated coordination.</b> Confirming details, checking payments, and arranging pickups adds work.</li>
-            <li><b>Availability changes around classes.</b> Sellers need flexibility to limit orders and manage pickup times.</li>
-          </ul>
-        </section>
-
-        <section class="cs-section" id="design">
-          <p class="cs-kicker">Design</p>
-          <h2 class="cs-h2">Design opportunity</h2>
-          <p class="cs-p">How might we keep products discoverable beyond a single post, make buyer and seller identities clearer, and bring order details and pickup coordination into one place?</p>
-
-          <div class="cs-persona">
-            <div class="cs-persona-img"><img src="../assets/work/nearu/persona-kabir.png" alt="Illustrated portrait of Kabir, the seller persona."></div>
-            <div class="cs-persona-body">
-              <h3>Meet Kabir, our seller — who also likes to buy from fellow students</h3>
-              <p class="cs-p" style="margin-top:8px">Kabir sells woodwork, ceramics, designs, and trinkets from his hostel room. What began as a way to fund his supplies now brings regular orders, which he manages alongside coursework.</p>
-              <dl>
-                <div><dt>Goal</dt><dd>Maintain a manageable source of income without letting the business take over his study time.</dd></div>
-                <div><dt>Challenges</dt><dd>Keeping track of DMs, confirming orders, and coordinating deliveries around classes.</dd></div>
-                <div><dt>Needs</dt><dd>One place to manage orders, set availability, and keep buyers informed.</dd></div>
-              </dl>
-            </div>
-          </div>
-
-          <div class="cs-cards">
-            <div class="cs-card">
-              <h4>Promote</h4>
-              <p>Instagram stories, posts, and fest stalls help students get noticed.</p>
-              <p class="cs-challenge">Challenge: visibility disappears quickly.</p>
-            </div>
-            <div class="cs-card">
-              <h4>Coordinate</h4>
-              <p>Buyers ask questions, confirm customizations, and share details through DMs or WhatsApp.</p>
-              <p class="cs-challenge">Challenge: conversations and requests become difficult to track.</p>
-            </div>
-          </div>
-
-          <h3 class="cs-h3">User needs</h3>
-          <ul class="cs-list">
-            <li><b>Buyers</b> need listings they can revisit, clear product information, and confidence that an order will be fulfilled — plus visibility beyond a single post.</li>
-            <li><b>Sellers</b> need visibility beyond their existing followers and simple tools to manage demand within their available time.</li>
-          </ul>
-
-          <h3 class="cs-h3">Brand</h3>
-          <div class="cs-brand">
-            <div class="cs-brand-mark"><img src="../assets/work/nearu/logo-mark.png" alt="NearU logo mark: the wordmark next to a shopping-bag icon."></div>
-            <div class="cs-swatches">
-              <div class="cs-swatch"><i style="background:#FC5956"></i><span>#FC5956</span></div>
-              <div class="cs-swatch"><i style="background:#0E59D3"></i><span>#0E59D3</span></div>
-              <div class="cs-swatch"><i style="background:#FEC12D"></i><span>#FEC12D</span></div>
-              <div class="cs-swatch"><i style="background:#FFFAEB;border-color:rgba(14,3,20,0.25)"></i><span>#FFFAEB</span></div>
-            </div>
-          </div>
-          <div class="cs-fonts">
-            <div><span>Primary font</span><b>Liberation Sans</b></div>
-            <div><span>Secondary font</span><b>Inter</b></div>
-          </div>
-          <div class="cs-package"><img src="../assets/work/nearu/brand-packaging.png" alt="NearU branded paper bag and box, kraft paper with the shopping-bag mark."></div>
-        </section>
-
-        <section class="cs-section" id="onboarding">
-          <p class="cs-kicker">Onboarding</p>
-          <h2 class="cs-h2">One account, two modes</h2>
-          <p class="cs-p">Onboarding introduces NearU's purpose, verifies the student's campus, and lets them choose whether they want to buy or sell — a choice that can be switched easily later. This creates a trusted campus-only space while tailoring the experience to each user's needs.</p>
-          <figure class="cs-shot"><img src="../assets/work/nearu/onboarding-screens.png" alt="Four onboarding-related screens: the profile menu with a buyer/seller switch, the storefront, messages inbox, and search results."></figure>
-          <div class="cs-shot-caps">
-            <span>Easy mode switch and access to pages</span>
-            <span>Customizable storefront</span>
-            <span>Messaging service</span>
-            <span>Quick search and filter by store or product</span>
-          </div>
-        </section>
-
-        <section class="cs-section" id="scope">
-          <p class="cs-kicker">Scope</p>
-          <h2 class="cs-h2">Core features</h2>
-          <p class="cs-p">NearU works as a campus commerce service: a platform that gives student sellers their own storefront, discovery, order tools, and verified buyers within one college community.</p>
-          <figure class="cs-shot"><img src="../assets/work/nearu/feature-screens.png" alt="Four core-feature screens: chatting with a seller about a product, a payment-confirmed screen, a seller's analytics dashboard, and payouts with a cash-out button."></figure>
-          <div class="cs-shot-caps">
-            <span>Chatting when shopping</span>
-            <span>Digital payment</span>
-            <span>Analytics</span>
-            <span>Payouts</span>
-          </div>
-
-          <h3 class="cs-h3">Business model</h3>
-          <ul class="cs-model">
-            <li><b>Transaction fee</b><span>1–2% on completed orders.</span></li>
-            <li><b>Seller boosts</b><span>Paid promotion for listings during fests, launches, or high-demand periods.</span></li>
-            <li><b>Campus partnerships</b><span>Collaborate with colleges, entrepreneurship cells, and fest teams to onboard sellers.</span></li>
-            <li><b>Delivery commission</b><span>A small fee when campus delivery or pickup support is introduced.</span></li>
-            <li><b>Premium seller tools</b><span>Optional analytics, custom storefront themes, or priority visibility for regular sellers.</span></li>
-          </ul>
-        </section>
-
-        <div class="cs-closing">
-          <p>Clear to browse, easy to manage between classes, and familiar enough to build trust between students.</p>
-          <div class="cs-credits">
-            <div><b>Role</b><span>Design, Research</span></div>
-            <div><b>Team</b><span>Siddhi Bhavya, Ridhi Lakhina, Naaysha Doshi</span></div>
-            <div><b>Timeline</b><span>May 2026 – October 2026</span></div>
+<body class="nearu-page" data-page="nearu" data-root="../" data-shell="none">
+  <a class="nearu-skip" href="#context">Skip to case study</a>
+  <aside class="nearu-sidebar" id="nearu-sidebar" aria-label="Case study navigation">
+    <div class="nearu-sidebar-inner">
+      <a class="nearu-home" href="../home"><img src="../assets/ui/nav-arrow.svg" alt="" width="15" height="17"><span>HOME</span></a>
+      <div class="nearu-nav-panel"></div>
+      <div class="nearu-nav-pill" aria-hidden="true"></div>
+      <nav class="nearu-sections" data-node-id="351:1527" aria-label="Case study sections">
+        <a href="#context" aria-current="location">Context</a>
+        <a href="#solution">Solution</a>
+        <a href="#ideation">Ideation</a>
+        <a href="#research">Research</a>
+        <a href="#design">Design</a>
+        <a href="#onboarding">Onboarding</a>
+        <a href="#scope">Scope</a>
+      </nav>
+    </div>
+  </aside>
+  <main class="nearu-viewport" aria-label="NearU case study">
+<div class="nu-1 nearu-canvas" data-node-id="351:1516" data-name="NearU case study">
+      <div class="nu-2" data-node-id="351:1517"></div>
+      <div class="nu-3" data-node-id="351:1518" data-name="Rounded Rectangle"></div>
+      <div class="nu-4" data-node-id="351:1519" data-name="Main Frame">
+        <div class="nu-5" data-node-id="351:1520">
+          <div class="nu-6">
+            <div class="nu-7" data-name="Rounded Rectangle"></div>
           </div>
         </div>
-
-        <a class="cs-back" href="../home">&larr; Back to my work</a>
-      </article>
-    </main>
-  </div>
-  <footer class="footer"></footer>
-
+        <div class="nu-8" data-node-id="351:1521" data-name="Rounded Rectangle"></div>
+        <div class="nu-9" data-node-id="351:1522">
+          <img alt="" class="nu-10" src="../assets/work/nearu/rectangle92.svg" />
+        </div>
+        <h1 class="nu-18" data-node-id="351:1535" >
+          Building NearU
+        </h1>
+        <p class="nu-19" data-node-id="351:1536">Student Businesses are unorganised </p>
+        <h2 class="nu-20" data-node-id="351:1537" id="context" tabindex="-1">
+          Context
+        </h2>
+        <h2 class="nu-21" data-node-id="351:1538" id="solution" tabindex="-1">
+          Solution
+        </h2>
+        <h2 class="nu-22" data-node-id="351:1539" id="ideation" tabindex="-1">
+          Ideation
+        </h2>
+        <h2 class="nu-23" data-node-id="351:1540" id="research" tabindex="-1">
+          Research
+        </h2>
+        <p class="nu-24" data-node-id="351:1541">
+          FOCUS and approach
+        </p>
+        <p class="nu-25" data-node-id="351:1542">
+          Insights
+        </p>
+        <h2 class="nu-26" data-node-id="351:1543" id="design" tabindex="-1">
+          DESIGN
+        </h2>
+        <p class="nu-27" data-node-id="351:1544">
+          Design opportunity
+        </p>
+        <p class="nu-28" data-node-id="351:1545">
+          MEET KABIR, OUR SELLER ,WHO ALSO LIKES TO BUY FROM FELLOW STUDENTS
+        </p>
+        <p class="nu-29" data-node-id="351:1546">
+          I Designed NearU with Ridhi Lakhina, from an idea conceptualized during our course Business in Design: Introduction, We focused on catering to student hustlers in the campus, Giving a common storefront space to everyone so they have ease running their business all year round.
+        </p>
+        <p class="nu-30" data-node-id="351:1547">
+          Student businesses rely on social media, and word of mouth to reach buyers. Disappearing listings, scattered conversations, and manual payment checks make buying and selling difficult to manage alongside classes.
+        </p>
+        <p class="nu-31" data-node-id="351:1548">
+          Student businesses rely on social media, and word of mouth to reach buyers. Disappearing listings, scattered conversations, and manual payment checks make buying and selling difficult to manage alongside classes.
+        </p>
+        <p class="nu-32" data-node-id="351:1549">
+          NearU is a campus marketplace designed to connect student entrepreneurs with buyers at Anant University, making it easier to discover and support student businesses throughout the year.
+        </p>
+        <p class="nu-33" data-node-id="351:1550">
+          NearU began with wireframe sketches and early branding explorations, testing how a campus marketplace could look and work. These initial ideas gave us a starting point to investigate student needs and refine the experience.
+          <br aria-hidden="true" />
+          <br aria-hidden="true" />
+        </p>
+        <div class="nu-34" data-node-id="351:1551">
+          <div class="nu-35">
+            <div class="nu-36" data-name="Side Image"></div>
+          </div>
+        </div>
+        <div class="nu-37" data-node-id="351:1552" data-name="Details Background"></div>
+        <div class="nu-38" data-node-id="351:1553" data-name="Details Frame">
+          <p class="nu-39" data-node-id="351:1554">
+            My Role
+          </p>
+          <p class="nu-40" data-node-id="351:1555">
+            Timeline
+          </p>
+          <div class="nu-41" data-node-id="351:1556">
+            <p class="nu-42">Design</p>
+            <p class="nu-43">
+              Research
+              <br aria-hidden="true" />
+              Interactions
+            </p>
+          </div>
+          <div class="nu-44" data-node-id="351:1557">
+            <p class="nu-42">Siddhi Bhavya </p>
+            <p class="nu-43">Ridhi Lakhina Naaysha Doshi</p>
+          </div>
+          <p class="nu-45" data-node-id="351:1558">
+            May 2026
+          </p>
+          <div class="nu-46" data-node-id="351:1559">
+            <p class="nu-47">Interaction </p>
+            <p class="nu-48">Design</p>
+          </div>
+          <p class="nu-49" data-node-id="351:1560">
+            July2026-August2026
+          </p>
+          <p class="nu-50" data-node-id="351:1561">
+            Skills
+          </p>
+          <div class="nu-51" data-node-id="351:1562">
+            <p class="nu-52">Prototyping,</p>
+            <p class="nu-53">Figma</p>
+          </div>
+          <p class="nu-54" data-node-id="351:1563">
+            Teammates
+          </p>
+        </div>
+        <p class="nu-55" data-node-id="351:1564">
+          <span class="nu-56">How might we</span>
+          <span class="nu-57"> keep products discoverable beyond a single post, make buyer and seller identities clearer, and bring order details and pickup coordination into one place.</span>
+        </p>
+        <div class="nu-58" data-node-id="351:1565">
+          <div class="nu-59">
+            <div class="nu-60">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star6.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="nu-61" data-node-id="351:1566" data-name="Header Frame">
+          <div class="nu-62" data-node-id="351:1567" data-name="Mask group">
+            <div class="nu-63" data-node-id="351:1569" style="mask-image:url(../assets/work/nearu/vector.svg)" data-name="Vector">
+              <div class="nu-64">
+                <img alt="" class="nu-65" src="../assets/work/nearu/vector1.png"  decoding="async">
+              </div>
+            </div>
+          </div>
+          <div class="nu-66" data-node-id="351:1570">
+            <div class="nu-67">
+              <div class="nu-68" data-name="Welcome to NearU (clip) (Bezel) 1">
+                <div class="nu-69">
+                  <img alt="welcome to near uclip bezel1" class="nu-70" src="../assets/work/nearu/welcome-to-near-uclip-bezel1.png"  decoding="async">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nu-71" data-node-id="351:1571">
+            <div class="nu-72">
+              <div class="nu-73" data-name="Header Image">
+                <img alt="header image" class="nu-74" src="../assets/work/nearu/header-image.png"  decoding="async">
+              </div>
+            </div>
+          </div>
+          <div class="nu-75" data-node-id="351:1572">
+            <div class="nu-76">
+              <div class="nu-77" data-name="Explore Marketplace - Focused (clip) (Bezel) 1">
+                <img alt="explore marketplace focused clip bezel1" class="nu-78" src="../assets/work/nearu/explore-marketplace-focused-clip-bezel1.png"  decoding="async">
+              </div>
+            </div>
+          </div>
+          <div class="nu-79" data-node-id="351:1573" data-name="Vector">
+            <img alt="" class="nu-10" src="../assets/work/nearu/vector2.svg" />
+          </div>
+          <p class="nu-80" data-node-id="351:1574">
+            For you, NearU
+          </p>
+        </div>
+        <div class="nu-81" data-node-id="351:1575" data-name="Vector">
+          <img alt="" class="nu-10" src="../assets/work/nearu/vector3.svg" />
+        </div>
+        <div class="nu-82" data-node-id="351:1576" data-name="My Wishlist (clip) (Bezel) 1">
+          <img alt="my wishlist clip bezel1" class="nu-78" src="../assets/work/nearu/my-wishlist-clip-bezel1.png"  decoding="async">
+        </div>
+        <div class="nu-83" data-node-id="351:1577" data-name="nearU • Square wordmark animation 1">
+<video class="nearu-video nearu-video-wordmark" src="../assets/work/nearu/wordmark.mp4" muted autoplay loop playsinline preload="metadata" aria-label="NearU animated wordmark"></video></div>
+        <p class="nu-84" data-node-id="351:1578">Buyer </p>
+        <p class="nu-85" data-node-id="351:1579">
+          Seller
+        </p>
+        <div class="nu-86" data-node-id="351:1580" data-name="Storefront selller (clip) (Bezel) 1">
+          <img alt="storefront selller clip bezel1" class="nu-78" src="../assets/work/nearu/storefront-selller-clip-bezel1.png"  decoding="async">
+        </div>
+        <div class="nu-87" data-node-id="351:1581" data-name="SLIDER-1-02-5-8 (1) 1">
+<video class="nearu-video nearu-video-wireframes-first" src="../assets/work/nearu/wireframes-first.mp4" muted autoplay loop playsinline preload="metadata" aria-label="First wireframe exploration"></video>
+          <div class="nu-88"></div>
+        </div>
+        <div class="nu-89" data-node-id="351:1582" data-name="SLIDER-1-02-5-8 (2) 1">
+<video class="nearu-video nearu-video-wireframes-final" src="../assets/work/nearu/wireframes-final.mp4" muted autoplay loop playsinline preload="metadata" aria-label="Refined wireframes"></video>
+          <div aria-hidden="true" class="nu-90">
+            <div class="nu-91"></div>
+            <div class="nu-92"></div>
+          </div>
+        </div>
+        <p class="nu-93" data-node-id="351:1583">
+          First look
+        </p>
+        <p class="nu-94" data-node-id="351:1584">
+          Final look
+        </p>
+        <div class="nu-95" data-node-id="351:1585" data-name="Scene (3) 1">
+<video class="nearu-video nearu-video-demo" src="../assets/work/nearu/demo.mp4" muted autoplay loop playsinline preload="metadata" aria-label="NearU product demonstration"></video>
+          <div class="nu-96"></div>
+        </div>
+        <div class="nu-97" data-node-id="351:1586">
+          <p class="nu-98">After more research, we decided to reduced the maximalist layout and removed competing visual elements to lower cognitive load. However, we retained the color palette to preserve the app’s playful, youthful personality.</p>
+          <p class="nu-98">​</p>
+          <p class="nu-99">​</p>
+        </div>
+        <div class="nu-100" data-node-id="351:1587" data-name="Layer_1">
+          <img alt="" class="nu-10" src="../assets/work/nearu/layer1.svg" />
+        </div>
+        <div class="nu-101" data-node-id="351:1596" data-name="Logo Reveal">
+          <div class="nu-102" data-node-id="351:1597" data-name="Logo nearu">
+            <img alt="" class="nu-10" src="../assets/work/nearu/logo-nearu.svg" />
+          </div>
+        </div>
+        <div class="nu-103" data-node-id="351:1599" data-name="iPhone 13 Pro">
+          <div class="nu-69">
+            <img alt="iphone13 pro" class="nu-104" src="../assets/work/nearu/iphone13-pro.png"  decoding="async">
+          </div>
+        </div>
+        <div class="nu-105" data-node-id="351:1600" data-name="Explore Marketplace - Focused (clip) (Bezel) 3">
+          <img alt="explore marketplace focused clip bezel3" class="nu-78" src="../assets/work/nearu/explore-marketplace-focused-clip-bezel3.png"  decoding="async">
+        </div>
+        <p class="nu-106" data-node-id="351:1601">
+          A
+        </p>
+        <p class="nu-107" data-node-id="351:1602">
+          B
+        </p>
+        <p class="nu-108" data-node-id="351:1603">
+          Instead of using color everywhere, we used it intentionally :-to highlight key actions, categories, progress, and important decision points. This kept the experience expressive while making the user flow clearer and easier to scan.
+        </p>
+        <p class="nu-109" data-node-id="351:1604">
+          Our research explored how students discover, buy, and sell on campus, identifying gaps in trust, visibility, and order management that shaped NearU’s design.
+        </p>
+        <div class="nu-110" data-node-id="351:1605">
+          <p class="nu-111">
+            <span class="nu-112">How</span>
+            <span class="nu-99"> students buy and sell within the campus, focusing on discovery, trust, and the effort required to manage a small business alongside classes, we also looked into popular existing platforms they use.</span>
+          </p>
+          <p class="nu-98">​</p>
+          <p class="nu-99">We interviewed student entrepreneurs and buyers to understand how campus businesses operate beyond fests and occasional stalls. Conversations explored profit margins, goals, material sourcing, connections between student businesses, and buyers’ experiences commissioning their peers.</p>
+        </div>
+        <ul class="nu-113" data-node-id="351:1606">
+          <li class="nu-114">
+            <span class="nu-115">Products are easy to miss.</span>
+             Temporary stories and scattered posts make listings difficult to revisit.
+          </li>
+          <li class="nu-114">
+            <span class="nu-115">Trust matters on both sides.</span>
+             Buyers worry about receiving orders; sellers worry about genuine enquiries and payment.
+          </li>
+          <li class="nu-114">
+            <span class="nu-115">Every order involves repeated coordination</span>. Confirming details, checking payments, and arranging pickups adds work.
+          </li>
+          <li class="nu-116">
+            <span class="nu-115">Availability changes around classes.</span>
+             Sellers need flexibility to limit orders and manage pickup times.
+          </li>
+        </ul>
+        <div class="nu-117" data-node-id="351:1607" data-name="Rounded Rectangle"></div>
+        <div class="nu-118" data-node-id="351:1608">
+          <p class="nu-111">
+            <span class="nu-119">Promote</span>
+            <span class="nu-120">
+              <br aria-hidden="true" />
+              Instagram stories, posts, and fest stalls help students get noticed.
+            </span>
+          </p>
+          <p class="nu-120">
+            <br aria-hidden="true" />
+            Challenge: visibility disappears quickly.
+          </p>
+        </div>
+        <div class="nu-121" data-node-id="351:1609" data-name="Rounded Rectangle"></div>
+        <div class="nu-122" data-node-id="351:1610">
+          <p class="nu-111">
+            <span class="nu-120">
+               Coordinate
+              <br aria-hidden="true" />
+            </span>
+            <span class="nu-123">Buyers ask questions, confirm customizations, and share details through DMs or WhatsApp.</span>
+          </p>
+          <p class="nu-124">
+            <br aria-hidden="true" />
+            Challenge: conversations and requests become difficult to track.
+          </p>
+        </div>
+        <div class="nu-125" data-node-id="351:1611" data-name="Text Container">
+          <div class="nu-126" data-node-id="351:1612" data-name="Rounded Rectangle"></div>
+          <div class="nu-127" data-node-id="351:1613">
+            <p class="nu-111">
+              <span class="nu-120">
+                Complete the order
+                <br aria-hidden="true" />
+              </span>
+              <span class="nu-123">Payment and pickup are arranged manually around class schedules.</span>
+            </p>
+            <p class="nu-124">
+              <br aria-hidden="true" />
+              Challenge: both sides need reassurance that the order will be completed.
+            </p>
+          </div>
+        </div>
+        <p class="nu-128" data-node-id="351:1614">
+          HOW STUDENTS SELL TODAY
+        </p>
+        <div class="nu-129" data-node-id="351:1615" data-name="Image">
+          <img alt="Kabir, a student seller and buyer" class="nu-78" src="../assets/work/nearu/image.png"  decoding="async">
+        </div>
+        <div class="nu-130" data-node-id="351:1616">
+          <img alt="" class="nu-10" src="../assets/work/nearu/rectangle97.svg" />
+        </div>
+        <div class="nu-131" data-node-id="351:1617">
+          <p class="nu-111">
+            <span class="nu-132">Kabir</span>
+            <span class="nu-133"> sells Woodwork, ceramics, designs, trinkets from his hostel room. What began as a way to fund his supplies now brings regular orders, which he manages alongside coursework.</span>
+          </p>
+          <p class="nu-134">​</p>
+          <p class="nu-111">
+            <span class="nu-135">Goal:</span>
+            <span class="nu-133"> Maintain a manageable source of income without letting the business take over his study time.</span>
+          </p>
+          <p class="nu-111">
+            <span class="nu-136">Challenges</span>
+            <span class="nu-133">: Keeping track of DMs, confirming orders, and coordinating deliveries around classes.</span>
+          </p>
+          <p class="nu-111">
+            <span class="nu-136">Needs:</span>
+            <span class="nu-133"> One place to manage orders, set availability, and keep buyers informed.</span>
+          </p>
+          <p class="nu-133">​</p>
+        </div>
+        <div class="nu-137" data-node-id="351:1618" data-name="Rounded Rectangle"></div>
+        <div class="nu-138" data-node-id="351:1619" data-name="Rounded Rectangle"></div>
+        <div class="nu-139" data-node-id="351:1620" data-name="Rounded Rectangle"></div>
+        <p class="nu-140" data-node-id="351:1621">
+          User Needs
+        </p>
+        <div class="nu-141" data-node-id="351:1622">
+          <div class="nu-142">
+            <img alt="" class="nu-143" src="../assets/work/nearu/vector4.svg" />
+          </div>
+        </div>
+        <div class="nu-144" data-node-id="351:1623">
+          <div class="nu-145">
+            <div class="nu-146">
+              <div class="nu-147">
+                <img alt="" class="nu-143" src="../assets/work/nearu/vector5.svg" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nu-148" data-node-id="351:1624">
+          <div class="nu-59">
+            <div class="nu-60">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star6.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="nu-149" data-node-id="351:1625">
+          <div class="nu-59">
+            <div class="nu-60">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star6.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="nu-150" data-node-id="351:1626">
+          <div class="nu-59">
+            <div class="nu-60">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star6.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="nu-151" data-node-id="351:1627">
+          <div class="nu-152">
+            <div class="nu-60">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star10.svg" />
+            </div>
+          </div>
+        </div>
+        <p class="nu-153" data-node-id="351:1628">
+          Need listings they can revisit, clear product information, and confidence that an order will be fulfilled.
+        </p>
+        <p class="nu-154" data-node-id="351:1629">
+          Need visibility beyond their existing followers and simple tools to manage demand within their available time.
+        </p>
+        <div class="nu-155" data-node-id="351:1630" data-name="Vector">
+          <img alt="" class="nu-10" src="../assets/work/nearu/vector6.svg" />
+        </div>
+        <div class="nu-156" data-node-id="351:1631" data-name="Rounded Rectangle"></div>
+        <div class="nu-157" data-node-id="351:1632" data-name="Rounded Rectangle"></div>
+        <div class="nu-158" data-node-id="351:1633" data-name="Rounded Rectangle"></div>
+        <div class="nu-159" data-node-id="351:1634" data-name="Rounded Rectangle"></div>
+        <div class="nu-160" data-node-id="351:1635" data-name="Rounded Rectangle"></div>
+        <div class="nu-161" data-node-id="351:1636" data-name="Rounded Rectangle"></div>
+        <p class="nu-162" data-node-id="351:1637">
+          Aa
+        </p>
+        <p class="nu-163" data-node-id="351:1638">
+          Aa
+        </p>
+        <div class="nu-164" data-node-id="351:1639">
+          <p class="nu-165">core Features</p>
+        </div>
+        <div class="nu-166" data-node-id="351:1640">
+          <p class="nu-165">Brand</p>
+        </div>
+        <div class="nu-167" data-node-id="351:1641">
+          <p class="nu-165">Font: Liberation Sans </p>
+        </div>
+        <div class="nu-168" data-node-id="351:1642">
+          <p class="nu-169">Secondary Font: Inter</p>
+        </div>
+        <div class="nu-170" data-node-id="351:1643">
+          <p class="nu-165">#FC5956</p>
+        </div>
+        <div class="nu-171" data-node-id="351:1644">
+          <p class="nu-165">#0E59D3</p>
+        </div>
+        <div class="nu-172" data-node-id="351:1645">
+          <p class="nu-165">#FEC12D</p>
+        </div>
+        <div class="nu-173" data-node-id="351:1646">
+          <p class="nu-165">#FFFAEB</p>
+        </div>
+        <div class="nu-174" data-node-id="351:1647" data-name="Logo Reveal">
+          <div class="nu-102" data-node-id="351:1648" data-name="Logo nearu">
+            <img alt="" class="nu-10" src="../assets/work/nearu/logo-nearu.svg" />
+          </div>
+          <div class="nu-175" data-node-id="351:1650">
+            <p class="nu-165">Logo</p>
+          </div>
+        </div>
+        <div class="nu-176" data-node-id="351:1651" data-name="Image Container">
+          <div class="nu-177" data-node-id="351:1652" data-name="Frame 12 (clip) (Bezel) 2">
+            <img alt="frame12 clip bezel2" class="nu-78" src="../assets/work/nearu/frame12-clip-bezel2.png"  decoding="async">
+          </div>
+          <div class="nu-177" data-node-id="351:1653" data-name="Storefront selller (clip) (Bezel) 2">
+            <img alt="storefront selller clip bezel2" class="nu-78" src="../assets/work/nearu/storefront-selller-clip-bezel2.png"  decoding="async">
+          </div>
+          <div class="nu-178" data-node-id="351:1654" data-name="Messages-bbbuuyer (clip) (Bezel) 2">
+            <img alt="messages bbbuuyer clip bezel2" class="nu-78" src="../assets/work/nearu/messages-bbbuuyer-clip-bezel2.png"  decoding="async">
+          </div>
+          <div class="nu-178" data-node-id="351:1655" data-name="Search Results (clip) (Bezel) 1">
+            <img alt="search results clip bezel1" class="nu-78" src="../assets/work/nearu/search-results-clip-bezel1.png"  decoding="async">
+          </div>
+        </div>
+        <div class="nu-179" data-node-id="351:1656">
+          <p class="nu-165">Customizable storefront</p>
+        </div>
+        <div class="nu-180" data-node-id="351:1657">
+          <p class="nu-181">Messaging</p>
+          <p class="nu-165">sevice</p>
+        </div>
+        <div class="nu-182" data-node-id="351:1658">
+          <p class="nu-183">Quick search and filter by store or product</p>
+        </div>
+        <div class="nu-184" data-node-id="351:1659">
+          <p class="nu-185">Easy mode Switch and access to pages</p>
+        </div>
+        <div class="nu-186" data-node-id="351:1660">
+          <p class="nu-185">Chatting when shopping</p>
+        </div>
+        <div class="nu-187" data-node-id="351:1661">
+          <p class="nu-188"> Digital</p>
+          <p class="nu-185">Payment</p>
+        </div>
+        <div class="nu-189" data-node-id="351:1662">
+          <p class="nu-185">Analytics</p>
+        </div>
+        <div class="nu-190" data-node-id="351:1663">
+          <p class="nu-185">Payouts</p>
+        </div>
+        <div class="nu-191" data-node-id="351:1664" data-name="Image">
+          <img alt="NearU brand packaging" class="nu-78" src="../assets/work/nearu/image1.png"  decoding="async">
+        </div>
+        <div class="nu-192" data-node-id="351:1665">
+          <div class="nu-193">
+            <div class="nu-194">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star11.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="nu-195" data-node-id="351:1666">
+          <div class="nu-196" data-node-id="351:1667" data-name="Messages (Digital Zine) (clip) (Bezel) 1">
+            <img alt="messages digital zine clip bezel1" class="nu-78" src="../assets/work/nearu/messages-digital-zine-clip-bezel1.png"  decoding="async">
+          </div>
+          <div class="nu-197" data-node-id="351:1668" data-name="My Wishlist (clip) (Bezel)-1 1">
+            <img alt="my wishlist clip bezel11" class="nu-78" src="../assets/work/nearu/my-wishlist-clip-bezel11.png"  decoding="async">
+          </div>
+          <div class="nu-198" data-node-id="351:1669" data-name="Analytics Page (clip) (Bezel) 1"></div>
+          <div class="nu-199" data-node-id="351:1670" data-name="Payouts (clip) (Bezel) 2">
+            <img alt="payouts clip bezel2" class="nu-78" src="../assets/work/nearu/payouts-clip-bezel2.png"  decoding="async">
+          </div>
+          <div class="nu-200" data-node-id="351:1671"></div>
+          <div class="nu-201" data-node-id="351:1672" data-name="Analytics Page (clip) (Bezel) 3">
+            <img alt="analytics page clip bezel3" class="nu-78" src="../assets/work/nearu/analytics-page-clip-bezel3.png"  decoding="async">
+          </div>
+        </div>
+        <div class="nu-202" data-node-id="351:1673">
+          <h2 class="nu-203" data-node-id="351:1674" id="onboarding" tabindex="-1">
+            Onboarding
+          </h2>
+          <h2 class="nu-204" data-node-id="351:1675" id="scope" tabindex="-1">
+            Scope
+          </h2>
+          <div class="nu-205" data-node-id="351:1676">
+            <p class="nu-165">User Flow(Buyer)</p>
+          </div>
+          <div class="nu-206" data-node-id="351:1677">
+            <p class="nu-165">User Flow(Seller)</p>
+          </div>
+          <div class="nu-207" data-node-id="351:1678" data-name="Image">
+            <img alt="NearU buyer journey: onboarding, browsing, ordering, payment, and pickup" class="nu-78" src="../assets/work/nearu/image2.png"  decoding="async">
+          </div>
+          <div class="nu-208" data-node-id="351:1679">
+            <div class="nu-209" data-node-id="351:1680" data-name="Welcome to NearU (clip) (Bezel) 2">
+              <img alt="welcome to near uclip bezel2" class="nu-78" src="../assets/work/nearu/welcome-to-near-uclip-bezel2.png"  decoding="async">
+            </div>
+            <div class="nu-210" data-node-id="351:1681" data-name="Set Up Your Profile Buy (Bezel) 1">
+              <img alt="set up your profile buy bezel1" class="nu-78" src="../assets/work/nearu/set-up-your-profile-buy-bezel1.png"  decoding="async">
+            </div>
+            <div class="nu-211" data-node-id="351:1682" data-name="CAMPUS VERIFICATION (clip) (Bezel) 1">
+              <img alt="campus verification clip bezel1" class="nu-78" src="../assets/work/nearu/campus-verification-clip-bezel1.png"  decoding="async">
+            </div>
+            <div class="nu-212" data-node-id="351:1683" data-name="profile (clip) (Bezel) 2">
+              <img alt="profile clip bezel2" class="nu-78" src="../assets/work/nearu/profile-clip-bezel2.png"  decoding="async">
+            </div>
+          </div>
+          <div class="nu-213" data-node-id="351:1684" data-name="Image">
+            <img alt="NearU seller journey: verification, storefront setup, orders, analytics, and payouts" class="nu-78" src="../assets/work/nearu/image3.png"  decoding="async">
+          </div>
+        </div>
+        <div class="nu-214" data-node-id="351:1685" data-name="Rounded Rectangle"></div>
+        <div class="nu-215" data-node-id="351:1686">
+          <p class="nu-165">Onboarding</p>
+        </div>
+      </div>
+      <div class="nu-216" data-node-id="351:1687">
+        <div class="nu-217">
+          <div class="nu-218" data-name="Rounded Rectangle"></div>
+        </div>
+      </div>
+      <div class="nu-219" data-node-id="351:1688">
+        <div class="nu-217">
+          <div class="nu-220" data-name="Rounded Rectangle"></div>
+        </div>
+      </div>
+      <div class="nu-221" data-node-id="351:1689" data-name="Container">
+        <div class="nu-222" data-node-id="351:1690">
+          <div class="nu-223">
+            <div class="nu-224">
+              <p class="nu-53">E- Commerce</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nu-225" data-node-id="351:1691" data-name="Container">
+        <div class="nu-226" data-node-id="351:1692">
+          <div class="nu-223">
+            <div class="nu-227">
+              <p class="nu-53">B2B2C</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nu-228" data-node-id="351:1693">
+        <div class="nu-229" data-node-id="351:1694"></div>
+        <div class="nu-230" data-node-id="351:1695">
+          <p class="nu-231">
+            Great Ideas are yet to be built.
+            <br aria-hidden="true" />
+            Why not with you?
+          </p>
+        </div>
+        <div class="nu-232" data-node-id="351:1696">
+          <a class="nu-233" data-node-id="351:1697" href="mailto:alongsiddhi@gmail.com">
+            <p class="nu-231">Email</p>
+          </a>
+          <a class="nu-234" data-node-id="351:1698" href="https://www.instagram.com/alongsiddhi/?hl=en">
+            <p class="nu-231">Instagram</p>
+          </a>
+          <a class="nu-233" data-node-id="351:1699" href="https://www.linkedin.com/in/siddhi-bhavya/">
+            <p class="nu-231">Linkedin</p>
+          </a>
+          <a class="nu-235" data-node-id="351:1700" href="mailto:alongsiddhi@gmail.com?subject=Resume%20request">
+            <p class="nu-231">Resume</p>
+          </a>
+        </div>
+        <div class="nu-236" data-node-id="351:1701">
+          <a class="nu-233" data-node-id="351:1702" href="../home">
+            <p class="nu-231">Work</p>
+          </a>
+          <a class="nu-234" data-node-id="351:1703" href="../about">
+            <p class="nu-231">About me</p>
+          </a>
+          <a class="nu-237" data-node-id="351:1704" href="../side-quests">
+            <p class="nu-231">Side Quests</p>
+          </a>
+          <a class="nu-235" data-node-id="351:1705" href="../home#lm">
+            <p class="nu-231">M.I.K.U</p>
+          </a>
+          <a class="nu-238" data-node-id="351:1706" href="../guest-gallery">
+            <p class="nu-231">Guest Gallery</p>
+          </a>
+        </div>
+        <a class="nu-239" data-node-id="351:1707" href="../">
+          <p class="nu-231">Back to space</p>
+        </a>
+        <div class="nu-240" data-node-id="351:1708">
+          <div class="nu-241">
+            <div class="nu-242">
+              <img alt="" class="nu-10" src="../assets/work/nearu/star7.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nu-243" data-node-id="351:1709"></div>
+      <div class="nu-244" data-node-id="351:1710">
+        <p class="nu-165">Clear to browse, easy to manage between classes, and familiar enough to build trust between students.</p>
+      </div>
+      <p class="nu-245" data-node-id="351:1711">
+        Onboarding introduces NearU’s purpose, verifies the student’s campus, and lets them choose whether they want to buy, sell, which can be easily switched This creates a trusted campus-only space while tailoring the experience to each user’s needs.
+      </p>
+      <p class="nu-246" data-node-id="351:1712">
+        NearU works as a campus commerce service: a platform that gives student sellers their own storefront, discovery, order tools, and verified buyers within one college community.
+      </p>
+      <div class="nu-247" data-node-id="351:1713">
+        <p class="nu-248">Its business model can be:</p>
+        <ul class="nu-249">
+          <li class="nu-250">
+            <span class="nu-251">Small transaction fee: 1–2% on completed orders.</span>
+          </li>
+          <li class="nu-250">
+            <span class="nu-251">Seller boosts: Paid promotion for listings during fests, launches, or high-demand periods.</span>
+          </li>
+          <li class="nu-250">
+            <span class="nu-251">Campus partnerships: Collaborate with colleges, entrepreneurship cells, and fest teams to onboard sellers.</span>
+          </li>
+          <li class="nu-250">
+            <span class="nu-251">Delivery commission: Charge a small fee when campus delivery or pickup support is introduced.</span>
+          </li>
+          <li class="nu-252">
+            <span class="nu-251">Premium seller tools: Optional analytics, custom storefront themes, or priority visibility for regular sellers.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
   <script src="../js/config.js"></script>
-  <script src="../js/bank.js"></script>
-  <script src="../js/chat.js"></script>
   <script src="../js/shell.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.min.js"></script>
-  <script src="../js/koi.js"></script>
+  <script src="../js/nearu.js"></script>
 </body>
 </html>
