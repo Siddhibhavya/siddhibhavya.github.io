@@ -70,6 +70,28 @@
 }
 .bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
 
+/* ---------- 4b · Contents box (case-study pages: js/shell.js swaps the Index pane's markup when body[data-toc] is set) ---------- */
+.toc-back {
+  position: absolute; left: 38px; top: 40px; display: flex; align-items: center; gap: 10px;
+  font-size: 16px; line-height: 1.18; color: var(--brown-soft); transition: color 0.2s ease;
+}
+.toc-back img { transform: scaleX(-1); }   /* arrow-left.svg points right; flip it to point left */
+.toc-back:hover { color: var(--maroon); }
+.toc-heading { position: absolute; left: 38px; top: 86px; font-family: var(--font-serif); font-size: 24px; line-height: 1.18; color: var(--ink); }
+.toc-box { position: absolute; left: 26px; top: 130px; right: 20px; padding: 6px 0; }
+.toc-pill {
+  position: absolute; left: 0; right: 0; top: 0; height: 44px; border-radius: 10px; background: var(--maroon);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.toc-box.ready .toc-pill { opacity: 1; transition: top 0.55s var(--ease-out), height 0.55s var(--ease-out), opacity 0.3s ease; }   /* the glide only starts once the box has settled at its first section */
+.toc-pill.is-hidden { opacity: 0; }
+.toc-item {
+  position: relative; z-index: 1; display: flex; align-items: center; height: 44px; padding: 0 16px;
+  font-size: 18px; line-height: 1.18; color: var(--brown-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+.toc-item.is-active { color: var(--cream); }
+
 /* ---------- 5 · Explore nav ---------- */
 .explore-box {
   position: absolute; left: 26px; top: calc(421px + var(--nav-dy, 0px)); width: 298px; height: 419px;

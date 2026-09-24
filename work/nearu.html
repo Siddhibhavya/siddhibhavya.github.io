@@ -10,18 +10,168 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500&display=swap">
   <link rel="stylesheet" href="../css/site.css">
 </head>
-<body data-page="work" data-root="../">
+<body data-page="work" data-root="../" data-toc='[{"id":"context","label":"Context"},{"id":"solution","label":"Solution"},{"id":"ideation","label":"Ideation"},{"id":"research","label":"Research"},{"id":"design","label":"Design"},{"id":"onboarding","label":"Onboarding"},{"id":"scope","label":"Scope"}]'>
   <div class="layout">
     <main class="main" id="main">
-      <div class="stage-wrap" style="--sh:1024px">
-        <div class="stage">
-          <p class="stub-eyebrow">Case study</p>
-          <h1 class="stub-title">NearU</h1>
-          <p class="stub-copy">How might we build a trusted, hyperlocal buying culture within campus communities, so student makers can be discovered by the buyers right around them instead of scattered, informal channels?</p>
-          <p class="stub-soon">The full case study is coming soon.</p>
-          <a class="stub-back" href="../home">&larr; Back to my work</a>
+      <article class="cs-article">
+
+        <p class="cs-eyebrow">Case study</p>
+        <h1 class="cs-title">Building NearU</h1>
+        <p class="cs-role">Designed with <b>Ridhi Lakhina</b>, from an idea conceptualized during our course Business in Design: Introduction. We focused on catering to student hustlers on campus — giving them a common storefront space so they have ease running their business all year round.</p>
+
+        <figure class="cs-hero cs-hero-app">
+          <img src="../assets/work/nearu/screen-feed.png" alt="NearU's feed screen: a grid of student-made products under a search bar and category chips.">
+        </figure>
+
+        <section class="cs-section" id="context">
+          <p class="cs-kicker">Context</p>
+          <h2 class="cs-h2">Student Businesses are unorganised</h2>
+          <p class="cs-p">Student businesses rely on social media and word of mouth to reach buyers. Disappearing listings, scattered conversations, and manual payment checks make buying and selling difficult to manage alongside classes.</p>
+          <p class="cs-p">NearU is a campus marketplace designed to connect student entrepreneurs with buyers at Anant University, making it easier to discover and support student businesses throughout the year.</p>
+        </section>
+
+        <section class="cs-section" id="solution">
+          <p class="cs-kicker">Solution</p>
+          <h2 class="cs-h2">One app, two sides of the same campus economy</h2>
+          <p class="cs-p">Everyone starts on the same account and switches freely between buying and selling — a wishlist and checkout for buyers, a storefront and order tools for sellers.</p>
+          <div class="cs-phones">
+            <div class="cs-phone">
+              <figure><img src="../assets/work/nearu/screen-buyer-wishlist.png" alt="Buyer's cart screen, showing a wishlist with two products and a Pay Now button."></figure>
+              <figcaption>Buyer</figcaption>
+            </div>
+            <div class="cs-phone">
+              <figure><img src="../assets/work/nearu/screen-seller-storefront.png" alt="Seller's storefront screen for Kabir Mehta, a featured maker, with rating and an Add Listing button."></figure>
+              <figcaption>Seller</figcaption>
+            </div>
+          </div>
+          <p class="cs-p">After more research, we reduced the maximalist layout and removed competing visual elements to lower cognitive load — while keeping the color palette to preserve the app's playful, youthful personality. Instead of using color everywhere, we used it intentionally: to highlight key actions, categories, progress, and important decision points. This kept the experience expressive while making the user flow clearer and easier to scan.</p>
+        </section>
+
+        <section class="cs-section" id="ideation">
+          <p class="cs-kicker">Ideation</p>
+          <h2 class="cs-h2">From sketches to a working flow</h2>
+          <p class="cs-p">NearU began with wireframe sketches and early branding explorations, testing how a campus marketplace could look and work. These initial ideas gave us a starting point to investigate student needs and refine the experience.</p>
+          <div class="cs-compare">
+            <figure><img src="../assets/work/nearu/wireframes-first-look.png" alt="Early low-fidelity wireframes for the listing, storefront setup, and profile screens."><figcaption>First look</figcaption></figure>
+            <figure><img src="../assets/work/nearu/wireframes-final-look.png" alt="Refined mid-fidelity wireframes closer to the shipped layout."><figcaption>Final look</figcaption></figure>
+          </div>
+        </section>
+
+        <section class="cs-section" id="research">
+          <p class="cs-kicker">Research</p>
+          <h2 class="cs-h2">How students sell today</h2>
+          <h3 class="cs-h3">Focus and approach</h3>
+          <p class="cs-p">We looked at how students buy and sell within campus — focusing on discovery, trust, and the effort required to manage a small business alongside classes — and looked into the platforms they already use.</p>
+          <p class="cs-p">We interviewed student entrepreneurs and buyers to understand how campus businesses operate beyond fests and occasional stalls: profit margins, goals, material sourcing, connections between student businesses, and buyers' experiences commissioning their peers.</p>
+          <h3 class="cs-h3">Insights</h3>
+          <ul class="cs-list">
+            <li><b>Products are easy to miss.</b> Temporary stories and scattered posts make listings difficult to revisit.</li>
+            <li><b>Trust matters on both sides.</b> Buyers worry about receiving orders; sellers worry about genuine enquiries and payment.</li>
+            <li><b>Every order involves repeated coordination.</b> Confirming details, checking payments, and arranging pickups adds work.</li>
+            <li><b>Availability changes around classes.</b> Sellers need flexibility to limit orders and manage pickup times.</li>
+          </ul>
+        </section>
+
+        <section class="cs-section" id="design">
+          <p class="cs-kicker">Design</p>
+          <h2 class="cs-h2">Design opportunity</h2>
+          <p class="cs-p">How might we keep products discoverable beyond a single post, make buyer and seller identities clearer, and bring order details and pickup coordination into one place?</p>
+
+          <div class="cs-persona">
+            <div class="cs-persona-img"><img src="../assets/work/nearu/persona-kabir.png" alt="Illustrated portrait of Kabir, the seller persona."></div>
+            <div class="cs-persona-body">
+              <h3>Meet Kabir, our seller — who also likes to buy from fellow students</h3>
+              <p class="cs-p" style="margin-top:8px">Kabir sells woodwork, ceramics, designs, and trinkets from his hostel room. What began as a way to fund his supplies now brings regular orders, which he manages alongside coursework.</p>
+              <dl>
+                <div><dt>Goal</dt><dd>Maintain a manageable source of income without letting the business take over his study time.</dd></div>
+                <div><dt>Challenges</dt><dd>Keeping track of DMs, confirming orders, and coordinating deliveries around classes.</dd></div>
+                <div><dt>Needs</dt><dd>One place to manage orders, set availability, and keep buyers informed.</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="cs-cards">
+            <div class="cs-card">
+              <h4>Promote</h4>
+              <p>Instagram stories, posts, and fest stalls help students get noticed.</p>
+              <p class="cs-challenge">Challenge: visibility disappears quickly.</p>
+            </div>
+            <div class="cs-card">
+              <h4>Coordinate</h4>
+              <p>Buyers ask questions, confirm customizations, and share details through DMs or WhatsApp.</p>
+              <p class="cs-challenge">Challenge: conversations and requests become difficult to track.</p>
+            </div>
+          </div>
+
+          <h3 class="cs-h3">User needs</h3>
+          <ul class="cs-list">
+            <li><b>Buyers</b> need listings they can revisit, clear product information, and confidence that an order will be fulfilled — plus visibility beyond a single post.</li>
+            <li><b>Sellers</b> need visibility beyond their existing followers and simple tools to manage demand within their available time.</li>
+          </ul>
+
+          <h3 class="cs-h3">Brand</h3>
+          <div class="cs-brand">
+            <div class="cs-brand-mark"><img src="../assets/work/nearu/logo-mark.png" alt="NearU logo mark: the wordmark next to a shopping-bag icon."></div>
+            <div class="cs-swatches">
+              <div class="cs-swatch"><i style="background:#FC5956"></i><span>#FC5956</span></div>
+              <div class="cs-swatch"><i style="background:#0E59D3"></i><span>#0E59D3</span></div>
+              <div class="cs-swatch"><i style="background:#FEC12D"></i><span>#FEC12D</span></div>
+              <div class="cs-swatch"><i style="background:#FFFAEB;border-color:rgba(14,3,20,0.25)"></i><span>#FFFAEB</span></div>
+            </div>
+          </div>
+          <div class="cs-fonts">
+            <div><span>Primary font</span><b>Liberation Sans</b></div>
+            <div><span>Secondary font</span><b>Inter</b></div>
+          </div>
+          <div class="cs-package"><img src="../assets/work/nearu/brand-packaging.png" alt="NearU branded paper bag and box, kraft paper with the shopping-bag mark."></div>
+        </section>
+
+        <section class="cs-section" id="onboarding">
+          <p class="cs-kicker">Onboarding</p>
+          <h2 class="cs-h2">One account, two modes</h2>
+          <p class="cs-p">Onboarding introduces NearU's purpose, verifies the student's campus, and lets them choose whether they want to buy or sell — a choice that can be switched easily later. This creates a trusted campus-only space while tailoring the experience to each user's needs.</p>
+          <figure class="cs-shot"><img src="../assets/work/nearu/onboarding-screens.png" alt="Four onboarding-related screens: the profile menu with a buyer/seller switch, the storefront, messages inbox, and search results."></figure>
+          <div class="cs-shot-caps">
+            <span>Easy mode switch and access to pages</span>
+            <span>Customizable storefront</span>
+            <span>Messaging service</span>
+            <span>Quick search and filter by store or product</span>
+          </div>
+        </section>
+
+        <section class="cs-section" id="scope">
+          <p class="cs-kicker">Scope</p>
+          <h2 class="cs-h2">Core features</h2>
+          <p class="cs-p">NearU works as a campus commerce service: a platform that gives student sellers their own storefront, discovery, order tools, and verified buyers within one college community.</p>
+          <figure class="cs-shot"><img src="../assets/work/nearu/feature-screens.png" alt="Four core-feature screens: chatting with a seller about a product, a payment-confirmed screen, a seller's analytics dashboard, and payouts with a cash-out button."></figure>
+          <div class="cs-shot-caps">
+            <span>Chatting when shopping</span>
+            <span>Digital payment</span>
+            <span>Analytics</span>
+            <span>Payouts</span>
+          </div>
+
+          <h3 class="cs-h3">Business model</h3>
+          <ul class="cs-model">
+            <li><b>Transaction fee</b><span>1–2% on completed orders.</span></li>
+            <li><b>Seller boosts</b><span>Paid promotion for listings during fests, launches, or high-demand periods.</span></li>
+            <li><b>Campus partnerships</b><span>Collaborate with colleges, entrepreneurship cells, and fest teams to onboard sellers.</span></li>
+            <li><b>Delivery commission</b><span>A small fee when campus delivery or pickup support is introduced.</span></li>
+            <li><b>Premium seller tools</b><span>Optional analytics, custom storefront themes, or priority visibility for regular sellers.</span></li>
+          </ul>
+        </section>
+
+        <div class="cs-closing">
+          <p>Clear to browse, easy to manage between classes, and familiar enough to build trust between students.</p>
+          <div class="cs-credits">
+            <div><b>Role</b><span>Design, Research</span></div>
+            <div><b>Team</b><span>Siddhi Bhavya, Ridhi Lakhina, Naaysha Doshi</span></div>
+            <div><b>Timeline</b><span>May 2026 – October 2026</span></div>
+          </div>
         </div>
-      </div>
+
+        <a class="cs-back" href="../home">&larr; Back to my work</a>
+      </article>
     </main>
   </div>
   <footer class="footer"></footer>

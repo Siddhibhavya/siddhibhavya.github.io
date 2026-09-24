@@ -117,7 +117,28 @@
   }
 
   /* ------------------------------------------------------------------ 3 · Markup */
+  /* Case-study pages (work/*.html) set body[data-toc] to a JSON list of {id,label} sections. When present the sidebar is JUST
+     the Contents box (jump links + a scrollspy pill, css/shell/sidebar.css §4b) — no INDEX/M.I.K.U tabs, no chat: the Figma
+     case-study frame carries its own "Contents" sidebar (node 261:878) in place of the site's Index/M.I.K.U card. */
+  function tocList() {
+    try { return JSON.parse(body.dataset.toc || 'null'); } catch (e) { return null; }
+  }
+
+  function tocHTML(toc) {
+    const items = toc.map((t) => `<a class="toc-item" data-toc-id="${t.id}" href="#${t.id}"><span>${esc(t.label)}</span></a>`).join('');
+    return `
+<div class="sb-inner sb-toc">
+  <div class="sb-body sb-body-toc"></div>
+  <a class="toc-back" href="${R}home"><img src="${R}assets/ui/arrow-left.svg" alt="" width="13" height="13"><span>Back to my work</span></a>
+  <p class="toc-heading">Contents</p>
+  <div class="toc-box"><i class="toc-pill" aria-hidden="true"></i>${items}</div>
+</div>`;
+  }
+
   function sidebarHTML() {
+    const toc = tocList();
+    if (toc) return tocHTML(toc);
+
     const items = SITE.nav.map((n) => {
       const active = n.id === page ? ' is-active' : '';
       const extra = n.action === 'lm' ? ' data-action="lm"' : '';
@@ -579,7 +600,7 @@
       '<svg class="ic ic-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' +
       '<svg class="ic ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
     const note = document.createElement('div');                       // the little label that slides out of the corner now and then
-    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & M.I.K.U';
+    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = tocList() ? 'Menu · Contents' : 'Menu · Index & M.I.K.U';
     const scrim = document.createElement('div');
     scrim.className = 'sb-scrim';
     document.body.append(scrim, btn, note);
@@ -607,6 +628,44 @@
       remind(600);                                                  // the first time is right as the page opens
     }
     return { open: () => set(true), close: () => set(false) };
+  }
+
+  /* Case-study pages: the Contents box highlights the section currently in view (a pill glides between items, same as EXPLORE's) and
+     clicking an item scrolls smoothly to it. Sections are found by the ids in body[data-toc]; a section counts as "current" once its
+     top has crossed a line a third of the way down the viewport, so the pill moves a little before the reader reaches the very top of it. */
+  function initToc(sidebar) {
+    const toc = tocList();
+    if (!toc) return;
+    const box = sidebar.querySelector('.toc-box');
+    const pill = sidebar.querySelector('.toc-pill');
+    const tocItems = [...sidebar.querySelectorAll('.toc-item')];
+    const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
+    if (!sections.length) return;
+
+    let current = null;
+    const setCurrent = (id) => {
+      if (id === current) return;
+      current = id;
+      tocItems.forEach((a) => a.classList.toggle('is-active', a.dataset.tocId === id));
+      const on = sidebar.querySelector(`.toc-item[data-toc-id="${id}"]`);
+      if (on) { pill.style.top = on.offsetTop + 'px'; pill.style.height = on.offsetHeight + 'px'; pill.classList.remove('is-hidden'); }
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      const above = sections.filter((s) => s.getBoundingClientRect().top <= window.innerHeight / 3);
+      const active = above.length ? above[above.length - 1] : sections[0];
+      setCurrent(active.id);
+    }, { rootMargin: `-${Math.round(window.innerHeight / 3)}px 0px -60% 0px`, threshold: 0 });
+    sections.forEach((s) => io.observe(s));
+    setCurrent(sections[0].id);
+    requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('ready')));   // enable the pill's glide after first paint (no glide-in on load)
+
+    tocItems.forEach((a) => a.addEventListener('click', (e) => {
+      const target = document.getElementById(a.dataset.tocId);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }));
   }
 
   /* "Resume": a pill in the top-right corner of every main-site page, always in reach */
@@ -693,13 +752,15 @@
     store.del('siddhi.enter');                                // the arrival flag is single-use
     guard('footer markup', () => mountFooter(layout));
 
-    const sb = sidebar ? guard('tabs', () => initSidebar(sidebar)) : null;
+    const toc = tocList();
+    const sb = (sidebar && !toc) ? guard('tabs', () => initSidebar(sidebar)) : null;
+    if (sidebar && toc) guard('contents scrollspy', () => initToc(sidebar));
     if (sb) {
       guard('chat', () => initChat(sidebar, sb.setTab));
       guard('nudge', () => initNudge(sidebar));
       guard('page navigation', () => initRouter(sidebar));
     }
-    const drawer = sb ? guard('drawer', () => initDrawer(sidebar)) : null;
+    const drawer = sidebar ? guard('drawer', () => initDrawer(sidebar)) : null;
     guard('case-study cursor', initCaseCursor);
 
     // "M.I.K.U" links (footer, quick links): open the chat tab — or, with no sidebar on this page, open it on the home page
