@@ -128,25 +128,45 @@
      guest.css), so every play() looks a little different. */
   function driftDecor(main) {
     const els = [...main.querySelectorAll('.gb-decor .dc')];
-    const MARGIN = 40;                                                  // stays this far clear of the stage's own right edge
-    const TXT = { x0: 167, y0: 331, x1: 1137, y1: 643 };                 // the raw "Thank You / for contributing!" box (measured, .ov-thanks) — margin is added per element below
-    // clears(): true only if the element's own body (its own half-size, plus the sway it will do, plus a flat margin) never reaches the text box at all
-    const clears = (x, y, half) => x + half < TXT.x0 || x - half > TXT.x1 || y + half < TXT.y0 || y - half > TXT.y1;
-    // No fade, and it does not leave: each one wanders a little, settling clear of the thank-you text (the check accounts for its own size, not just its
-    // centre point) — only the strings (js/guest-anim.js, leave()) actually exit the screen. It settles well before "Thank You" starts revealing, then
-    // keeps a small idle sway going instead of freezing solid.
-    els.forEach((el) => {
+    const TXT = { x0: 167, y0: 331, x1: 1137, y1: 643 };                 // the raw "Thank You / for contributing!" box (measured, .ov-thanks)
+    const outsideText = (x, y) => Math.hypot(Math.max(TXT.x0 - x, 0, x - TXT.x1), Math.max(TXT.y0 - y, 0, y - TXT.y1));
+    const GAP = 26, TEXT_MARGIN = 50;
+    // No fade, and it does not leave: each one wanders to a new resting spot nearby, clear of the thank-you text — only the strings (leave(), below)
+    // actually exit the screen. Landing spots are chosen the same way js/guest.js scatters the page's own decorations: try a lot of candidate spots
+    // (biased rightward, but reaching in any direction so there is always room somewhere), keep the roomiest, shrinking the required gap a little each
+    // round if the bigger ones can't otherwise fit — so 15 of them can share the screen without a visitor's card and the text ending up crowded.
+    const items = els.map((el) => {
       const cx = parseFloat(el.style.getPropertyValue('--cx')) || 0, cy = parseFloat(el.style.getPropertyValue('--cy')) || 0;
       const w = parseFloat(el.style.getPropertyValue('--w')) || 200, h = parseFloat(el.style.getPropertyValue('--h')) || 200;
       const baseR = parseFloat(el.style.getPropertyValue('--r')) || 0;
+      const fish = el.classList.contains('fish');
       const swayX = rand(12, 30), swayY = rand(10, 26), swayR = rand(4, 12);
-      const half = Math.max(w, h) / 2 + Math.max(swayX, swayY) + 60;    // its own reach, plus the sway it will do, plus a flat 60px clear margin
-      const room = Math.max(40, 1448 - MARGIN - cx);                    // how far right it can go and still land on the stage
-      let dxEnd = Math.min(room, rand(90, 320)), dyEnd = rand(-120, 120);
-      if (!clears(cx + dxEnd, cy + dyEnd, half)) {                      // would land on (or too near) the text: push it above or below instead, whichever is the shorter hop
-        dyEnd = (cy < (TXT.y0 + TXT.y1) / 2 ? TXT.y0 - half : TXT.y1 + half) - cy;
-        dyEnd = Math.max(-cy + half * 0.6, Math.min(1024 - half * 0.6 - cy, dyEnd));   // still clear of the top/bottom of the stage itself
+      const bodyHalf = (fish ? 0.35 : 0.42) * Math.max(w, h);            // how much room it really takes up (same formula as js/guest.js, scatterDecor)
+      const reach = bodyHalf + Math.max(swayX, swayY);                  // plus the sway it will do
+      return { el, cx, cy, baseR, swayX, swayY, swayR, bodyHalf, reach, dxEnd: 0, dyEnd: 0 };
+    }).sort((a, b) => b.bodyHalf - a.bodyHalf);                          // biggest (pickiest) first
+    for (let squeeze = 1, round = 0; round < 14; round++, squeeze *= 0.92) {
+      const placed = []; let ok = true;
+      for (const it of items) {
+        let best = null;
+        for (let k = 0; k < 500 && (!best || k < 160); k++) {
+          const dx = rand(-260, 700), dy = rand(-420, 420);              // where it could end up, generally biased to the right but free to go any way
+          const fx = it.cx + dx, fy = it.cy + dy;
+          if (fx < it.reach * 0.6 || fx > 1448 - it.reach * 0.6 || fy < it.reach * 0.6 || fy > 1024 - it.reach * 0.6) continue;   // stays on the stage
+          if (outsideText(fx, fy) < it.reach + TEXT_MARGIN - 20) continue;                                                        // clear of the text
+          let room = Infinity;
+          for (const p of placed) room = Math.min(room, Math.hypot(p.fx - fx, p.fy - fy) - (p.it.bodyHalf + it.bodyHalf + GAP) * squeeze);
+          if (room < 0) continue;
+          if (!best || room > best.room) best = { fx, fy, room };
+        }
+        if (!best) { ok = false; break; }
+        placed.push({ it, fx: best.fx, fy: best.fy });
       }
+      if (!ok) continue;
+      for (const { it, fx, fy } of placed) { it.dxEnd = fx - it.cx; it.dyEnd = fy - it.cy; }
+      break;                                                             // everyone found a spot: done (if every round fails, they simply don't drift)
+    }
+    items.forEach(({ el, baseR, swayX, swayY, swayR, dxEnd, dyEnd }) => {
       const dx1 = dxEnd * rand(0.25, 0.4), dy1 = rand(-60, 60);          // a light wander first, not yet committed to a direction
       const dx2 = dxEnd * rand(0.65, 0.85), dy2 = rand(-100, 100);       // picking up speed, heading right
       const spin = rand(-35, 35);
