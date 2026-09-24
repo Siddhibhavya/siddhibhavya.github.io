@@ -37,6 +37,7 @@
   const PHONE = window.matchMedia('(max-width: 759px)').matches;                   // phones do the same shape with about half the points: far less work per frame
   const BODY_N = PHONE ? 150 : 301, LEAD_N = PHONE ? 12 : 24, LEAD_LEN = 900;      // samples along the line; straight lead-in/out so it reaches any screen edge
   const lerp = (a, b, f) => a + (b - a) * f;
+  const rand = (a, b) => a + Math.random() * (b - a);
   const unit = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
   const bez = (a, b, c, d, w) => { const u = 1 - w; return [u * u * u * a[0] + 3 * u * u * w * b[0] + 3 * u * w * w * c[0] + w * w * w * d[0], u * u * u * a[1] + 3 * u * u * w * b[1] + 3 * u * w * w * c[1] + w * w * w * d[1]]; };
   // Quintic Hermite keeps both velocity and acceleration continuous at the middle shape.
@@ -119,6 +120,47 @@
     for (let i = 1; i < NP - 1; i++) if (lengths[i] > back && lengths[i] < front) seg.push(pts[i]);
     seg.push(at(front));
     return polyD(seg);
+  }
+
+  /* ------------------------------------------------------------------ 3b · Background stars and fish-bone patches
+     Each one wanders off on its own loose, randomised path that generally trends left-to-right (never back the way it came), so the whole
+     background feels like it's flowing past, roughly finishing as "Thank You" settles in. Driven here (not the old straight-line CSS fly-off in
+     guest.css), so every play() looks a little different. */
+  function driftDecor(main) {
+    const els = [...main.querySelectorAll('.gb-decor .dc')];
+    const MARGIN = 40;                                                  // stays this far clear of the stage's own right edge
+    const TXT = { x0: 167, y0: 331, x1: 1137, y1: 643 };                 // the raw "Thank You / for contributing!" box (measured, .ov-thanks) — margin is added per element below
+    // clears(): true only if the element's own body (its own half-size, plus the sway it will do, plus a flat margin) never reaches the text box at all
+    const clears = (x, y, half) => x + half < TXT.x0 || x - half > TXT.x1 || y + half < TXT.y0 || y - half > TXT.y1;
+    // No fade, and it does not leave: each one wanders a little, settling clear of the thank-you text (the check accounts for its own size, not just its
+    // centre point) — only the strings (js/guest-anim.js, leave()) actually exit the screen. It settles well before "Thank You" starts revealing, then
+    // keeps a small idle sway going instead of freezing solid.
+    els.forEach((el) => {
+      const cx = parseFloat(el.style.getPropertyValue('--cx')) || 0, cy = parseFloat(el.style.getPropertyValue('--cy')) || 0;
+      const w = parseFloat(el.style.getPropertyValue('--w')) || 200, h = parseFloat(el.style.getPropertyValue('--h')) || 200;
+      const baseR = parseFloat(el.style.getPropertyValue('--r')) || 0;
+      const swayX = rand(12, 30), swayY = rand(10, 26), swayR = rand(4, 12);
+      const half = Math.max(w, h) / 2 + Math.max(swayX, swayY) + 60;    // its own reach, plus the sway it will do, plus a flat 60px clear margin
+      const room = Math.max(40, 1448 - MARGIN - cx);                    // how far right it can go and still land on the stage
+      let dxEnd = Math.min(room, rand(90, 320)), dyEnd = rand(-120, 120);
+      if (!clears(cx + dxEnd, cy + dyEnd, half)) {                      // would land on (or too near) the text: push it above or below instead, whichever is the shorter hop
+        dyEnd = (cy < (TXT.y0 + TXT.y1) / 2 ? TXT.y0 - half : TXT.y1 + half) - cy;
+        dyEnd = Math.max(-cy + half * 0.6, Math.min(1024 - half * 0.6 - cy, dyEnd));   // still clear of the top/bottom of the stage itself
+      }
+      const dx1 = dxEnd * rand(0.25, 0.4), dy1 = rand(-60, 60);          // a light wander first, not yet committed to a direction
+      const dx2 = dxEnd * rand(0.65, 0.85), dy2 = rand(-100, 100);       // picking up speed, heading right
+      const spin = rand(-35, 35);
+      // after it settles (by ~40% in), a slow figure-of-eight-ish sway around that spot — small, so it never wanders back onto the text
+      el.animate([
+        { translate: '0px 0px', rotate: baseR + 'deg', offset: 0 },
+        { translate: `${dx1.toFixed(0)}px ${dy1.toFixed(0)}px`, rotate: (baseR + spin * 0.4).toFixed(1) + 'deg', offset: 0.16 },
+        { translate: `${dx2.toFixed(0)}px ${dy2.toFixed(0)}px`, rotate: (baseR + spin * 0.75).toFixed(1) + 'deg', offset: 0.32 },
+        { translate: `${dxEnd.toFixed(0)}px ${dyEnd.toFixed(0)}px`, rotate: (baseR + spin).toFixed(1) + 'deg', offset: 0.42, easing: 'ease-in-out' },
+        { translate: `${(dxEnd + swayX).toFixed(0)}px ${(dyEnd - swayY).toFixed(0)}px`, rotate: (baseR + spin + swayR).toFixed(1) + 'deg', offset: 0.6, easing: 'ease-in-out' },
+        { translate: `${(dxEnd - swayX * 0.7).toFixed(0)}px ${(dyEnd + swayY).toFixed(0)}px`, rotate: (baseR + spin - swayR).toFixed(1) + 'deg', offset: 0.8, easing: 'ease-in-out' },
+        { translate: `${(dxEnd + swayX * 0.4).toFixed(0)}px ${(dyEnd - swayY * 0.5).toFixed(0)}px`, rotate: (baseR + spin + swayR * 0.5).toFixed(1) + 'deg', offset: 1 }
+      ], { duration: rand(5400, 6000), delay: rand(0, 300), easing: 'cubic-bezier(.32,0,.67,1)', fill: 'forwards' });
+    });
   }
 
   /* ------------------------------------------------------------------ 4 · play() */
@@ -238,6 +280,7 @@
 
     apply(0);                                                        // paint the first frame before the originals disappear (no flash)
     main.classList.add('gb-leaving');
+    driftDecor(main);
     card.style.visibility = 'hidden'; title.style.visibility = 'hidden'; sub.style.visibility = 'hidden';
     if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
 
