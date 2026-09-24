@@ -30,8 +30,7 @@
 
   /* ------------------------------------------------------------------ 2 · Scaling */
   const COMPACT_W = 900, COMPACT_H = 830;
-  const QUESTS_MIN = 0.62;                                              // Side Quests on a phone: the smallest the artwork is drawn (1 = the full 1092px design)
-  const ONE_COL_W = 760;                                                // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b") and Welcome Aboard gets its phone layout (css/pages/guest.css)
+  const ONE_COL_W = 760;                                             // narrower than this, the Home cards stack in ONE column (css/pages/work.css, "4b") and Welcome Aboard gets its phone layout (css/pages/guest.css)
   function fit() {
     const vw = root.clientWidth, vh = window.innerHeight;
     // Everything is drawn on a 1448-wide design. On smaller windows it shrinks proportionally (never grows),
@@ -52,13 +51,6 @@
       const stageEl = main.querySelector('.stage');
       const sw = (stageEl && stageEl.offsetWidth) || 1092;   // the design width of this page's stage (1092 normally, 1448 for Welcome Aboard, 480 for the one-column Home, 720 for Welcome Aboard on a phone)
       let ss = Math.min(1, main.clientWidth / sw);
-      if (compact && body.dataset.page === 'quests' && stageEl) {
-        // The artwork is never shrunk below QUESTS_MIN on a phone: it is bigger than the screen instead, so you scroll down a little and swipe sideways
-        // (css/pages/quests.css lets the page pan). It also fills the available height when that is larger.
-        const footerHeight = document.querySelector('.footer')?.offsetHeight || 0;
-        const topGap = parseFloat(getComputedStyle(main).paddingTop) || 0;
-        ss = Math.min(1, Math.max(ss, QUESTS_MIN, (vh - footerHeight - topGap) / stageEl.offsetHeight));
-      }
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
       root.style.setProperty('--stage-m', Math.max(0, (main.clientWidth - sw * ss) / 2).toFixed(1) + 'px');   // where the stage starts inside the main column (it is centred when the window is wider than the design)
