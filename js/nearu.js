@@ -63,13 +63,6 @@
     body.appendChild(a);
   })();
 
-  // The top strip (small screens) is otherwise bare between the menu button and Resume — put the wordmark there
-  (function mountStripLogo() {
-    const img = document.createElement('img');
-    img.className = 'nearu-strip-logo'; img.src = R + 'assets/work/nearu/logo-nearu.svg'; img.alt = 'NearU';
-    body.appendChild(img);
-  })();
-
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', event => {
     const target = document.querySelector(a.hash);
     if (!target) return;
