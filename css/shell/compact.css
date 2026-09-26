@@ -28,6 +28,17 @@
 .compact .bio { left: 30px; top: 170px; width: 294px; font-size: 15px; line-height: 1.32; color: rgba(53, 35, 26, 0.86); }
 .compact .connect { bottom: 36px; }
 
+/* the Contents box (sidebar.css §4b): the phone card is shorter (COMPACT_H, not 1024+), so it needs its own,
+   tighter fit above .connect instead of the desktop spacing */
+.compact .toc-box { height: 528px; }
+.compact .toc-item[data-toc-id='context'] { top: 190px; }
+.compact .toc-item[data-toc-id='solution'] { top: 264.5px; }
+.compact .toc-item[data-toc-id='ideation'] { top: 339px; }
+.compact .toc-item[data-toc-id='research'] { top: 413.5px; }
+.compact .toc-item[data-toc-id='design'] { top: 488px; }
+.compact .toc-item[data-toc-id='onboarding'] { top: 562.5px; }
+.compact .toc-item[data-toc-id='scope'] { top: 637px; }
+
 /* a strip at the top of every page (not Welcome Aboard) is kept free for the menu circle (left) and the Resume pill (right), so neither covers a title;
    decor.css shifts the graph paper down by the same amount so it stays lined up with the content */
 body.compact:not([data-fit='screen']) .main { --top-gap: 64px; padding-top: var(--top-gap); min-height: 0; }

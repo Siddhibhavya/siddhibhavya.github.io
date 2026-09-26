@@ -116,6 +116,13 @@
     main.prepend(layer);
   }
 
+  /* Case-study pages (work/*.html) set body[data-toc] to a JSON list of {id,label} sections. When present the INDEX
+     tab's pane shows a "back to my work" link + those sections (styled and animated the same as EXPLORE, §5 below)
+     in place of the avatar/bio/EXPLORE nav — the tab bar, M.I.K.U pane and Connect block are all untouched. */
+  function tocList() {
+    try { return JSON.parse(body.dataset.toc || 'null'); } catch (e) { return null; }
+  }
+
   /* ------------------------------------------------------------------ 3 · Markup */
   function sidebarHTML() {
     const items = SITE.nav.map((n) => {
@@ -127,6 +134,20 @@
 
     const quick = SITE.nav.filter((n) => n.id !== 'lm').map((n) => `<a href="${hrefOf(n)}">${esc(n.label)}</a>`).join('');
     const L = links();
+    const toc = tocList();
+    const indexPane = toc ? `
+    <a class="toc-back" href="${R}home"><img src="${R}assets/ui/nav-arrow.svg" alt="" width="15" height="17"><span>Home</span></a>
+    <div class="explore-box toc-box"></div>
+    <nav aria-label="Contents"><i class="nav-pill toc-pill" aria-hidden="true"></i>${toc.map((t) =>
+      `<a class="nav-item toc-item" data-toc-id="${t.id}" href="#${t.id}"><span>${esc(t.label)}</span><img class="arrow" src="${R}assets/ui/nav-arrow.svg" alt="" width="21" height="24"></a>`).join('')}</nav>` : `
+    <img class="avatar-ring" src="${R}assets/ui/avatar-ring.svg" alt="">
+    <div class="avatar-photo"><img src="${R}assets/ui/avatar.png" alt="Illustrated portrait of Siddhi"></div>
+    <p class="name">Siddhi Bhavya</p>
+    <p class="role">${esc(SITE.tagline)}</p>
+    <p class="bio">I am a designer tinkering at the intersection of human-computer interaction, accessibility, and efficiency.</p>
+    <div class="explore-box"></div>
+    <span class="explore-title">EXPLORE</span>
+    <nav aria-label="Explore"><i class="nav-pill" aria-hidden="true"></i>${items}</nav>`;
 
     return `
 <div class="sb-inner">
@@ -150,15 +171,7 @@
     <button class="sb-tab" role="tab" data-tab="lm" id="tab-lm" aria-controls="pane-lm"><span>M.I.K.U</span></button>
   </div>
 
-  <section class="pane pane-index" id="pane-index" role="tabpanel" aria-labelledby="tab-index">
-    <img class="avatar-ring" src="${R}assets/ui/avatar-ring.svg" alt="">
-    <div class="avatar-photo"><img src="${R}assets/ui/avatar.png" alt="Illustrated portrait of Siddhi"></div>
-    <p class="name">Siddhi Bhavya</p>
-    <p class="role">${esc(SITE.tagline)}</p>
-    <p class="bio">I am a designer tinkering at the intersection of human-computer interaction, accessibility, and efficiency.</p>
-    <div class="explore-box"></div>
-    <span class="explore-title">EXPLORE</span>
-    <nav aria-label="Explore"><i class="nav-pill" aria-hidden="true"></i>${items}</nav>
+  <section class="pane pane-index" id="pane-index" role="tabpanel" aria-labelledby="tab-index">${indexPane}
     <div class="connect">
       <h2 class="connect-title">Connect with me!</h2>
       <div class="connect-links">
@@ -283,6 +296,36 @@
       if (e.key === 'ArrowLeft') { setTab('index'); sidebar.querySelector('#tab-index').focus(); }
     });
     return { setTab, getTab: () => state };
+  }
+
+  /* Case-study pages: the Contents box highlights the section currently in view (a pill glides between items, same
+     motion as EXPLORE's) and clicking one scrolls smoothly to it. A scroll+rAF listener (not IntersectionObserver —
+     see js/nearu.js's own equivalent, and the project's prior experience with IO edge cases) checks which section's
+     top has crossed a line a third of the way down the viewport, so the pill moves a little before the reader gets there. */
+  function initToc(sidebar) {
+    const toc = tocList();
+    if (!toc) return;
+    const items = [...sidebar.querySelectorAll('.toc-item')];
+    const pill = sidebar.querySelector('.toc-pill');
+    const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
+    if (!sections.length) return;
+
+    let pending = false;
+    function update() {
+      pending = false;
+      let active = 0;
+      sections.forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 3) active = i; });
+      items.forEach((a, i) => a.classList.toggle('is-active', i === active));
+      pill.style.top = items[active].offsetTop + 'px';
+    }
+    window.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+
+    items.forEach((a, i) => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.pushState(null, '', '#' + a.dataset.tocId);
+      sections[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }));
   }
 
   /* A quiet nudge from the M.I.K.U tab: "Ask me questions! :3", shown for 3 seconds — but only if the visitor has not used M.I.K.U (opened its tab or sent a message)
@@ -683,21 +726,26 @@
   function boot() {
     guard('address', cleanAddress);
     if (body.dataset.shell === 'none') { fit(); window.addEventListener('resize', fit); return; }
+    const bareShell = body.dataset.shell === 'sidebar';    // e.g. the NearU case study: it draws its own canvas + footer, just borrows the sidebar
 
     const layout = document.querySelector('.layout');
     const noSidebar = body.dataset.sidebar === 'none';       // e.g. Welcome Aboard: full screen, footer only
     guard('scaling', fit);                                    // sets body.compact before the sidebar exists, so a small screen never flashes it open
 
     const sidebar = noSidebar ? null : guard('sidebar markup', () => mountSidebar(layout));
-    if (!noSidebar) guard('arrival', () => markArrival(layout));
-    store.del('siddhi.enter');                                // the arrival flag is single-use
-    guard('footer markup', () => mountFooter(layout));
+    if (!bareShell) {
+      if (!noSidebar) guard('arrival', () => markArrival(layout));
+      store.del('siddhi.enter');                              // the arrival flag is single-use
+      guard('footer markup', () => mountFooter(layout));
+    }
 
     const sb = sidebar ? guard('tabs', () => initSidebar(sidebar)) : null;
     if (sb) {
       guard('chat', () => initChat(sidebar, sb.setTab));
       guard('nudge', () => initNudge(sidebar));
-      guard('page navigation', () => initRouter(sidebar));
+      if (!bareShell) guard('page navigation', () => initRouter(sidebar));
+      else requestAnimationFrame(() => requestAnimationFrame(() => sidebar.classList.add('ready')));   // initRouter usually does this; a bareShell page skips it
+      guard('contents scrollspy', () => initToc(sidebar));
     }
     const drawer = sb ? guard('drawer', () => initDrawer(sidebar)) : null;
     guard('case-study cursor', initCaseCursor);
