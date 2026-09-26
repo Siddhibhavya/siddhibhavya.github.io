@@ -298,13 +298,13 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-204 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:900;line-height:normal;left:426px;font-style:normal;color:#7f404e;font-size:24px;top:12040px;text-transform:uppercase;width:194px; }
 .nearu-page .nu-205 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:700;justify-content:center;line-height:0;left:474px;font-style:normal;font-size:24px;color:rgba(77,51,38,0.72);top:9880.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
 .nearu-page .nu-206 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:700;justify-content:center;line-height:0;left:470px;font-style:normal;font-size:24px;color:rgba(77,51,38,0.72);top:10533.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
-.nearu-page .nu-207 { position:absolute;height:551px;left:284.5px;top:9899px;width:879px; }   /* centred in the 1448-wide canvas, not left-set like running body text */
-.nearu-page .nu-208 { position:absolute;align-content:stretch;display:flex;align-items:center;left:285px;top:11356px; }   /* centred (878px total, matches nu-207's flow diagram above it) */
+.nearu-page .nu-207 { position:absolute;height:562px;left:438.5px;top:9899px;width:919px; }   /* centred in the visible content column (356 to 356+1084, not the full 1448 canvas — that 356px on the left is reserved for the sidebar, see js/nearu.js's fit()); updated buyer-flow export (Figma node 388:54) */
+.nearu-page .nu-208 { position:absolute;align-content:stretch;display:flex;align-items:center;left:459px;top:11356px; }   /* centred in the visible content column (356 to 356+1084 — see nu-207's comment); 878px total, matches the flow diagram above it */
 .nearu-page .nu-209 { height:464px;position:relative;flex-shrink:0;width:221px; }
 .nearu-page .nu-210 { height:458px;position:relative;flex-shrink:0;width:224px; }
 .nearu-page .nu-211 { height:457px;position:relative;flex-shrink:0;width:218px; }
 .nearu-page .nu-212 { height:454px;position:relative;flex-shrink:0;width:215px; }
-.nearu-page .nu-213 { position:absolute;height:630px;left:220.5px;top:10549px;width:1007px; }   /* centred in the 1448-wide canvas */
+.nearu-page .nu-213 { position:absolute;height:630px;left:394.5px;top:10549px;width:1007px; }   /* centred in the visible content column (356 to 356+1084 — see nu-207's comment) */
 .nearu-page .nu-214 { position:absolute;background:#ddd6fe;height:21px;left:599px;top:9942px;width:78px; }
 .nearu-page .nu-215 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:600;justify-content:center;line-height:0;left:601px;font-style:normal;font-size:12px;color:rgba(0,0,0,0.69);top:9951px;letter-spacing:0.6px;white-space:nowrap;transform:translateY(-50%); }
 .nearu-page .nu-216 { position:absolute;display:flex;height:33.597px;align-items:center;justify-content:center;left:423px;top:390px;width:264.668px; }
