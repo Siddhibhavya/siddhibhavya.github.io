@@ -305,10 +305,39 @@
   function initToc(sidebar) {
     const toc = tocList();
     if (!toc) return;
+    const box = sidebar.querySelector('.toc-box');
     const items = [...sidebar.querySelectorAll('.toc-item')];
     const pill = sidebar.querySelector('.toc-pill');
     const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
     if (!sections.length) return;
+
+    // Evenly spread across however tall the box actually is right now (698px design space on desktop, 528px in
+    // compact — see sidebar.css/compact.css), rather than two hardcoded sets of per-item positions.
+    const TOP_PAD = 40, BOTTOM_PAD = 20;
+    function layout() {
+      const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
+      const itemH = items[0].offsetHeight || 54;
+      const usable = box.clientHeight - TOP_PAD - BOTTOM_PAD - itemH;
+      const step = items.length > 1 ? usable / (items.length - 1) : 0;
+      items.forEach((a, i) => { a.style.top = (boxTop + TOP_PAD + i * step) + 'px'; });
+    }
+
+    // A plain top-transition read as stiff, not "gooey" like the tab switch — so the move is a squash-and-stretch
+    // (WAAPI, like js/guest-anim.js's drifts): the pill stretches toward where it's headed, then settles back.
+    let pillTop = null;
+    function movePill(to) {
+      if (pillTop === to) return;
+      const from = pillTop == null ? to : pillTop;
+      pillTop = to;
+      pill.style.top = to + 'px';
+      if (reduce) return;
+      const dist = to - from, stretch = Math.min(1.5, 1 + Math.abs(dist) / 260);
+      pill.animate([
+        { translate: `0 ${from - to}px`, scale: '1 1' },
+        { translate: `0 ${(from - to) * 0.4}px`, scale: `1 ${stretch}`, offset: 0.5 },
+        { translate: '0 0', scale: '1 1' }
+      ], { duration: 420, easing: 'cubic-bezier(.32,0,.67,1)' });
+    }
 
     let pending = false;
     function update() {
@@ -316,9 +345,11 @@
       let active = 0;
       sections.forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 3) active = i; });
       items.forEach((a, i) => a.classList.toggle('is-active', i === active));
-      pill.style.top = items[active].offsetTop + 'px';
+      movePill(items[active].offsetTop);
     }
     window.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', () => requestAnimationFrame(() => { layout(); update(); }));
+    layout();
     update();
 
     items.forEach((a, i) => a.addEventListener('click', (e) => {
