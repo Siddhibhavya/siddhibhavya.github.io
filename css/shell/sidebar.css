@@ -70,6 +70,22 @@
 }
 .bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
 
+/* ---------- 4b · Contents box (case-study pages: js/shell.js swaps the avatar/bio/EXPLORE nav for this when
+   body[data-toc] is set) — same box, pill and motion as EXPLORE (§5), just a taller box and its own item list. */
+.toc-back {
+  position: absolute; left: 0; top: 84px; width: 356px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 30px; font-weight: 500; color: var(--ink); transition: color 0.2s ease;
+}
+.toc-back img { width: 15px; height: 13px; transform: scaleX(-1); }   /* nav-arrow.svg points right; flip it to point left */
+.toc-back:hover { color: var(--maroon); }
+.toc-item[data-toc-id='context'] { top: 190px; }
+.toc-item[data-toc-id='solution'] { top: 290px; }
+.toc-item[data-toc-id='ideation'] { top: 389px; }
+.toc-item[data-toc-id='research'] { top: 489px; }
+.toc-item[data-toc-id='design'] { top: 588px; }
+.toc-item[data-toc-id='onboarding'] { top: 688px; }
+.toc-item[data-toc-id='scope'] { top: 787px; }
+
 /* ---------- 5 · Explore nav ---------- */
 .explore-box {
   position: absolute; left: 26px; top: calc(421px + var(--nav-dy, 0px)); width: 298px; height: 419px;
@@ -104,6 +120,10 @@
 .nav-item[data-nav='quests'] { top: calc(641px + var(--nav-dy, 0px)); }
 .nav-item[data-nav='lm'] { top: calc(709px + var(--nav-dy, 0px)); }
 .nav-item[data-nav='gallery'] { top: calc(778px + var(--nav-dy, 0px)); }
+
+/* the Contents box (§4b) overrides EXPLORE's box/pill geometry — after §5 in the cascade so it actually wins */
+.toc-box { top: 150px; height: 698px; }
+.toc-pill { top: 190px; }
 
 /* ---------- 6 · Connect links ---------- */
 .connect { position: absolute; left: 0; width: 356px; bottom: 60px; height: 96px; }
