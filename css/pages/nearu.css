@@ -63,7 +63,8 @@
 .nearu-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff2e6; color: #7f404e; }
 .nearu-skip:focus { top: 12px; }
 /* small screens: the sidebar becomes a drawer behind the same star/hamburger toggle used everywhere else (js/nearu.js builds it, css/shell/compact.css + widgets.css style it) */
-body.compact .nearu-viewport { margin-top: 64px; }
+/* the 64px strip kept free for the menu circle/Resume pill is padding on .nearu-mobile (below), not a margin here —
+   a margin would sit outside .nearu-mobile's own grid background, leaving that strip a plain ungridded gap */
 /* a plain media query (COMPACT_W in js/shell.js) hides it the instant the stylesheet loads, before JS adds body.compact —
    otherwise the full-size drawer flashes open for a frame on a small screen */
 @media (max-width: 899px) {
@@ -440,7 +441,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 @media (max-width: 899px) {
   .nearu-canvas { display: none; }
   .nearu-mobile {
-    display: block; padding: 28px 20px 56px; color: #674636;
+    display: block; padding: 92px 20px 56px; color: #674636;   /* 28 + the 64px strip kept free for the menu circle/Resume pill, so the grid still runs behind it */
     background-color: #fff2e6;
     background-image: linear-gradient(to right, rgba(46,20,10,.10) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(46,20,10,.10) 1px, transparent 1px);
