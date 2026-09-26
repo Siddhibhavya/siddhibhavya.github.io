@@ -680,7 +680,7 @@
       '<svg class="ic ic-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' +
       '<svg class="ic ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
     const note = document.createElement('div');                       // the little label that slides out of the corner now and then
-    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu · Index & M.I.K.U';
+    note.className = 'sb-note'; note.setAttribute('aria-hidden', 'true'); note.textContent = 'Menu';
     const scrim = document.createElement('div');
     scrim.className = 'sb-scrim';
     document.body.append(scrim, btn, note);
