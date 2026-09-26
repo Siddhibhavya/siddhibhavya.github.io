@@ -192,13 +192,13 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-100 { position:absolute;height:84px;left:1021px;top:3112px;width:260px; }
 .nearu-page .nu-101 { position:absolute;height:167px;left:470px;overflow:clip;top:3336px;width:230px; }
 .nearu-page .nu-102 { position:absolute;height:110px;left:22px;top:57px;width:186px; }
-.nearu-page .nu-103 { position:absolute;height:385px;left:630px;top:3698px;width:202px; }
+.nearu-page .nu-103 { position:absolute;height:385px;left:691px;top:3698px;width:202px; }   /* A/B phone comparison recentred in the content column (+61px, was left of true centre) */
 .nearu-page .nu-104 { position:absolute;height:121%;left:-51.18%;max-width:none;top:-10.47%;width:302.5%; }
 /* Figma shadows the transparent phone silhouette, not its rectangular image slot.
    CSS drop-shadow uses half the Figma blur radius (Gaussian standard deviation). */
-.nearu-page .nu-105 { position:absolute;height:371px;left:858px;filter:drop-shadow(0px 4px 2px rgba(0,0,0,0.25));top:3757px;width:186px; }
-.nearu-page .nu-106 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:722px;font-style:normal;color:#674636;font-size:24px;top:4077px;white-space:nowrap; }
-.nearu-page .nu-107 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:941px;font-style:normal;color:#674636;font-size:24px;top:3710px;white-space:nowrap; }
+.nearu-page .nu-105 { position:absolute;height:371px;left:919px;filter:drop-shadow(0px 4px 2px rgba(0,0,0,0.25));top:3757px;width:186px; }
+.nearu-page .nu-106 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:783px;font-style:normal;color:#674636;font-size:24px;top:4077px;white-space:nowrap; }
+.nearu-page .nu-107 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:1002px;font-style:normal;color:#674636;font-size:24px;top:3710px;white-space:nowrap; }
 .nearu-page .nu-108 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:183px;line-height:41px;left:434px;font-style:normal;color:#674636;font-size:24px;top:4168px;width:938px; }
 .nearu-page .nu-109 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:108px;line-height:41px;left:434px;font-style:normal;color:#674636;font-size:24px;top:4416px;width:938px; }
 .nearu-page .nu-110 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:430px;line-height:0;left:469px;font-style:normal;color:#674636;font-size:24px;top:4612px;width:834px;white-space:normal; }
@@ -248,8 +248,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-153 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:592px;font-style:normal;color:#4d3326;font-size:24px;top:7014px;width:154px; }
 .nearu-page .nu-154 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:982px;font-style:normal;color:#4d3326;font-size:24px;top:7089px;width:163px; }
 .nearu-page .nu-155 { position:absolute;inset:19.51% 22.38% 80.39% 75.97%; }
-.nearu-page .nu-156 { position:absolute;background:#716767;height:2px;left:852px;border-radius:104px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);top:4121px;width:198px; }
-.nearu-page .nu-157 { position:absolute;background:#000;height:12px;left:926px;border-radius:3px;top:3769px;width:50px; }
+.nearu-page .nu-156 { position:absolute;background:#716767;height:2px;left:913px;border-radius:104px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);top:4121px;width:198px; }
+.nearu-page .nu-157 { position:absolute;background:#000;height:12px;left:987px;border-radius:3px;top:3769px;width:50px; }
 .nearu-page .nu-158 { position:absolute;background:#fc5956;height:205px;left:509px;top:7881px;width:367px; }
 .nearu-page .nu-159 { position:absolute;background:#0e59d3;height:118px;left:882px;top:7882px;width:365px; }
 .nearu-page .nu-160 { position:absolute;background:#fec12d;height:77px;left:1065px;top:8007px;width:182px; }
