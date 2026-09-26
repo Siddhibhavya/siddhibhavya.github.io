@@ -71,13 +71,14 @@
 .bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
 
 /* ---------- 4b · Contents box (case-study pages: js/shell.js swaps the avatar/bio/EXPLORE nav for this when
-   body[data-toc] is set) — same box, pill and motion as EXPLORE (§5), just a taller box and its own item list. */
+   body[data-toc] is set) — matches the Figma reference (node 385:51): same box/pill motion as EXPLORE (§5),
+   its own item list, "<-HOME" at top:114 in maroon 36px. */
 .toc-back {
-  position: absolute; left: 0; top: 84px; width: 356px; display: flex; align-items: center; justify-content: center; gap: 10px;
-  font-size: 30px; font-weight: 500; color: var(--brown); transition: color 0.2s ease;   /* matches the arrow's own colour */
+  position: absolute; left: 0; top: 114px; width: 356px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 36px; font-weight: 500; color: var(--maroon); transition: color 0.2s ease;
 }
 .toc-back img { width: 15px; height: 13px; transform: scaleX(-1); }   /* nav-arrow.svg points right; flip it to point left */
-.toc-back:hover { color: var(--maroon); }
+.toc-back:hover { color: var(--brown); }
 /* item font/size/position and the label/arrow decoupling live after §5 below, so they actually win the cascade
    over .nav-item's same-specificity rules there (item tops are computed responsively at runtime, js/shell.js). */
 
@@ -117,23 +118,25 @@
 .nav-item[data-nav='gallery'] { top: calc(778px + var(--nav-dy, 0px)); }
 
 /* the Contents box (§4b) overrides EXPLORE's box/pill geometry — after §5 in the cascade so it actually wins.
-   Box height is set at runtime (js/shell.js hugs it to the item cluster); this is just its pre-JS fallback. */
-.toc-box { top: 150px; height: 698px; }
+   Figma has this box fixed at left:26/top:174/298x666, but that only ever fits the compact phone card by luck —
+   height is set at runtime instead (js/shell.js hugs/fills/shrinks it to the item cluster); this is its fallback. */
+.toc-box { left: 26px; top: 174px; height: 698px; }
 .toc-pill { top: 190px; height: 76px; }
 /* its move is a WAAPI squash-and-stretch (js/shell.js), not this CSS top-transition — leave only opacity here */
 .sidebar.ready .toc-pill { transition: opacity 0.3s ease; }
 /* the shared .nav-item centres text+arrow together as one flex row, so the text drifts off-centre whenever the
-   arrow is visible — decouple them here: the label centres on the whole pill, the arrow is pinned to the right edge. */
-.toc-item { display: block; font-size: 60px; height: 76px; }
+   arrow is visible — decouple them here: the label centres on the whole pill, the arrow is pinned to the right edge.
+   Figma's own text frame (217px) is narrower than its pill (273px) too — the pill leaves room for the arrow. */
+.toc-item { display: block; width: 217px; font-size: 60px; height: 76px; }
 .toc-item span {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; line-height: 1;
-  transform: translateX(-30px); transition: transform 0.45s var(--ease-out), color 0.25s ease;
+  transform: translateX(-6px); transition: transform 0.45s var(--ease-out), color 0.25s ease;
 }
 .toc-item.is-active span { transform: translateX(0); }   /* the label sits a little left at rest, and centres once it's the current section */
 @media (prefers-reduced-motion: reduce) {
   .toc-item span { transition: none; }
 }
-.toc-item .arrow { position: absolute; right: 34px; top: 50%; margin-left: 0; transform: translateY(-50%); }
+.toc-item .arrow { position: absolute; right: -22px; top: 50%; margin-left: 0; transform: translateY(-50%); }   /* item is narrower than its pill (Figma); this sits in that extra width */
 @media (hover: hover) and (pointer: fine) {
   .toc-item:not(.is-active):hover .arrow { width: 21.17px; opacity: 1; }
 }
