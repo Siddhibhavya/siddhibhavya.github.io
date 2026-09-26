@@ -311,15 +311,18 @@
     const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
     if (!sections.length) return;
 
-    // Evenly spread across however tall the box actually is right now (698px design space on desktop, 528px in
-    // compact — see sidebar.css/compact.css), rather than two hardcoded sets of per-item positions.
-    const PAD = 30;   // same top and bottom, so the box reads as evenly balanced
+    // Packed close together (GAP apart) and the whole cluster centred in however tall the box actually is right
+    // now (698px design space on desktop, 528px in compact — see sidebar.css/compact.css), rather than stretching
+    // to fill it or using two hardcoded sets of per-item positions.
+    const PAD = 30, GAP = 16;
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
       const itemH = items[0].offsetHeight || 54;
-      const usable = box.clientHeight - PAD * 2 - itemH;
-      const step = items.length > 1 ? usable / (items.length - 1) : 0;
-      items.forEach((a, i) => { a.style.top = (boxTop + PAD + i * step) + 'px'; });
+      const maxStep = items.length > 1 ? (box.clientHeight - PAD * 2 - itemH) / (items.length - 1) : 0;
+      const step = Math.min(maxStep, itemH + GAP);
+      const span = step * (items.length - 1);
+      const start = boxTop + (box.clientHeight - span - itemH) / 2;   // centre the (possibly shorter) cluster
+      items.forEach((a, i) => { a.style.top = (start + i * step) + 'px'; });
     }
 
     // A plain top-transition read as stiff, not "gooey" like the tab switch — so the move is a squash-and-stretch
@@ -331,10 +334,10 @@
       pillTop = to;
       pill.style.top = to + 'px';
       if (reduce) return;
-      const dist = to - from, stretch = Math.min(1.5, 1 + Math.abs(dist) / 260);
+      const dist = to - from, stretchY = Math.min(1.5, 1 + Math.abs(dist) / 260), squishX = 1 / Math.sqrt(stretchY);
       pill.animate([
         { translate: `0 ${from - to}px`, scale: '1 1' },
-        { translate: `0 ${(from - to) * 0.4}px`, scale: `1 ${stretch}`, offset: 0.5 },
+        { translate: `0 ${(from - to) * 0.4}px`, scale: `${squishX} ${stretchY}`, offset: 0.5 },
         { translate: '0 0', scale: '1 1' }
       ], { duration: 420, easing: 'cubic-bezier(.32,0,.67,1)' });
     }
