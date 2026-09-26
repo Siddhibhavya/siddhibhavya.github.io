@@ -317,19 +317,31 @@
     const BASE_FONT = 60, BASE_H = 76, MIN_FONT = 26, PAD = 30, GAP = 36, MIN_GAP = 8;
     const spans = items.map((a) => a.querySelector('span'));
     const connect = sidebar.querySelector('.connect');
+    const range = document.createRange();
+    function textWidth(span) {
+      range.selectNodeContents(span);   // span itself is a flex container sized to the item, so its own
+      return range.getBoundingClientRect().width;   // scrollWidth is useless here — measure the glyphs directly
+    }
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
       const maxTextWidth = items[0].clientWidth - 72;   // clears the arrow's reserved space on the right, plus a matching margin
-      const available = (connect ? connect.offsetTop : Infinity) - boxTop - PAD;
+      // box bottom = boxTop + span + itemH + PAD*2 (its own top+bottom padding); reserve one more PAD as a
+      // visible gap before .connect, so "available" is the true budget for (span + itemH) alone.
+      const available = (connect ? connect.offsetTop : Infinity) - boxTop - PAD * 3;
 
       let font = BASE_FONT, itemH = BASE_H, gap = GAP;
-      for (; font >= MIN_FONT; font -= 2, itemH = BASE_H * (font / BASE_FONT)) {
+      while (font >= MIN_FONT) {
+        itemH = BASE_H * (font / BASE_FONT);
         spans.forEach((s) => { s.style.fontSize = font + 'px'; });
-        if (spans.some((s) => s.scrollWidth > maxTextWidth)) continue;   // the longest label still doesn't fit sideways
-        gap = Math.max(MIN_GAP, Math.min(GAP, (available - itemH * items.length) / (items.length - 1)));
+        if (spans.some((s) => textWidth(s) > maxTextWidth)) { font -= 2; continue; }   // the longest label still doesn't fit sideways
+        // fill whatever room is actually there down to .connect, rather than clustering tight with leftover
+        // space below Scope — but never past MIN_GAP, and if that overshoots, fall through to a smaller font
+        gap = Math.max(MIN_GAP, (available - itemH * items.length) / (items.length - 1));
         if (itemH * items.length + gap * (items.length - 1) <= available) break;   // and the whole stack fits upright
+        font -= 2;
       }
       items.forEach((a) => { a.style.height = itemH + 'px'; });
+      pill.style.height = itemH + 'px';   // must track the item height, or the pill no longer vertically centres its label
 
       const step = itemH + gap;
       const span = step * (items.length - 1);

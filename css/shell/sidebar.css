@@ -74,7 +74,7 @@
    body[data-toc] is set) — same box, pill and motion as EXPLORE (§5), just a taller box and its own item list. */
 .toc-back {
   position: absolute; left: 0; top: 84px; width: 356px; display: flex; align-items: center; justify-content: center; gap: 10px;
-  font-size: 30px; font-weight: 500; color: var(--ink); transition: color 0.2s ease;
+  font-size: 30px; font-weight: 500; color: var(--brown); transition: color 0.2s ease;   /* matches the arrow's own colour */
 }
 .toc-back img { width: 15px; height: 13px; transform: scaleX(-1); }   /* nav-arrow.svg points right; flip it to point left */
 .toc-back:hover { color: var(--maroon); }
