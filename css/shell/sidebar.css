@@ -78,17 +78,15 @@
 }
 .toc-back img { width: 15px; height: 13px; transform: scaleX(-1); }   /* nav-arrow.svg points right; flip it to point left */
 .toc-back:hover { color: var(--maroon); }
-.toc-item { font-size: 32px; height: 54px; }
+/* the shared .nav-item centres text+arrow together as one flex row, so the text drifts off-centre whenever the
+   arrow is visible — decouple them here: the label centres on the whole pill, the arrow is pinned to the right edge. */
+.toc-item { display: block; font-size: 36px; height: 54px; }
+.toc-item span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.toc-item .arrow { position: absolute; right: 16px; top: 50%; margin-left: 0; transform: translateY(-50%); }
 @media (hover: hover) and (pointer: fine) {
-  .toc-item:not(.is-active):hover .arrow { width: 21.17px; margin-left: 0; opacity: 1; }
+  .toc-item:not(.is-active):hover .arrow { width: 21.17px; opacity: 1; }
 }
-.toc-item[data-toc-id='context'] { top: 190px; }
-.toc-item[data-toc-id='solution'] { top: 287px; }
-.toc-item[data-toc-id='ideation'] { top: 385px; }
-.toc-item[data-toc-id='research'] { top: 482px; }
-.toc-item[data-toc-id='design'] { top: 579px; }
-.toc-item[data-toc-id='onboarding'] { top: 677px; }
-.toc-item[data-toc-id='scope'] { top: 774px; }
+/* item tops are computed responsively at runtime (js/shell.js's initToc), not hardcoded per breakpoint */
 
 /* ---------- 5 · Explore nav ---------- */
 .explore-box {
@@ -128,6 +126,8 @@
 /* the Contents box (§4b) overrides EXPLORE's box/pill geometry — after §5 in the cascade so it actually wins */
 .toc-box { top: 150px; height: 698px; }
 .toc-pill { top: 190px; height: 54px; }
+/* its move is a WAAPI squash-and-stretch (js/shell.js), not this CSS top-transition — leave only opacity here */
+.sidebar.ready .toc-pill { transition: opacity 0.3s ease; }
 
 /* ---------- 6 · Connect links ---------- */
 .connect { position: absolute; left: 0; width: 356px; bottom: 60px; height: 96px; }
