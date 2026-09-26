@@ -57,7 +57,7 @@
   // Filled cards/pills have their own centred typography; all writing on paper
   // follows the same continuous rows, including titles and image captions.
   const ruledIds = [1535,1536,1537,1538,1539,1540,1541,1542,1543,1544,1545,
-    1546,1547,1548,1549,1550,1564,1583,1584,1586,1601,1602,1603,1604,1605,
+    1546,1547,1549,1550,1564,1583,1584,1586,1601,1602,1603,1604,1605,
     1606,1614,1617,1639,1640,1656,1657,1658,1659,1660,1661,1662,1663,
     1674,1675,1676,1677,1710,1711,1712,1713];
   const ruled = ruledIds.map(id => canvas.querySelector('[data-node-id="351:' + id + '"]'));

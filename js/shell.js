@@ -314,7 +314,7 @@
     // Packed GAP apart (down to MIN_GAP, then shrinking the labels themselves as a last resort), and the box hugs
     // the resulting cluster — instead of stretching to fill a fixed 698/528px, or overflowing into .connect below
     // it when 7 items at full size just don't fit that page's available height (e.g. the compact phone drawer).
-    const BASE_FONT = 36, BASE_H = 44, MIN_FONT = 26, PAD = 30, GAP = 36, MIN_GAP = 8;   // 36/44 match "<-HOME" and the Figma reference (node 385:51)
+    const BASE_FONT = 31, BASE_H = 38, MIN_FONT = 22, PAD = 30, GAP = 36, MIN_GAP = 8;   // 5px below "<-HOME"/the Figma reference (node 385:51), by request
     const spans = items.map((a) => a.querySelector('span'));
     const connect = sidebar.querySelector('.connect');
     const range = document.createRange();

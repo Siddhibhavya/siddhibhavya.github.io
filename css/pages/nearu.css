@@ -253,8 +253,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-159 { position:absolute;background:#0e59d3;height:118px;left:882px;top:7882px;width:365px; }
 .nearu-page .nu-160 { position:absolute;background:#fec12d;height:77px;left:1065px;top:8007px;width:182px; }
 .nearu-page .nu-161 { position:absolute;background:#fffaeb;height:77px;left:882px;top:8007px;width:177px; }
-.nearu-page .nu-162 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:1.53;left:892px;font-style:normal;color:#fffcf2;font-size:96px;top:7867px;letter-spacing:4.8px;white-space:nowrap; }
-.nearu-page .nu-163 { overflow-wrap:break-word;position:absolute;font-family:'Liberation Sans',Arial,sans-serif;line-height:1.53;left:567px;font-style:normal;color:#fffcf2;font-size:173px;top:7849px;letter-spacing:8.65px;white-space:nowrap; }
+.nearu-page .nu-162 { overflow-wrap:break-word;position:absolute;font-family:'Liberation Sans',Arial,sans-serif;font-weight:400;line-height:1.53;left:892px;font-style:normal;color:#fffcf2;font-size:96px;top:7867px;letter-spacing:4.8px;white-space:nowrap; }
+.nearu-page .nu-163 { overflow-wrap:break-word;position:absolute;font-family:'Futura','Century Gothic',var(--font-ui);font-weight:100;line-height:1.53;left:567px;font-style:normal;color:#fffcf2;font-size:173px;top:7849px;letter-spacing:8.65px;white-space:nowrap; }
 .nearu-page .nu-164 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:700;justify-content:center;line-height:0;left:473px;font-style:normal;font-size:24px;color:rgba(77,51,38,0.7);top:8406.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
 .nearu-page .nu-165 { line-height:1.53; }
 .nearu-page .nu-166 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:700;justify-content:center;line-height:0;left:840px;font-style:normal;font-size:24px;color:rgba(77,51,38,0.7);top:7831.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
