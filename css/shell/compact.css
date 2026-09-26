@@ -32,12 +32,12 @@
    tighter fit above .connect instead of the desktop spacing */
 .compact .toc-box { height: 528px; }
 .compact .toc-item[data-toc-id='context'] { top: 190px; }
-.compact .toc-item[data-toc-id='solution'] { top: 264.5px; }
-.compact .toc-item[data-toc-id='ideation'] { top: 339px; }
-.compact .toc-item[data-toc-id='research'] { top: 413.5px; }
-.compact .toc-item[data-toc-id='design'] { top: 488px; }
-.compact .toc-item[data-toc-id='onboarding'] { top: 562.5px; }
-.compact .toc-item[data-toc-id='scope'] { top: 637px; }
+.compact .toc-item[data-toc-id='solution'] { top: 259px; }
+.compact .toc-item[data-toc-id='ideation'] { top: 328px; }
+.compact .toc-item[data-toc-id='research'] { top: 397px; }
+.compact .toc-item[data-toc-id='design'] { top: 466px; }
+.compact .toc-item[data-toc-id='onboarding'] { top: 535px; }
+.compact .toc-item[data-toc-id='scope'] { top: 604px; }
 
 /* a strip at the top of every page (not Welcome Aboard) is kept free for the menu circle (left) and the Resume pill (right), so neither covers a title;
    decor.css shifts the graph paper down by the same amount so it stays lined up with the content */
