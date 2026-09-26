@@ -311,18 +311,30 @@
     const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
     if (!sections.length) return;
 
-    // Packed close together (GAP apart) and the whole cluster centred in however tall the box actually is right
-    // now (698px design space on desktop, 528px in compact — see sidebar.css/compact.css), rather than stretching
-    // to fill it or using two hardcoded sets of per-item positions.
-    const PAD = 30, GAP = 16;
+    // Packed GAP apart (down to MIN_GAP, then shrinking the labels themselves as a last resort), and the box hugs
+    // the resulting cluster — instead of stretching to fill a fixed 698/528px, or overflowing into .connect below
+    // it when 7 items at full size just don't fit that page's available height (e.g. the compact phone drawer).
+    const BASE_FONT = 60, BASE_H = 76, MIN_FONT = 26, PAD = 30, GAP = 36, MIN_GAP = 8;
+    const spans = items.map((a) => a.querySelector('span'));
+    const connect = sidebar.querySelector('.connect');
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
-      const itemH = items[0].offsetHeight || 54;
-      const maxStep = items.length > 1 ? (box.clientHeight - PAD * 2 - itemH) / (items.length - 1) : 0;
-      const step = Math.min(maxStep, itemH + GAP);
+      const maxTextWidth = items[0].clientWidth - 72;   // clears the arrow's reserved space on the right, plus a matching margin
+      const available = (connect ? connect.offsetTop : Infinity) - boxTop - PAD;
+
+      let font = BASE_FONT, itemH = BASE_H, gap = GAP;
+      for (; font >= MIN_FONT; font -= 2, itemH = BASE_H * (font / BASE_FONT)) {
+        spans.forEach((s) => { s.style.fontSize = font + 'px'; });
+        if (spans.some((s) => s.scrollWidth > maxTextWidth)) continue;   // the longest label still doesn't fit sideways
+        gap = Math.max(MIN_GAP, Math.min(GAP, (available - itemH * items.length) / (items.length - 1)));
+        if (itemH * items.length + gap * (items.length - 1) <= available) break;   // and the whole stack fits upright
+      }
+      items.forEach((a) => { a.style.height = itemH + 'px'; });
+
+      const step = itemH + gap;
       const span = step * (items.length - 1);
-      const start = boxTop + (box.clientHeight - span - itemH) / 2;   // centre the (possibly shorter) cluster
-      items.forEach((a, i) => { a.style.top = (start + i * step) + 'px'; });
+      box.style.height = (span + itemH + PAD * 2) + 'px';
+      items.forEach((a, i) => { a.style.top = (boxTop + PAD + i * step) + 'px'; });
     }
 
     // A plain top-transition read as stiff, not "gooey" like the tab switch — so the move is a squash-and-stretch
