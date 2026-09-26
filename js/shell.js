@@ -314,7 +314,7 @@
     // Packed GAP apart (down to MIN_GAP, then shrinking the labels themselves as a last resort), and the box hugs
     // the resulting cluster — instead of stretching to fill a fixed 698/528px, or overflowing into .connect below
     // it when 7 items at full size just don't fit that page's available height (e.g. the compact phone drawer).
-    const BASE_FONT = 60, BASE_H = 76, MIN_FONT = 26, PAD = 30, GAP = 36, MIN_GAP = 8;
+    const BASE_FONT = 36, BASE_H = 44, MIN_FONT = 26, PAD = 30, GAP = 36, MIN_GAP = 8;   // 36/44 match "<-HOME" and the Figma reference (node 385:51)
     const spans = items.map((a) => a.querySelector('span'));
     const connect = sidebar.querySelector('.connect');
     const range = document.createRange();
@@ -324,7 +324,7 @@
     }
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
-      const maxTextWidth = items[0].clientWidth - 72;   // clears the arrow's reserved space on the right, plus a matching margin
+      const maxTextWidth = items[0].clientWidth - 16;   // the arrow now sits outside the item (in the pill's extra width), so this is just a small side margin
       // box bottom = boxTop + span + itemH + PAD*2 (its own top+bottom padding); reserve one more PAD as a
       // visible gap before .connect, so "available" is the true budget for (span + itemH) alone.
       const available = (connect ? connect.offsetTop : Infinity) - boxTop - PAD * 3;
