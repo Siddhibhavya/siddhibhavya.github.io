@@ -313,13 +313,13 @@
 
     // Evenly spread across however tall the box actually is right now (698px design space on desktop, 528px in
     // compact — see sidebar.css/compact.css), rather than two hardcoded sets of per-item positions.
-    const TOP_PAD = 40, BOTTOM_PAD = 20;
+    const PAD = 30;   // same top and bottom, so the box reads as evenly balanced
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
       const itemH = items[0].offsetHeight || 54;
-      const usable = box.clientHeight - TOP_PAD - BOTTOM_PAD - itemH;
+      const usable = box.clientHeight - PAD * 2 - itemH;
       const step = items.length > 1 ? usable / (items.length - 1) : 0;
-      items.forEach((a, i) => { a.style.top = (boxTop + TOP_PAD + i * step) + 'px'; });
+      items.forEach((a, i) => { a.style.top = (boxTop + PAD + i * step) + 'px'; });
     }
 
     // A plain top-transition read as stiff, not "gooey" like the tab switch — so the move is a squash-and-stretch
