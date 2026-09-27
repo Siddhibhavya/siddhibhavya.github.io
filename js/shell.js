@@ -499,8 +499,10 @@
         links.forEach((a) => {
           const link = document.createElement(a.tab || a.ask ? 'button' : 'a');
           link.textContent = a.label;
-          if (a.raw) { link.href = lk(a.raw); if (/^https?:/.test(a.raw)) { link.target = '_blank'; link.rel = 'noopener'; } if (/^mailto:/.test(a.raw)) link.dataset.action = 'email'; }   // Email opens the address pop-up (copy / Gmail), like the sidebar's
-          else if (a.href) { link.href = R + pretty(a.href); if (/^work\//.test(pretty(a.href))) { link.target = '_blank'; link.rel = 'noopener'; } }   // case studies open in a new tab
+          // rule: every link M.I.K.U adds to a reply (case studies, prototypes, the playlist, socials, anything from the bank) opens in a new tab —
+          // the one exception is mailto, which pops the address card (copy / Gmail) instead of "opening" anywhere.
+          if (a.raw) { link.href = lk(a.raw); if (/^mailto:/.test(a.raw)) link.dataset.action = 'email'; else { link.target = '_blank'; link.rel = 'noopener'; } }
+          else if (a.href) { link.href = R + pretty(a.href); link.target = '_blank'; link.rel = 'noopener'; }
           if (a.tab) { link.type = 'button'; link.addEventListener('click', () => setTab(a.tab)); }
           row.appendChild(link);
         });

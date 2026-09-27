@@ -307,6 +307,23 @@ Checklist for a new case study's assets:
   M.I.K.U" or "Menu · Contents". This is shared, sitewide text in
   `js/shell.js`; don't reintroduce a longer page-specific version of it.
 
+### Standing rule: every link opens in a new tab (2026-09-28)
+
+Any link added as page content — a prototype, a research board, a game, a
+Drive file, the playlist, a social/contact link, a résumé, a case study —
+opens in a new tab (`target="_blank" rel="noopener"`), full stop. This
+applies whether it's written directly in a page (`work/*.html`,
+`side-quests.html`, `about.html`, …) or added as a `go`/`raw` entry in
+`js/bank.js` for M.I.K.U. `js/shell.js`'s chat-bubble action renderer already
+does this generically for every bank-sourced link (the one exception is
+`mailto:`, which pops the address card instead of navigating anywhere) — new
+bank entries don't need anything extra. A hand-written `<a>` on a page still
+needs `target="_blank" rel="noopener"` added explicitly.
+The only things that stay same-tab are the sidebar's own EXPLORE nav and the
+pjax shell's internal page routing (`js/shell.js`'s `sidebarHTML()`/router) —
+that's core site chrome, not content, and swapping it to a new tab would
+break the SPA feel the shell is built for.
+
 ## 7 · Workflow
 
 - Run `node tools/check.js` after every change. Zero errors before saying
