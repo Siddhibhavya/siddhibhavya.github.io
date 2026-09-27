@@ -144,7 +144,7 @@
     <div class="avatar-photo"><img src="${R}assets/ui/avatar.png" alt="Illustrated portrait of Siddhi"></div>
     <p class="name">Siddhi Bhavya</p>
     <p class="role">${esc(SITE.tagline)}</p>
-    <p class="bio">I am a designer tinkering at the intersection of human-computer interaction, accessibility, and efficiency.</p>
+    <p class="bio">I am a designer tinkering at the intersection of human-computer interaction, clarity, and efficiency.</p>
     <div class="explore-box"></div>
     <span class="explore-title">EXPLORE</span>
     <nav aria-label="Explore"><i class="nav-pill" aria-hidden="true"></i>${items}</nav>`;
@@ -316,6 +316,7 @@
     // it when 7 items at full size just don't fit that page's available height (e.g. the compact phone drawer).
     const BASE_FONT = 31, BASE_H = 38, MIN_FONT = 22, PAD = 30, GAP = 36, MIN_GAP = 8;   // 5px below "<-HOME"/the Figma reference (node 385:51), by request
     const spans = items.map((a) => a.querySelector('span'));
+    const slidingLabels = body.matches('.nearu-page, .syncletter-page');
     const connect = sidebar.querySelector('.connect');
     const range = document.createRange();
     function textWidth(span) {
@@ -324,7 +325,7 @@
     }
     function layout() {
       const boxTop = box.offsetTop;   // items share the box's positioned ancestor, not the box itself
-      const maxTextWidth = items[0].clientWidth - 16;   // the arrow now sits outside the item (in the pill's extra width), so this is just a small side margin
+      const maxTextWidth = items[0].clientWidth - (slidingLabels ? 65 : 16); // sliding labels reserve both insets, the arrow, and a 12px gap
       // box bottom = boxTop + span + itemH + PAD*2 (its own top+bottom padding); reserve one more PAD as a
       // visible gap before .connect, so "available" is the true budget for (span + itemH) alone.
       const available = (connect ? connect.offsetTop : Infinity) - boxTop - PAD * 3;
@@ -337,10 +338,14 @@
         // fill whatever room is actually there down to .connect, rather than clustering tight with leftover
         // space below Scope — but never past MIN_GAP, and if that overshoots, fall through to a smaller font
         gap = Math.max(MIN_GAP, (available - itemH * items.length) / (items.length - 1));
+        if (slidingLabels) gap = Math.min(24, gap); // let these panels hug the links on taller screens
         if (itemH * items.length + gap * (items.length - 1) <= available) break;   // and the whole stack fits upright
         font -= 2;
       }
-      items.forEach((a) => { a.style.height = itemH + 'px'; });
+      items.forEach((a, i) => {
+        a.style.height = itemH + 'px';
+        if (slidingLabels) a.style.setProperty('--toc-half-label', (spans[i].offsetWidth / 2) + 'px');
+      });
       pill.style.height = itemH + 'px';   // must track the item height, or the pill no longer vertically centres its label
 
       const step = itemH + gap;
@@ -367,21 +372,39 @@
     }
 
     let pending = false;
+    let clickedItem = null, clickDeadline = 0;
     function update() {
       pending = false;
       let active = 0;
       sections.forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 3) active = i; });
-      items.forEach((a, i) => a.classList.toggle('is-active', i === active));
+      if (clickedItem !== null) {
+        if (performance.now() < clickDeadline) active = clickedItem;
+        else clickedItem = null;
+      }
+      items.forEach((a, i) => {
+        a.classList.toggle('is-active', i === active);
+        if (slidingLabels) {
+          if (i === active) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
+        }
+      });
       movePill(items[active].offsetTop);
     }
     window.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(update); } }, { passive: true });
     window.addEventListener('resize', () => requestAnimationFrame(() => { layout(); update(); }));
     layout();
     update();
+    if (slidingLabels) document.fonts.ready.then(() => { layout(); update(); });
 
     items.forEach((a, i) => a.addEventListener('click', (e) => {
       e.preventDefault();
       history.pushState(null, '', '#' + a.dataset.tocId);
+      if (slidingLabels) {
+        clickedItem = i;
+        clickDeadline = performance.now() + 1400;
+        update();
+        setTimeout(update, 1450);
+      }
       sections[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     }));
   }
@@ -461,7 +484,7 @@
           const src = /^(https?:|data:)/.test(im.src) ? im.src : R + im.src;
           if (/[.](mp4|webm|mov)([?#]|$)/i.test(im.src)) { box.appendChild(videoFrame(im, src)); return; }   // a video in the bank is shown in a framed player, like the clip on the About page
           const a = document.createElement('a'), img = document.createElement('img');
-          a.href = src; a.target = '_blank'; a.rel = 'noopener'; a.title = im.alt || 'Open the picture';
+          a.href = im.href || src; a.target = '_blank'; a.rel = 'noopener'; a.title = im.href ? (im.alt || 'Open the link') : (im.alt || 'Open the picture');
           img.src = src; img.alt = im.alt || ''; img.loading = 'lazy'; img.decoding = 'async';
           img.addEventListener('load', () => { if (animate) toBottom(); });            // keep the newest message in view once the picture has its height
           a.appendChild(img); box.appendChild(a);

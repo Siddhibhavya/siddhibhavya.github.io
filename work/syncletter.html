@@ -3,34 +3,230 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Siddhi — Syncletter</title>
+  <title>Syncletter — Case study · Siddhi Bhavya</title>
   <meta name="description" content="Syncletter translates corporate jargon and idioms — helping users understand what a message means, how urgent it is, and how to reply.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="../css/site.css">
 </head>
-<body data-page="work" data-root="../">
-  <div class="layout">
-    <main class="main" id="main">
-      <div class="stage-wrap" style="--sh:1024px">
-        <div class="stage">
-          <p class="stub-eyebrow">Case study</p>
-          <h1 class="stub-title">Syncletter</h1>
-          <p class="stub-copy">Syncletter translates corporate jargon and idioms — helping users understand what a message means, how urgent it is, and how to reply.</p>
-          <p class="stub-soon">The full case study is coming soon.</p>
-          <a class="stub-back" href="../home">&larr; Back to my work</a>
-        </div>
-      </div>
-    </main>
-  </div>
-  <footer class="footer"></footer>
+<body class="syncletter-page" data-page="syncletter" data-root="../" data-shell="sidebar"
+  data-toc='[{"id":"context","label":"Context"},{"id":"solution","label":"Solution"},{"id":"research","label":"Research"},{"id":"design","label":"Design"},{"id":"reflection","label":"Reflection"}]'>
+  <a class="syncletter-skip" href="#context">Skip to case study</a>
+  <div class="layout syncletter-layout">
+  <main class="syncletter-viewport" aria-label="Syncletter case study">
+  <div class="syn-canvas" data-node-id="419:966" data-name="Main Frame">
 
+    <div class="syn-1" data-node-id="419:967"></div>
+
+    <h1 class="syn-2" data-node-id="419:969">Building Syncletter</h1>
+    <p class="syn-3" data-node-id="419:970">Workplace messages can be hard to interpret.</p>
+    <h2 class="syn-4" data-node-id="419:971" id="context" tabindex="-1">Context</h2>
+    <h2 class="syn-5" data-node-id="419:1260" id="solution" tabindex="-1">Solution</h2>
+    <p class="syn-6" data-node-id="419:972">Problem Statement</p>
+    <h2 class="syn-7" data-node-id="419:973" id="research" tabindex="-1">Research</h2>
+    <h2 class="syn-8" data-node-id="419:974" id="design" tabindex="-1">Design</h2>
+
+    <div class="syn-9 syncletter-grid-copy" data-node-id="419:975">
+      <p>I designed Syncletter for early-career employees who may second-guess messages from people they do not know well, especially colleagues in senior or supervisory roles. The aim was to make workplace communication feel clearer and less stressful while keeping the user in control.</p>
+    </div>
+    <p class="syn-10 syncletter-grid-copy" data-node-id="419:976">Through past design work and internships, I noticed workplace messages can be difficult to interpret without shared context. Jargon, brief replies, and unclear requests may leave new employees unsure what a colleague means or how urgently they need to respond. Syncletter helps make those messages easier to understand.</p>
+    <p class="syn-11 syncletter-grid-copy" data-node-id="419:977">Syncletter decodes a confusing phrase on tap. It shows what it likely means, how urgent it is, and a few short reply pointers, built from what you've personally taught it about that sender. Everything stays on your device, and the sender never knows.</p>
+
+    <div class="syn-13" data-node-id="419:979" data-name="Details Background"></div>
+    <p class="syn-13a" data-node-id="419:1019">Skills</p>
+    <p class="syn-13b" data-node-id="419:1020">Timeline</p>
+    <p class="syn-13c" data-node-id="419:1021">Tools</p>
+    <p class="syn-13d" data-node-id="419:1022">Interaction Design</p>
+    <p class="syn-13e" data-node-id="419:1023">Figma, Figma Motion</p>
+    <p class="syn-13f" data-node-id="419:1024">Prototyping</p>
+    <p class="syn-13g" data-node-id="419:1025">Firebase</p>
+    <p class="syn-13h" data-node-id="419:1026">Research</p>
+    <p class="syn-13i" data-node-id="419:1027">Claude Code</p>
+    <p class="syn-13j" data-node-id="419:1028">August 2026</p>
+
+    <div class="syn-14" data-node-id="423:1302" data-name="01 Concept">
+      <div class="syn-14-crop">
+        <img alt="Syncletter: tap a phrase in WhatsApp to decode it, see the likely meaning, and reply with confidence" src="../assets/work/syncletter/header-image.webp">
+      </div>
+    </div>
+
+    <div class="syn-15a" data-node-id="419:1010">
+      <div class="syn-15btn" data-node-id="419:1012"><img alt="" class="syn-15heart" src="../assets/work/syncletter/heart-icon.svg" loading="lazy"></div>
+      <p class="syn-15a-label" data-node-id="419:1015">Interaction design</p>
+    </div>
+    <div class="syn-15b" data-node-id="419:1011"><p class="syn-15b-label" data-node-id="419:1016">Personal Project</p></div>
+
+    <a class="syn-17" data-node-id="419:1017" href="https://syncletter-67d17.web.app/" target="_blank" rel="noopener"><span class="syn-17-label" data-node-id="419:1018">Try prototype</span></a>
+
+    <p class="syn-18" data-node-id="419:1029">How might we help early-career employees understand ambiguous workplace messages and respond with more confidence, while respecting their privacy and keeping them in control?</p>
+
+    <p class="syn-19" data-node-id="419:1258">The project began with a broad question about misunderstandings in digital communication. Research helped narrow the focus to a specific moment: the receiver trying to interpret a message from someone they do not yet know well.</p>
+    <p class="syn-20" data-node-id="419:1030">To know more, I interviewed people who had recently joined the corporate world, and at times they had trouble keeping up with the language used.</p>
+
+    <ul class="syn-21" data-node-id="419:1035">
+      <li><span class="syn-stat">6 out of 10</span> already reread and second-guess before sending!</li>
+    </ul>
+    <ul class="syn-22" data-node-id="419:1036">
+      <li><span class="syn-stat">5/10 users</span> agree corporate tone-monitoring isn't just effortful, it's described as exhausting and constant.</li>
+    </ul>
+    <ul class="syn-23" data-node-id="419:1037">
+      <li><span class="syn-stat">8/10 users</span> want to keep the choice to stay "human," even when they know a suggestion might be better.</li>
+    </ul>
+    <ul class="syn-24" data-node-id="419:1038">
+      <li>A full AI rewrite is trusted less than a human's own imperfect wording; <span class="syn-stat">this came up independently, unprompted</span> in every 2nd interview!</li>
+    </ul>
+
+    <div class="syn-25" data-node-id="45:3291" data-name="Views / Popover">
+      <img alt="" class="syn-25-shadow" src="../assets/work/syncletter/quote-shadow.svg" loading="lazy">
+      <p class="syn-25-text">I am fairly new to the Corporate world, and honestly I do not understand the overly formal mails my HR sends.</p>
+      <img alt="" class="syn-25-close" src="../assets/work/syncletter/quote-close.svg" loading="lazy">
+      <img alt="" class="syn-25-open" src="../assets/work/syncletter/quote-open.svg" loading="lazy">
+    </div>
+    <p class="syn-26" data-node-id="419:1031">I learnt, I wasn't the only one struggling!</p>
+    <p class="syn-27" data-node-id="419:1032">-Participant, Age 22, From Bangalore.</p>
+
+    <p class="syn-28" data-node-id="419:1033">Looking at the current market; we found many tools offered <span class="syn-highlight">full rewrite, paraphrasing and were standalone apps.</span></p>
+    <div class="syn-29" data-node-id="419:1034">
+      <p>Here is where, <span class="syn-semibold">Syncletter differs.</span></p>
+      <p class="syn-highlight">It is local, editable, and sits within the texting app.</p>
+    </div>
+
+    <div class="syn-30" data-node-id="419:1040"></div>
+    <div class="syn-31" data-node-id="419:1041" data-name="Phone Bezel">
+      <div class="syn-31-screen">
+        <video class="syncletter-video" src="../assets/work/syncletter/demo.mp4" poster="../assets/work/syncletter/demo-poster.webp" muted loop playsinline preload="metadata" aria-label="Syncletter decoding a message inside WhatsApp"></video>
+      </div>
+    </div>
+    <img alt="" class="syn-32a" src="../assets/work/syncletter/down-arrow-doodle.svg" loading="lazy">
+    <img alt="" class="syn-32b" src="../assets/work/syncletter/down-arrow-doodle.svg" loading="lazy">
+    <p class="syn-33" data-node-id="419:1050">Logo/Icon</p>
+    <p class="syn-34" data-node-id="419:1051">Expected Experience on WhatsApp</p>
+    <p class="syn-35" data-node-id="419:1052">The product is designed around a personal, user-taught glossary: meanings are saved for specific senders and can be confirmed or changed by the user.</p>
+    <p class="syn-36" data-node-id="419:1053">Reply cues offer direction rather than ready-made sentences, so the user retains their voice and agency. The concept also puts privacy at the center: the sender is not notified, and the project direction specifies on-device handling.</p>
+
+    <a class="syn-37" data-node-id="419:1054" href="https://www.figma.com/board/Ie0iQFHBi4iRggutvVXYTq/Communications?node-id=0-1&amp;t=ytJ99LBh9SDUWDnI-1" target="_blank" rel="noopener"><span class="syn-37-label" data-node-id="419:1055">Read the research board</span></a>
+    <div class="syn-38" data-node-id="419:1056"><p>I got you!</p></div>
+
+    <p class="syn-39" data-node-id="419:1059">Elements</p>
+    <p class="syn-40" data-node-id="419:1060">Syncletter is designed as an Android Accessibility Overlay that can be used on any text messaging app. For the prototype, I chose to simulate WhatsApp as a PWA (Progressive Web App), since building a real Android overlay was outside the scope of this term.</p>
+
+    <div class="syn-grid" data-node-id="419:1061">
+      <div class="syn-card">
+        <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <p class="syn-card-meaning">You are asked to test the popularity of the idea/proposal.</p>
+        <div class="syn-card-actions"><span class="syn-pill">Add onto it</span><span class="syn-pill">Reply cues</span></div>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
+      </div>
+      <div class="syn-card">
+        <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <p class="syn-card-meaning">You are asked to test the popularity of the idea/proposal.</p>
+        <div class="syn-card-vote"><span>vote</span><button aria-label="remove">×</button></div>
+        <div class="syn-card-actions"><span class="syn-pill">Add onto it</span><span class="syn-pill">Reply cues</span></div>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
+      </div>
+      <div class="syn-card">
+        <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <p class="syn-card-addmeaning">Add your meaning-</p>
+        <div class="syn-card-actions"><span class="syn-pill-alt">Save</span><span class="syn-pill-alt">Reply Cues</span></div>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
+      </div>
+      <div class="syn-card syn-card-search">
+        <p class="syn-card-search-label">Search Word/Phrase</p>
+        <div class="syn-card-search-input"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/search-glyph-small.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-searchicon" src="../assets/work/syncletter/search-icon.svg" loading="lazy">
+        <span class="syn-card-back">←</span>
+      </div>
+      <div class="syn-card">
+        <p class="syn-card-search-label">Search Word/Phrase</p>
+        <div class="syn-card-result">
+          <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span><span class="syn-card-add">+</span></div>
+          <p class="syn-card-meaning-sm">You are asked to test the popularity of the idea/proposal.</p>
+          <span class="syn-pill-sm">Reply cues</span>
+        </div>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-searchicon" src="../assets/work/syncletter/search-icon.svg" loading="lazy">
+        <span class="syn-card-back">←</span>
+      </div>
+      <div class="syn-card syn-card-cues">
+        <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Reply Cues</span></div>
+        <ul class="syn-cues-list">
+          <li>A simple "sure, will do" is enough.</li>
+          <li>No need to propose a time yet.</li>
+          <li>Good time to ask any doubts; start with "Can you confirm-"</li>
+        </ul>
+        <span class="syn-card-backbtn">‹ Back</span>
+        <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
+        <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
+      </div>
+    </div>
+
+    <p class="syn-41" data-node-id="419:1217">Wireframes</p>
+    <p class="syn-42" data-node-id="419:1218">Developing the prototype.</p>
+    <div class="syn-flow" data-node-id="419:1219">
+      <p class="syn-flow-label">User Flow</p>
+      <ol class="syn-flow-steps">
+        <li class="syn-flow-card syn-flow-card-1"><span class="syn-flow-num">01</span><strong>Type message</strong><p>"sure, fine." typed in Teams, Outlook, or WhatsApp</p></li>
+        <li class="syn-flow-card syn-flow-card-2"><span class="syn-flow-num">02</span><strong>Rule-based check</strong><p>Pattern match runs on-device, no network call</p></li>
+        <li class="syn-flow-card syn-flow-card-3"><span class="syn-flow-num">03</span><strong>Icon lights</strong><p>Quiet signal in the suggestion row — no popup yet</p></li>
+        <li class="syn-flow-card syn-flow-card-4"><span class="syn-flow-num">04</span><strong>Tap to open</strong><p>A small floating window opens above the keyboard</p></li>
+        <li class="syn-flow-card syn-flow-card-5"><span class="syn-flow-num">05</span><strong>Pick or retype</strong><p>Choose a tone chip, or adjust a word yourself</p></li>
+        <li class="syn-flow-card syn-flow-card-6"><span class="syn-flow-num">06</span><strong>Send</strong><p>Message goes out. Nothing is stored or sent elsewhere</p></li>
+      </ol>
+      <span class="syn-flow-arrow syn-flow-arrow-h syn-flow-arrow-h1" aria-hidden="true">→</span>
+      <span class="syn-flow-arrow syn-flow-arrow-h syn-flow-arrow-h2" aria-hidden="true">→</span>
+      <span class="syn-flow-arrow syn-flow-arrow-h syn-flow-arrow-h3" aria-hidden="true">→</span>
+      <span class="syn-flow-arrow syn-flow-arrow-h syn-flow-arrow-h4" aria-hidden="true">→</span>
+      <span class="syn-flow-arrow syn-flow-arrow-v" aria-hidden="true">↓</span>
+    </div>
+    <div class="syn-slider" data-node-id="419:1228">
+      <video class="syncletter-video" src="../assets/work/syncletter/wireframe-slider.mp4" poster="../assets/work/syncletter/slider-poster.webp" muted loop playsinline preload="metadata" aria-label="Early prototype slider exploration"></video>
+    </div>
+    <div class="syn-devshot" data-node-id="419:1229">
+      <img alt="Prototype development screenshot" src="../assets/work/syncletter/prototype-dev-screenshot.webp" loading="lazy">
+    </div>
+    <p class="syn-43" data-node-id="419:1230">The first prototype was built in Figma. I then used a Figma Dev Mode link to pull the design into Claude Code via MCP, which became the working PWA.</p>
+    <div class="syn-44" data-node-id="419:1231">
+      <p class="syn-44-lede">Why a PWA?</p>
+      <p>I wanted users to test and understand Syncletter as closely as the real product. A PWA lets two people text each other in a shared room connected by a code, so I could test the decode-and-reply flow and get real feedback to work from.</p>
+    </div>
+    <p class="syn-45" data-node-id="419:1232">Syncletter already starts out with an inbuilt context library which is editable and local, the library contains most common 200 jargons and idioms of the corporate language that can help any new joinee get familiar with the workplace.</p>
+
+    <h2 class="syn-46" data-node-id="419:1233" id="reflection" tabindex="-1">Reflection</h2>
+    <p class="syn-47" data-node-id="419:1234">The project taught me to narrow a broad communication problem into a specific user need. Early exploration considered tone and emotional misinterpretation across digital messaging; the research and concept development brought the focus to the receiver's uncertainty around workplace phrases, urgency, and unfamiliar relationships.</p>
+    <a class="syn-48" data-node-id="419:1235" href="https://syncletter-67d17.web.app/" target="_blank" rel="noopener"><span class="syn-48-label" data-node-id="419:1236">Try prototype</span></a>
+
+  </div>
+  </main>
+  </div>
+  <footer class="footer syncletter-footer">
+    <div class="footer-koi" id="footer-koi" aria-hidden="true"></div>
+    <div class="footer-inner">
+      <p class="footer-tag">Great Ideas are yet to be built.<br>Why not with you?</p>
+      <div class="footer-links">
+        <div class="footer-col footer-contact">
+          <a href="mailto:alongsiddhi@gmail.com">Email</a>
+          <a href="https://www.instagram.com/alongsiddhi/?hl=en" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.linkedin.com/in/siddhi-bhavya/" target="_blank" rel="noopener">Linkedin</a>
+          <a href="mailto:alongsiddhi@gmail.com?subject=Resume%20request">Resume</a>
+        </div>
+        <div class="footer-col footer-nav">
+          <a href="../home">Work</a><a href="../about">About me</a>
+          <a href="../side-quests">Side Quests</a><a href="../home#lm" data-action="lm">M.I.K.U</a>
+          <a href="../guest-gallery">Guest Gallery</a>
+        </div>
+        <a class="footer-space" href="../"><img src="../assets/ui/star-back.svg" alt="" width="26" height="25" loading="lazy"><span>Back to space</span></a>
+      </div>
+    </div>
+  </footer>
   <script src="../js/config.js"></script>
-  <script src="../js/bank.js"></script>
-  <script src="../js/chat.js"></script>
   <script src="../js/shell.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.min.js"></script>
-  <script src="../js/koi.js"></script>
+  <script src="../js/syncletter.js"></script>
+  <script src="../assets/vendor/p5.min.js" defer></script>
+  <script src="../js/koi.js" defer></script>
 </body>
 </html>
