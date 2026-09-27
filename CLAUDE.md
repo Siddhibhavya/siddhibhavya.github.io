@@ -22,6 +22,18 @@ chats, not just this one.
 
 ## Working style
 
+- The approved case-study standards in `CASE-STUDY-GUIDELINES.md` §1 are
+  mandatory for every case study: `#fff2e6` continuous paper, text baselines
+  aligned to grid rules, and left-aligned Contents labels that animate to an
+  optical center with their arrow. The panel hugs the actual section count.
+  Preserve these defaults as copy, label lengths and section counts change.
+  Center case-study pill labels in both axes inside their pill, with clear icon
+  spacing and a full-pill click target. Syncletter prototype pills extend to
+  the next lower grid rule; see the approved dimensions in the guidelines.
+  Extend the shared shell hooks for new pages; the current implementation is
+  scoped to NearU and Syncletter. These approved standards take precedence
+  over older Figma chrome and do not need fresh approval.
+
 - Nothing invented without checking. When a design detail is ambiguous or
   feedback contradicts an earlier guess, pull the Figma node
   (`get_metadata` / `get_design_context`, file key `Nc087O4ophE87f3EyMdcVh`)

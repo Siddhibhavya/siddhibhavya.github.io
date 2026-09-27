@@ -39,6 +39,14 @@ body.compact .dc-arc { transform-origin: 50% 100%; transform: scaleY(calc(1 + 64
 .board img { position: absolute; height: 137.73%; left: -60.46%; top: -18.09%; width: 229.34%; }
 .vinyl img { width: 100%; height: 100%; animation: vinyl-spin 20s linear infinite; }
 @keyframes vinyl-spin { to { transform: rotate(360deg); } }
+/* the vinyl (and its "Songs?" caption) link out to the playlist — the record keeps spinning, this just adds a little lift on top of it */
+a.vinyl-link { display: block; transition: scale 0.4s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  a.vinyl-link:hover, a.vinyl-link:focus-visible { scale: 1.06; }
+}
+@media (prefers-reduced-motion: reduce) {
+  a.vinyl-link { transition: none; }
+}
 
 /* ---------- 4 · The stars, the fish-bone patch and the dino can be picked up and moved around (js/about.js) ----------
    --tx / --ty are the drag offset, --tilt leans it into the direction it is pulled; a tap makes it spin / wobble. */

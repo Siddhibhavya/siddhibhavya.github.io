@@ -144,9 +144,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-55 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:0;left:470px;font-style:normal;color:#674636;font-size:24px;top:7567px;width:831px; }
 .nearu-page .nu-56 { font-family:var(--font-ui);font-weight:500;line-height:161.76806688308716%; }
 .nearu-page .nu-57 { line-height:161.76806688308716%; }
-.nearu-page .nu-58 { position:absolute;display:flex;height:88.973px;align-items:center;justify-content:center;left:414px;top:766px;width:89.881px; }
-.nearu-page .nu-59 { flex:none;transform:rotate(36.95deg); }
-.nearu-page .nu-60 { height:61.571px;position:relative;width:66.156px; }
 /* the Figma-exported header frame (node 351:1566) as one flattened SVG — its own canvas is 998x281,
    9px larger on every side than the inner 980x263 card the rest of the layout was measured against */
 .nearu-page .nu-61.nearu-header-frame { position:absolute; left:404px; top:37px; width:998px; height:281px; }
@@ -240,11 +237,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-145 { flex:none;transform:scaleY(-1) rotate(180deg); }
 .nearu-page .nu-146 { height:158px;position:relative;width:170px; }
 .nearu-page .nu-147 { position:absolute;inset:-0.27% -0.85% 0 -5.14%; }
-.nearu-page .nu-148 { position:absolute;display:flex;height:88.973px;align-items:center;justify-content:center;left:547px;top:5385px;width:89.881px; }
-.nearu-page .nu-149 { position:absolute;display:flex;height:88.973px;align-items:center;justify-content:center;left:1129px;top:5380px;width:89.881px; }
-.nearu-page .nu-150 { position:absolute;display:flex;height:88.973px;align-items:center;justify-content:center;left:1081px;top:6821px;width:89.881px; }
-.nearu-page .nu-151 { position:absolute;display:flex;height:88.973px;align-items:center;justify-content:center;left:506px;top:6818px;width:89.881px; }
-.nearu-page .nu-152 { flex:none;transform:scaleY(-1) rotate(143.05deg); }
 .nearu-page .nu-153 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:592px;font-style:normal;color:#4d3326;font-size:24px;top:7014px;width:154px; }
 .nearu-page .nu-154 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:982px;font-style:normal;color:#4d3326;font-size:24px;top:7089px;width:163px; }
 .nearu-page .nu-155 { position:absolute;inset:19.51% 22.38% 80.39% 75.97%; }
@@ -284,9 +276,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-189 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:400;height:67px;justify-content:center;line-height:0;left:930px;font-style:normal;color:#4d3326;font-size:24px;top:9674.5px;letter-spacing:1.2px;width:117px;transform:translateY(-50%); }
 .nearu-page .nu-190 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:400;height:67px;justify-content:center;line-height:0;left:1141px;font-style:normal;color:#4d3326;font-size:24px;top:9672.5px;letter-spacing:1.2px;width:117px;transform:translateY(-50%); }
 .nearu-page .nu-191 { position:absolute;height:421px;left:896px;top:8046px;width:337px; }
-.nearu-page .nu-192 { position:absolute;display:flex;height:22.818px;align-items:center;justify-content:center;left:531px;top:9087px;width:23.051px; }
-.nearu-page .nu-193 { flex:none;transform:rotate(143.05deg); }
-.nearu-page .nu-194 { height:15.791px;position:relative;width:16.967px; }
 .nearu-page .nu-195 { position:absolute;height:413px;left:449px;top:9226px;width:861px; }
 .nearu-page .nu-196 { position:absolute;height:413px;left:0;top:0;width:207px; }
 .nearu-page .nu-197 { position:absolute;height:413px;left:218px;top:0;width:207px; }
@@ -306,8 +295,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-211 { height:457px;position:relative;flex-shrink:0;width:218px; }
 .nearu-page .nu-212 { height:454px;position:relative;flex-shrink:0;width:215px; }
 .nearu-page .nu-213 { position:absolute;height:630px;left:394.5px;top:10549px;width:1007px; }   /* centred in the visible content column (356 to 356+1084 — see nu-207's comment) */
-.nearu-page .nu-214 { position:absolute;background:#ddd6fe;height:21px;left:599px;top:9942px;width:78px; }
-.nearu-page .nu-215 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:600;justify-content:center;line-height:0;left:601px;font-style:normal;font-size:12px;color:rgba(0,0,0,0.69);top:9951px;letter-spacing:0.6px;white-space:nowrap;transform:translateY(-50%); }
 .nearu-page .nu-216 { position:absolute;display:flex;height:33.597px;align-items:center;justify-content:center;left:423px;top:390px;width:264.668px; }
 .nearu-page .nu-217 { flex:none;transform:skewX(-0.93deg); }
 .nearu-page .nu-218 { background:#fde6cf;outline:none;border:2px solid rgba(119,51,68,0.93);height:46px;position:relative;border-radius:23px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);width:264.121px;box-sizing:border-box; }

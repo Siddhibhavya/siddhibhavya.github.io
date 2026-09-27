@@ -1,0 +1,228 @@
+/* Syncletter case study — Figma canvas geometry (file Nc087O4ophE87f3EyMdcVh, node 419:964), scoped to this page.
+   Same technique as NearU: artwork stays on its original design canvas; text is live HTML; media uses local assets.
+   The real sidebar/Contents nav is the shared one (data-shell="sidebar" + data-toc; js/shell.js + css/shell/sidebar.css) —
+   nothing sidebar-specific lives here. */
+.syncletter-page { background: #fff2e6; }
+.syncletter-viewport {
+  position: relative; margin: 0; overflow: clip; background-color: #fff2e6;
+  background-image: linear-gradient(to right, rgba(46,20,10,.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46,20,10,.12) 1px, transparent 1px);
+  background-size: var(--paper-step) var(--paper-step);
+  background-position: var(--paper-x) var(--paper-y);
+}
+/* trimmed from the Figma frame's own 8244px: that height assumed the plum band (removed) filling the tail end;
+   the real last content (the second "Try prototype" pill) ends around 7756px, so stop shortly after it instead
+   of leaving ~500px of dead grid before the footer. */
+.syn-canvas { position: relative; width: 1448px !important; height: 7820px !important; transform-origin: top left; overflow: visible; background: none; }
+.syncletter-page h1, .syncletter-page h2 { margin: 0; }
+/* Figma's own tile for this frame doesn't export cleanly — draw the site's real grid instead (same technique as
+   css/pages/decor.css / nearu.css). Rows follow this page's most common body line-height (41px); columns anchor to
+   the text's left edge (~450px) so lines don't slice through the middle of a line of text. */
+.syncletter-page .syn-canvas {
+  background-color: #fff2e6;
+  background-image:
+    linear-gradient(to right, rgba(46, 20, 10, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 20, 10, 0.12) 1px, transparent 1px);
+  background-repeat: repeat;
+  background-size: 41px 41px;
+  background-position: 450px 14px;
+}
+.syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff2e6; color: #7f404e; }
+.syncletter-skip:focus { top: 12px; }
+@media (max-width: 899px) {
+  .syncletter-skip { display: none; }
+}
+
+/* ---------- background plates ---------- */
+.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #6d3642; border-radius: 12px; }
+
+/* ---------- intro / eyebrows ---------- */
+.syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #310f41; font-size: 64px; white-space: nowrap; line-height: normal; }
+.syn-3 { position: absolute; left: 448px; top: 1099px; width: 951px; margin: 0; font-family: var(--font-serif); font-weight: 400; color: #310f41; font-size: 62px; line-height: 104.895%; }
+.syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: #7f404e; font-size: 24px; text-transform: uppercase; white-space: nowrap; }
+.syn-4 { left: 450px; top: 1047px; }
+.syn-5 { left: 447px; top: 1866px; }
+.syn-7 { left: 453px; top: 2935px; }
+.syn-8 { left: 451px; top: 4250px; }
+.syn-46 { left: 447px; top: 7362px; }
+.syn-6 { position: absolute; left: 772px; top: 1533px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
+
+/* ---------- body copy ---------- */
+.syn-9 { position: absolute; left: 448px; top: 510px; width: 857px; height: 193px; font-family: var(--font-ui); font-weight: 400; color: #4d3326; font-size: 24px; }
+.syn-9 p { line-height: 42px; margin: 0; }
+.syn-10 { position: absolute; left: 448px; top: 1251px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-11 { position: absolute; left: 450px; top: 1945px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-18 { position: absolute; left: 511px; top: 1618px; width: 834px; margin: 0; font-family: var(--font-ui); font-weight: 600; color: #674636; font-size: 24px; line-height: 42px; }
+.syn-19 { position: absolute; left: 446px; top: 2970px; width: 880px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
+.syn-20 { position: absolute; left: 449px; top: 3709px; width: 851px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
+.syn-26 { position: absolute; left: 639px; top: 3790px; width: 459px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
+.syn-27 { position: absolute; left: 975px; top: 3640px; width: 298px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 16px; line-height: 121.788%; }
+.syn-28 { position: absolute; left: 453px; top: 3875px; width: 852px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 130.738%; }
+.syn-28 .syn-highlight { font-weight: 600; color: #840808; }
+.syn-29 { position: absolute; left: 885px; top: 3987px; width: 444px; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; }
+.syn-29 p { line-height: 143.833%; margin: 0 0 4px; }
+.syn-29 .syn-semibold { font-weight: 600; }
+.syn-29 .syn-highlight { color: #840808; font-weight: 600; }
+.syn-33 { position: absolute; left: 793px; top: 2237px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #fff; font-size: 24px; line-height: 41px; white-space: nowrap; }
+.syn-34 { position: absolute; left: 842px; top: 2490px; width: 157px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #fff; font-size: 24px; line-height: 41px; }
+.syn-35 { position: absolute; left: 474px; top: 2235px; width: 249px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-36 { position: absolute; left: 471px; top: 2685px; width: 825px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-39 { position: absolute; left: 468px; top: 4577px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-40 { position: absolute; left: 473px; top: 4365px; width: 839px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-41 { position: absolute; left: 467px; top: 5400px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-42 { position: absolute; left: 471px; top: 6261px; width: 377px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-43 { position: absolute; left: 513px; top: 6663px; width: 776px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-44 { position: absolute; left: 509px; top: 6822px; width: 776px; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; }
+.syn-44 p { line-height: 41px; margin: 0; }
+.syn-44-lede { font-weight: 500; }
+.syn-45 { position: absolute; left: 454px; top: 7072px; width: 857px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-47 { position: absolute; left: 447px; top: 7402px; width: 858px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+
+/* ---------- stat lists (research) ---------- */
+.syn-21, .syn-22, .syn-23, .syn-24 { position: absolute; margin: 0; padding-left: 36px; list-style: disc; font-family: var(--font-ui); font-weight: 700; color: #4d3326; font-size: 24px; }
+.syn-21 li, .syn-22 li, .syn-23 li, .syn-24 li { font-weight: 600; }
+.syn-stat { font-weight: 700; color: #840808; }
+.syn-21 { left: 468px; top: 3170px; width: 342px; }
+.syn-22 { left: 468px; top: 3350px; width: 850px; }
+.syn-23 { left: 953px; top: 3169px; width: 378px; }
+.syn-24 { left: 453px; top: 3466px; width: 450px; }
+
+/* ---------- quote popover ---------- */
+.syn-25 { position: absolute; left: 953px; top: 3443px; width: 343px; height: 174px; background: #fff; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+.syn-25-shadow { display: none; }
+.syn-25-text { position: absolute; inset: 17.82% 8.16% 17.82% 9.62%; margin: 0; font-family: var(--font-ui); font-weight: 700; font-size: 16px; line-height: 28px; color: #000; }
+.syn-25-close { position: absolute; inset: 77.59% 23.03% -7.47% 58.31%; }
+.syn-25-open { position: absolute; inset: -11.49% 82.22% 82.18% 0; }
+
+/* ---------- Details Background (skills/timeline/tools) ---------- */
+/* box made taller than Figma's literal 114px, and every row nudged down 20px, so the header+rows block
+   (96px tall) actually centers in the box instead of hugging the top with all the slack left at the bottom */
+.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #6d3642; border: 8px solid #7f404e; border-radius: 11px; box-sizing: border-box; }
+.syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #ffeddb; font-size: 20px; text-align: center; }
+.syn-13a { left: 1143.5px; width: 115px; }
+.syn-13b { left: 869.25px; width: 250.5px; }
+.syn-13c { left: 590.25px; width: 250.5px; }
+.syn-13d { position: absolute; left: 1159px; top: 925px; width: 168px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 400; line-height: 19px; color: rgba(255,237,219,.83); font-size: 15px; text-align: center; }
+.syn-13e, .syn-13f, .syn-13g, .syn-13h, .syn-13i { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 15px; }
+.syn-13e { left: 540px; top: 925px; width: 149px; line-height: 19px; }
+.syn-13f { left: 1094px; top: 945px; width: 152px; line-height: 22px; }
+.syn-13g { left: 540px; top: 945px; width: 152px; line-height: 22px; }
+.syn-13h { left: 1094px; top: 966px; width: 152px; line-height: 22px; }
+.syn-13i { left: 540px; top: 966px; width: 152px; line-height: 22px; }
+.syn-13j { position: absolute; left: 830px; top: 925px; width: 98px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 15px; line-height: 25px; }
+
+/* ---------- header image ---------- */
+/* height matches the image's own aspect ratio (885:311) at this width, so cropping never eats into top/bottom —
+   the old 309px came from the earlier hand-built mockup panel and doesn't match this flat export's proportions.
+   left is snapped to the nearest grid line (450px); only the left corners curve (11px), right stays square. */
+.syn-14 { position: absolute; left: 450px; top: 50px; width: 919px; height: 323px; overflow: hidden; border-radius: 11px 0 0 11px; box-shadow: -38px 8px 24px rgba(0,0,0,.06); transition: scale .45s var(--ease-out); transform-origin: center; }
+/* Figma's own crop on this asset: trim ~1.24% off the right edge, not a plain aspect-ratio cover-fit */
+.syn-14-crop { position: absolute; inset: 0 1.24% 0 0; overflow: hidden; }
+.syn-14-crop img { position: absolute; left: 0; top: 0; width: 101.26%; height: 100%; max-width: none; display: block; }
+
+/* ---------- pills under the header ---------- */
+.syn-15a, .syn-15b { position: absolute; top: 378px; height: 42px; background: #e8ffe5; border: 1px solid #075e54; border-radius: 32.5px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; }
+.syn-15a { left: 450px; width: 295px; }
+.syn-15b { left: 775px; top: 380px; width: 249px; }
+.syn-15btn { position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 30px; height: 28px; background: #075e54; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.syn-15heart { width: 31.985px; height: 31.985px; display: block; }
+.syn-15a-label, .syn-15b-label { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #003d36; font-size: 24px; line-height: 1; white-space: nowrap; }
+
+/* ---------- "Try prototype" CTAs ---------- */
+.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff2e6; color: #310f41; border: 4px solid #6d3642; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+/* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
+.syn-17 { left: 448px; top: 746px; height: 47px; }
+.syn-48 { left: 454px; top: 7715px; height: 48px; }
+.syn-17-label, .syn-48-label { font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 1; text-transform: capitalize; white-space: nowrap; }
+
+/* ---------- phone bezel demo ---------- */
+.syn-30 { position: absolute; left: 783px; top: 2097px; width: 513px; height: 532px; background: #02221e; border-radius: 20px; }
+.syn-31 { position: absolute; left: 992px; top: 2081px; width: 304px; height: 577px; overflow: hidden; border-radius: 38px; background: #000; box-shadow: inset 0 0 0 10px #535353; }
+.syn-31-screen { position: absolute; inset: 23.48px 23.52px 23.52px 23.48px; overflow: hidden; border-radius: 27.558px; background: #000; }
+.syn-31-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.syn-32a { position: absolute; left: 724px; top: 2114px; width: 126.018px; height: 124.147px; }
+.syn-32b { position: absolute; left: 482px; top: 3976px; width: 126.018px; height: 124.147px; }
+
+/* ---------- research CTA ---------- */
+.syn-37 { position: absolute; left: 679px; top: 4148px; width: 386px; height: 44px; border: 3px solid #6d3642; border-radius: 107px; box-sizing: border-box; color: #7f404e; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-37-label { font-family: var(--font-ui); font-weight: 400; font-size: 24px; line-height: 1; white-space: nowrap; }
+.syn-38 { position: absolute; left: 592px; top: 4042px; height: 63px; max-width: 304px; padding: 8px; background: #faf2ea; border: 1px solid #000; border-radius: 0 11px 11px 11px; box-shadow: 8px 2px 4.05px rgba(0,0,0,.43); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+.syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
+
+/* ---------- Elements grid (feature mockup cards) ---------- */
+.syn-grid { position: absolute; left: 502px; top: 4646px; width: 736.329px; background: #7f404e; border-radius: 12px; padding: 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: min-content; column-gap: 113px; row-gap: 33px; }
+.syn-card { background: #faf2ea; border: 1.232px solid rgba(190,201,197,.3); border-radius: 16px; padding: 16px; box-shadow: -8px 8px 4px rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; position: relative; box-sizing: border-box; }
+.syn-card-search { align-self: start; }
+.syn-card-cues { justify-self: end; width: 239.983px; }
+.syn-card-phrase { display: flex; align-items: center; gap: 8px; padding-right: 40px; }
+.syn-glyph-sm { width: 14.992px; height: 14.992px; flex: none; }
+.syn-card-phrase span { font-family: var(--font-ui); font-weight: 400; font-size: 12px; color: #1e1b17; line-height: 24px; white-space: nowrap; }
+.syn-card-meaning { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: #000; line-height: 17px; width: 225px; margin: 0; }
+.syn-card-meaning-sm { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: #000; margin: 4px 0; }
+.syn-card-actions { display: flex; gap: 10px; align-items: center; }
+.syn-pill { background: rgba(140,241,225,.3); border: 1.232px solid rgba(0,0,0,.15); border-radius: 9999px; height: 31.985px; display: flex; align-items: center; justify-content: center; padding: 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; color: #006f64; white-space: nowrap; }
+.syn-pill-sm { background: rgba(140,241,225,.3); border: 1.232px solid rgba(0,0,0,.15); border-radius: 9999px; height: 26px; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; font-size: 12px; color: #006f64; font-family: var(--font-ui); }
+.syn-pill-alt { background: #d9f2e7; border-radius: 12px; height: 24px; display: flex; align-items: center; justify-content: center; width: 84px; font-family: var(--font-ui); font-size: 13px; color: #075e54; box-shadow: 0 2px .5px rgba(0,0,0,.25); }
+.syn-card-vote { background: rgba(255,255,255,.6); display: flex; gap: 6px; align-items: center; padding: 6px 8px; border-radius: 8px; width: 224.548px; box-sizing: border-box; }
+.syn-card-vote span { font-size: 12px; color: #1e1b17; font-family: var(--font-ui); }
+.syn-card-vote button { background: none; border: none; color: #075e54; font-size: 13px; cursor: default; padding: 0; line-height: 1; width: 14.992px; height: 14.992px; }
+.syn-card-close, .syn-card-expand, .syn-card-searchicon { position: absolute; top: 14px; width: 14.992px; height: 14.992px; }
+.syn-card-close { right: 14px; }
+.syn-card-expand { right: 37px; }
+.syn-card-addmeaning { font-family: var(--font-ui); font-weight: 200; font-size: 12px; color: #111827; letter-spacing: -.35px; margin: 8px 0 0; }
+.syn-card-search-label { font-family: var(--font-ui); font-weight: 200; font-size: 12px; color: #111827; letter-spacing: -.35px; margin: 0; }
+.syn-card-search-input { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 12px; height: 36px; padding: 0 12px 0 34px; width: 224.548px; box-shadow: 0 1px 1.3px rgba(0,0,0,.25); box-sizing: border-box; position: relative; }
+.syn-card-search-input span { font-size: 13px; color: #9ca3af; font-family: var(--font-ui); }
+.syn-card-back { position: absolute; top: 14px; left: 23px; font-size: 15px; font-weight: 600; color: #075e54; }
+.syn-card-result { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 1px .65px rgba(0,0,0,.25); width: 224px; box-sizing: border-box; }
+.syn-card-result .syn-card-phrase { gap: 8px; padding-right: 0; width: 204.572px; }
+.syn-card-add { background: rgba(140,241,225,.3); border-radius: 9999px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #006f64; margin-left: auto; }
+.syn-cues-list { list-style: disc; padding-left: 14px; margin: 8px 0; }
+.syn-cues-list li { font-family: var(--font-ui); font-weight: 200; font-size: 10px; color: #000; line-height: 17px; margin-bottom: 2px; }
+.syn-card-backbtn { background: #075e54; color: #fff; border-radius: 9999px; padding: 5px 12px; font-size: 11px; font-family: var(--font-ui); font-weight: 500; display: inline-flex; gap: 4px; }
+
+/* ---------- wireframes / user flow ---------- */
+.syn-flow { display: contents; }
+.syn-flow-label { position: absolute; left: 471px; top: 5886px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+/* uniform step cards (rebuilt as real HTML — the original was a single flattened SVG export with the text
+   baked into vector paths, so individual boxes couldn't be resized or the arrows restyled) */
+.syn-flow-steps { display: contents; margin: 0; padding: 0; list-style: none; }
+.syn-flow-card {
+  position: absolute; width: 140px; height: 118px; padding: 12px; box-sizing: border-box;
+  border: 3px solid #7f404e; border-radius: 10px; background: #fff2e6; font-family: var(--font-ui);
+}
+.syn-flow-card-1 { left: 480px; top: 5930px; }
+.syn-flow-card-2 { left: 660px; top: 5930px; }
+.syn-flow-card-3 { left: 840px; top: 5930px; }
+.syn-flow-card-4 { left: 1020px; top: 5930px; }
+.syn-flow-card-5 { left: 1200px; top: 5930px; }
+.syn-flow-card-6 { left: 1200px; top: 6098px; }
+.syn-flow-num { display: block; font-weight: 700; font-size: 11px; color: #7f404e; margin-bottom: 2px; }
+.syn-flow-card strong { display: block; font-size: 14px; font-weight: 700; color: #4d3326; margin-bottom: 4px; }
+.syn-flow-card p { margin: 0; font-size: 11px; line-height: 14px; color: #674636; font-weight: 400; }
+.syn-flow-arrow { position: absolute; font-size: 24px; font-weight: 700; color: #7f404e; line-height: 1; }
+.syn-flow-arrow-h1 { left: 632px; top: 5977px; }
+.syn-flow-arrow-h2 { left: 812px; top: 5977px; }
+.syn-flow-arrow-h3 { left: 992px; top: 5977px; }
+.syn-flow-arrow-h4 { left: 1172px; top: 5977px; }
+.syn-flow-arrow-v { left: 1263px; top: 6060px; }
+.syn-slider, .syn-devshot { position: absolute; overflow: hidden; border-radius: 8px; }
+.syn-slider { left: 526px; top: 5483px; width: 690px; height: 344px; }
+.syn-devshot { left: 509px; top: 6323px; width: 763px; height: 313px; }
+.syn-slider img, .syn-devshot img, .syn-slider video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Keep every line of on-paper copy on the same rules as its measured first baseline. */
+.syncletter-page .syncletter-ruled { height: auto; line-height: var(--ruled-line); }
+.syncletter-page .syncletter-ruled :is(p, span, li) { line-height: var(--ruled-line); }
+.syncletter-page .syncletter-ruled p { margin-block: 0; }
+
+/* ---------- hover interactions (mirrors css/pages/nearu.css's convention) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .syn-14:hover { scale: 1.015; }
+  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #6d3642; color: #fff2e6; scale: 1.03; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .syn-14, .syn-17, .syn-48, .syn-37, .syn-17-label, .syn-48-label, .syn-37-label {
+    transition: none !important; scale: none !important;
+  }
+}

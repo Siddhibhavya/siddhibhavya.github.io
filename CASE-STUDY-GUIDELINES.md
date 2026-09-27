@@ -31,6 +31,18 @@ Never introduce a new hex for something these already cover — a new case study
 page reusing `#7f5744` instead of `var(--brown)` is a paper cut that shows up
 the next time the palette changes.
 
+### Approved case-study paper colours (2026-09-28)
+
+All case studies use the NearU/Syncletter paper background: **`#fff2e6`**.
+Apply it consistently to the page, layout, viewport, canvas and mobile paper
+so exposed edges and section boundaries have no colour seams. This is distinct
+from `--cream` (`#ffece1`, sidebar text) and `--card` (`#ffeddb`, shell cards).
+The footer keeps `var(--plum)`; Contents keeps `var(--maroon)` with
+`var(--pill)` for the selected row and `var(--brown)` for its text.
+Product screenshots and intentionally filled cards retain their own colours.
+Reuse these approved values; consolidate them into a shared paper token when
+extending the common styles instead of introducing another similar beige.
+
 ### Fonts
 - **Inter** (`var(--font-ui)`) — all UI chrome, body copy.
 - **Ancizar Serif** (`var(--font-serif)`) — display headings ("Building NearU", the sidebar name).
@@ -58,6 +70,59 @@ This is **one shared component**, built once by `js/shell.js` + `css/shell/sideb
   Contents variant needs a new capability, extend `initToc`/`sidebarHTML`
   in `shell.js` so every case study benefits.
 
+### Approved Contents navigation (2026-09-28)
+
+Use this behavior for every case study, regardless of section count or label
+length. NearU and Syncletter are the approved visual reference.
+
+- Inactive labels share a left edge. The selected label slides inward to an
+  **optical center with its arrow**. Animate `left`/`transform`; changing
+  `justify-content` alone snaps. Selection must not push text to the far right.
+- Reserve separate space for the arrow throughout the animation. The current
+  design uses a 273px row, 16px outer insets, a 21px arrow and a 12px label/arrow
+  gap. Center their combined width, measuring each label after fonts load.
+  Compare measurements in the same coordinate system when the sidebar scales.
+- Keep the rounded maroon panel, subtle inset border/shadow, cream moving pill,
+  warm brown active text and visible keyboard focus. Keep `aria-current` in
+  sync with selection and respect reduced-motion preferences.
+- Clicking selects immediately while the page scrolls; intermediate sections
+  must not steal that selection during the jump. Normal scroll tracking resumes
+  when the jump finishes. Keep the pill and row heights synchronized.
+- The panel hugs its links. Cap gaps at **24 design pixels**, with **30px top
+  and bottom padding**; fewer sections produce a shorter panel. Reserve a
+  visible gap above Connect. Reduce gaps toward 8px before reducing label size.
+  The current starting label size is 31px, with a 38px row height.
+- Calculate height from the actual item count and available space. Handle zero
+  or one section without dividing by zero. For longer labels or larger lists,
+  use wrapping/adequate row height or an accessible scrolling list if needed;
+  never clip labels, overlap rows/arrows, or cover Connect to force a fit.
+- Keep this behavior in the shared shell. The current approved implementation
+  is gated by `.nearu-page`/`.syncletter-page` in `sidebar.css` and `initToc()`.
+  When adding another case study, extend the shared case-study hook so it gets
+  these defaults; do not assume `data-toc` alone currently enables them or copy
+  the sidebar into the new page.
+
+### Pill labels and grid edges (approved 2026-09-28)
+
+- Center pill text horizontally and vertically using a single flex/grid
+  container. Put the label inside the pill; avoid separate absolute text
+  coordinates that drift when its height, width or copy changes. Use explicit
+  line-height and remove paragraph margins within pills.
+- Apply this to case-study tags, prototype/research links and small UI pills.
+  The approved Contents navigation above retains its own selection animation.
+- A pill with an icon must still leave clear space around centered text.
+  Reserve balanced icon space or widen the pill; check the actual text and icon
+  bounds after fonts load. Keep neighboring pills clear when dimensions change.
+- Make the entire link pill clickable and keyboard focusable. Background,
+  border and label hover together as one element, with reduced motion supported.
+- Syncletter's two **Try prototype** pills extend downward to the next horizontal
+  grid rule. Keep their top positions and set height from the grid phase/step:
+  the current design-space bottoms are 793px and 7763px, giving heights of 47px
+  and 48px. Recalculate from the grid if their position changes. Center the text
+  in the resulting pill; button labels are excluded from paper-baseline snapping.
+- Verify centering, icon clearance, grid contact and hover/focus behavior at
+  desktop and compact widths. Keep the whole pill and grid scaled together.
+
 ### Background grid
 Two different techniques exist, pick based on how the page is built:
 - **Pages built as normal HTML flow** (About, Work, Quests, Gallery): use
@@ -70,9 +135,34 @@ Two different techniques exist, pick based on how the page is built:
   exported fully transparent"). If a Figma export's own grid/tile asset is
   transparent or missing, don't chase the broken asset — draw the grid this
   way instead.
-- Either way, anchor the grid's origin to the **text column's left edge**
-  (and, loosely, a body-paragraph's line-height) so lines don't visibly
-  slice through the middle of a line of text.
+- Anchor vertical rules to the text column. Keep one continuous paper grid
+  through the content, including uncovered viewport edges.
+
+### Text must sit on the grid (approved 2026-09-28)
+
+- Align the actual font **baseline** of headings, paragraphs, lists and captions
+  on paper with horizontal rules. Grid alignment here refers to page content;
+  Contents navigation and text inside filled cards/buttons keep their own layout.
+- The desktop canvas reference is a **41px grid**, vertical phase **14px**, with
+  1px rules in `rgba(46,20,10,.12)`. Use 41px body line-height and whole multiples
+  such as 82px for larger titles. Nested paragraphs, spans and list items must
+  follow the same rhythm; fractional line-heights or arbitrary paragraph margins
+  cause later lines to drift even when the first line aligns.
+- After `document.fonts.ready`, measure a real baseline with a zero-size inline
+  baseline probe. Convert screen measurements to canvas coordinates and snap
+  to `phase + round((baseline - phase) / step) * step`. Even headings with an
+  82px line-height snap their first baseline to the nearest **41px** rule.
+  Recalculate after resizing or changing content; avoid cumulative drift.
+- A scaled canvas keeps its design-space grid and typography scaled together,
+  including on phones. A mobile layout that reflows uses its own coherent grid:
+  NearU's reference is 28px spacing, 20px phase, 28px body line-height and 56px
+  display line-height. Measure again after wrapping changes.
+- Allow text blocks to grow when copy changes. Reflow or adjust neighboring
+  blocks to preserve clear space around images, quotes and other text. Never
+  rely on an old fixed text height or hide overflow to conceal longer content.
+- Check all lines and nearby elements after alignment, not just the first
+  baseline. Verify fonts loaded, long copy, desktop and compact widths, and
+  grid continuity between the transformed canvas and its surrounding viewport.
 
 ## 2 · Figma is ground truth — pull it before guessing
 
@@ -90,12 +180,16 @@ own x/y, not the page: subtract the frame's own `x`/`y` from each child's to
 get local (0,0-origin) coordinates you can use directly as CSS `left`/`top`
 within that component's own positioned box.
 
+The approved paper, grid and Contents standards above take precedence over
+older Figma chrome. Apply them without asking for approval again. Content
+geometry may be adjusted as needed for baseline alignment and collision-free
+text growth; preserve the product artwork and unrelated design details.
+
 A literal Figma-canvas page (like NearU) is a direct export of many small
 absolute-positioned nodes (`nu-1`, `nu-2`, …, one class per Figma node,
-`data-node-id` kept for traceability). Treat these as read-only content —
-don't "clean up" their geometry by hand; if one looks wrong, re-check its
-node in Figma rather than eyeballing a fix, since these numbers are meant to
-be exact exports, not approximations.
+`data-node-id` kept for traceability). Preserve exported artwork geometry.
+Beyond the approved text-alignment and text-growth adjustments above, re-check
+a questionable node in Figma before changing its geometry.
 
 ## 3 · Bugs this project already hit once — don't repeat them
 
@@ -136,9 +230,9 @@ be exact exports, not approximations.
 
 ## 4 · Centering content on a literal Figma-canvas page
 
-On a page like NearU, the sidebar isn't a separate column next to the canvas —
-it's rendered *on top of* the canvas's own left edge. `js/nearu.js`'s `fit()`
-reserves the canvas's own local x:0→356 for the sidebar and treats x:356→1440
+On NearU, the shared sidebar occupies its own column beside the viewport.
+`js/nearu.js`'s `fit()` removes the exported canvas's x:0→356 sidebar area
+and treats x:356→1440
 (1084px) as the actual visible "beige" content column
 (`canvas.style.transform = translateX(inset) scale(scale) translateX(-356px)`).
 

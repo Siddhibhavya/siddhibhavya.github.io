@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="517" height="360.999" viewBox="0 0 517 360.999" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Shadow" filter="url(#filter0_d_0_18)">
+<foreignObject x="45.6344" y="35.6344" width="425.731" height="269.73"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(27.18px);clip-path:url(#bgblur_0_0_18_clip_path);height:100%;width:100%"></div></foreignObject><path id="Union" data-figma-bg-blur-radius="54.3656" d="M405.046 238.002C404.318 238.003 403.59 238.005 402.862 238.013C401.224 238.031 399.389 238.058 397.794 238.658C396.072 239.308 394.933 240.445 393.783 241.782C392.956 242.744 391.333 244.797 390.544 245.788C389.897 246.6 388.631 248.207 387.939 248.983C387.07 249.96 385.995 250.999 384.501 250.999C383.007 250.999 381.931 249.96 381.061 248.982C380.369 248.205 379.103 246.599 378.456 245.786C377.666 244.795 376.043 242.743 375.217 241.781C374.069 240.444 372.928 239.307 371.205 238.657C369.61 238.056 367.776 238.03 366.137 238.012C365.281 238.002 364.424 238 363.568 238L405.046 238.002ZM404 90C411.18 90 417 95.8203 417 103V225C417 232.18 411.18 238 404 238H113C105.82 238 100 232.18 100 225V103C100 95.8203 105.82 90 113 90H404Z" fill="white" fill-opacity="0.78"/>
+</g>
+<defs>
+<filter id="filter0_d_0_18" x="0" y="0" width="517" height="360.999" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="10"/>
+<feGaussianBlur stdDeviation="50"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_18"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_18" result="shape"/>
+</filter>
+<clipPath id="bgblur_0_0_18_clip_path" transform="translate(-45.6344 -35.6344)"><path d="M405.046 238.002C404.318 238.003 403.59 238.005 402.862 238.013C401.224 238.031 399.389 238.058 397.794 238.658C396.072 239.308 394.933 240.445 393.783 241.782C392.956 242.744 391.333 244.797 390.544 245.788C389.897 246.6 388.631 248.207 387.939 248.983C387.07 249.96 385.995 250.999 384.501 250.999C383.007 250.999 381.931 249.96 381.061 248.982C380.369 248.205 379.103 246.599 378.456 245.786C377.666 244.795 376.043 242.743 375.217 241.781C374.069 240.444 372.928 239.307 371.205 238.657C369.61 238.056 367.776 238.03 366.137 238.012C365.281 238.002 364.424 238 363.568 238L405.046 238.002ZM404 90C411.18 90 417 95.8203 417 103V225C417 232.18 411.18 238 404 238H113C105.82 238 100 232.18 100 225V103C100 95.8203 105.82 90 113 90H404Z"/>
+</clipPath></defs>
+</svg>
