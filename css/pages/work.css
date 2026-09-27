@@ -28,7 +28,7 @@
 
 .media { display: block; overflow: hidden; border-radius: 15px; background: #d9d9d9; }
 .media img { width: 100%; height: 100%; object-fit: cover; }
-.nearu-card { border-color: rgba(127, 64, 78, 0.7); box-shadow: -6px 5px 6px rgba(0, 0, 0, 0.25); }
+.nearu-card { box-shadow: -6px 5px 6px rgba(0, 0, 0, 0.25); }
 .nearu-card-media { background: transparent; }
 .nearu-card-media video { width: 100%; height: 100%; object-fit: cover; }
 .nearu-card .tag { font-size: 12px; border-color: #a6747b; }
