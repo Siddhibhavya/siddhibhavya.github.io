@@ -88,7 +88,7 @@
   plate(s, [1581,1583,1587], 427, 3058, 899, 247);
   plate(s, [1582,1584,1596], 470, 3294, 856, 247);
   copy(s, 1586);
-  plate(s, [1599,1600,1601,1602,1631,1632], 620, 3690, 440, 452);
+  plate(s, [1599,1600,1601,1602,1631,1632], 671, 3690, 460, 452);   // x/width follow nu-103's desktop left:691 (recentred +61px) and nu-105's right edge at 1105 — keep in sync if either moves
   copy(s, 1603);
 
   s = section('research', 1540);
