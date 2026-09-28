@@ -132,7 +132,7 @@
         `<span>${esc(n.label.toUpperCase())}</span><img class="arrow" src="${R}assets/ui/nav-arrow.svg" alt="" width="21" height="24"></a>`;
     }).join('');
 
-    const quick = SITE.nav.filter((n) => n.id !== 'lm').map((n) => `<a href="${hrefOf(n)}">${esc(n.label)}</a>`).join('');
+    const quick = SITE.nav.filter((n) => n.id !== 'lm').map((n) => `<a href="${hrefOf(n)}" target="_blank" rel="noopener">${esc(n.label)}</a>`).join('');
     const L = links();
     const toc = tocList();
     const indexPane = toc ? `
