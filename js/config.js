@@ -9,7 +9,7 @@ window.SITE = {
     emailAddress: 'alongsiddhi@gmail.com',      // shown on the pop-up button when "Email" is pressed
     linkedin: 'https://www.linkedin.com/in/siddhi-bhavya/',
     instagram: 'https://www.instagram.com/alongsiddhi/?hl=en',
-    resume: 'https://drive.google.com/file/d/1ALWAW4Qm_FeONfaqu2hGZuBhEG89Ushw/view?usp=sharing',   // the site résumé — the Resume pill in the top-right corner
+    resume: 'https://drive.google.com/file/d/1ALWAW4Qm_FeONfaqu2hGZuBhEG89Ushw/view?usp=drive_link',   // the site résumé — the Resume pill in the top-right corner
     resumeAts: 'https://drive.google.com/file/d/1zJQg8Z51ZCetirIovAvApxQkgCxdzwo7/view?usp=sharing'   // the ATS-friendly résumé — "Resume" under Connect with me! and in the footer
   },
 
