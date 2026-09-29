@@ -45,6 +45,8 @@ entered the Syncletter website."
 `#F7E9DC`, Ink Brown `#57443E`, Muted Ink `#8A746B`.
 **Migrated 2026-09-29:** these hexes are now the live values in `css/base.css` (`--plum`=Cosmic Ink, `--maroon`=Burgundy, `--brown`=Ink Brown, `--cream`/case-study paper=Gallery Cream, `--card`/`--pill`=Paper, headings=Museum Purple `#39265f`). Change them only in `base.css`, never per page.
 
+**Highlighted words (2026-09-29):** feature names and key insights inside case-study copy are bold `var(--hl-red)` (`#8f2000`, NearU's red two tones darker) on every case study — NearU and Syncletter share it. Don't hard-code the hex.
+
 **Case-study text browns (2026-09-29):** body copy uses `var(--espresso)` (`#4a2e22`, 11:1 on cream); lighter/secondary text (≤20px, small labels, captions, uppercase tags) uses `var(--chestnut)` (`#5c3a21`, 9:1). Don't hard-code either hex on a page.
 
 **Site brand controls (never project colours):** page backgrounds, global
@@ -183,6 +185,22 @@ Two different techniques exist, pick based on how the page is built:
   through the content, including uncovered viewport edges.
 
 ### Text must sit on the grid (approved 2026-09-28)
+
+**This is a global design rule (restated 2026-09-29).** It applies to *every*
+piece of text you add or move — new sections, diagrams, captions, side notes,
+labels beside images, list items — on desktop **and** phone, and it must be
+re-verified after each edit, not just when the page is first built.
+- Desktop: 41px rows, phase 14px. Phone: 28px rows, phase 20px.
+- Give text whole-row line-heights (41 / 28) and whole-row block heights, and
+  shift blocks in whole rows, so every following line stays on a rule.
+- Register each new text node with the page's snapping code (`RULED` in
+  `js/syncletter.js`; `ruledIds` in `js/nearu.js`, which also snaps the phone
+  Reflection list as a unit).
+- Alignment runs once fonts load **and again after the page load event**:
+  images and SVG art settle late and shift everything below them.
+- Verify with the real baseline probe (zero-size inline element with
+  `vertical-align:baseline`, in the page): `((baseline - origin - phase) mod
+  step)` should be 0 (or exactly one step). Don't eyeball it.
 
 - Align the actual font **baseline** of headings, paragraphs, lists and captions
   on paper with horizontal rules. Grid alignment here refers to page content;
