@@ -13,6 +13,7 @@
   color: var(--ink);
   transform: rotate(var(--r)); transform-origin: 50% 218.5px;
   transition: transform 0.6s var(--ease-out), height 0.55s var(--ease-out), box-shadow 0.45s ease;
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;   /* no backface-visibility / will-change here: promoting the tilted card to its own layer makes its text look like a scaled screenshot */
 }
 .card.is-featured { box-shadow: -6px 5px 6px rgba(0, 0, 0, 0.25); }   /* solid, like the other cards */
 .card:hover, .card:focus-visible {
@@ -36,7 +37,7 @@
 .nearu-card:hover .desc, .nearu-card:focus-visible .desc { width: 396.443px; line-height: 1.02305; text-align: left; }
 .media.road img { position: absolute; left: -15.45px; top: -332.4px; width: 454px; height: 1006px; max-width: none; object-fit: fill; }
 
-.phone { left: 113.83px; top: 38.57px; width: 200.94px; height: 255.43px; overflow: hidden; filter: drop-shadow(-9px 0 3.7px rgba(0, 0, 0, 0.53)); }
+.phone { left: 113.83px; top: 38.57px; width: 200.94px; height: 255.43px; overflow: hidden; border-radius: 30px 30px 0 0; box-shadow: -9px 0 3.7px rgba(0, 0, 0, 0.53); }   /* box-shadow instead of filter: a filter is another GPU layer that softens everything in the tilted card */
 .phone img { position: absolute; left: -0.05%; top: 0; height: 100%; width: 121.71%; }
 .glyph { left: 286.3px; top: 213.8px; width: 74px; height: 71px; }
 
@@ -47,7 +48,8 @@
   font-size: 14px; line-height: 1; color: #7a5c47; white-space: nowrap;
   animation: levitate 5.4s var(--ease-sine) infinite; animation-delay: var(--d, 0s);
 }
-@keyframes levitate { 0%, 100% { transform: translateY(0); } 25% { transform: translateY(-4px); } 75% { transform: translateY(4px); } }
+/* margin-top, not transform: a transform animation gives each pill its own GPU layer, which forces the whole tilted card's text to be drawn as a flat picture and rotated (blurry) */
+@keyframes levitate { 0%, 100% { margin-top: 0; } 25% { margin-top: -4px; } 75% { margin-top: 4px; } }
 
 .tag {
   left: var(--tl); top: var(--tt); width: var(--tw); height: 21px;
