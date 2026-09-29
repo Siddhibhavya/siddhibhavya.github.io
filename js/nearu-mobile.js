@@ -51,6 +51,15 @@
     box.className = 'nearu-mobile-card';
     copy(box, id); parent.append(box);
   }
+  // The desktop canvas draws this as a mind map (two cards, a centre title, a third card). On a phone the three cards
+  // can't sit side by side at readable size, so keep the map idea: a centre hub on a trunk with cards branching left/right.
+  function mindmap(parent, ids, hubId) {
+    const map = document.createElement('div');
+    map.className = 'nearu-mobile-map';
+    copy(map, hubId, 'nearu-mobile-hub');
+    ids.forEach(id => card(map, id));
+    parent.append(map);
+  }
   function phones(parent, ids, captions = []) {
     const row = document.createElement('div');
     row.className = 'nearu-mobile-phones';
@@ -93,8 +102,7 @@
 
   s = section('research', 1540);
   copy(s, 1604); copy(s, 1541, 'nearu-mobile-label'); copy(s, 1605);
-  card(s, 1608); card(s, 1610);
-  copy(s, 1614, 'nearu-mobile-label'); card(s, 1613);
+  mindmap(s, [1608, 1610, 1613], 1614);   // hub ("HOW STUDENTS SELL TODAY") + its three branches, still a mind map on small screens
   copy(s, 1542, 'nearu-mobile-label'); copy(s, 1606);
   copy(s, 1545, 'nearu-mobile-label');
   plate(s, [1520,1615,1616], 370, 6191, 350, 400);

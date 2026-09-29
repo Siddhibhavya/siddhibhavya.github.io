@@ -459,6 +459,20 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
     background: #f6e4d3; border: 3px solid #4a2230; border-radius: 24px; padding: 25px;
   }
   .nearu-mobile-card > .nearu-mobile-copy { margin: 0; }
+  /* Mind map: centre hub on a trunk, cards branch alternately left and right (keeps the desktop diagram's idea). */
+  .nearu-mobile-map { position: relative; display: grid; row-gap: 36px; }
+  .nearu-mobile-map::before {
+    content: ''; position: absolute; left: 50%; top: 20px; bottom: 20px; width: 3px; margin-left: -1.5px;
+    background: #4a2230; border-radius: 2px;
+  }
+  .nearu-mobile .nearu-mobile-copy.nearu-mobile-hub {   /* extra class: beats the shared copy rules (and their stray top padding) */
+    justify-self: center; position: relative; z-index: 1; background: #fff1df; border: 3px solid #4a2230;
+    border-radius: 999px; padding: 8px 20px !important; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; text-transform: uppercase;
+    color: var(--chestnut);
+  }
+  .nearu-mobile-map > .nearu-mobile-card { position: relative; z-index: 1; width: 88%; }
+  .nearu-mobile-map > .nearu-mobile-card:nth-of-type(odd) { justify-self: start; }
+  .nearu-mobile-map > .nearu-mobile-card:nth-of-type(even) { justify-self: end; }
   .nearu-mobile-phones { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px 16px; }
   .nearu-mobile-phones figure { margin: 0; min-width: 0; }
   .nearu-mobile-phones img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 2; object-fit: contain; }
