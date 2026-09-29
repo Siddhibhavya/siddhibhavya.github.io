@@ -25,7 +25,7 @@
 .compact .avatar-photo { left: 26.6px; top: 90.8px; width: 85.9px; height: 78px; }
 .compact .name { left: 112px; top: 88px; width: auto; text-align: left; font-size: 27px; }
 .compact .role { left: 112px; top: 128px; transform: none; font-size: 13px; }
-.compact .bio { left: 30px; top: 170px; width: 294px; font-size: 15px; line-height: 1.32; color: rgba(53, 35, 26, 0.86); }
+.compact .bio { left: 30px; top: 170px; width: 294px; font-size: 15px; line-height: 1.32; color: rgba(87, 68, 62, 0.86); }
 .compact .connect { bottom: 36px; }
 
 /* the Contents box (sidebar.css §4b): the phone card is shorter (COMPACT_H, not 1024+), so it needs its own,

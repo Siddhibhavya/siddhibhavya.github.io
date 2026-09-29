@@ -5,19 +5,21 @@
 ================================================================== */
 
 /* ---------- 1 · Tokens ----------
-   Every colour is lifted straight from the Figma file. Do not "tune" them: landing + footer plum is #190523 (not black). */
+   Every colour is lifted straight from the Figma file. Palette migrated 2026-09-29 to the brand palette (Cosmic Ink #1b0b2e, Burgundy #6b3341, Ink Brown #57443e, Gallery Cream #fff1df, Paper #f7e9dc, Museum Purple #39265f). */
 :root {
-  --plum: #190523;
-  --cream: #ffece1;
-  --sidebar: rgba(119, 51, 68, 0.93);
-  --maroon: #7f404e;
-  --maroon-edge: rgba(119, 51, 68, 0.93);
-  --pill: #f5e9e2;
-  --ink: #0e0314;
-  --card: #ffeddb;
+  --plum: #1b0b2e;
+  --cream: #fff1df;
+  --sidebar: rgba(107, 51, 65, 0.93);
+  --maroon: #6b3341;
+  --maroon-edge: rgba(107, 51, 65, 0.93);
+  --pill: #f7e9dc;
+  --ink: #1b0b2e;
+  --card: #f7e9dc;
   --card-edge: var(--maroon-edge);
-  --brown: #7f5744;
-  --brown-soft: rgba(53, 35, 26, 0.7);
+  --brown: #57443e;
+  --chestnut: #5c3a21;                        /* lighter/secondary case-study text: labels, captions, small copy */
+  --espresso: #4a2e22;                        /* case-study body text */
+  --brown-soft: rgba(87, 68, 62, 0.7);
   --trail: #075e54;
   --highlight: #ff9a00;                       /* the highlighter pen: the stars' yellow ochre (same as the orange string) */
 

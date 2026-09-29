@@ -14,6 +14,10 @@ adding or editing a case-study page. It covers:
 - a list of specific bugs this project already hit once (CSS measurement,
   cascade ordering, centering math on the absolute-canvas pages, media
   weight) so they aren't repeated
+- **brand ownership**: the site palette owns ~75–85% of every case-study
+  page; project colours appear only on elements that represent the product
+  (feature pills/boxes, prototype UI, diagrams, icons, mockups), never on
+  page background, body text, headings, navigation, dividers or borders
 - the small sitewide copy conventions (e.g. the drawer reminder just says
   "Menu")
 
@@ -23,7 +27,7 @@ chats, not just this one.
 ## Working style
 
 - The approved case-study standards in `CASE-STUDY-GUIDELINES.md` §1 are
-  mandatory for every case study: `#fff2e6` continuous paper, text baselines
+  mandatory for every case study: `#fff1df` continuous paper, text baselines
   aligned to grid rules, and left-aligned Contents labels that animate to an
   optical center with their arrow. The panel hugs the actual section count.
   Preserve these defaults as copy, label lengths and section counts change.

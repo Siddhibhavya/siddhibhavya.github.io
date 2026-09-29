@@ -158,8 +158,8 @@
         <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -13"/>
       </filter>
     </defs>
-    <path class="sb-static" fill="#ffeddb" d=""/>
-    <g class="sb-goo-group" fill="#ffeddb" filter="url(#sb-goo)">
+    <path class="sb-static" fill="#f7e9dc" d=""/>
+    <g class="sb-goo-group" fill="#f7e9dc" filter="url(#sb-goo)">
       <rect x="6" y="66" width="338" height="94" rx="8"/>
       <rect class="goo-tab" x="6" y="12" width="149" height="76" rx="8"/>
     </g>
@@ -757,7 +757,7 @@
       raf = (on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5) ? requestAnimationFrame(tick) : 0;
     };
     const show = (card) => {
-      pill.style.setProperty('--cs', card.dataset.cs || '#7f404e');
+      pill.style.setProperty('--cs', card.dataset.cs || '#6b3341');
       if (!on) { x = tx; y = ty; }                                    // appear right under the pointer, then follow
       on = true; pill.classList.add('on'); document.body.classList.add('cs-on');
       if (!raf) raf = requestAnimationFrame(tick);

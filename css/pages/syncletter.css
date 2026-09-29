@@ -2,9 +2,9 @@
    Same technique as NearU: artwork stays on its original design canvas; text is live HTML; media uses local assets.
    The real sidebar/Contents nav is the shared one (data-shell="sidebar" + data-toc; js/shell.js + css/shell/sidebar.css) —
    nothing sidebar-specific lives here. */
-.syncletter-page { background: #fff2e6; }
+.syncletter-page { background: #fff1df; }
 .syncletter-viewport {
-  position: relative; margin: 0; overflow: clip; background-color: #fff2e6;
+  position: relative; margin: 0; overflow: clip; background-color: #fff1df;
   background-image: linear-gradient(to right, rgba(46,20,10,.12) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(46,20,10,.12) 1px, transparent 1px);
   background-size: var(--paper-step) var(--paper-step);
@@ -19,7 +19,7 @@
    css/pages/decor.css / nearu.css). Rows follow this page's most common body line-height (41px); columns anchor to
    the text's left edge (~450px) so lines don't slice through the middle of a line of text. */
 .syncletter-page .syn-canvas {
-  background-color: #fff2e6;
+  background-color: #fff1df;
   background-image:
     linear-gradient(to right, rgba(46, 20, 10, 0.12) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(46, 20, 10, 0.12) 1px, transparent 1px);
@@ -27,19 +27,19 @@
   background-size: 41px 41px;
   background-position: 450px 14px;
 }
-.syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff2e6; color: #7f404e; }
+.syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff1df; color: #6b3341; }
 .syncletter-skip:focus { top: 12px; }
 @media (max-width: 899px) {
   .syncletter-skip { display: none; }
 }
 
 /* ---------- background plates ---------- */
-.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #6d3642; border-radius: 12px; }
+.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #6b3341; border-radius: 12px; }
 
 /* ---------- intro / eyebrows ---------- */
-.syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #310f41; font-size: 64px; white-space: nowrap; line-height: normal; }
-.syn-3 { position: absolute; left: 448px; top: 1099px; width: 951px; margin: 0; font-family: var(--font-serif); font-weight: 400; color: #310f41; font-size: 62px; line-height: 104.895%; }
-.syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: #7f404e; font-size: 24px; text-transform: uppercase; white-space: nowrap; }
+.syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 64px; white-space: nowrap; line-height: normal; }
+.syn-3 { position: absolute; left: 448px; top: 1099px; width: 951px; margin: 0; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 62px; line-height: 104.895%; }
+.syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: #6b3341; font-size: 24px; text-transform: uppercase; white-space: nowrap; }
 .syn-4 { left: 450px; top: 1047px; }
 .syn-5 { left: 447px; top: 1866px; }
 .syn-7 { left: 453px; top: 2935px; }
@@ -48,40 +48,40 @@
 .syn-6 { position: absolute; left: 772px; top: 1533px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
 
 /* ---------- body copy ---------- */
-.syn-9 { position: absolute; left: 448px; top: 510px; width: 857px; height: 193px; font-family: var(--font-ui); font-weight: 400; color: #4d3326; font-size: 24px; }
+.syn-9 { position: absolute; left: 448px; top: 510px; width: 857px; height: 193px; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; }
 .syn-9 p { line-height: 42px; margin: 0; }
-.syn-10 { position: absolute; left: 448px; top: 1251px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
-.syn-11 { position: absolute; left: 450px; top: 1945px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
-.syn-18 { position: absolute; left: 511px; top: 1618px; width: 834px; margin: 0; font-family: var(--font-ui); font-weight: 600; color: #674636; font-size: 24px; line-height: 42px; }
-.syn-19 { position: absolute; left: 446px; top: 2970px; width: 880px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
-.syn-20 { position: absolute; left: 449px; top: 3709px; width: 851px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
-.syn-26 { position: absolute; left: 639px; top: 3790px; width: 459px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 121.788%; }
-.syn-27 { position: absolute; left: 975px; top: 3640px; width: 298px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 16px; line-height: 121.788%; }
-.syn-28 { position: absolute; left: 453px; top: 3875px; width: 852px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 130.738%; }
-.syn-28 .syn-highlight { font-weight: 600; color: #840808; }
-.syn-29 { position: absolute; left: 885px; top: 3987px; width: 444px; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; }
+.syn-10 { position: absolute; left: 448px; top: 1251px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-11 { position: absolute; left: 450px; top: 1945px; width: 938px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-18 { position: absolute; left: 511px; top: 1618px; width: 834px; margin: 0; font-family: var(--font-ui); font-weight: 600; color: var(--espresso); font-size: 24px; line-height: 42px; }
+.syn-19 { position: absolute; left: 446px; top: 2970px; width: 880px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 121.788%; }
+.syn-20 { position: absolute; left: 449px; top: 3709px; width: 851px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 121.788%; }
+.syn-26 { position: absolute; left: 639px; top: 3790px; width: 459px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 121.788%; }
+.syn-27 { position: absolute; left: 975px; top: 3640px; width: 298px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--chestnut); font-size: 16px; line-height: 121.788%; }
+.syn-28 { position: absolute; left: 453px; top: 3875px; width: 852px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 130.738%; }
+.syn-28 .syn-highlight { font-weight: 600; color: var(--maroon); }
+.syn-29 { position: absolute; left: 885px; top: 3987px; width: 444px; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; }
 .syn-29 p { line-height: 143.833%; margin: 0 0 4px; }
 .syn-29 .syn-semibold { font-weight: 600; }
-.syn-29 .syn-highlight { color: #840808; font-weight: 600; }
+.syn-29 .syn-highlight { color: var(--maroon); font-weight: 600; }
 .syn-33 { position: absolute; left: 793px; top: 2237px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #fff; font-size: 24px; line-height: 41px; white-space: nowrap; }
 .syn-34 { position: absolute; left: 842px; top: 2490px; width: 157px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #fff; font-size: 24px; line-height: 41px; }
-.syn-35 { position: absolute; left: 474px; top: 2235px; width: 249px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
-.syn-36 { position: absolute; left: 471px; top: 2685px; width: 825px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-35 { position: absolute; left: 474px; top: 2235px; width: 249px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-36 { position: absolute; left: 471px; top: 2685px; width: 825px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 .syn-39 { position: absolute; left: 468px; top: 4577px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
-.syn-40 { position: absolute; left: 473px; top: 4365px; width: 839px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-40 { position: absolute; left: 473px; top: 4365px; width: 839px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 .syn-41 { position: absolute; left: 467px; top: 5400px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
 .syn-42 { position: absolute; left: 471px; top: 6261px; width: 377px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
-.syn-43 { position: absolute; left: 513px; top: 6663px; width: 776px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
-.syn-44 { position: absolute; left: 509px; top: 6822px; width: 776px; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; }
+.syn-43 { position: absolute; left: 513px; top: 6663px; width: 776px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-44 { position: absolute; left: 509px; top: 6822px; width: 776px; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; }
 .syn-44 p { line-height: 41px; margin: 0; }
 .syn-44-lede { font-weight: 500; }
-.syn-45 { position: absolute; left: 454px; top: 7072px; width: 857px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
-.syn-47 { position: absolute; left: 447px; top: 7402px; width: 858px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: #674636; font-size: 24px; line-height: 41px; }
+.syn-45 { position: absolute; left: 454px; top: 7072px; width: 857px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-47 { position: absolute; left: 447px; top: 7402px; width: 858px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 
 /* ---------- stat lists (research) ---------- */
-.syn-21, .syn-22, .syn-23, .syn-24 { position: absolute; margin: 0; padding-left: 36px; list-style: disc; font-family: var(--font-ui); font-weight: 700; color: #4d3326; font-size: 24px; }
+.syn-21, .syn-22, .syn-23, .syn-24 { position: absolute; margin: 0; padding-left: 36px; list-style: disc; font-family: var(--font-ui); font-weight: 700; color: var(--espresso); font-size: 24px; }
 .syn-21 li, .syn-22 li, .syn-23 li, .syn-24 li { font-weight: 600; }
-.syn-stat { font-weight: 700; color: #840808; }
+.syn-stat { font-weight: 700; color: var(--maroon); }
 .syn-21 { left: 468px; top: 3170px; width: 342px; }
 .syn-22 { left: 468px; top: 3350px; width: 850px; }
 .syn-23 { left: 953px; top: 3169px; width: 378px; }
@@ -97,8 +97,8 @@
 /* ---------- Details Background (skills/timeline/tools) ---------- */
 /* box made taller than Figma's literal 114px, and every row nudged down 20px, so the header+rows block
    (96px tall) actually centers in the box instead of hugging the top with all the slack left at the bottom */
-.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #6d3642; border: 8px solid #7f404e; border-radius: 11px; box-sizing: border-box; }
-.syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #ffeddb; font-size: 20px; text-align: center; }
+.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #6b3341; border: 8px solid #6b3341; border-radius: 11px; box-sizing: border-box; }
+.syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #f7e9dc; font-size: 20px; text-align: center; }
 .syn-13a { left: 1143.5px; width: 115px; }
 .syn-13b { left: 869.25px; width: 250.5px; }
 .syn-13c { left: 590.25px; width: 250.5px; }
@@ -129,7 +129,7 @@
 .syn-15a-label, .syn-15b-label { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #003d36; font-size: 24px; line-height: 1; white-space: nowrap; }
 
 /* ---------- "Try prototype" CTAs ---------- */
-.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff2e6; color: #310f41; border: 4px solid #6d3642; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #6b3341; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 /* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
 .syn-17 { left: 448px; top: 746px; height: 47px; }
 .syn-48 { left: 454px; top: 7715px; height: 48px; }
@@ -144,13 +144,13 @@
 .syn-32b { position: absolute; left: 482px; top: 3976px; width: 126.018px; height: 124.147px; }
 
 /* ---------- research CTA ---------- */
-.syn-37 { position: absolute; left: 679px; top: 4148px; width: 386px; height: 44px; border: 3px solid #6d3642; border-radius: 107px; box-sizing: border-box; color: #7f404e; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-37 { position: absolute; left: 679px; top: 4148px; width: 386px; height: 44px; border: 3px solid #6b3341; border-radius: 107px; box-sizing: border-box; color: #6b3341; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 .syn-37-label { font-family: var(--font-ui); font-weight: 400; font-size: 24px; line-height: 1; white-space: nowrap; }
 .syn-38 { position: absolute; left: 592px; top: 4042px; height: 63px; max-width: 304px; padding: 8px; background: #faf2ea; border: 1px solid #000; border-radius: 0 11px 11px 11px; box-shadow: 8px 2px 4.05px rgba(0,0,0,.43); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
 .syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
 
 /* ---------- Elements grid (feature mockup cards) ---------- */
-.syn-grid { position: absolute; left: 502px; top: 4646px; width: 736.329px; background: #7f404e; border-radius: 12px; padding: 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: min-content; column-gap: 113px; row-gap: 33px; }
+.syn-grid { position: absolute; left: 502px; top: 4646px; width: 736.329px; background: #6b3341; border-radius: 12px; padding: 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: min-content; column-gap: 113px; row-gap: 33px; }
 .syn-card { background: #faf2ea; border: 1.232px solid rgba(190,201,197,.3); border-radius: 16px; padding: 16px; box-shadow: -8px 8px 4px rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; position: relative; box-sizing: border-box; }
 .syn-card-search { align-self: start; }
 .syn-card-cues { justify-self: end; width: 239.983px; }
@@ -189,7 +189,7 @@
 .syn-flow-steps { display: contents; margin: 0; padding: 0; list-style: none; }
 .syn-flow-card {
   position: absolute; width: 140px; height: 118px; padding: 12px; box-sizing: border-box;
-  border: 3px solid #7f404e; border-radius: 10px; background: #fff2e6; font-family: var(--font-ui);
+  border: 3px solid #6b3341; border-radius: 10px; background: #fff1df; font-family: var(--font-ui);
 }
 .syn-flow-card-1 { left: 480px; top: 5930px; }
 .syn-flow-card-2 { left: 660px; top: 5930px; }
@@ -197,10 +197,10 @@
 .syn-flow-card-4 { left: 1020px; top: 5930px; }
 .syn-flow-card-5 { left: 1200px; top: 5930px; }
 .syn-flow-card-6 { left: 1200px; top: 6098px; }
-.syn-flow-num { display: block; font-weight: 700; font-size: 11px; color: #7f404e; margin-bottom: 2px; }
-.syn-flow-card strong { display: block; font-size: 14px; font-weight: 700; color: #4d3326; margin-bottom: 4px; }
-.syn-flow-card p { margin: 0; font-size: 11px; line-height: 14px; color: #674636; font-weight: 400; }
-.syn-flow-arrow { position: absolute; font-size: 24px; font-weight: 700; color: #7f404e; line-height: 1; }
+.syn-flow-num { display: block; font-weight: 700; font-size: 11px; color: #6b3341; margin-bottom: 2px; }
+.syn-flow-card strong { display: block; font-size: 14px; font-weight: 700; color: var(--chestnut); margin-bottom: 4px; }
+.syn-flow-card p { margin: 0; font-size: 11px; line-height: 14px; color: var(--chestnut); font-weight: 400; }
+.syn-flow-arrow { position: absolute; font-size: 24px; font-weight: 700; color: #6b3341; line-height: 1; }
 .syn-flow-arrow-h1 { left: 632px; top: 5977px; }
 .syn-flow-arrow-h2 { left: 812px; top: 5977px; }
 .syn-flow-arrow-h3 { left: 992px; top: 5977px; }
@@ -219,7 +219,7 @@
 /* ---------- hover interactions (mirrors css/pages/nearu.css's convention) ---------- */
 @media (hover: hover) and (pointer: fine) {
   .syn-14:hover { scale: 1.015; }
-  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #6d3642; color: #fff2e6; scale: 1.03; }
+  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #6b3341; color: #fff1df; scale: 1.03; }
 }
 @media (prefers-reduced-motion: reduce) {
   .syn-14, .syn-17, .syn-48, .syn-37, .syn-17-label, .syn-48-label, .syn-37-label {

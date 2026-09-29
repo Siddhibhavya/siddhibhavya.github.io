@@ -19,24 +19,68 @@ by default; only skip one if she explicitly says to.
 ### Colours (`css/base.css`, `:root`)
 | Token | Hex | Use |
 |---|---|---|
-| `--plum` | `#190523` | landing + footer bg |
-| `--cream` | `#ffece1` | sidebar text on dark, page bg elsewhere |
-| `--maroon` | `#7f404e` | sidebar/explore-box bg, headings, "HOME" links, arrows |
+| `--plum` | `#1b0b2e` | landing + footer bg |
+| `--cream` | `#fff1df` | sidebar text on dark, page bg elsewhere |
+| `--maroon` | `#6b3341` | sidebar/explore-box bg, headings, "HOME" links, arrows |
 | `--maroon-edge` | `rgba(119,51,68,.93)` | borders on maroon UI (drawer button, nudge pill) |
-| `--ink` | `#0e0314` | the real EXPLORE nav's active-item text (reads harsh on a cream pill — prefer `--brown` there, see §3) |
-| `--brown` | `#7f5744` | active pill text, "Connect with me!" title |
+| `--ink` | `#1b0b2e` | the real EXPLORE nav's active-item text (reads harsh on a cream pill — prefer `--brown` there, see §3) |
+| `--brown` | `#57443e` | active pill text, "Connect with me!" title |
 | `--brown-soft` | `rgba(53,35,26,.7)` | bio/connect-link body text |
 | `--pill` | (check base.css) | the EXPLORE nav-pill fill |
 Never introduce a new hex for something these already cover — a new case study
-page reusing `#7f5744` instead of `var(--brown)` is a paper cut that shows up
+page reusing `#57443e` instead of `var(--brown)` is a paper cut that shows up
 the next time the palette changes.
+
+### Brand ownership — the site is the environment, the project is the exhibit (2026-09-29)
+
+**Siddhi's brand = the environment. The project's brand = content displayed
+inside it.** Roughly 75–85% of the visible interface on *every* page, case
+studies included, uses the global site palette. The portfolio never changes
+its colour identity to match the project being viewed. A visitor should feel
+"I'm still in Siddhi's portfolio, viewing the Syncletter exhibit" — not "I've
+entered the Syncletter website."
+
+**Site brand palette (as briefed):** Cosmic Ink `#1B0B2E`, Museum Purple
+`#39265F`, Archive Burgundy `#6b3341`, Gallery Cream `#FFF1DF`, Paper
+`#F7E9DC`, Ink Brown `#57443E`, Muted Ink `#8A746B`.
+**Migrated 2026-09-29:** these hexes are now the live values in `css/base.css` (`--plum`=Cosmic Ink, `--maroon`=Burgundy, `--brown`=Ink Brown, `--cream`/case-study paper=Gallery Cream, `--card`/`--pill`=Paper, headings=Museum Purple `#39265f`). Change them only in `base.css`, never per page.
+
+**Case-study text browns (2026-09-29):** body copy uses `var(--espresso)` (`#4a2e22`, 11:1 on cream); lighter/secondary text (≤20px, small labels, captions, uppercase tags) uses `var(--chestnut)` (`#5c3a21`, 9:1). Don't hard-code either hex on a page.
+
+**Site brand controls (never project colours):** page backgrounds, global
+typography, navigation/Contents, menu, Resume button, global buttons,
+case-study headings and section titles, page dividers, general borders,
+general cards, research text, metadata, footer, global links, decorative site
+elements.
+
+**Project colours are secondary and contextual.** Allowed only in components
+that *represent, explain or demonstrate the product*: feature boxes and
+pills, prototype UI, product diagrams, branded callouts, selected data
+visualisations, icons, screenshots, mockups, component demos, brand-system
+sections.
+
+**The test, before applying any project colour:** *is this element
+representing the PRODUCT, or structuring the WEBSITE?* Product → project
+colour allowed. Website → site palette.
+
+| Element | Colour |
+|---|---|
+| "RESEARCH" label | Site burgundy |
+| Research paragraph | Site ink brown |
+| Large case-study headline | Site museum purple |
+| Page background, navigation, dividers | Site palette |
+| "Reply Cues" feature pill, Syncletter feature box, WhatsApp prototype, Syncletter icon | Syncletter teal/green |
+| NearU feature boxes, pills, branding demos, illustrations, product UI | NearU yellow/blue/black |
+
+Never turn a whole case-study page Syncletter-green or NearU-yellow/blue.
+Apply this consistently to every case study, including all future projects.
 
 ### Approved case-study paper colours (2026-09-28)
 
-All case studies use the NearU/Syncletter paper background: **`#fff2e6`**.
+All case studies use the NearU/Syncletter paper background: **`#fff1df`**.
 Apply it consistently to the page, layout, viewport, canvas and mobile paper
 so exposed edges and section boundaries have no colour seams. This is distinct
-from `--cream` (`#ffece1`, sidebar text) and `--card` (`#ffeddb`, shell cards).
+from `--cream` (`#fff1df`, sidebar text) and `--card` (`#f7e9dc`, shell cards).
 The footer keeps `var(--plum)`; Contents keeps `var(--maroon)` with
 `var(--pill)` for the selected row and `var(--brown)` for its text.
 Product screenshots and intentionally filled cards retain their own colours.

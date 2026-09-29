@@ -5,7 +5,7 @@
 .footer-inner {
   position: relative; width: 100%; min-height: 368px; padding: 48px 36px;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px;
-  color: #f5e9e2; font-weight: 500;
+  color: #f7e9dc; font-weight: 500;
 }
 .footer-tag {
   font-family: var(--font-serif); font-weight: 400; font-size: clamp(28px, 3vw, 40px); line-height: 1.18;
