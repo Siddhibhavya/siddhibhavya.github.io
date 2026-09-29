@@ -34,7 +34,7 @@
 }
 
 /* ---------- background plates ---------- */
-.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #6b3341; border-radius: 12px; }
+.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #4a2230; border-radius: 12px; }
 
 /* ---------- intro / eyebrows ---------- */
 .syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 64px; white-space: nowrap; line-height: normal; }
@@ -97,7 +97,7 @@
 /* ---------- Details Background (skills/timeline/tools) ---------- */
 /* box made taller than Figma's literal 114px, and every row nudged down 20px, so the header+rows block
    (96px tall) actually centers in the box instead of hugging the top with all the slack left at the bottom */
-.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #6b3341; border: 8px solid #6b3341; border-radius: 11px; box-sizing: border-box; }
+.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #4a2230; border: 8px solid #4a2230; border-radius: 11px; box-sizing: border-box; }
 .syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #f7e9dc; font-size: 20px; text-align: center; }
 .syn-13a { left: 1143.5px; width: 115px; }
 .syn-13b { left: 869.25px; width: 250.5px; }
@@ -129,7 +129,7 @@
 .syn-15a-label, .syn-15b-label { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #003d36; font-size: 24px; line-height: 1; white-space: nowrap; }
 
 /* ---------- "Try prototype" CTAs ---------- */
-.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #6b3341; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #4a2230; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 /* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
 .syn-17 { left: 448px; top: 746px; height: 47px; }
 .syn-48 { left: 454px; top: 7715px; height: 48px; }
@@ -144,7 +144,7 @@
 .syn-32b { position: absolute; left: 482px; top: 3976px; width: 126.018px; height: 124.147px; }
 
 /* ---------- research CTA ---------- */
-.syn-37 { position: absolute; left: 679px; top: 4148px; width: 386px; height: 44px; border: 3px solid #6b3341; border-radius: 107px; box-sizing: border-box; color: #6b3341; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-37 { position: absolute; left: 679px; top: 4148px; width: 386px; height: 44px; border: 3px solid #4a2230; border-radius: 107px; box-sizing: border-box; color: #6b3341; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 .syn-37-label { font-family: var(--font-ui); font-weight: 400; font-size: 24px; line-height: 1; white-space: nowrap; }
 .syn-38 { position: absolute; left: 592px; top: 4042px; height: 63px; max-width: 304px; padding: 8px; background: #faf2ea; border: 1px solid #000; border-radius: 0 11px 11px 11px; box-shadow: 8px 2px 4.05px rgba(0,0,0,.43); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
 .syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
@@ -189,7 +189,7 @@
 .syn-flow-steps { display: contents; margin: 0; padding: 0; list-style: none; }
 .syn-flow-card {
   position: absolute; width: 140px; height: 118px; padding: 12px; box-sizing: border-box;
-  border: 3px solid #6b3341; border-radius: 10px; background: #fff1df; font-family: var(--font-ui);
+  border: 3px solid #4a2230; border-radius: 10px; background: #fff1df; font-family: var(--font-ui);
 }
 .syn-flow-card-1 { left: 480px; top: 5930px; }
 .syn-flow-card-2 { left: 660px; top: 5930px; }
@@ -219,7 +219,7 @@
 /* ---------- hover interactions (mirrors css/pages/nearu.css's convention) ---------- */
 @media (hover: hover) and (pointer: fine) {
   .syn-14:hover { scale: 1.015; }
-  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #6b3341; color: #fff1df; scale: 1.03; }
+  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #4a2230; color: #fff1df; scale: 1.03; }
 }
 @media (prefers-reduced-motion: reduce) {
   .syn-14, .syn-17, .syn-48, .syn-37, .syn-17-label, .syn-48-label, .syn-37-label {
