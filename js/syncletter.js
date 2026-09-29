@@ -9,7 +9,7 @@
   const viewport = document.querySelector('.syncletter-viewport');
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
-  const CANVAS_H = 7861; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
+  const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
   const CONTENT_W = 1092; // 1448 canvas width - 356 shared sidebar width
   const sectionFor = hash => document.getElementById(hash.slice(1));
   function fit() {
@@ -37,7 +37,7 @@
   const RULED = ['.syn-2', '.syn-3', '.syn-4', '.syn-5', '.syn-6', '.syn-7', '.syn-8', '.syn-46',
     '.syn-9', '.syn-10', '.syn-11', '.syn-18', '.syn-19', '.syn-20', '.syn-21', '.syn-22', '.syn-23', '.syn-24',
     '.syn-26', '.syn-27', '.syn-28', '.syn-29', '.syn-33', '.syn-34', '.syn-35', '.syn-36',
-    '.syn-39', '.syn-40', '.syn-41', '.syn-42', '.syn-43', '.syn-44', '.syn-45', '.syn-47', '.syn-flow-label']
+    '.syn-39', '.sp-intro', '.syn-40', '.syn-41', '.syn-wf-text', '.syn-42', '.syn-43', '.syn-44', '.syn-45', '.syn-47', '.syn-flow-label']
     .map(sel => canvas.querySelector(sel)).filter(Boolean);
   const GRID_PHASE = 14; // matches the 14px vertical offset in css/pages/syncletter.css's background-position
   RULED.forEach(el => {

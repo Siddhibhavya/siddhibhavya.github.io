@@ -38,6 +38,20 @@ chats, not just this one.
   scoped to NearU and Syncletter. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
+- **Global design rules for every element you add or move, on every case
+  study, desktop and phone** (not just the first pass — re-check after each
+  edit):
+  1. **Text sits on the grid lines.** Every line of text (headings, body,
+     labels, list items, diagram captions, notes beside images) has its
+     baseline on a paper rule: desktop 41px rows (phase 14px), phone 28px
+     rows (phase 20px). Use whole-row line-heights and whole-row block
+     heights, register new text nodes in the page's ruled list
+     (`RULED` in `js/syncletter.js`, `ruledIds` in `js/nearu.js`), and shift
+     content in whole rows (41 / 28). Measure the real baseline to verify —
+     don't eyeball. See `CASE-STUDY-GUIDELINES.md` "Text must sit on the grid".
+  2. **Content is centred in the beige content area**, not the whole canvas
+     (see guidelines §4), and equal on both sides on phones.
+  3. Highlighted feature names / key insights are bold `var(--hl-red)`.
 - Nothing invented without checking. When a design detail is ambiguous or
   feedback contradicts an earlier guess, pull the Figma node
   (`get_metadata` / `get_design_context`, file key `Nc087O4ophE87f3EyMdcVh`)

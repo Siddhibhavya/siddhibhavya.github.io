@@ -308,8 +308,13 @@
     const box = sidebar.querySelector('.toc-box');
     const items = [...sidebar.querySelectorAll('.toc-item')];
     const pill = sidebar.querySelector('.toc-pill');
-    const sections = toc.map((t) => document.getElementById(t.id)).filter(Boolean);
-    if (!sections.length) return;
+    // Pages with a separate small-screen layout (NearU) keep its copies of each heading as #mobile-<id>; the desktop canvas is
+    // display:none there, so its headings all report top:0 and the last one (Scope) would always win the scrollspy.
+    const sectionsNow = () => toc.map((t) => {
+      const desktop = document.getElementById(t.id), phone = document.getElementById('mobile-' + t.id);
+      return phone && phone.getClientRects().length ? phone : desktop;
+    }).filter(Boolean);
+    if (!sectionsNow().length) return;
 
     // Packed GAP apart (down to MIN_GAP, then shrinking the labels themselves as a last resort), and the box hugs
     // the resulting cluster — instead of stretching to fill a fixed 698/528px, or overflowing into .connect below
@@ -376,7 +381,7 @@
     function update() {
       pending = false;
       let active = 0;
-      sections.forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 3) active = i; });
+      sectionsNow().forEach((s, i) => { if (s.getBoundingClientRect().top < window.innerHeight / 3) active = i; });
       if (clickedItem !== null) {
         if (performance.now() < clickDeadline) active = clickedItem;
         else clickedItem = null;
@@ -405,7 +410,7 @@
         update();
         setTimeout(update, 1450);
       }
-      sections[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      sectionsNow()[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     }));
   }
 
