@@ -159,7 +159,7 @@
     if (!e || !filled(e)) return fallback;
     return Object.assign({}, fallback, {
       text: answerOf(e) || fallback.text,
-      images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '' })),
+      images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '', caption: i.caption || '' })),
       actions: (fallback.actions || []).concat((e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))))
     });
   }
@@ -170,7 +170,7 @@
     if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return said('talk-bye', { kind: 'talk', text: 'Bye for now, and thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] });
     if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return said('talk-how-are-you', { kind: 'talk', text: 'Doing good, surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) });
     if (/\b(are you|r u|youre)\s+(a |an |the )?(real|human|bot|ai|llm|robot|chatbot|machine|actual)\b|\bwho (made|built|created|programmed|trained) you\b|\bwhat are you\b|\bare you (chatgpt|gpt|claude|gemini)\b/.test(t)) {
-      return said('talk-are-you-a-bot', { kind: 'talk', text: 'I’m M.I.K.U, named after Siddhi’s cat, Miku. I’m a little bot that lives on this site and matches your question to answers Siddhi wrote herself, so I’m not an AI and I can’t make anything up. Not the real her, but as close as a museum guide gets. For the real thing, email is the way.', actions: [raw('Email', S.links.email), go('About Me', 'about.html')] });
+      return said('talk-are-you-a-bot', { kind: 'talk', text: 'No, I am not an AI. I am a system bot that lives on this site and matches your question to answers Siddhi wrote herself. For more questions, Email or a DM is the way!', actions: [raw('Email', S.links.email), raw('Instagram', S.links.instagram), go('About Me', 'about.html')] });
     }
     if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return said('talk-what-can-you-do', { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies, or how to reach me. Here are a few to start with:', actions: starters(4) });
     return null;
@@ -183,7 +183,8 @@
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
     if (has('ncfe', 'financ')) return about(P.ncfe);
     if (has('driving', 'kalahandi', 'accident')) return about(P.driving);
-    if (has('resume', 'cv')) return { text: 'My résumé is linked in the sidebar and the footer.', actions: [raw('Open résumé', S.links.resume)] };
+    if (has('ats')) return { text: 'Here is the ATS friendly résumé.', actions: [raw('Open ATS friendly résumé', S.links.resumeAts)] };
+    if (has('resume', 'cv')) return { text: 'Do you want the site résumé or the ATS friendly one?', actions: [raw('Site résumé', S.links.resume), raw('ATS friendly', S.links.resumeAts)] };
     if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram. They’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
     if (has('guest', 'gallery')) return { text: 'The Guest Gallery is an art installation by visitors. Draw a little card, sign it and leave it there.', actions: [go('Guest Gallery', 'guest-gallery.html'), go('Draw a card', 'guest-book.html')] };
     return null;
@@ -230,7 +231,7 @@
     const ranked = rank(text), top = ranked[0];
     if (top && top.score >= STRONG) {
       const a = answerOf(top.e), im = imgsOf(top.e);
-      if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
+      if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '', caption: i.caption || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
       return said('talk-not-written', { kind: 'bank', text: 'Hmm. Maybe you should Mail/DM me for that one:', actions: contactActions() });
     }
     const jailed = j.soft();                                   // not a question about Siddhi at all: homework, code jobs, trivia

@@ -9,7 +9,8 @@ window.SITE = {
     emailAddress: 'alongsiddhi@gmail.com',      // shown on the pop-up button when "Email" is pressed
     linkedin: 'https://www.linkedin.com/in/siddhi-bhavya/',
     instagram: 'https://www.instagram.com/alongsiddhi/?hl=en',
-    resume: 'assets/resume/resume.pdf'          // TODO: drop the PDF at this path
+    resume: 'https://drive.google.com/file/d/1ALWAW4Qm_FeONfaqu2hGZuBhEG89Ushw/view?usp=sharing',   // the site résumé — the Resume pill in the top-right corner
+    resumeAts: 'https://drive.google.com/file/d/1zJQg8Z51ZCetirIovAvApxQkgCxdzwo7/view?usp=sharing'   // the ATS-friendly résumé — "Resume" under Connect with me! and in the footer
   },
 
   // Sidebar + footer navigation. `lm` opens the M.I.K.U tab instead of navigating.
