@@ -176,7 +176,7 @@
       <h2 class="connect-title">Connect with me!</h2>
       <div class="connect-links">
         <a href="${L.email}" data-action="email">Email</a><a href="${L.linkedin}" target="_blank" rel="noopener">Linkedin</a>
-        <a href="${L.instagram}" target="_blank" rel="noopener">Instagram</a><a href="${L.resume}" target="_blank" rel="noopener">Resume</a>
+        <a href="${L.instagram}" target="_blank" rel="noopener">Instagram</a><a href="${L.resumeAts}" target="_blank" rel="noopener">Resume</a>
       </div>
     </div>
   </section>
@@ -213,7 +213,7 @@
   <div class="footer-links">
     <div class="footer-col footer-contact">
       <a href="${L.email}" data-action="email">Email</a><a href="${L.instagram}" target="_blank" rel="noopener">Instagram</a>
-      <a href="${L.linkedin}" target="_blank" rel="noopener">Linkedin</a><a href="${L.resume}" target="_blank" rel="noopener">Resume</a>
+      <a href="${L.linkedin}" target="_blank" rel="noopener">Linkedin</a><a href="${L.resumeAts}" target="_blank" rel="noopener">Resume</a>
     </div>
     <div class="footer-col footer-nav">${nav}</div>
     <a class="footer-space" href="${R || './'}"><img src="${R}assets/ui/star-back.svg" alt=""><span>Back to space</span></a>
@@ -492,7 +492,14 @@
           a.href = im.href || src; a.target = '_blank'; a.rel = 'noopener'; a.title = im.href ? (im.alt || 'Open the link') : (im.alt || 'Open the picture');
           img.src = src; img.alt = im.alt || ''; img.loading = 'lazy'; img.decoding = 'async';
           img.addEventListener('load', () => { if (animate) toBottom(); });            // keep the newest message in view once the picture has its height
-          a.appendChild(img); box.appendChild(a);
+          a.appendChild(img);
+          if (im.caption) {                                           // a captioned picture gets the same polaroid frame as the clips
+            const fig = document.createElement('figure');
+            fig.className = 'msg-photo';
+            fig.appendChild(a);
+            const cap = document.createElement('figcaption'); cap.textContent = im.caption; fig.appendChild(cap);
+            box.appendChild(fig);
+          } else box.appendChild(a);
         });
         el.appendChild(box);
         el.classList.add('has-img');
