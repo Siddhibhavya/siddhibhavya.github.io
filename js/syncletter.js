@@ -9,7 +9,7 @@
   const viewport = document.querySelector('.syncletter-viewport');
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
-  const CANVAS_H = 7779; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
+  const CANVAS_H = 7861; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
   const CONTENT_W = 1092; // 1448 canvas width - 356 shared sidebar width
   const sectionFor = hash => document.getElementById(hash.slice(1));
   function fit() {

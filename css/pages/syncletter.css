@@ -13,7 +13,7 @@
 /* trimmed from the Figma frame's own 8244px: that height assumed the plum band (removed) filling the tail end;
    the real last content (the second "Try prototype" pill) ends around 7756px, so stop shortly after it instead
    of leaving ~500px of dead grid before the footer. */
-.syn-canvas { position: relative; width: 1448px !important; height: 7779px !important; transform-origin: top left; overflow: visible; background: none; }
+.syn-canvas { position: relative; width: 1448px !important; height: 7861px !important; transform-origin: top left; overflow: visible; background: none; }
 .syncletter-page h1, .syncletter-page h2 { margin: 0; }
 /* Figma's own tile for this frame doesn't export cleanly — draw the site's real grid instead (same technique as
    css/pages/decor.css / nearu.css). Rows follow this page's most common body line-height (41px); columns anchor to
@@ -34,7 +34,7 @@
 }
 
 /* ---------- background plates ---------- */
-.syn-1 { position: absolute; left: 473px; top: 4622px; width: 795px; height: 706px; background: #4a2230; border-radius: 12px; }
+.syn-1 { position: absolute; left: 491px; top: 4626px; width: 820px; height: 779px; background: #4a2230; border-radius: 12px; }
 
 /* ---------- intro / eyebrows ---------- */
 .syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 64px; white-space: nowrap; line-height: normal; }
@@ -44,7 +44,7 @@
 .syn-5 { left: 447px; top: 1866px; }
 .syn-7 { left: 453px; top: 2935px; }
 .syn-8 { left: 451px; top: 4250px; }
-.syn-46 { left: 447px; top: 7321px; }
+.syn-46 { left: 447px; top: 7403px; }
 .syn-6 { position: absolute; left: 772px; top: 1533px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
 
 /* ---------- body copy ---------- */
@@ -69,14 +69,14 @@
 .syn-36 { position: absolute; left: 471px; top: 2685px; width: 825px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 .syn-39 { position: absolute; left: 468px; top: 4577px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
 .syn-40 { position: absolute; left: 473px; top: 4365px; width: 839px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
-.syn-41 { position: absolute; left: 467px; top: 5359px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
-.syn-42 { position: absolute; left: 471px; top: 6220px; width: 377px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
-.syn-43 { position: absolute; left: 513px; top: 6622px; width: 776px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
-.syn-44 { position: absolute; left: 509px; top: 6781px; width: 776px; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; }
+.syn-41 { position: absolute; left: 467px; top: 5441px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-42 { position: absolute; left: 471px; top: 6302px; width: 377px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-43 { position: absolute; left: 513px; top: 6704px; width: 776px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-44 { position: absolute; left: 509px; top: 6863px; width: 776px; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; }
 .syn-44 p { line-height: 41px; margin: 0; }
 .syn-44-lede { font-weight: 500; }
-.syn-45 { position: absolute; left: 454px; top: 7031px; width: 857px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
-.syn-47 { position: absolute; left: 447px; top: 7361px; width: 858px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-45 { position: absolute; left: 454px; top: 7113px; width: 857px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
+.syn-47 { position: absolute; left: 447px; top: 7443px; width: 858px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 
 /* ---------- stat lists (research) ---------- */
 .syn-21, .syn-22, .syn-23, .syn-24 { position: absolute; margin: 0; padding-left: 36px; list-style: disc; font-family: var(--font-ui); font-weight: 700; color: var(--espresso); font-size: 24px; }
@@ -132,7 +132,7 @@
 .syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #4a2230; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 /* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
 .syn-17 { left: 448px; top: 746px; height: 47px; }
-.syn-48 { left: 454px; top: 7674px; height: 48px; }
+.syn-48 { left: 454px; top: 7756px; height: 48px; }
 .syn-17-label, .syn-48-label { font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 1; text-transform: capitalize; white-space: nowrap; }
 
 /* ---------- phone bezel demo ---------- */
@@ -150,20 +150,18 @@
 .syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
 
 /* ---------- Elements grid (feature mockup cards) ---------- */
-.syn-grid { position: absolute; left: 502px; top: 4646px; width: 736.329px; background: #6b3341; border-radius: 12px; padding: 24px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: min-content; column-gap: 113px; row-gap: 33px; }
+.syn-grid { position: absolute; left: 521px; top: 4656px; width: 760px; height: 719px; background: #6b3341; border-radius: 12px; padding: 30px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(3, minmax(0,1fr)); column-gap: 40px; row-gap: 40px; }
 .syn-card { background: #faf2ea; border: 1.232px solid rgba(190,201,197,.3); border-radius: 16px; padding: 16px; box-shadow: -8px 8px 4px rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; position: relative; box-sizing: border-box; }
-.syn-card-search { align-self: start; }
-.syn-card-cues { justify-self: end; width: 239.983px; }
 .syn-card-phrase { display: flex; align-items: center; gap: 8px; padding-right: 40px; }
 .syn-glyph-sm { width: 14.992px; height: 14.992px; flex: none; }
 .syn-card-phrase span { font-family: var(--font-ui); font-weight: 400; font-size: 12px; color: #1e1b17; line-height: 24px; white-space: nowrap; }
-.syn-card-meaning { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: #000; line-height: 17px; width: 225px; margin: 0; }
+.syn-card-meaning { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: #000; line-height: 17px; width: 100%; padding-right: 8px; box-sizing: border-box; margin: 0; }
 .syn-card-meaning-sm { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: #000; margin: 4px 0; }
 .syn-card-actions { display: flex; gap: 10px; align-items: center; }
 .syn-pill { background: rgba(140,241,225,.3); border: 1.232px solid rgba(0,0,0,.15); border-radius: 9999px; height: 31.985px; display: flex; align-items: center; justify-content: center; padding: 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; color: #006f64; white-space: nowrap; }
 .syn-pill-sm { background: rgba(140,241,225,.3); border: 1.232px solid rgba(0,0,0,.15); border-radius: 9999px; height: 26px; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; font-size: 12px; color: #006f64; font-family: var(--font-ui); }
 .syn-pill-alt { background: #d9f2e7; border-radius: 12px; height: 24px; display: flex; align-items: center; justify-content: center; width: 84px; font-family: var(--font-ui); font-size: 13px; color: #075e54; box-shadow: 0 2px .5px rgba(0,0,0,.25); }
-.syn-card-vote { background: rgba(255,255,255,.6); display: flex; gap: 6px; align-items: center; padding: 6px 8px; border-radius: 8px; width: 224.548px; box-sizing: border-box; }
+.syn-card-vote { background: rgba(255,255,255,.6); display: flex; gap: 6px; align-items: center; padding: 6px 8px; border-radius: 8px; width: 100%; box-sizing: border-box; }
 .syn-card-vote span { font-size: 12px; color: #1e1b17; font-family: var(--font-ui); }
 .syn-card-vote button { background: none; border: none; color: #075e54; font-size: 13px; cursor: default; padding: 0; line-height: 1; width: 14.992px; height: 14.992px; }
 .syn-card-close, .syn-card-expand, .syn-card-searchicon { position: absolute; top: 14px; width: 14.992px; height: 14.992px; }
@@ -171,11 +169,11 @@
 .syn-card-expand { right: 37px; }
 .syn-card-addmeaning { font-family: var(--font-ui); font-weight: 200; font-size: 12px; color: #111827; letter-spacing: -.35px; margin: 8px 0 0; }
 .syn-card-search-label { font-family: var(--font-ui); font-weight: 200; font-size: 12px; color: #111827; letter-spacing: -.35px; margin: 0; }
-.syn-card-search-input { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 12px; height: 36px; padding: 0 12px 0 34px; width: 224.548px; box-shadow: 0 1px 1.3px rgba(0,0,0,.25); box-sizing: border-box; position: relative; }
+.syn-card-search-input { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 12px; height: 36px; padding: 0 12px 0 34px; width: 100%; box-shadow: 0 1px 1.3px rgba(0,0,0,.25); box-sizing: border-box; position: relative; }
 .syn-card-search-input span { font-size: 13px; color: #9ca3af; font-family: var(--font-ui); }
 .syn-card-back { position: absolute; top: 14px; left: 23px; font-size: 15px; font-weight: 600; color: #075e54; }
-.syn-card-result { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 1px .65px rgba(0,0,0,.25); width: 224px; box-sizing: border-box; }
-.syn-card-result .syn-card-phrase { gap: 8px; padding-right: 0; width: 204.572px; }
+.syn-card-result { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 1px .65px rgba(0,0,0,.25); width: 100%; box-sizing: border-box; }
+.syn-card-result .syn-card-phrase { gap: 8px; padding-right: 0; width: 100%; }
 .syn-card-add { background: rgba(140,241,225,.3); border-radius: 9999px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #006f64; margin-left: auto; }
 .syn-cues-list { list-style: disc; padding-left: 14px; margin: 8px 0; }
 .syn-cues-list li { font-family: var(--font-ui); font-weight: 200; font-size: 10px; color: #000; line-height: 17px; margin-bottom: 2px; }
@@ -183,7 +181,7 @@
 
 /* ---------- wireframes / user flow ---------- */
 .syn-flow { display: contents; }
-.syn-flow-label { position: absolute; left: 471px; top: 5845px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
+.syn-flow-label { position: absolute; left: 471px; top: 5927px; width: 171px; margin: 0; font-family: var(--font-ui); font-weight: 700; color: rgba(94,63,49,.7); font-size: 24px; text-transform: uppercase; }
 /* uniform step cards (rebuilt as real HTML — the original was a single flattened SVG export with the text
    baked into vector paths, so individual boxes couldn't be resized or the arrows restyled) */
 .syn-flow-steps { display: contents; margin: 0; padding: 0; list-style: none; }
@@ -191,24 +189,24 @@
   position: absolute; width: 140px; height: 118px; padding: 12px; box-sizing: border-box;
   border: 3px solid #4a2230; border-radius: 10px; background: #fff1df; font-family: var(--font-ui);
 }
-.syn-flow-card-1 { left: 480px; top: 5889px; }
-.syn-flow-card-2 { left: 660px; top: 5889px; }
-.syn-flow-card-3 { left: 840px; top: 5889px; }
-.syn-flow-card-4 { left: 1020px; top: 5889px; }
-.syn-flow-card-5 { left: 1200px; top: 5889px; }
-.syn-flow-card-6 { left: 1200px; top: 6057px; }
+.syn-flow-card-1 { left: 472px; top: 5971px; }
+.syn-flow-card-2 { left: 652px; top: 5971px; }
+.syn-flow-card-3 { left: 832px; top: 5971px; }
+.syn-flow-card-4 { left: 1012px; top: 5971px; }
+.syn-flow-card-5 { left: 1192px; top: 5971px; }
+.syn-flow-card-6 { left: 1192px; top: 6139px; }
 .syn-flow-num { display: block; font-weight: 700; font-size: 11px; color: #6b3341; margin-bottom: 2px; }
 .syn-flow-card strong { display: block; font-size: 14px; font-weight: 700; color: var(--chestnut); margin-bottom: 4px; }
 .syn-flow-card p { margin: 0; font-size: 11px; line-height: 14px; color: var(--chestnut); font-weight: 400; }
 .syn-flow-arrow { position: absolute; font-size: 24px; font-weight: 700; color: #6b3341; line-height: 1; }
-.syn-flow-arrow-h1 { left: 632px; top: 5936px; }
-.syn-flow-arrow-h2 { left: 812px; top: 5936px; }
-.syn-flow-arrow-h3 { left: 992px; top: 5936px; }
-.syn-flow-arrow-h4 { left: 1172px; top: 5936px; }
-.syn-flow-arrow-v { left: 1263px; top: 6019px; }
+.syn-flow-arrow-h1 { left: 624px; top: 6018px; }
+.syn-flow-arrow-h2 { left: 804px; top: 6018px; }
+.syn-flow-arrow-h3 { left: 984px; top: 6018px; }
+.syn-flow-arrow-h4 { left: 1164px; top: 6018px; }
+.syn-flow-arrow-v { left: 1255px; top: 6101px; }
 .syn-slider, .syn-devshot { position: absolute; overflow: hidden; border-radius: 8px; }
-.syn-slider { left: 526px; top: 5442px; width: 690px; height: 344px; }
-.syn-devshot { left: 509px; top: 6282px; width: 763px; height: 313px; }
+.syn-slider { left: 557px; top: 5524px; width: 690px; height: 344px; }
+.syn-devshot { left: 521px; top: 6364px; width: 763px; height: 313px; }
 .syn-slider img, .syn-devshot img, .syn-slider video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Keep every line of on-paper copy on the same rules as its measured first baseline. */
