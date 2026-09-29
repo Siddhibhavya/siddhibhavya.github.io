@@ -760,7 +760,7 @@
   function initCaseCursor() {
     const pill = document.createElement('div');
     pill.className = 'cs-cursor'; pill.setAttribute('aria-hidden', 'true');
-    pill.innerHTML = '<svg viewBox="0 0 41.71 19.27" width="41" height="19" fill="none"><path d="M21.7172 7.38518C6.35654 8.87304 5.8737 18.2341 5.8737 18.2341L40.3816 17.1377C40.3816 17.1377 37.0779 5.89732 21.7172 7.38518Z" stroke="#fff" stroke-width="2"/><ellipse cx="22.3934" cy="11.4674" rx="5.50658" ry="4.2" fill="#fff"/><g stroke="#fff"><path d="M0 9.2L7.4 13.9"/><path d="M18.9 0.1L19.7 8"/><path d="M40.7 4.7L34.4 10.6"/><path d="M31.4 0.2L27.9 7.3"/><path d="M8.1 2.7L12.2 10.6"/></g></svg><span>View case study</span>';
+    pill.innerHTML = '<svg class="ic-eye" viewBox="0 0 41.71 19.27" width="41" height="19" fill="none"><path d="M21.7172 7.38518C6.35654 8.87304 5.8737 18.2341 5.8737 18.2341L40.3816 17.1377C40.3816 17.1377 37.0779 5.89732 21.7172 7.38518Z" stroke="#fff" stroke-width="2"/><ellipse cx="22.3934" cy="11.4674" rx="5.50658" ry="4.2" fill="#fff"/><g stroke="#fff"><path d="M0 9.2L7.4 13.9"/><path d="M18.9 0.1L19.7 8"/><path d="M40.7 4.7L34.4 10.6"/><path d="M31.4 0.2L27.9 7.3"/><path d="M8.1 2.7L12.2 10.6"/></g></svg><svg class="ic-try" viewBox="0 0 31 28" width="27" height="24" fill="none" aria-hidden="true"><path d="M30.2906 3.59504C30.3787 2.49398 29.5575 1.53 28.4564 1.44191L10.5138 0.00650238C9.4127 -0.0815824 8.44871 0.739591 8.36063 1.84064C8.27255 2.94169 9.09372 3.90568 10.1948 3.99376L26.1438 5.26969L24.8679 21.2187C24.7798 22.3198 25.601 23.2838 26.702 23.3719C27.8031 23.4599 28.7671 22.6388 28.8552 21.5377L30.2906 3.59504ZM1.29694 26.4355L2.59387 27.958L29.5939 4.95803L28.2969 3.43555L27 1.91306L3.09944e-06 24.9131L1.29694 26.4355Z" fill="#fff"/></svg><span>View case study</span>';
     document.body.appendChild(pill);
     let x = -200, y = -200, tx = -200, ty = -200, raf = 0, on = false;
     const tick = () => {
@@ -770,6 +770,10 @@
     };
     const show = (card) => {
       pill.style.setProperty('--cs', card.dataset.cs || '#6b3341');
+      const label = card.dataset.csLabel;                              // side-quest links: a short label ("View" / "Try it!") on a pill that hugs it
+      pill.querySelector('span').textContent = label || 'View case study';
+      pill.classList.toggle('hug', !!label);
+      pill.classList.toggle('try', label === 'Try it!');            // "Try it!" links get an arrow instead of the eye
       if (!on) { x = tx; y = ty; }                                    // appear right under the pointer, then follow
       on = true; pill.classList.add('on'); document.body.classList.add('cs-on');
       if (!raf) raf = requestAnimationFrame(tick);
@@ -778,12 +782,12 @@
     document.addEventListener('pointermove', (e) => {
       tx = e.clientX; ty = e.clientY;
       if (e.pointerType && e.pointerType !== 'mouse') return;
-      const card = e.target.closest && e.target.closest('.card[data-cs]');
+      const card = e.target.closest && e.target.closest('[data-cs]');
       if (card) show(card); else if (on) hide();
     }, { passive: true });
     document.addEventListener('pointerleave', hide);
     window.addEventListener('blur', hide);
-    document.addEventListener('scroll', () => { if (on) { const el = document.elementFromPoint(tx, ty); if (!(el && el.closest('.card[data-cs]'))) hide(); } }, { passive: true });
+    document.addEventListener('scroll', () => { if (on) { const el = document.elementFromPoint(tx, ty); if (!(el && el.closest('[data-cs]'))) hide(); } }, { passive: true });
   }
 
   /* ------------------------------------------------------------------ 8 · Boot */
