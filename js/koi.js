@@ -1,13 +1,13 @@
 /* Koi-fish background — ported from Background/sketch.js.
    Every constant and all geometry below are unchanged from that sketch.
    Only the page integration differs (see the "SITE INTEGRATION" markers):
-     - background is the Figma plum #190523 instead of near-black
+     - background is the Figma plum #1b0b2e instead of near-black
      - the canvas mounts inside an element (landing: full screen, footer: the 368px strip)
      - in the footer the fish only wakes while the pointer is over the footer
      - the loop pauses while the canvas is off-screen */
 
 // ---- SITE INTEGRATION: per-page configuration ------------------------------
-const KOI = Object.assign({ mount: '#koi', bg: [25, 5, 35], hoverOnly: false }, window.KOI_CONFIG || {});
+const KOI = Object.assign({ mount: '#koi', bg: [27, 11, 46], hoverOnly: false }, window.KOI_CONFIG || {});
 let KOI_HOST = null;
 
 // idle Mechanism
@@ -300,7 +300,7 @@ function initField() {
 }
 
 function draw() {
-  background(KOI.bg[0], KOI.bg[1], KOI.bg[2]);   // SITE INTEGRATION: #190523
+  background(KOI.bg[0], KOI.bg[1], KOI.bg[2]);   // SITE INTEGRATION: #1b0b2e
   noiseT   += FIELD_NOISE_SPEED;
   wagPhase += WAG_FREQ;
   frameN++;

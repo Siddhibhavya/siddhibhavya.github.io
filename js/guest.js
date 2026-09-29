@@ -15,7 +15,7 @@
   const KEY = 'siddhi.guestbook.v1';
   const MAX_STORED = 24;
   const SWATCH = { red: '#bb3739', orange: '#ff9a00', green: '#249343', blue: '#2c2696' };
-  const INK = '#0e0314';
+  const INK = '#1b0b2e';
 
   // the four cards drawn in the Figma gallery frame (blank, exact colours)
   const SEEDS = [

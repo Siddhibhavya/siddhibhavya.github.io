@@ -26,7 +26,7 @@
 .cs-cursor {
   position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none;
   display: flex; align-items: center; gap: 13px; width: 217px; height: 42px; padding-left: 29px;
-  border-radius: 32.5px; background: var(--cs, #7f404e); color: #fff;
+  border-radius: 32.5px; background: var(--cs, #6b3341); color: #fff;
   font: 400 15px/1.18 var(--font-ui); white-space: nowrap;
   box-shadow: 0 6px 16px rgba(25, 5, 35, 0.25);
   opacity: 0; scale: 0.6; transition: opacity 0.18s ease, scale 0.32s var(--ease-out), background-color 0.2s ease;
@@ -47,7 +47,7 @@ body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
 @keyframes hint-out { to { opacity: 0; } }                                        /* a plain fade: it stays where it is */
 
 /* the nudge from the M.I.K.U tab (js/shell.js, initNudge). Straight from the Figma frame "Ask me questions" (162 x 43): the speech bubble is its exported "Union" picture
-   (assets/ui/nudge-bubble.svg — the Explore box maroon, a beige outline, a tail up towards the tab), with the text centred at (78.5, 28): 13px Inter Medium #f5e9e2.
+   (assets/ui/nudge-bubble.svg — the Explore box maroon, a beige outline, a tail up towards the tab), with the text centred at (78.5, 28): 13px Inter Medium #f7e9dc.
    Placed where the frame sits over the Index card in Figma: 75px from the card's left, 50px from its top. */
 .lm-nudge {
   position: absolute; left: 75px; top: 50px; z-index: 5; width: 162.068px; height: 42.842px; pointer-events: none;
