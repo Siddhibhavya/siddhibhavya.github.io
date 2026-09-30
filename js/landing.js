@@ -5,6 +5,12 @@
   'use strict';
   const stage = document.querySelector('.intro-stage');
   if (!stage) return;
+  /* repeat-visit caching (sw.js) — skipped on localhost so local edits are always live */
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()));
+    else addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+
   if (/index\.html$/.test(location.pathname)) history.replaceState(history.state, '', location.pathname.replace(/index\.html$/, '') + location.search + location.hash);   // tidy address: / instead of /index.html
 
   /* ---- fit to window (contain) ------------------------------------------------ */

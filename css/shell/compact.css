@@ -49,9 +49,9 @@ body.compact:not([data-fit='screen']) .main { --top-gap: 64px; padding-top: var(
   width: 46px; height: 46px; padding: 0; border-radius: 50%;
   background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--cream);
   box-shadow: 0 6px 16px rgba(25, 5, 35, 0.32);
-  transition: left 0.6s var(--ease-out), background-color 0.2s ease, transform 0.25s var(--ease-out);
+  transition: left 0.6s var(--ease-out), background-color 0.2s ease, color 0.2s ease, transform 0.25s var(--ease-out);
 }
-.compact .sb-toggle:hover { background: #8f4a59; transform: translateY(-1px); }
+.compact .sb-toggle:hover { background: var(--cream); color: var(--maroon); transform: translateY(-1px); }   /* hover = the page's beige, icon turns maroon */
 .compact .sb-toggle .ic { position: absolute; flex: none; transition: opacity 0.35s ease, transform 0.55s var(--ease-out); }
 .compact .sb-toggle .ic-menu, .compact .sb-toggle .ic-close { opacity: 0; transform: rotate(-90deg) scale(0.55); }
 .compact .sb-toggle.as-menu .ic-star { opacity: 0; transform: rotate(90deg) scale(0.55); }

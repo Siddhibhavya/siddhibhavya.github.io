@@ -11,7 +11,7 @@
   if (!viewport || !canvas) return;
   const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
   const CONTENT_W = 1092; // 1448 canvas width - 356 shared sidebar width
-  const sectionFor = hash => document.getElementById(hash.slice(1));
+  const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
   function fit() {
     const mobile = innerWidth < 900;
     const width = document.documentElement.clientWidth;
@@ -85,6 +85,6 @@
   window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };
   if (location.hash) requestAnimationFrame(() => {
     const target = sectionFor(location.hash);
-    if (target) window.scrollTo(0, target.getBoundingClientRect().top + scrollY - 25);
+    if (target) window.scrollTo(0, target.getBoundingClientRect().top + scrollY - (innerWidth < 900 ? 70 : 25));
   });
 })();

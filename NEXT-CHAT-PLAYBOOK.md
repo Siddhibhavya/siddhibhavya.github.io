@@ -51,7 +51,7 @@ phone layout was tried and rejected — don't rebuild it for Syncletter. NearU k
 
 ## Design rules (all already in the docs — the short version)
 - Palette lives only in `css/base.css`: paper `#fff1df`, burgundy
-  `--maroon #6b3341`, borders `#4a2230`, body text `--espresso #4a2e22`, light
+  `--maroon #7b2b3d`, borders `#4a1a2c`, body text `--espresso #4a2e22`, light
   labels `--chestnut #5c3a21`, headings Museum Purple `#39265f`, highlights bold
   `var(--hl-red)` (`#8f2000`), Cosmic Ink `#1b0b2e`. Project colours only on
   product elements (Syncletter teal `#075e54`; NearU yellow `#FEC12D`, blue

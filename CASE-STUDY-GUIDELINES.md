@@ -21,7 +21,7 @@ by default; only skip one if she explicitly says to.
 |---|---|---|
 | `--plum` | `#1b0b2e` | landing + footer bg |
 | `--cream` | `#fff1df` | sidebar text on dark, page bg elsewhere |
-| `--maroon` | `#6b3341` | sidebar/explore-box bg, headings, "HOME" links, arrows |
+| `--maroon` | `#7b2b3d` | sidebar/explore-box bg, headings, "HOME" links, arrows |
 | `--maroon-edge` | `rgba(119,51,68,.93)` | borders on maroon UI (drawer button, nudge pill) |
 | `--ink` | `#1b0b2e` | the real EXPLORE nav's active-item text (reads harsh on a cream pill — prefer `--brown` there, see §3) |
 | `--brown` | `#57443e` | active pill text, "Connect with me!" title |
@@ -41,7 +41,7 @@ its colour identity to match the project being viewed. A visitor should feel
 entered the Syncletter website."
 
 **Site brand palette (as briefed):** Cosmic Ink `#1B0B2E`, Museum Purple
-`#39265F`, Archive Burgundy `#6b3341`, Gallery Cream `#FFF1DF`, Paper
+`#39265F`, Archive Burgundy `#7b2b3d`, Gallery Cream `#FFF1DF`, Paper
 `#F7E9DC`, Ink Brown `#57443E`, Muted Ink `#8A746B`.
 **Migrated 2026-09-29:** these hexes are now the live values in `css/base.css` (`--plum`=Cosmic Ink, `--maroon`=Burgundy, `--brown`=Ink Brown, `--cream`/case-study paper=Gallery Cream, `--card`/`--pill`=Paper, headings=Museum Purple `#39265f`). Change them only in `base.css`, never per page.
 

@@ -5,13 +5,14 @@
 ================================================================== */
 
 /* ---------- 1 · Tokens ----------
-   Every colour is lifted straight from the Figma file. Palette migrated 2026-09-29 to the brand palette (Cosmic Ink #1b0b2e, Burgundy #6b3341, Ink Brown #57443e, Gallery Cream #fff1df, Paper #f7e9dc, Museum Purple #39265f). */
+   Every colour is lifted straight from the Figma file. Palette migrated 2026-09-29 to the brand palette (Cosmic Ink #1b0b2e, Burgundy #7b2b3d, Ink Brown #57443e, Gallery Cream #fff1df, Paper #f7e9dc, Museum Purple #39265f). */
 :root {
   --plum: #1b0b2e;
   --cream: #fff1df;
-  --sidebar: var(--maroon);                  /* solid, so the panel matches the Resume pill and the Contents box */
-  --maroon: #6b3341;
-  --maroon-edge: rgba(74, 34, 48, 0.93);
+  --sidebar: #4a1a2c;                       /* the frame behind the tabs = the border colour */
+  --maroon: #7b2b3d;
+  --heading: #5d202e;                        /* content titles (Context, Design …): a darker step of the tab maroon #7b2b3d */
+  --maroon-edge: rgba(74, 26, 44, 0.93);
   --pill: #f7e9dc;
   --ink: #1b0b2e;
   --card: #f7e9dc;
