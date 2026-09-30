@@ -13,7 +13,7 @@
 /* trimmed from the Figma frame's own 8244px: that height assumed the plum band (removed) filling the tail end;
    the real last content (the second "Try prototype" pill) ends around 7756px, so stop shortly after it instead
    of leaving ~500px of dead grid before the footer. */
-.syn-canvas { position: relative; width: 1448px !important; height: 8804px !important; transform-origin: top left; overflow: visible; background: none; }
+.syn-canvas { position: relative; width: 1448px !important; height: calc(8804px + var(--flow-extra, 0px)) !important; transform-origin: top left; overflow: visible; background: none; }
 .syncletter-page h1, .syncletter-page h2 { margin: 0; }
 /* Figma's own tile for this frame doesn't export cleanly — draw the site's real grid instead (same technique as
    css/pages/decor.css / nearu.css). Rows follow this page's most common body line-height (41px); columns anchor to
@@ -285,3 +285,21 @@
 
 .syn-fc-steps li.fc-decision { justify-content: center; align-content: center; }
 .syn-fc-steps li.fc-decision .fc-num { margin-bottom: 1px; }
+
+/* ---------- phone/tablet user flow: linear chart (js/syncletter-flow.js) — same colours, shapes and arrow SVG ---------- */
+.syn-lin { display: none; position: absolute; transform-origin: 0 0; }
+.syn-canvas.syn-lin-on .syn-lin { display: block; }
+.syn-canvas.syn-lin-on .syn-fc { display: none; }
+.syn-lin-in { display: flex; flex-direction: column; align-items: center; font-family: var(--font-ui); }
+.lin-arr { display: block; width: 21px; height: 24px; margin: 6px 0; transform: rotate(90deg); }
+.lin-arr svg { display: block; width: 100%; height: 100%; }
+.lin-arr path { fill: var(--maroon); }
+.lin-node { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px 20px; min-height: 56px; width: min(100%, 300px); font-size: 16px; line-height: 20px; font-weight: 700; color: #fff; border-radius: 9px; }
+.lin-node b { font-weight: 700; display: block; }
+.lin-node small { display: block; font-size: 16px; font-weight: 400; line-height: 20px; margin-top: 4px; }
+.lin-start, .lin-end { border-radius: 999px; width: 120px; text-transform: uppercase; }
+.lin-start { background: #2f9e6e; } .lin-end { background: #d94f4f; }
+.lin-proc { background: #3f7fc4; }
+.lin-io { background: #f0983a; color: #2a1a14; clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); padding: 12px 36px; }
+.lin-dec { background: #f2c94c; color: #2a1a14; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); width: 300px; min-height: 160px; padding: 20px 76px; }
+.lin-branch { margin: 6px 0 0; padding: 4px 14px; border-radius: 999px; background: #f7e9dc; border: 2px solid #4a2230; font-size: 16px; line-height: 20px; font-weight: 700; color: var(--chestnut); }

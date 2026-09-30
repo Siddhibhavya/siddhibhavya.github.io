@@ -21,7 +21,7 @@
     const scale = Math.min(1, paperWidth / CONTENT_W);
     const inset = (paperWidth - CONTENT_W * scale) / 2;
     canvas.style.transform = `translateX(${inset}px) scale(${scale}) translateX(-356px)`;
-    viewport.style.height = `${CANVAS_H * scale}px`;
+    viewport.style.height = `${(CANVAS_H + (window.synFlowExtra || 0)) * scale}px`;
     viewport.style.width = `${paperWidth}px`;
     viewport.style.marginLeft = '0px';
     viewport.style.setProperty('--paper-step', `${41 * scale}px`);
@@ -29,6 +29,7 @@
     viewport.style.setProperty('--paper-y', `${14 * scale}px`);
   }
   fit();
+  window.synFit = fit;
   addEventListener('resize', fit);
 
   // Snap on-paper text to the grid's horizontal rules, same technique as js/nearu.js: measure each element's real
@@ -64,6 +65,7 @@
       el.style.top = (parseFloat(getComputedStyle(el).top) + delta) + 'px';
     });
   }
+  window.synAlign = alignGrid;
   document.fonts.ready.then(() => requestAnimationFrame(alignGrid));
   addEventListener('resize', () => requestAnimationFrame(() => requestAnimationFrame(alignGrid)));
 
