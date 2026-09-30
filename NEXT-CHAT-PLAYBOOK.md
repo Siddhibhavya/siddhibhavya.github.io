@@ -22,9 +22,8 @@ results fast — act, verify once, report briefly.
   three case-study frames; use `use_figma` (load the `figma-use` skill first).
 
 ## Phone layouts
-Syncletter's phone layout (`js/syncletter-mobile.js` + `css/pages/syncletter-mobile.css`) is the cheap pattern: clone canvas nodes by
-selector into a `.syn-mobile` paper, hide the canvas below 900px, reuse the repeat-until-stable 28px alignment pass. Use it (not a
-scaled canvas) for NCFE and Are they Driving. Verify with `tools/grid-audit.js` at 394 / 760 / 1300px.
+Siddhi prefers Syncletter's original approach: the phone shows the scaled desktop canvas (no separate phone layout). A separate
+phone layout was tried and rejected — don't rebuild it for Syncletter. NearU keeps its own phone layout (`js/nearu-mobile.js`).
 
 ## Fastest way to build a case study
 1. Copy the closest finished page: Syncletter for a single-canvas page,
