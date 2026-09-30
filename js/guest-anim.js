@@ -130,7 +130,7 @@
     const els = [...main.querySelectorAll('.gb-decor .dc')];
     const TXT = { x0: 167, y0: 331, x1: 1137, y1: 643 };                 // the raw "Thank You / for contributing!" box (measured, .ov-thanks)
     const outsideText = (x, y) => Math.hypot(Math.max(TXT.x0 - x, 0, x - TXT.x1), Math.max(TXT.y0 - y, 0, y - TXT.y1));
-    const GAP = 26, TEXT_MARGIN = 50;
+    const GAP = 90, TEXT_MARGIN = 60;   // generous gaps: the trinkets spread right out across the stage instead of huddling
     // No fade, and it does not leave: each one wanders to a new resting spot nearby, clear of the thank-you text — only the strings (leave(), below)
     // actually exit the screen. Landing spots are chosen the same way js/guest.js scatters the page's own decorations: try a lot of candidate spots
     // (biased rightward, but reaching in any direction so there is always room somewhere), keep the roomiest, shrinking the required gap a little each
@@ -149,20 +149,37 @@
       const placed = []; let ok = true;
       for (const it of items) {
         let best = null;
-        for (let k = 0; k < 500 && (!best || k < 160); k++) {
-          const dx = rand(-260, 700), dy = rand(-420, 420);              // where it could end up, generally biased to the right but free to go any way
-          const fx = it.cx + dx, fy = it.cy + dy;
+        for (let k = 0; k < 900 && (!best || k < 400); k++) {
+          const fx = rand(it.reach * 0.6, 1448 - it.reach * 0.6), fy = rand(it.reach * 0.6, 1024 - it.reach * 0.6);   // anywhere on the stage; the roomiest candidate wins, so they fan out evenly
+          const dx = fx - it.cx, dy = fy - it.cy;
           if (fx < it.reach * 0.6 || fx > 1448 - it.reach * 0.6 || fy < it.reach * 0.6 || fy > 1024 - it.reach * 0.6) continue;   // stays on the stage
           if (outsideText(fx, fy) < it.reach + TEXT_MARGIN - 20) continue;                                                        // clear of the text
           let room = Infinity;
           for (const p of placed) room = Math.min(room, Math.hypot(p.fx - fx, p.fy - fy) - (p.it.bodyHalf + it.bodyHalf + GAP) * squeeze);
           if (room < 0) continue;
-          if (!best || room > best.room) best = { fx, fy, room };
+          const score = Math.min(room, (Math.min(fx, 1448 - fx, fy, 1024 - fy) - it.reach * 0.6) * 2 + 60);   // prefer spots that also keep off the very edges
+          if (!best || score > best.score) best = { fx, fy, room, score };
         }
         if (!best) { ok = false; break; }
         placed.push({ it, fx: best.fx, fy: best.fy });
       }
       if (!ok) continue;
+      // Relax: nudge every spot away from its neighbours a little at a time (staying on the stage and clear of the text), so the trinkets fan out
+      // evenly over the whole screen with real distance between them instead of huddling in the first places that fit.
+      for (let iter = 0; iter < 120; iter++) {
+        for (const a of placed) {
+          let mx = 0, my = 0;
+          for (const b of placed) {
+            if (a === b) continue;
+            const dx = a.fx - b.fx, dy = a.fy - b.fy, d = Math.hypot(dx, dy) || 1, want = a.it.bodyHalf + b.it.bodyHalf + 200;
+            if (d < want) { const f = (want - d) * 0.06; mx += (dx / d) * f; my += (dy / d) * f; }
+          }
+          const nx = a.fx + mx, ny = a.fy + my, r = a.it.reach;
+          if (nx < r * 0.6 || nx > 1448 - r * 0.6 || ny < r * 0.6 || ny > 1024 - r * 0.6) continue;
+          if (outsideText(nx, ny) < r + TEXT_MARGIN - 20) continue;
+          a.fx = nx; a.fy = ny;
+        }
+      }
       for (const { it, fx, fy } of placed) { it.dxEnd = fx - it.cx; it.dyEnd = fy - it.cy; }
       break;                                                             // everyone found a spot: done (if every round fails, they simply don't drift)
     }
