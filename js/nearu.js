@@ -15,7 +15,7 @@
     scale = Math.min(1, paperWidth / 1084);
     const inset = (paperWidth - 1084 * scale) / 2;
     canvas.style.transform = `translateX(${inset}px) scale(${scale}) translateX(-356px)`;
-    viewport.style.height = mobile ? 'auto' : `${14327 * scale}px`;
+    viewport.style.height = mobile ? 'auto' : `${14409 * scale}px`;
     viewport.style.width = mobile ? '100%' : `${paperWidth}px`;
     // The sidebar now occupies its own column, like the shared Index/M.I.K.U shell.
     viewport.style.marginLeft = '0px';
@@ -67,7 +67,7 @@
     if (el.classList.contains('nu-244')) el.style.top = '9822px';
   });
   function baseline(el) {
-    const line = el.matches('p,h1,h2') ? el : el.querySelector('li,p') || el;
+    const line = el.matches('p,h1,h2') ? el : el.querySelector('li,p,.rs-title') || el;
     const probe = document.createElement('span');
     probe.setAttribute('aria-hidden', 'true');
     probe.style.cssText = 'display:inline-block!important;width:0!important;height:0!important;padding:0!important;margin:0!important;vertical-align:baseline!important;line-height:0!important;font-size:0!important;';
@@ -89,36 +89,55 @@
       // One top-to-bottom pass over every line of text on the paper (labels, headings, captions, insight rows, before/after lists,
       // the Reflection list…): each block's first baseline is pushed onto the next 28px rule, and later blocks are measured after
       // earlier ones have moved. Filled cards, pills, buttons and SVG keep their own typography.
-      paper.querySelectorAll('[data-gp]').forEach(el => { el.style.paddingTop = el.dataset.gp; });
+      paper.querySelectorAll('[data-gp]').forEach(el => { el.style.paddingTop = el.dataset.gp; if (el.dataset.gt) { el.style.removeProperty('top'); el.style.removeProperty('position'); delete el.dataset.gt; } });
       paper.querySelectorAll('.nearu-mobile-copy').forEach(el => { if (!el.closest('.nearu-mobile-card')) el.style.paddingTop = '0px'; });
       const refl = paper.querySelector('.nearu-mobile-refl');
       if (refl) refl.style.paddingTop = '0px';
-      const origin = paper.getBoundingClientRect().top;
       const exempt = el => {
         for (let n = el; n && n !== paper; n = n.parentElement) {
-          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-refl,figure,video')) return true;
+          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
           if (n.classList.contains('nearu-mobile-copy')) continue;
           const bg = getComputedStyle(n).backgroundColor;
           if (bg && bg !== 'transparent' && !/rgba\(\d+, \d+, \d+, 0\)/.test(bg)) return true;
         }
         return false;
       };
-      const seenBlocks = new Set();
       const walker = document.createTreeWalker(paper, NodeFilter.SHOW_TEXT);
       const runs = [];
       while (walker.nextNode()) if (walker.currentNode.textContent.trim().length > 1) runs.push(walker.currentNode);
-      const push = (block, node) => {
+      const measure = node => {
         const probe = document.createElement('span');
         probe.style.cssText = 'display:inline-block;width:0;height:0;padding:0;margin:0;line-height:0;font-size:0;vertical-align:baseline;';
         node.parentNode.insertBefore(probe, node);
-        const y = probe.getBoundingClientRect().top - origin;
+        const y = probe.getBoundingClientRect().top - paper.getBoundingClientRect().top; // live paper top: scroll anchoring moves the page while we edit
         probe.remove();
-        let delta = ((20 - y) % 28 + 28) % 28;
-        if (delta > 27.9 || delta < 0.4) return;
-        if (block.dataset.gp === undefined) block.dataset.gp = block.style.paddingTop;
-        block.style.paddingTop = (parseFloat(getComputedStyle(block).paddingTop) + delta) + 'px';
+        return y;
       };
-      runs.forEach(node => {
+      const need = y => ((20 - y) % 28 + 28) % 28;
+      const push = (block, node) => {
+        const y = measure(node);
+        const delta = need(y);
+        if (delta > 27.6 || delta < 0.4) return false;
+        if (block.dataset.gp === undefined) block.dataset.gp = block.style.paddingTop;
+        const stage = block.closest('.nearu-mobile-art-stage');
+        const sc = stage ? (new DOMMatrix(getComputedStyle(stage).transform).a || 1) : 1; // blocks inside a scaled plate move by delta/scale canvas px
+        const before = parseFloat(getComputedStyle(block).paddingTop);
+        block.style.paddingTop = (before + delta / sc) + 'px';
+        const left = need(measure(node));
+        if (left > 0.6 && left < 27.4) {
+          // Padding did not move this text (fixed-height / centred box): undo it and nudge the block itself instead.
+          block.style.paddingTop = block.dataset.gp;
+          if (getComputedStyle(block).position === 'static') block.style.setProperty('position', 'relative', 'important');
+          block.style.setProperty('top', (parseFloat(getComputedStyle(block).top) || 0) + need(measure(node)) / sc + 'px', 'important');
+          block.dataset.gt = '1';
+        }
+        return true;
+      };
+      // Repeat until nothing moves: a later shift can push an earlier line off its rule.
+      for (let pass = 0; pass < 6; pass++) {
+        let moved = 0;
+        const seenBlocks = new Set();
+        runs.forEach(node => {
         const inRefl = refl && refl.contains(node);
         let block = inRefl ? refl : node.parentElement;
         if (!inRefl) while (block && block !== paper && getComputedStyle(block).display === 'inline') block = block.parentElement;
@@ -126,14 +145,27 @@
         if (!inRefl && exempt(block)) return;
         if (inRefl && node.parentElement !== refl.querySelector('.rs-title')) return;
         seenBlocks.add(block);
-        push(block, node);
-      });
+        if (push(block, node)) moved++;
+        });
+        if (!moved) break;
+      }
     }
   }
   document.fonts.ready.then(() => requestAnimationFrame(alignGrid));
   // Images/SVG art settle after the first pass and shift the text below them: measure again once the page has loaded.
   addEventListener('load', () => { requestAnimationFrame(alignGrid); setTimeout(alignGrid, 800); });
   addEventListener('resize', () => requestAnimationFrame(() => requestAnimationFrame(alignGrid)));
+  // The phone art re-scales (js/nearu-mobile.js) after our pass and moves everything below it: re-align whenever the paper's height changes.
+  (function watchPaper() {
+    const paper = document.querySelector('.nearu-mobile');
+    if (!paper) return setTimeout(watchPaper, 300);
+    let busy = false;
+    new ResizeObserver(() => {
+      if (busy || innerWidth >= 900) return;
+      busy = true;
+      requestAnimationFrame(() => { alignGrid(); requestAnimationFrame(() => { busy = false; }); });
+    }).observe(paper);
+  })();
   window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };
   if (location.hash) requestAnimationFrame(() => {
     const target = sectionFor(location.hash);

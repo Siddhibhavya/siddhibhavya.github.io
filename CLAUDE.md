@@ -42,6 +42,14 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   scoped to NearU and Syncletter. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
+- **NON-NEGOTIABLE: grid alignment.** No case-study change is finished, and
+  nothing may be committed or pushed, until the grid audit
+  (`tools/grid-audit.js`, paste into the browser JS tool) reports zero
+  off-grid text runs on desktop AND on phone/tablet widths, for every page
+  touched. Text baselines on the rules, smallest text 16px (as rendered).
+  Filled cards/pills/mockups are the only exceptions. Do not report "done"
+  from eyeballing.
+
 - **Global design rules for every element you add or move, on every case
   study, desktop and phone** (not just the first pass — re-check after each
   edit):

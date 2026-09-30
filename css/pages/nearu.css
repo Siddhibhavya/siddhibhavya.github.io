@@ -9,7 +9,7 @@
   background-size: var(--paper-step) var(--paper-step);
   background-position: var(--paper-x) var(--paper-y);
 }
-.nearu-canvas { width: 1440px !important; height: 14327px !important; transform-origin: top left; overflow: hidden; }
+.nearu-canvas { width: 1440px !important; height: 14409px !important; transform-origin: top left; overflow: hidden; }
 .nearu-page h1, .nearu-page h2 { margin: 0; }
 /* the Figma tile PNG for this frame's graph-paper background exported fully transparent — draw the site's real grid
    (same technique as css/pages/decor.css) instead. Rows are the page's most common body line-height (41px) so most
@@ -322,7 +322,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-240 { position:absolute;display:flex;height:27.962px;align-items:center;justify-content:center;left:1206.84px;top:14403px;width:29.548px; }
 .nearu-page .nu-241 { flex:none;transform:rotate(-7.81deg) skewX(0.01deg); }
 .nearu-page .nu-242 { height:24.596px;position:relative;width:26.445px; }
-.nearu-page .nu-243 { position:absolute;background:#39265f;height:14px;left:-31px;top:14327px;width:1471px; }
+.nearu-page .nu-243 { position:absolute;background:#39265f;height:14px;left:-31px;top:14409px;width:1471px; }
 .nearu-page .nu-244 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:400;justify-content:center;line-height:0;left:553px;font-style:normal;color:var(--espresso);font-size:24px;text-align:justify;top:9877.5px;letter-spacing:1.2px;width:649px;transform:translateY(-50%); }
 .nearu-page .nu-245 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:466px;font-style:normal;color:var(--espresso);font-size:24px;top:12572px;width:831px; }
 .nearu-page .nu-246 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:448px;font-style:normal;color:var(--espresso);font-size:24px;top:12815px;width:831px; }
@@ -474,7 +474,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-refl .refl-c b { font-weight: 800; font-size: 24px; line-height: 26px; }
   .nearu-mobile-refl .refl-c span { font-weight: 700; font-size: 16px; letter-spacing: 0; line-height: 18px; text-transform: uppercase; }
   .nearu-mobile-refl .rs-title { display: block; font-weight: 800; font-size: 18px; line-height: 28px; }
-  .nearu-mobile-refl .rs-text { display: block; font-weight: 500; font-size: 16px; line-height: 28px; }
+  .nearu-mobile-refl .rs-text { display: block; position: relative; top: 1.6px; font-weight: 500; font-size: 16px; line-height: 28px; }
   .nearu-mobile-refl-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .nearu-mobile-refl-line path { fill: none; stroke: #17120E; stroke-opacity: .85; stroke-width: 4; stroke-linecap: round; }
   /* A/B comparison: notes stacked under the phones on narrow screens; on wide ones they flank the phones like the desktop canvas. */
@@ -568,16 +568,16 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* ---------- Reflection: a horizontal flow of five steps along a looping line, text semi-overlapping the circles ---------- */
 .nearu-page .nu-refl-h { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:900;line-height:normal;left:426px;font-style:normal;color:#6b3341;font-size:24px;top:13440px;text-transform:uppercase;width:194px; }
-.nearu-page .nu-refl-art { position: absolute; left: 443px; top: 13520px; width: 910px; height: 720px; overflow: visible; pointer-events: none; }
+.nearu-page .nu-refl-art { position: absolute; left: 443px; top: 13602px; width: 910px; height: 720px; overflow: visible; pointer-events: none; }
 .nu-refl-art .refl-line { fill: none; stroke: #17120E; stroke-opacity: .85; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
 .nearu-page .refl-step { position: absolute; width: 210px; margin: 0; text-align: center; font-family: var(--font-ui); color: var(--espresso); }
 .nearu-page .refl-step .rs-label { display: none; } .refl-step .rs-label-x { display: block; font-weight: 700; font-size: 12px; line-height: 41px; letter-spacing: .6px; text-transform: uppercase; }
 .refl-step .rs-title { display: block; font-weight: 800; font-size: 19px; line-height: 41px; }
-.refl-step .rs-text { display: block; font-weight: 500; font-size: 16px; line-height: 41px; }
+.nearu-page .refl-step .rs-text { position: relative; top: 1.6px; display: block; font-weight: 500; font-size: 16px; line-height: 41px; }
 .nu-refl-art .refl-num { font-family: var(--font-ui); font-weight: 800; font-size: 26px; }
 .nu-refl-art .refl-word { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: .8px; }
 .nearu-page .refl-step[data-node-id="351:9012"] { left: 443px; top: 13520px; }
-.nearu-page .refl-step[data-node-id="351:9013"] { left: 618px; top: 14040px; }
+.nearu-page .refl-step[data-node-id="351:9013"] { left: 618px; top: 14122px; }
 .nearu-page .refl-step[data-node-id="351:9014"] { left: 793px; top: 13520px; }
-.nearu-page .refl-step[data-node-id="351:9015"] { left: 968px; top: 14040px; }
+.nearu-page .refl-step[data-node-id="351:9015"] { left: 968px; top: 14122px; }
 .nearu-page .refl-step[data-node-id="351:9016"] { left: 1143px; top: 13520px; }

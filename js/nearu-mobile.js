@@ -209,7 +209,8 @@
   copy(s, 1545, 'nearu-mobile-label');
   plate(s, [1520,1615,1616], 370, 6929, 350, 400);
   copy(s, 1617);
-  plate(s, [1618,1619,1620,1621,1622,1623,1628,1629], 500, 7548, 685, 635);
+  // User needs: the desktop diagram (two boxes under a bracket) can't hold 16px text when scaled to a phone, so stack the two needs as cards.
+  copy(s, 1621, 'nearu-mobile-label'); card(s, 1628); card(s, 1629);
   copy(s, 1544, 'nearu-mobile-label'); copy(s, 1564);
 
   s = section('design', 1543);
@@ -238,6 +239,13 @@
       stage.style.transform = 'scale(' + scale + ')';
       stage.style.marginLeft = Math.max(0, (box.clientWidth - width * scale) / 2) + 'px';   // plates narrower than the column sit centred, not hugging the left edge
       box.style.height = Math.ceil(height * scale / 28) * 28 + 'px';
+      // Text inside a scaled plate: make each line exactly one paper row (28px) on screen so every line sits on a rule.
+      // …and never let it render under 16px: grow the font to 16/scale where the plate is scaled down a lot.
+      [...box.querySelectorAll('.nu-93, .nu-94, .nu-153, .nu-154, .nu-165')].filter(t => !t.classList.contains('nu-165') || t.textContent.trim() === 'Brand').forEach(t => {
+        t.style.fontSize = ''; t.style.lineHeight = (28 / scale) + 'px';
+        const nominal = parseFloat(getComputedStyle(t).fontSize);
+        if (nominal * scale < 16) t.style.fontSize = (16 / scale) + 'px';
+      });
     });
   }
   new ResizeObserver(() => { fit(); drawReflLines(); }).observe(mobile);
