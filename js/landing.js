@@ -59,6 +59,17 @@
     const started = tune.play();                                      // the rise starts the moment the sound does, so they stay together
     if (started && started.then) started.then(() => leave(href, GUEST_MS, true), () => leave(href, QUICK_MS, false)); else leave(href, GUEST_MS, true);
   }));
+  /* ---- phone: scrolling / swiping down anywhere (apart from pressing the two buttons) enters the site, exactly like "To site" ---- */
+  const isPhone = () => window.matchMedia('(max-width: 899px)').matches;
+  const enterSite = () => { if (leaving || !isPhone()) return; const a = stage.querySelector('a.btn[href="home"]'); if (a) a.click(); };
+  let touchY = null;
+  window.addEventListener('touchstart', (e) => { touchY = e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    if (touchY === null || !e.touches.length) return;
+    if (touchY - e.touches[0].clientY > 40) { touchY = null; enterSite(); }          // finger moves up = page scrolls down
+  }, { passive: true });
+  window.addEventListener('wheel', (e) => { if (e.deltaY > 20) enterSite(); }, { passive: true });
+  window.addEventListener('scroll', () => { if (window.scrollY > 24) enterSite(); }, { passive: true });
   window.addEventListener('pageshow', (e) => {                        // back button from the next page: the landing is whole again
     if (!e.persisted) return;
     leaving = false; stage.classList.remove('leaving'); if (koiEl) koiEl.classList.remove('fade');
