@@ -86,25 +86,48 @@
       });
     } else {
       const paper = document.querySelector('.nearu-mobile');
-      const copies = [...paper.querySelectorAll('.nearu-mobile-copy')].filter(el => !el.closest('.nearu-mobile-card'));
-      copies.forEach(el => { el.style.paddingTop = '0px'; });
+      // One top-to-bottom pass over every line of text on the paper (labels, headings, captions, insight rows, before/after lists,
+      // the Reflection list…): each block's first baseline is pushed onto the next 28px rule, and later blocks are measured after
+      // earlier ones have moved. Filled cards, pills, buttons and SVG keep their own typography.
+      paper.querySelectorAll('[data-gp]').forEach(el => { el.style.paddingTop = el.dataset.gp; });
+      paper.querySelectorAll('.nearu-mobile-copy').forEach(el => { if (!el.closest('.nearu-mobile-card')) el.style.paddingTop = '0px'; });
       const refl = paper.querySelector('.nearu-mobile-refl');
       if (refl) refl.style.paddingTop = '0px';
       const origin = paper.getBoundingClientRect().top;
-      copies.forEach(el => {
-        const y = baseline(el) - origin;
+      const exempt = el => {
+        for (let n = el; n && n !== paper; n = n.parentElement) {
+          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-refl,figure,video')) return true;
+          if (n.classList.contains('nearu-mobile-copy')) continue;
+          const bg = getComputedStyle(n).backgroundColor;
+          if (bg && bg !== 'transparent' && !/rgba\(\d+, \d+, \d+, 0\)/.test(bg)) return true;
+        }
+        return false;
+      };
+      const seenBlocks = new Set();
+      const walker = document.createTreeWalker(paper, NodeFilter.SHOW_TEXT);
+      const runs = [];
+      while (walker.nextNode()) if (walker.currentNode.textContent.trim().length > 1) runs.push(walker.currentNode);
+      const push = (block, node) => {
+        const probe = document.createElement('span');
+        probe.style.cssText = 'display:inline-block;width:0;height:0;padding:0;margin:0;line-height:0;font-size:0;vertical-align:baseline;';
+        node.parentNode.insertBefore(probe, node);
+        const y = probe.getBoundingClientRect().top - origin;
+        probe.remove();
         let delta = ((20 - y) % 28 + 28) % 28;
-        if (delta > 27.9) delta = 0;
-        el.style.paddingTop = delta + 'px';
+        if (delta > 27.9 || delta < 0.4) return;
+        if (block.dataset.gp === undefined) block.dataset.gp = block.style.paddingTop;
+        block.style.paddingTop = (parseFloat(getComputedStyle(block).paddingTop) + delta) + 'px';
+      };
+      runs.forEach(node => {
+        const inRefl = refl && refl.contains(node);
+        let block = inRefl ? refl : node.parentElement;
+        if (!inRefl) while (block && block !== paper && getComputedStyle(block).display === 'inline') block = block.parentElement;
+        if (!block || block === paper || seenBlocks.has(block)) return;
+        if (!inRefl && exempt(block)) return;
+        if (inRefl && node.parentElement !== refl.querySelector('.rs-title')) return;
+        seenBlocks.add(block);
+        push(block, node);
       });
-      // Reflection list: every row is a whole number of 28px lines, so one shift on the list lands all its titles on the rules.
-      if (refl) {
-        const title = refl.querySelector('.rs-title');
-        const y = baseline(title) - origin;
-        let delta = ((20 - y) % 28 + 28) % 28;
-        if (delta > 27.9) delta = 0;
-        refl.style.paddingTop = delta + 'px';
-      }
     }
   }
   document.fonts.ready.then(() => requestAnimationFrame(alignGrid));

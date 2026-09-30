@@ -56,6 +56,10 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   2. **Content is centred in the beige content area**, not the whole canvas
      (see guidelines §4), and equal on both sides on phones.
   3. Highlighted feature names / key insights are bold `var(--hl-red)`.
+  4. **The smallest text is 16px** (as rendered, after the canvas scale) for
+     every written line on the paper, desktop and phone: body, captions,
+     labels, notes, diagram text. Text inside product mockups/screenshots is
+     the only exception.
 - Nothing invented without checking. When a design detail is ambiguous or
   feedback contradicts an earlier guess, pull the Figma node
   (`get_metadata` / `get_design_context`, file key `Nc087O4ophE87f3EyMdcVh`)

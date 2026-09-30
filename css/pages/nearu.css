@@ -170,8 +170,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-81 { position:absolute;left:497px;top:2300px;width:280px;height:152px; }   /* was inset % of the canvas height, which drifts whenever the canvas grows */
 .nearu-page .nu-82 { position:absolute;height:365px;left:1023px;top:2291px;width:183px; }
 .nearu-page .nu-83 { position:absolute;height:166px;left:485px;border-radius:17px;top:2511px;width:304px; }
-.nearu-page .nu-84 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:1099px;font-style:normal;color:#fff1df;font-size:15px;top:2654px;width:53px; }
-.nearu-page .nu-85 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:891px;font-style:normal;color:#fff1df;font-size:15px;top:2654px;width:48px; }
+.nearu-page .nu-84 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:1099px;font-style:normal;color:#fff1df;font-size:16px;top:2654px;width:53px; }
+.nearu-page .nu-85 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:891px;font-style:normal;color:#fff1df;font-size:16px;top:2654px;width:48px; }
 .nearu-page .nu-86 { position:absolute;height:363px;left:823px;top:2293px;width:182.075px; }
 .nearu-page .nu-87 { position:absolute;height:247px;left:427px;top:2976px;width:452px; }
 .nearu-page .nu-88 { position:absolute;inset:0;overflow:hidden; }
@@ -461,25 +461,26 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-card > .nearu-mobile-copy { margin: 0; }
   /* Mind map: centre hub on a trunk, cards branch alternately left and right (keeps the desktop diagram's idea). */
   .nearu-mobile-eco svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; overflow: visible; }
-  .nearu-mobile .nearu-mobile-eco text { font-size: 10.5px; letter-spacing: 0; }
-  .nearu-mobile .nearu-mobile-eco text.eco-fest { font-size: 15px; }
+  .nearu-mobile .nearu-mobile-eco text { font-size: 16px; letter-spacing: 0; }
+  .nearu-mobile .nearu-mobile-eco text.eco-fest { font-size: 16px; }
   .nearu-mobile-eco-note { margin: 0; padding-left: 22px; font-family: var(--font-ui); font-weight: 500; font-size: 16px; line-height: 28px; color: var(--espresso); }
   .nearu-mobile-insights { display: grid; gap: 16px; }
   /* Reflection on small screens: the same five uniform circles, stacked, with a thick line bending between them (drawn in JS). */
   .nearu-mobile-refl { list-style: none; margin: 0; padding: 0; position: relative; }
-  .nearu-mobile-refl li { position: relative; display: grid; grid-template-columns: 144px 1fr; column-gap: 14px; align-items: start; min-height: 196px; padding: 28px 0; color: var(--espresso); font-family: var(--font-ui); }
-  .nearu-mobile-refl .refl-c { position: relative; z-index: 1; align-self: center; width: 96px; height: 96px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; justify-self: start; text-align: center; }
-  .nearu-mobile-refl li:nth-child(even) .refl-c { justify-self: end; }
+  .nearu-mobile-refl li { position: relative; display: grid; grid-template-columns: 168px 1fr; column-gap: 14px; align-items: start; min-height: 224px; padding: 28px 0; color: var(--espresso); font-family: var(--font-ui); }
+  .nearu-mobile-refl .refl-c { position: relative; z-index: 1; align-self: center; width: 164px; height: 164px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; justify-self: start; text-align: center; }
+  @media (min-width: 560px) { .nearu-mobile-refl li:nth-child(even) .refl-c { justify-self: end; } }
+  @media (max-width: 559px) { .nearu-mobile-refl li { grid-template-columns: 140px 1fr; column-gap: 16px; min-height: 196px; } .nearu-mobile-refl .refl-c { width: 140px; height: 140px; } .nearu-mobile-refl .refl-c span { font-size: 16px; } }
   .nearu-mobile-refl .refl-c b { font-weight: 800; font-size: 24px; line-height: 26px; }
-  .nearu-mobile-refl .refl-c span { font-weight: 700; font-size: 10.5px; letter-spacing: .6px; line-height: 14px; text-transform: uppercase; }
+  .nearu-mobile-refl .refl-c span { font-weight: 700; font-size: 16px; letter-spacing: 0; line-height: 18px; text-transform: uppercase; }
   .nearu-mobile-refl .rs-title { display: block; font-weight: 800; font-size: 18px; line-height: 28px; }
-  .nearu-mobile-refl .rs-text { display: block; font-weight: 500; font-size: 15px; line-height: 28px; }
+  .nearu-mobile-refl .rs-text { display: block; font-weight: 500; font-size: 16px; line-height: 28px; }
   .nearu-mobile-refl-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .nearu-mobile-refl-line path { fill: none; stroke: #17120E; stroke-opacity: .85; stroke-width: 4; stroke-linecap: round; }
   /* A/B comparison: notes stacked under the phones on narrow screens; on wide ones they flank the phones like the desktop canvas. */
   .nearu-mobile-ab { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "plate plate" "a b"; gap: 20px; }
   .nearu-mobile-ab > .nearu-mobile-art { grid-area: plate; }
-  .nearu-mobile-ab-col { margin: 0; font-family: var(--font-ui); font-weight: 700; font-size: 15px; line-height: 24px; text-transform: uppercase; color: var(--maroon); }
+  .nearu-mobile-ab-col { margin: 0; font-family: var(--font-ui); font-weight: 700; font-size: 16px; line-height: 28px; text-transform: uppercase; color: var(--maroon); }
   .nearu-mobile-ab-col.is-a { grid-area: a; }
   .nearu-mobile-ab-col.is-b { grid-area: b; }
   .nearu-mobile-ab-col span { display: block; }
@@ -488,13 +489,13 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 @media (min-width: 560px) and (max-width: 899px) {
   /* notes flank the phones (like the desktop canvas); the phone plate shrinks first, the notes keep a readable width */
   .nearu-mobile-ab { grid-template-columns: minmax(104px, 1fr) minmax(0, 460px) minmax(104px, 1fr); grid-template-areas: "a plate b"; gap: 10px; }
-  .nearu-mobile-ab-col { font-size: 12px; line-height: 20px; }
+  .nearu-mobile-ab-col { font-size: 16px; line-height: 28px; }
   .nearu-mobile-ab-col b { display: none; }
   .nearu-mobile-ab-col.is-a { text-align: right; margin-top: 56px; }
   .nearu-mobile-ab-col.is-b { margin-top: 130px; }
 }
 @media (min-width: 820px) and (max-width: 899px) {
-  .nearu-mobile-ab-col { font-size: 15px; line-height: 24px; }
+  .nearu-mobile-ab-col { font-size: 16px; line-height: 28px; }
   .nearu-mobile-ab-col.is-a { margin-top: 67px; }
   .nearu-mobile-ab-col.is-b { margin-top: 149px; }
 }
@@ -516,7 +517,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-phones figure { margin: 0; min-width: 0; }
   .nearu-mobile-phones img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 2; object-fit: contain; }
   .nearu-mobile .nearu-mobile-caption { margin-top: 14px; }
-  .nearu-mobile .nearu-mobile-caption, .nearu-mobile .nearu-mobile-caption p { font-size: 14px; line-height: 28px; }
+  .nearu-mobile .nearu-mobile-caption, .nearu-mobile .nearu-mobile-caption p { font-size: 16px; line-height: 28px; }
   .nearu-mobile-flow { display: block; }
   .nearu-mobile-flow img { display: block; width: 100%; height: auto; }
 }
@@ -546,7 +547,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-eco-label { position: absolute; left: 469px; top: 5726px; margin: 0; font-family: var(--font-ui); font-weight: 500; font-size: 24px; text-transform: uppercase; color: var(--chestnut); white-space: nowrap; }
 .nearu-page .nu-eco { position: absolute; left: 469px; top: 5789px; width: 795px; height: 520px; }
 .nu-eco svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.nu-eco text, .nearu-mobile-eco text { font-family: var(--font-ui); font-weight: 700; font-size: 15px; letter-spacing: .3px; }
+.nu-eco text, .nearu-mobile-eco text { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: .3px; }
 .nu-eco .eco-links line, .nearu-mobile-eco .eco-links line { stroke: #17120E; stroke-width: 3; stroke-dasharray: 7 7; }
 .nearu-page .nearu-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; left: 469px; width: 795px; height: auto; }
 .nearu-insight { background: #FFFAEB; border: 4px solid #17120E; border-radius: 24px; padding: 16px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
@@ -572,9 +573,9 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .refl-step { position: absolute; width: 210px; margin: 0; text-align: center; font-family: var(--font-ui); color: var(--espresso); }
 .nearu-page .refl-step .rs-label { display: none; } .refl-step .rs-label-x { display: block; font-weight: 700; font-size: 12px; line-height: 41px; letter-spacing: .6px; text-transform: uppercase; }
 .refl-step .rs-title { display: block; font-weight: 800; font-size: 19px; line-height: 41px; }
-.refl-step .rs-text { display: block; font-weight: 500; font-size: 14px; line-height: 41px; }
+.refl-step .rs-text { display: block; font-weight: 500; font-size: 16px; line-height: 41px; }
 .nu-refl-art .refl-num { font-family: var(--font-ui); font-weight: 800; font-size: 26px; }
-.nu-refl-art .refl-word { font-family: var(--font-ui); font-weight: 700; font-size: 12px; letter-spacing: .8px; }
+.nu-refl-art .refl-word { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: .8px; }
 .nearu-page .refl-step[data-node-id="351:9012"] { left: 443px; top: 13520px; }
 .nearu-page .refl-step[data-node-id="351:9013"] { left: 618px; top: 14040px; }
 .nearu-page .refl-step[data-node-id="351:9014"] { left: 793px; top: 13520px; }
