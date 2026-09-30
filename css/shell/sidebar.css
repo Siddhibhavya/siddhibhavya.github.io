@@ -70,10 +70,10 @@
   font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.18; color: var(--ink);
 }
 .role {
-  position: absolute; left: 168px; top: 275px; transform: translateX(-50%);
+  position: absolute; left: 168px; top: 272px; transform: translateX(-50%);
   font-size: 18px; line-height: 1.18; color: rgba(127, 87, 68, 0.7); white-space: nowrap;
 }
-.bio { position: absolute; left: 38px; top: 314px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
+.bio { position: absolute; left: 38px; top: 311px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
 
 /* ---------- 4b · Contents box (case-study pages: js/shell.js swaps the avatar/bio/EXPLORE nav for this when
    body[data-toc] is set) — matches the Figma reference (node 385:51): same box/pill motion as EXPLORE (§5),
