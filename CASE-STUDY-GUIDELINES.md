@@ -399,3 +399,6 @@ break the SPA feel the shell is built for.
 
 ## Minimum text size
 The smallest text on the paper is **16px as rendered** (font-size x canvas scale), desktop and phone. Only text inside product mockups/screenshots may be smaller. Audit with the browser: walk text nodes, skip those inside images/mockups, flag `fontSize * scale < 16`.
+
+## Same pills, animations and SVGs in every version
+Pill colours, invert/hover animations and every SVG must be present and identical in the desktop, tablet and phone versions. Re-arranging is fine; removing, recolouring or replacing them is not.
