@@ -396,3 +396,6 @@ break the SPA feel the shell is built for.
   showed up in one of the two.
 - Commit scoped to what you actually touched — don't stage unrelated
   in-progress work from elsewhere in the tree.
+
+## Minimum text size
+The smallest text on the paper is **16px as rendered** (font-size x canvas scale), desktop and phone. Only text inside product mockups/screenshots may be smaller. Audit with the browser: walk text nodes, skip those inside images/mockups, flag `fontSize * scale < 16`.
