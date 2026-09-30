@@ -70,10 +70,10 @@
   font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.18; color: var(--ink);
 }
 .role {
-  position: absolute; left: 168px; top: 272px; transform: translateX(-50%);
-  font-size: 18px; line-height: 1.18; color: rgba(127, 87, 68, 0.7); white-space: nowrap;
+  position: absolute; left: 176.5px; top: 276px; transform: translateX(-50%);
+  font-size: 17px; letter-spacing: .4px; text-transform: uppercase; line-height: 1.18; color: rgba(127, 87, 68, 0.7); white-space: nowrap;
 }
-.bio { position: absolute; left: 38px; top: 311px; width: 260px; font-size: 16px; line-height: 1.18; color: var(--brown-soft); }
+.bio { position: absolute; left: 49px; top: 301px; width: 272px; font-size: 17.5px; line-height: 26px; text-align: left; color: rgba(53, 35, 26, 0.8); }
 
 /* ---------- 4b · Contents box (case-study pages: js/shell.js swaps the avatar/bio/EXPLORE nav for this when
    body[data-toc] is set) — matches the Figma reference (node 385:51): same box/pill motion as EXPLORE (§5),
@@ -203,7 +203,7 @@
 .connect-links {
   position: absolute; left: 59px; top: 45px; width: 239px; height: 51px;
   display: flex; flex-wrap: wrap; justify-content: space-between; align-content: space-between;
-  font-size: 16px; line-height: 1.18; color: var(--brown-soft); text-transform: capitalize;
+  font-size: 17.5px; line-height: 1.18; color: rgba(53, 35, 26, 0.8); text-transform: capitalize;
 }
 .connect-links a { flex: none; width: 88px; transition: color 0.2s ease; }
 .connect-links a:nth-child(1) { width: 76px; }
