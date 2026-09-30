@@ -37,7 +37,8 @@
   const RULED = ['.syn-2', '.syn-3', '.syn-4', '.syn-5', '.syn-6', '.syn-7', '.syn-8', '.syn-46',
     '.syn-9', '.syn-10', '.syn-11', '.syn-18', '.syn-19', '.syn-20', '.syn-21', '.syn-22', '.syn-23', '.syn-24',
     '.syn-26', '.syn-27', '.syn-28', '.syn-29', '.syn-33', '.syn-34', '.syn-35', '.syn-36',
-    '.syn-39', '.sp-intro', '.syn-40', '.syn-41', '.syn-wf-text', '.syn-42', '.syn-43', '.syn-44', '.syn-45', '.syn-47', '.syn-flow-label']
+    '.syn-39', '.sp-intro', '.syn-40', '.syn-41', '.syn-wf-text', '.syn-42', '.syn-43', '.syn-44', '.syn-45', '.syn-47', '.syn-flow-label',
+    '.syn-el-1', '.syn-el-2', '.syn-el-3', '.syn-el-4', '.syn-el-5', '.syn-el-6', '.fc-b1', '.fc-b2']
     .map(sel => canvas.querySelector(sel)).filter(Boolean);
   const GRID_PHASE = 14; // matches the 14px vertical offset in css/pages/syncletter.css's background-position
   RULED.forEach(el => {
