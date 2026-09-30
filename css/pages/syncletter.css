@@ -18,15 +18,8 @@
 /* Figma's own tile for this frame doesn't export cleanly — draw the site's real grid instead (same technique as
    css/pages/decor.css / nearu.css). Rows follow this page's most common body line-height (41px); columns anchor to
    the text's left edge (~450px) so lines don't slice through the middle of a line of text. */
-.syncletter-page .syn-canvas {
-  background-color: #fff1df;
-  background-image:
-    linear-gradient(to right, rgba(46, 20, 10, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(46, 20, 10, 0.12) 1px, transparent 1px);
-  background-repeat: repeat;
-  background-size: 41px 41px;
-  background-position: 450px 14px;
-}
+/* the grid is drawn on .syncletter-viewport (crisp 1px lines at every scale); the canvas itself stays transparent */
+.syncletter-page .syn-canvas { background: none; }
 .syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff1df; color: #6b3341; }
 .syncletter-skip:focus { top: 12px; }
 @media (max-width: 899px) {

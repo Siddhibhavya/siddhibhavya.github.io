@@ -42,6 +42,13 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   scoped to NearU and Syncletter. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
+- **NON-NEGOTIABLE: parity across versions.** Pill colours, the pills' invert/hover
+  animations and every SVG (icons, arrows, doodles, diagrams) exist in every
+  version of a page (desktop, tablet, phone). A phone/tablet layout may
+  re-arrange them but must never remove, recolour or swap them for something
+  else. Prefer showing the desktop composition (scaled or re-flowed) over
+  inventing a different one — Siddhi rejected a bespoke Syncletter phone layout
+  and kept the scaled desktop canvas.
 - **NON-NEGOTIABLE: grid alignment.** No case-study change is finished, and
   nothing may be committed or pushed, until the grid audit
   (`tools/grid-audit.js`, paste into the browser JS tool) reports zero
