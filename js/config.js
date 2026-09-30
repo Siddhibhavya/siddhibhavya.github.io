@@ -35,12 +35,12 @@ window.SITE = {
       role: 'Design, Prototyping, Research', team: 'Siddhi Bhavya, Ridhi Lakhina', time: 'May 2026 – October 2026'
     },
     {
-      id: 'ncfe', title: 'NCFE – Redesign', tag: 'Accessibility', href: 'work/ncfe-redesign.html',
+      hidden: true, id: 'ncfe', title: 'NCFE – Redesign', tag: 'Accessibility', href: 'work/ncfe-redesign.html',
       blurb: 'How might we help people with low financial awareness find and trust reliable financial guidance, when it’s currently buried behind poor navigation and no clear starting point?',
       role: 'Design , Prototyping, Research', team: '', time: 'April 2026 – July 2026'
     },
     {
-      id: 'driving', title: 'Are they Driving?', tag: 'Data and Narratives', href: 'work/are-they-driving.html',
+      hidden: true, id: 'driving', title: 'Are they Driving?', tag: 'Data and Narratives', href: 'work/are-they-driving.html',
       blurb: 'What prompts my home, Kalahandi, to have more deaths than injuries from driving accidents?',
       role: 'Design, Research', team: '', time: 'June 2026 – Ongoing'
     }

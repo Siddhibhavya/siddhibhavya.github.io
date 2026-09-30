@@ -21,6 +21,17 @@ results fast — act, verify once, report briefly.
 - Figma edits: already recoloured to the site palette (see below) on the
   three case-study frames; use `use_figma` (load the `figma-use` skill first).
 
+## Hidden projects (HIDDEN-UNTIL-READY)
+Only finished case studies are public. NCFE – Redesign and Are they Driving? are hidden until Siddhi says so (Are they Driving? will
+become a different project). To hide/unhide, search the repo for `HIDDEN-UNTIL-READY`: `home.html` (cards carry `hidden`, wrapper has
+`hide-low`), `css/pages/work.css` (wrapper heights), `js/config.js` (`hidden: true` on the project), `js/bank.js` (`"hidden":true` on
+the ncfe-redesign-*, are-they-driving-* and projects-5 entries; projects-1 / projects-8 answers now only mention Syncletter and NearU),
+`work/ncfe-redesign.html` / `work/are-they-driving.html` (noindex + redirect to home unless `?preview`). Never publish an unfinished
+project card or M.I.K.U answer for it.
+Original answers to restore: projects-1 "There are four on the index: Syncletter, NearU, NCFE - Redesign and Are they Driving? Pick one and
+I’ll tell you more." (+ the two extra buttons); projects-8 "…NCFE - Redesign and Are they Driving? are still on their way — for now their
+cards on My Work open a summary."
+
 ## Phone layouts
 Siddhi prefers Syncletter's original approach: the phone shows the scaled desktop canvas (no separate phone layout). A separate
 phone layout was tried and rejected — don't rebuild it for Syncletter. NearU keeps its own phone layout (`js/nearu-mobile.js`).

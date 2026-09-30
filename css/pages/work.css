@@ -91,3 +91,8 @@ body.one-col .eye { left: calc((var(--cx) * 0.44 - 59.5) * 1px); top: calc((var(
 .stub-copy { position: absolute; left: 90px; top: 310px; width: 720px; font-size: 24px; line-height: 1.4; color: var(--ink); }
 .stub-soon { position: absolute; left: 90px; top: 520px; font-family: var(--font-serif); font-size: 28px; color: var(--maroon); }
 .stub-back { position: absolute; left: 90px; top: 590px; font-size: 20px; font-weight: 500; color: var(--maroon); border-bottom: 2px solid var(--maroon-edge); }
+
+/* HIDDEN-UNTIL-READY: unfinished projects are kept in the markup with [hidden]; the wrapper shrinks to the finished cards */
+.card[hidden] { display: none !important; }
+.home-wrap.hide-low, .home-wrap.hide-low:has(.card:hover), .home-wrap.hide-low:has(.card:focus-visible) { --sh: 700px; }
+body.one-col .home-wrap.hide-low, body.one-col .home-wrap.hide-low:has(.card:hover), body.one-col .home-wrap.hide-low:has(.card:focus-visible) { --sh: 1040px; }

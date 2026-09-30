@@ -42,6 +42,8 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   scoped to NearU and Syncletter. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
+- **Only finished case studies are public.** Unfinished projects stay hidden (see "Hidden projects" in
+  `NEXT-CHAT-PLAYBOOK.md`, search `HIDDEN-UNTIL-READY`) until Siddhi says to show them.
 - **NON-NEGOTIABLE: parity across versions.** Pill colours, the pills' invert/hover
   animations and every SVG (icons, arrows, doodles, diagrams) exist in every
   version of a page (desktop, tablet, phone). A phone/tablet layout may
