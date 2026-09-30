@@ -11,6 +11,12 @@
   const body = document.body;
   const root = document.documentElement;
   const R = body.dataset.root || '';
+  /* repeat-visit caching (sw.js) — skipped on localhost so local edits are always live */
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()));
+    else addEventListener('load', () => navigator.serviceWorker.register(R + 'sw.js').catch(() => {}));
+  }
+
   const page = body.dataset.page || '';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -141,7 +147,7 @@
     <nav aria-label="Contents"><i class="nav-pill toc-pill" aria-hidden="true"></i>${toc.map((t) =>
       `<a class="nav-item toc-item" data-toc-id="${t.id}" href="#${t.id}"><span>${esc(t.label)}</span><img class="arrow" src="${R}assets/ui/nav-arrow.svg" alt="" width="21" height="24"></a>`).join('')}</nav>` : `
     <img class="avatar-ring" src="${R}assets/ui/avatar-ring.svg" alt="">
-    <div class="avatar-photo"><img src="${R}assets/ui/avatar.png" alt="Illustrated portrait of Siddhi"></div>
+    <div class="avatar-photo"><img src="${R}assets/ui/avatar.webp" alt="Illustrated portrait of Siddhi"></div>
     <p class="name">Siddhi Bhavya</p>
     <p class="role">${esc(SITE.tagline)}</p>
     <p class="bio">I am a designer tinkering at the intersection of human-computer interaction, clarity, and efficiency.</p>
@@ -769,7 +775,7 @@
       raf = (on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5) ? requestAnimationFrame(tick) : 0;
     };
     const show = (card) => {
-      pill.style.setProperty('--cs', card.dataset.cs || '#6b3341');
+      pill.style.setProperty('--cs', card.dataset.cs || '#7b2b3d');
       const label = card.dataset.csLabel;                              // side-quest links: a short label ("View" / "Try it!") on a pill that hugs it
       pill.querySelector('span').textContent = label || 'View case study';
       pill.classList.toggle('hug', !!label);

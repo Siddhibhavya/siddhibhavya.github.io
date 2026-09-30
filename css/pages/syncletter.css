@@ -20,19 +20,19 @@
    the text's left edge (~450px) so lines don't slice through the middle of a line of text. */
 /* the grid is drawn on .syncletter-viewport (crisp 1px lines at every scale); the canvas itself stays transparent */
 .syncletter-page .syn-canvas { background: none; }
-.syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff1df; color: #6b3341; }
+.syncletter-skip { position: fixed; left: 12px; top: -80px; z-index: 100; padding: 12px 20px; background: #fff1df; color: #7b2b3d; }
 .syncletter-skip:focus { top: 12px; }
 @media (max-width: 899px) {
   .syncletter-skip { display: none; }
 }
 
 /* ---------- background plates ---------- */
-.syn-1 { position: absolute; left: 491px; top: 4872px; width: 820px; height: 779px; background: #4a2230; border-radius: 12px; }
+.syn-1 { position: absolute; left: 491px; top: 4872px; width: 820px; height: 779px; background: #4a1a2c; border-radius: 12px; }
 
 /* ---------- intro / eyebrows ---------- */
 .syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 64px; white-space: nowrap; line-height: normal; }
 .syn-3 { position: absolute; left: 448px; top: 1099px; width: 951px; margin: 0; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 62px; line-height: 104.895%; }
-.syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: #6b3341; font-size: 24px; text-transform: uppercase; white-space: nowrap; }
+.syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: var(--heading); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
 .syn-4 { left: 450px; top: 1047px; }
 .syn-5 { left: 447px; top: 1866px; }
 .syn-7 { left: 453px; top: 2935px; }
@@ -90,7 +90,7 @@
 /* ---------- Details Background (skills/timeline/tools) ---------- */
 /* box made taller than Figma's literal 114px, and every row nudged down 20px, so the header+rows block
    (96px tall) actually centers in the box instead of hugging the top with all the slack left at the bottom */
-.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #6b3341; border: 8px solid #4a2230; border-radius: 11px; box-sizing: border-box; }
+.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #7b2b3d; border: 8px solid #4a1a2c; border-radius: 11px; box-sizing: border-box; }
 .syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #f7e9dc; font-size: 20px; text-align: center; }
 .syn-13a { left: 1143.5px; width: 115px; }
 .syn-13b { left: 869.25px; width: 250.5px; }
@@ -122,7 +122,7 @@
 .syn-15a-label, .syn-15b-label { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #003d36; font-size: 24px; line-height: 1; white-space: nowrap; }
 
 /* ---------- "Try prototype" CTAs ---------- */
-.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #4a2230; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #4a1a2c; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 /* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
 .syn-17 { left: 448px; top: 746px; height: 47px; }
 .syn-48 { left: 454px; top: 8699px; height: 48px; }
@@ -137,13 +137,13 @@
 .syn-32b { position: absolute; left: 482px; top: 4263px; width: 126.018px; height: 124.147px; }
 
 /* ---------- research CTA ---------- */
-.syn-37 { position: absolute; left: 679px; top: 4435px; width: 386px; height: 44px; border: 3px solid #4a2230; border-radius: 107px; box-sizing: border-box; color: #6b3341; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-37 { position: absolute; left: 679px; top: 4435px; width: 386px; height: 44px; border: 3px solid #4a1a2c; border-radius: 107px; box-sizing: border-box; color: #7b2b3d; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
 .syn-37-label { font-family: var(--font-ui); font-weight: 400; font-size: 24px; line-height: 1; white-space: nowrap; }
 .syn-38 { position: absolute; left: 592px; top: 4329px; height: 63px; max-width: 304px; padding: 8px; background: #faf2ea; border: 1px solid #000; border-radius: 0 11px 11px 11px; box-shadow: 8px 2px 4.05px rgba(0,0,0,.43); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
 .syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
 
 /* ---------- Elements grid (feature mockup cards) ---------- */
-.syn-grid { position: absolute; left: 521px; top: 4902px; width: 760px; height: 719px; background: #6b3341; border-radius: 12px; padding: 30px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(3, minmax(0,1fr)); column-gap: 40px; row-gap: 40px; }
+.syn-grid { position: absolute; left: 521px; top: 4902px; width: 760px; height: 719px; background: #7b2b3d; border-radius: 12px; padding: 30px; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(3, minmax(0,1fr)); column-gap: 40px; row-gap: 40px; }
 .syn-card { background: #faf2ea; border: 1.232px solid rgba(190,201,197,.3); border-radius: 16px; padding: 16px; box-shadow: -8px 8px 4px rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; position: relative; box-sizing: border-box; }
 .syn-card-phrase { display: flex; align-items: center; gap: 8px; padding-right: 40px; }
 .syn-glyph-sm { width: 14.992px; height: 14.992px; flex: none; }
@@ -190,7 +190,7 @@
 /* ---------- hover interactions (mirrors css/pages/nearu.css's convention) ---------- */
 @media (hover: hover) and (pointer: fine) {
   .syn-14:hover { scale: 1.015; }
-  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #4a2230; color: #fff1df; scale: 1.03; }
+  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #4a1a2c; color: #fff1df; scale: 1.03; }
 }
 @media (prefers-reduced-motion: reduce) {
   .syn-14, .syn-17, .syn-48, .syn-37, .syn-17-label, .syn-48-label, .syn-37-label {
@@ -248,7 +248,7 @@
 .syn-fc .fc-proc { fill: #3f7fc4; }
 .syn-fc .fc-io { fill: #f0983a; }
 .syn-fc .fc-dec { fill: #f2c94c; }
-.syn-fc .fc-conn { stroke: #4a2230; stroke-width: 3.5; stroke-linecap: round; }
+.syn-fc .fc-conn { stroke: #4a1a2c; stroke-width: 3.5; stroke-linecap: round; }
 .syn-fc .fc-head path { fill: var(--maroon); }
 .syn-fc-steps { list-style: none; margin: 0; padding: 0; }
 .syn-fc-steps li { position: absolute; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; font-family: var(--font-ui); color: var(--chestnut); }
@@ -286,20 +286,79 @@
 .syn-fc-steps li.fc-decision { justify-content: center; align-content: center; }
 .syn-fc-steps li.fc-decision .fc-num { margin-bottom: 1px; }
 
-/* ---------- phone/tablet user flow: linear chart (js/syncletter-flow.js) — same colours, shapes and arrow SVG ---------- */
-.syn-lin { display: none; position: absolute; transform-origin: 0 0; }
-.syn-canvas.syn-lin-on .syn-lin { display: block; }
-.syn-canvas.syn-lin-on .syn-fc { display: none; }
-.syn-lin-in { display: flex; flex-direction: column; align-items: center; font-family: var(--font-ui); }
-.lin-arr { display: block; width: 21px; height: 24px; margin: 6px 0; transform: rotate(90deg); }
-.lin-arr svg { display: block; width: 100%; height: 100%; }
-.lin-arr path { fill: var(--maroon); }
-.lin-node { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px 20px; min-height: 56px; width: min(100%, 300px); font-size: 16px; line-height: 20px; font-weight: 700; color: #fff; border-radius: 9px; }
-.lin-node b { font-weight: 700; display: block; }
-.lin-node small { display: block; font-size: 16px; font-weight: 400; line-height: 20px; margin-top: 4px; }
-.lin-start, .lin-end { border-radius: 999px; width: 120px; text-transform: uppercase; }
-.lin-start { background: #2f9e6e; } .lin-end { background: #d94f4f; }
-.lin-proc { background: #3f7fc4; }
-.lin-io { background: #f0983a; color: #2a1a14; clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); padding: 12px 36px; }
-.lin-dec { background: #f2c94c; color: #2a1a14; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); width: 300px; min-height: 160px; padding: 20px 76px; }
-.lin-branch { margin: 6px 0 0; padding: 4px 14px; border-radius: 999px; background: #f7e9dc; border: 2px solid #4a2230; font-size: 16px; line-height: 20px; font-weight: 700; color: var(--chestnut); }
+/* ---------- phone/tablet layout (< 900px) — built by js/syncletter-mobile.js from clones of the desktop nodes ----------
+   One centred column; 28px paper rows; text >= 16px. Pills keep their colours + hover animation, SVGs/images are the same files. */
+.syn-mobile { display: none; }
+@media (max-width: 899px) {
+  .syn-canvas, .syncletter-viewport { display: none !important; }
+  .syn-mobile {
+    display: block; flex: 1 1 100%; width: 100%; min-width: 0; box-sizing: border-box; padding: 92px 20px 56px; color: var(--espresso); text-align: left; overflow-x: clip;   /* full width inside the flex layout, so the 560px column centres on the screen */
+    background-color: #fff1df;
+    background-image: linear-gradient(to right, rgba(46,20,10,.10) 1px, transparent 1px), linear-gradient(to bottom, rgba(46,20,10,.10) 1px, transparent 1px);
+    background-size: 28px 28px; background-position: 20px 20px;
+    font-family: var(--font-ui);
+  }
+  .syn-mobile > *, .syn-mobile section > * { max-width: 560px; margin-left: auto; margin-right: auto; margin-bottom: 28px; }   /* one centred column; text inside stays left-aligned */
+  .syn-mobile section { padding-top: 28px; scroll-margin-top: 84px; }
+  /* text clones: flow layout, 16px on 28px rows, centred */
+  .syn-mobile .sm-copy, .syn-mobile .sm-copy :is(p, span, div, li, ul, br) {
+    position: static !important; inset: auto !important; transform: none !important;
+    width: auto !important; height: auto !important; min-height: 0;
+    font-family: var(--font-ui); font-size: 16px; line-height: 28px; letter-spacing: normal; white-space: normal; text-align: left;
+  }
+  .syn-mobile .sm-copy { display: block; margin-left: auto; margin-right: auto; color: var(--espresso); font-weight: 400; }
+  .syn-mobile .sm-copy :is(p, div, ul) { margin: 0; }
+  .syn-mobile .sm-copy li { margin: 0 0 0 22px; }
+  .syn-mobile ul.sm-copy { padding: 0; list-style: disc outside; }
+  .syn-mobile .sm-title { font-family: var(--font-serif); font-size: 32px; line-height: 56px; color: #39265f; font-weight: 400; }
+  .syn-mobile .sm-heading { font-size: 20px; font-weight: 900; color: var(--heading); text-transform: uppercase; }
+  .syn-mobile .sm-label { font-weight: 600; color: var(--chestnut); text-transform: uppercase; margin-bottom: 0; }
+  .syn-mobile .sm-lede { font-weight: 600; color: var(--heading); }
+  .syn-mobile .sm-learnt { font-weight: 600; }
+  .syn-mobile .sm-attrib { color: var(--chestnut); }
+  .syn-mobile .syn-stat, .syn-mobile .syn-highlight { font-weight: 700; color: var(--hl-red); }
+  /* artwork/pill clones: keep size, colours, SVG and hover; drop only the canvas position */
+  .syn-mobile .sm-pos { position: relative !important; left: auto !important; top: auto !important; right: auto !important; bottom: auto !important; margin-left: auto; margin-right: auto; }
+  .syn-mobile .sm-hero { width: 100%; height: auto; aspect-ratio: 919 / 323; border-radius: 11px; }
+  .syn-mobile .sm-tags { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .syn-mobile .sm-tags > .sm-pos { margin: 0; max-width: 100%; }
+  .syn-mobile .sm-pill { width: min(100%, 350px); height: 56px; }
+  .syn-mobile .sm-pill :is(.syn-17-label, .syn-48-label, .syn-37-label) { font-size: 20px; }
+  .syn-mobile .sm-facts { background: #7b2b3d; border: 8px solid #4a1a2c; border-radius: 11px; padding: 12px 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; color: #f7e9dc; }
+  .syn-mobile .sm-fact p { margin: 0; text-align: center; }
+  .syn-mobile .sm-fact-h { font-weight: 500; font-size: 16px; line-height: 28px; color: #f7e9dc; }
+  .syn-mobile .sm-fact-v { font-weight: 400; font-size: 16px; line-height: 24px; color: rgba(255,237,219,.83); }
+  .syn-mobile .sm-dark { background: #02221e; border-radius: 20px; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .syn-mobile .sm-dark .sm-ondark { color: #fff; margin: 0; font-weight: 500; text-align: center; }
+  .syn-mobile .sm-doodle { width: 84px !important; height: auto !important; }
+  .syn-mobile .sm-phone { margin: 0; }
+  .syn-mobile .sm-quote { margin-right: auto; margin-left: auto; max-width: 100%; transform: translateX(-12px); }
+  .syn-mobile .sm-spectrum { width: 100% !important; height: auto !important; }
+  .syn-mobile .sm-spectrum .sp-intro { font-size: 18px; line-height: 28px; text-align: left; }
+  .syn-mobile .sm-spectrum svg { width: 100%; height: auto !important; }
+  .syn-mobile .sm-got { display: flex; align-items: flex-end; justify-content: center; }
+  .syn-mobile .sm-got > * { margin: 0; }
+  .syn-mobile .sm-got-icon { width: 108px !important; height: auto !important; flex: none; }
+  .syn-mobile .sm-got-bubble { margin-left: -18px; margin-bottom: 8px; }
+  .syn-mobile .sm-elements { position: relative; }
+  .syn-mobile .sm-elements-in { position: relative; width: 1066px; height: 779px; text-align: left; }
+  .syn-mobile .sm-wide { width: 100%; height: auto; aspect-ratio: 690 / 344; }
+  .syn-mobile .sm-wide.syn-devshot { aspect-ratio: 763 / 313; }
+  .syn-mobile .sm-proto { width: 100% !important; height: auto !important; flex-direction: column; gap: 10px; }
+  .syn-mobile .sm-proto .syn-proto-box { width: 100%; max-width: 340px; height: auto; min-height: 120px; }
+  .syn-mobile .sm-proto .syn-proto-arrow { transform: rotate(90deg); }
+  /* linear user flow: same colours, shapes and arrow SVG as the desktop chart */
+  .syn-mobile .sm-flow { display: flex; flex-direction: column; align-items: center; }
+  .syn-mobile .sm-arr { display: block; width: 21px; height: 24px; margin: 6px 0; transform: rotate(90deg); }
+  .syn-mobile .sm-arr svg { display: block; width: 100%; height: 100%; }
+  .syn-mobile .sm-arr path { fill: var(--maroon); }
+  .syn-mobile .sm-fc { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px 20px; min-height: 56px; width: min(100%, 300px); font-size: 16px; line-height: 20px; font-weight: 700; color: #fff; border-radius: 9px; }
+  .syn-mobile .sm-fc b { font-weight: 700; display: block; }
+  .syn-mobile .sm-fc small { display: block; font-size: 16px; font-weight: 400; line-height: 20px; margin-top: 4px; }
+  .syn-mobile .sm-fc-start, .syn-mobile .sm-fc-end { border-radius: 999px; width: 120px; text-transform: uppercase; }
+  .syn-mobile .sm-fc-start { background: #2f9e6e; } .syn-mobile .sm-fc-end { background: #d94f4f; }
+  .syn-mobile .sm-fc-proc { background: #3f7fc4; }
+  .syn-mobile .sm-fc-io { background: #f0983a; color: #2a1a14; clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); padding: 12px 36px; }
+  .syn-mobile .sm-fc-dec { background: #f2c94c; color: #2a1a14; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); width: 300px; min-height: 160px; padding: 20px 76px; }
+  .syn-mobile .sm-flow .sm-branch { margin: 12px 0 0; width: 100% !important; font-weight: 700; color: var(--chestnut); text-align: center; }
+}

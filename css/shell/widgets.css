@@ -26,17 +26,18 @@
 .cs-cursor {
   position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none;
   display: flex; align-items: center; gap: 13px; width: 217px; height: 42px; padding-left: 29px;
-  box-sizing: border-box; border: 2px solid color-mix(in srgb, var(--cs, #6b3341) 58%, #000); border-radius: 32.5px; background: var(--cs, #6b3341); color: #fff;   /* darker edge of the pill's own colour */
+  box-sizing: border-box; border: 2px solid color-mix(in srgb, var(--cs, #7b2b3d) 58%, #000); border-radius: 32.5px; background: var(--cs, #7b2b3d); color: #fff;   /* darker edge of the pill's own colour */
   font: 400 15px/1.18 var(--font-ui); white-space: nowrap;
   box-shadow: 0 6px 16px rgba(25, 5, 35, 0.25);
-  opacity: 0; scale: 0.6; transition: opacity 0.18s ease, scale 0.32s var(--ease-out), background-color 0.2s ease;
+  opacity: 0; visibility: hidden; transition: opacity 0.14s ease, visibility 0s linear 0.14s, background-color 0.2s ease;   /* fade only — no scale animation, so the text is never rasterised at a shrunk size and is always crisp */
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
 }
 .cs-cursor svg { flex: none; }
 .cs-cursor .ic-try { display: none; }
 .cs-cursor.try .ic-eye { display: none; }
 .cs-cursor.try .ic-try { display: block; }
 .cs-cursor.hug { width: auto; padding: 0 26px 0 22px; gap: 10px; }   /* side-quest links: just "View" / "Try it!", the pill hugs its content */
-.cs-cursor.on { opacity: 1; scale: 1; }
+.cs-cursor.on { opacity: 1; visibility: visible; transition-delay: 0s; }
 body.cs-on, body.cs-on a, body.cs-on .card { cursor: none; }
 
 /* ---------- 3 · Notification pill (top centre) ---------- */

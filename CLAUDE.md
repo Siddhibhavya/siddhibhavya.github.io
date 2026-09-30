@@ -42,6 +42,10 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   scoped to NearU and Syncletter. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
+- **NON-NEGOTIABLE: highest quality for text, images and video.** Performance work may change *how*
+  assets are delivered (caching, lazy loading, lossless WebP, deferring scripts) but never reduces
+  their quality: no lossy re-compression of images or video, no blurry/soft text, no smaller
+  dimensions. Text must always render crisp at rest (nothing readable only on hover).
 - **Only finished case studies are public.** Unfinished projects stay hidden (see "Hidden projects" in
   `NEXT-CHAT-PLAYBOOK.md`, search `HIDDEN-UNTIL-READY`) until Siddhi says to show them.
 - **NON-NEGOTIABLE: parity across versions.** Pill colours, the pills' invert/hover
