@@ -14,7 +14,7 @@
 (function () {
   'use strict';
   const S = window.SITE;
-  const P = Object.fromEntries(S.projects.map((p) => [p.id, p]));
+  const P = Object.fromEntries(S.projects.filter((p) => !p.hidden).map((p) => [p.id, p]))   // p.hidden = HIDDEN-UNTIL-READY;
   const go = (label, href) => ({ label, href });
   const raw = (label, url) => ({ label, href: '', _raw: url });
   const ask = (q) => ({ label: q, ask: q });
@@ -51,7 +51,7 @@
     const B = window.SIDDHI_BANK || { entries: [] };
     const key = JSON.stringify(B.entries.map((e) => [e.id, e.q, e.alts, e.a]));
     if (key === bankKey) return;
-    bankKey = key; BANK = B.entries; index = [];
+    bankKey = key; BANK = B.entries.filter((e) => !e.hidden); index = [];   // e.hidden = HIDDEN-UNTIL-READY
     const df = {};
     BANK.forEach((e, ei) => /^talk-(not-written|no-match|jail-.*)$/.test(e.id) ? null : [e.q].concat(e.alts || []).forEach((v) => {
       const toks = [...new Set(tokens(v))];
@@ -181,8 +181,8 @@
     const about = (p) => ({ text: [`${p.title}, ${p.tag}.`, p.blurb, `Role: ${p.role}.`].concat(p.team ? [`Team: ${p.team}.`] : [], [`Timeline: ${p.time}`]).join('\n'), actions: [go(`Open ${p.title}`, p.href)] });
     if (has('syncletter', 'jargon', 'idiom')) return about(P.syncletter);
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
-    if (has('ncfe', 'financ')) return about(P.ncfe);
-    if (has('driving', 'kalahandi', 'accident')) return about(P.driving);
+    if (P.ncfe && has('ncfe', 'financ')) return about(P.ncfe);
+    if (P.driving && has('driving', 'kalahandi', 'accident')) return about(P.driving);
     if (has('ats')) return { text: 'Here is the ATS friendly résumé.', actions: [raw('Open ATS friendly résumé', S.links.resumeAts)] };
     if (has('resume', 'cv')) return { text: 'Do you want the site résumé or the ATS friendly one?', actions: [raw('Site résumé', S.links.resume), raw('ATS friendly', S.links.resumeAts)] };
     if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram. They’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
