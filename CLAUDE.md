@@ -94,3 +94,4 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
 - **Crisp text:** never animate `transform` (or add `will-change`) inside/over a tilted card — it softens the text until hover. Use `margin`/`top`.
 - **Paper + scrapbook:** every grid page gets the faint paper veil (`css/shell/paper.css`); My Work/About have the torn corners; each My Work card has a pin (opposite colour of the project). Each also has a torn paper sheet behind it, shown on desktop only (hidden on the phone layout); upcoming cards mirror the card above. Notifications centre on the content area (`--notify-x`). After editing bundled CSS run `node tools/bundle-css.js`.
 
+- **Replies: keep them short.** When the answer is short, say it short ("done", "committed and live"). No recaps or lists unless asked.
