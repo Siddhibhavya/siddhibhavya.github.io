@@ -240,8 +240,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-153 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:592px;font-style:normal;color:var(--espresso);font-size:24px;top:7752px;width:154px; }
 .nearu-page .nu-154 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:982px;font-style:normal;color:var(--espresso);font-size:24px;top:7827px;width:163px; }
 .nearu-page .nu-155 { position:absolute;left:1100px;top:2327px;width:24px;height:12px; }   /* same: px instead of % of the canvas height */
-.nearu-page .nu-156 { position:absolute;background:#716767;height:2px;left:913px;border-radius:104px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);top:4039px;width:198px; }
-.nearu-page .nu-157 { position:absolute;background:#000;height:12px;left:987px;border-radius:3px;top:3687px;width:50px; }
+.nearu-page .nu-156 { position:absolute;background:#716767;height:2px;left:913px;border-radius:104px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);top:4039px;width:198px;transform-origin: 99px -178.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
+.nearu-page .nu-157 { position:absolute;background:#000;height:12px;left:987px;border-radius:3px;top:3687px;width:50px;transform-origin: 25px 173.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
 .nearu-page .nu-158 { position:absolute;background:#fc5956;height:205px;left:509px;top:8619px;width:367px; }
 .nearu-page .nu-159 { position:absolute;background:#0e59d3;height:118px;left:882px;top:8620px;width:365px; }
 .nearu-page .nu-160 { position:absolute;background:#fec12d;height:77px;left:1065px;top:8745px;width:182px; }
@@ -355,8 +355,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 /* Hover the complete phone crop, not the screen alone. No layout reflow. */
 .nearu-phone-frame { transition: scale .45s var(--ease-out); transform-origin: center; }
 /* B's separate notch/base layers follow the same phone-centred transform. */
-.nearu-page .nu-157 { transform-origin: 25px 173.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
-.nearu-page .nu-156 { transform-origin: 99px -178.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
 .kabir-greeting {
   position: absolute; left: 112px; top: 224px; width: 76px; height: 44.8789px;   /* stretched narrower to hug "HI" (the SVG is a stretchy pill, drawn wide for the longer site-wide nudge phrase) */
   z-index: 2; pointer-events: none; opacity: 0; visibility: hidden;

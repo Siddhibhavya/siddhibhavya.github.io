@@ -97,21 +97,37 @@
   }
 
   /* ------------------------------------------------------------------ the "you can move some elements" hint
-     The first time a visitor scrolls down the page, a small pill says so (3 seconds). */
-  let onScroll = null;
+     Once a visitor scrolls down the page, a small pill says so for 3 seconds, then comes back every 12 seconds (a loop) while they are scrolled down,
+     until they pick up one of the elements — or leave the page. */
+  const HINT_EVERY = 12000;
+  let onScroll = null, loop = 0, moved = false;
+  function showHint() {
+    if (!document.querySelector('.dc.drag')) { stopHint(); return; }      // already navigated away
+    if (window.scrollY < 150 || document.hidden || document.querySelector('.move-hint')) return;
+    const pill = document.createElement('div');
+    pill.className = 'move-hint'; pill.setAttribute('role', 'status');
+    pill.textContent = 'You can move some elements';
+    document.body.appendChild(pill);
+    setTimeout(() => pill.classList.add('out'), 2500);                    // 0.35s in, held, then a 0.5s fade out: gone after 3 seconds
+    setTimeout(() => pill.remove(), 3000);
+  }
+  function stopHint() {
+    clearInterval(loop); loop = 0;
+    if (onScroll) { window.removeEventListener('scroll', onScroll); onScroll = null; }
+  }
   function initHint() {
     if (!document.querySelector('.dc.drag')) return;
-    if (onScroll) window.removeEventListener('scroll', onScroll);
+    stopHint();
+    if (!document.body.dataset.hintDrag) {                                // one listener, however many times the page is swapped in
+      document.body.dataset.hintDrag = '1';
+      document.addEventListener('pointerdown', (e) => { if (e.target.closest && e.target.closest('.dc.drag')) { moved = true; stopHint(); } });
+    }
+    if (moved) return;
     onScroll = () => {
       if (window.scrollY < 150) return;
       window.removeEventListener('scroll', onScroll); onScroll = null;
-      if (!document.querySelector('.dc.drag')) return;                 // already navigated away
-      const pill = document.createElement('div');
-      pill.className = 'move-hint'; pill.setAttribute('role', 'status');
-      pill.textContent = 'You can move some elements';
-      document.body.appendChild(pill);
-      setTimeout(() => pill.classList.add('out'), 2500);               // 0.35s in, held, then a 0.5s fade out: gone after 3 seconds
-      setTimeout(() => pill.remove(), 3000);
+      showHint();
+      loop = setInterval(showHint, HINT_EVERY);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
   }

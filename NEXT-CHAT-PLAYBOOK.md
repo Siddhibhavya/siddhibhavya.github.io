@@ -96,3 +96,9 @@ phone layout reads well, text on grid everywhere (measure), content centred,
 highlights in `--hl-red`, links new-tab, M.I.K.U answers added from the page's
 own facts (no inventions), home card + Figma frame matched to the page,
 `node tools/check.js` clean, then commit/push on request.
+
+## Added 2026-10: look-and-feel rules to carry into NCFE and Are they Driving?
+- Fonts: Ancizar Sans (self-hosted, size-adjusted; bold = italic; no Inter). Paper veil/grain on every grid page (`css/shell/paper.css`).
+- My Work cards already have a pin (yellow for NCFE, green for Driving). Each card also has a torn paper sheet behind it (`<span class="card-sheet ...">`), desktop only: hidden on the phone layout.
+- Case-study cards open in the same tab; notifications centre on the content area; keep tilted-card text crisp (no transform animations inside). Full list: `CASE-STUDY-GUIDELINES.md` section 8.
+

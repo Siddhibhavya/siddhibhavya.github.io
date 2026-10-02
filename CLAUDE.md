@@ -90,3 +90,7 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   something done.
 - Commit only what was actually asked for or touched — don't stage unrelated
   in-progress work found elsewhere in the tree.
+- **Fonts:** Ancizar Sans only (self-hosted, `size-adjust: 122%`); **never Inter**. Bold/black render italic by design; an upright bold uses `'Ancizar Sans Upright'`. Details: `CASE-STUDY-GUIDELINES.md` section 8.
+- **Crisp text:** never animate `transform` (or add `will-change`) inside/over a tilted card — it softens the text until hover. Use `margin`/`top`.
+- **Paper + scrapbook:** every grid page gets the faint paper veil (`css/shell/paper.css`); My Work/About have the torn corners; each My Work card has a pin (opposite colour of the project). Each also has a torn paper sheet behind it, shown on desktop only (hidden on the phone layout); upcoming cards mirror the card above. Notifications centre on the content area (`--notify-x`). After editing bundled CSS run `node tools/bundle-css.js`.
+

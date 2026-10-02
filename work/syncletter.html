@@ -7,7 +7,7 @@
   <meta name="description" content="Syncletter translates corporate jargon and idioms — helping users understand what a message means, how urgent it is, and how to reply.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500&family=Inter:wght@200;400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@400;500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="../css/site.css">
   <link rel="stylesheet" href="../css/pages/syncletter.css">
 </head>
@@ -112,10 +112,11 @@
     </div>
 
     <div class="syn-30" data-node-id="419:1040"></div>
-    <div class="syn-31" data-node-id="419:1041" data-name="Phone Bezel">
-      <div class="syn-31-screen">
-        <video class="syncletter-video" src="../assets/work/syncletter/demo.mp4" poster="../assets/work/syncletter/demo-poster.webp" muted loop playsinline preload="metadata" aria-label="Syncletter decoding a message inside WhatsApp"></video>
-      </div>
+    <div class="syn-31" data-node-id="419:1041" data-name="Phone demo">
+      <video class="syncletter-video" poster="../assets/work/syncletter/demo-poster-transparent.webp" data-start="8.1" muted playsinline preload="metadata" aria-label="Syncletter decoding a manager's messages for an intern: tap a message, see its meaning and urgency, open reply cues, add your own meaning, search the library">
+        <source src="../assets/work/syncletter/demo-transparent@2x.webm" type="video/webm" media="(min-resolution: 1.5dppx)">
+        <source src="../assets/work/syncletter/demo-transparent.webm" type="video/webm">
+      </video>
     </div>
     <img alt="" class="syn-32a" src="../assets/work/syncletter/down-arrow-doodle.svg" loading="lazy">
     <img alt="" class="syn-32b" src="../assets/work/syncletter/down-arrow-doodle.svg" loading="lazy">
@@ -133,6 +134,7 @@
     <div class="syn-grid" data-node-id="419:1061">
       <div class="syn-card">
         <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <p class="syn-card-urg">Medium urgency</p>
         <p class="syn-card-meaning">You are asked to test the popularity of the idea/proposal.</p>
         <div class="syn-card-actions"><span class="syn-pill">Add onto it</span><span class="syn-pill">Reply cues</span></div>
         <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
@@ -140,6 +142,7 @@
       </div>
       <div class="syn-card">
         <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
+        <p class="syn-card-urg">Medium urgency</p>
         <p class="syn-card-meaning">You are asked to test the popularity of the idea/proposal.</p>
         <div class="syn-card-vote"><span>vote</span><button aria-label="remove">×</button></div>
         <div class="syn-card-actions"><span class="syn-pill">Add onto it</span><span class="syn-pill">Reply cues</span></div>
@@ -150,24 +153,27 @@
         <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
         <p class="syn-card-addmeaning">Add your meaning-</p>
         <div class="syn-card-typebox"><span>Type your meaning here</span></div>
-        <div class="syn-card-actions"><span class="syn-pill-alt">Save</span><span class="syn-pill-alt">Reply Cues</span></div>
+        <div class="syn-card-actions"><span class="syn-pill-alt">Save</span><span class="syn-pill-alt syn-pill-white">Reply Cues</span></div>
         <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
         <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
       </div>
       <div class="syn-card syn-card-search">
+        <span class="syn-card-backarrow" aria-hidden="true"><svg viewBox="0 0 15 15" width="15" height="15"><path d="M13 7.5H2.5M6.8 3.2 2.5 7.5l4.3 4.3" fill="none" stroke="#075e54" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <p class="syn-card-search-label">Search Word/Phrase</p>
-        <div class="syn-card-search-input"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/search-glyph-small.svg" loading="lazy"><span>Run it up the flagpole.</span></div>
-        <div class="syn-card-tabs"><span class="syn-pill-sm">Run it by</span><span class="syn-pill-sm">Run the numbers</span><span class="syn-pill-sm">Run with it</span></div>
+        <div class="syn-card-search-input"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/search-glyph-small.svg" loading="lazy"><span class="syn-caret" aria-hidden="true"></span><span>Search any word or phrase&hellip;</span></div>
+        <div class="syn-card-resultbox"><p>Type any word to search the whole library. Phrases you save show up here too.</p></div>
         <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
         <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
       </div>
       <div class="syn-card syn-card-cues">
         <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Reply Cues</span></div>
+        <p class="syn-card-suggested">Suggested</p>
         <ul class="syn-cues-list">
           <li>A simple "sure, will do" is enough.</li>
           <li>No need to propose a time yet.</li>
           <li>Good time to ask any doubts; start with "Can you confirm-"</li>
         </ul>
+        <span class="syn-pill-sm syn-pill-cue">Add onto it</span>
         <span class="syn-card-backbtn">‹ Back</span>
         <img alt="" class="syn-card-close" src="../assets/work/syncletter/close-x-icon.svg" loading="lazy">
         <img alt="" class="syn-card-expand" src="../assets/work/syncletter/expand-icon.svg" loading="lazy">
@@ -176,6 +182,7 @@
         <p class="syn-card-search-label">Search Word/Phrase</p>
         <div class="syn-card-result">
           <div class="syn-card-phrase"><img alt="" class="syn-glyph-sm" src="../assets/work/syncletter/comment-bubble-icon.svg" loading="lazy"><span>Run it up the flagpole.</span><span class="syn-card-add">+</span></div>
+          <p class="syn-card-src">Library &middot; Medium urgency</p>
           <p class="syn-card-meaning-sm">You are asked to test the popularity of the idea/proposal.</p>
           <span class="syn-pill-sm">Reply cues</span>
         </div>
@@ -258,7 +265,7 @@
           <a href="mailto:alongsiddhi@gmail.com">Email</a>
           <a href="https://www.instagram.com/alongsiddhi/?hl=en" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.linkedin.com/in/siddhi-bhavya/" target="_blank" rel="noopener">Linkedin</a>
-          <a href="mailto:alongsiddhi@gmail.com?subject=Resume%20request">Resume</a>
+          <a href="https://drive.google.com/file/d/1zJQg8Z51ZCetirIovAvApxQkgCxdzwo7/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
         </div>
         <div class="footer-col footer-nav">
           <a href="../home">Work</a><a href="../about">About me</a>

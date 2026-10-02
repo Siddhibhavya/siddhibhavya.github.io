@@ -158,6 +158,9 @@
   const paper = mob;
   function alignGrid() {
     if (innerWidth >= 900) return;
+    tags.style.position = 'relative'; tags.style.top = '0px';   // the pill row sits with its bottom edge on a paper rule (the hero above has a fractional height)
+    const tb = tags.getBoundingClientRect().bottom - paper.getBoundingClientRect().top;
+    tags.style.top = ((((20 - tb) % 28 + 28) % 28) - 28) + 'px';   // one box above the rule it would otherwise sit on
     paper.querySelectorAll('[data-gp]').forEach(el => {
       el.style.paddingTop = el.dataset.gp;
       if (el.dataset.gt) { el.style.removeProperty('top'); el.style.removeProperty('position'); delete el.dataset.gt; }

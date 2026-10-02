@@ -4,7 +4,7 @@
 ================================================================== */
 
 /* ---------- 1 · Page + koi ---------- */
-body.landing { background: var(--plum); color: #fff; overflow: hidden; height: 100vh; }
+body.landing { background: var(--plum); color: #fff; overflow: hidden; height: 100vh; height: 100dvh; }
 .koi { position: fixed; inset: 0; z-index: 0; transition: opacity 0.5s ease; }
 .koi canvas { display: block; }
 .koi.fade { opacity: 0; transition-delay: 0.35s; }
@@ -18,15 +18,15 @@ body.landing { background: var(--plum); color: #fff; overflow: hidden; height: 1
   animation: stage-in 1.5s var(--ease-out) both;                         /* entrance: see section 5 */
 }
 .intro-stage > * { pointer-events: auto; }
-.intro-stage .orbit-rot, .intro-stage .star, .intro-stage .wordmark, .intro-stage .hello, .intro-stage .thisis { pointer-events: none; }
+.intro-stage .orbit-rot, .intro-stage .star, .intro-stage .wordmark, .intro-stage .archives { pointer-events: none; }
 
 /* ---------- 3 · Orbit ring + stars ---------- */
-/* ring: element box 770.682×266.836 centred on (698.65, 522.42); the exported SVG overhangs it slightly */
+/* ring (Figma 109:6519): element box 685.318×227.854 centred on (693.84, 494.17); the exported SVG overhangs it slightly */
 .orbit-rot {
-  position: absolute; left: 313.31px; top: 388.99px; width: 770.682px; height: 266.836px;
+  position: absolute; left: 351.18px; top: 380.24px; width: 685.318px; height: 227.854px;
   transform: rotate(-20.59deg); transform-origin: 50% 50%;
 }
-.orbit-img { position: absolute; left: -1.598px; top: -1.307px; width: 772.28px; height: 269.078px; }
+.orbit-img { position: absolute; left: -1.37px; top: -1.3px; width: 686.92px; height: 230.116px; }
 
 .star {
   position: absolute; will-change: transform;
@@ -41,24 +41,34 @@ body.landing { background: var(--plum); color: #fff; overflow: hidden; height: 1
 /* ---------- 4 · Words + buttons ---------- */
 .wordmark { position: absolute; left: 400px; top: 413px; width: 640px; height: 140px; }
 
-.hello, .thisis {
-  position: absolute; font-size: 48px; line-height: 2; font-weight: 400; color: #fff; white-space: nowrap;
-}
-.hello { left: 714.5px; top: 134px; transform: translateX(-50%); text-align: center; }
-.hello .script { font-family: var(--font-script); font-size: 2.3em; line-height: 0.6; letter-spacing: 0.01em; }   /* the script is small on the em, so it is sized up to sit level with the Inter words */
-/* the host line: 32px (three steps down from 48), wider box so "I am your host..." stays centred. top 226 = the old text centre (192 at 48px) + 18px lower */
-.thisis { left: 714.5px; top: 226px; width: 480px; font-size: 32px; transform: translateX(-50%); text-align: center; }
-.thisis .ch { display: inline-block; white-space: pre; will-change: transform; }      /* one span per letter: js/landing.js pushes them away from the pointer */
+/* "All aboard to the creative archives" (Figma 477:12): a 611px box centred on x 734.5, top 252. Line 1 is Ancizar Sans Medium Italic 40px / 1.42; "of" is Blank Script 64px / 0.6 */
+.archives { position: absolute; left: 734.5px; top: 252px; width: 611px; transform: translateX(-50%); text-align: center; color: #fff; }
+.archives p { margin: 0; }
+.archives-line { font-family: var(--font-ui); font-weight: 500; font-style: italic; font-size: 40px; line-height: 1.42; }
+.archives-of { font-family: var(--font-script); font-weight: 400; font-style: normal; font-size: 64px; line-height: 0.6; }
+.archives .ch { display: inline-block; white-space: pre; will-change: transform; }      /* one span per letter: js/landing.js pushes them away from the pointer */
 
-/* the two buttons are 2x the Figma size (189x37 / 24px text -> 378x74 / 48px text), still centred on the same axis */
-.btn {
-  position: absolute; left: 512.5px; width: 378px; height: 74px;
-  display: flex; align-items: center; justify-content: center;
-  border: 4px solid #fff; border-radius: 28px;
-  font-size: 48px; line-height: 1; color: #fff; white-space: nowrap;
-  transition: background-color 0.28s ease, color 0.28s ease, transform 0.4s var(--ease-out);
-}
-.btn:hover, .btn:focus-visible { background: #fff; color: var(--plum); transform: translateY(-4px); }
+/* the two tickets: 190px wide at the Figma size, "Be my Guest" top-left, "To the site" tucked under it.
+   Each carries the brand's tip star, small. Hover straightens (and lifts a touch); a click punches a semicircle out of the ticket's right edge. */
+.tickets { position: absolute; left: 634px; top: 696px; width: 198px; height: 154px; transform-origin: 50% 0; }
+.ticket { position: absolute; display: block; transition: transform 0.45s var(--ease-out), filter 0.3s ease; }
+.tk { position: absolute; inset: 0; display: block; transition: transform 0.45s var(--ease-out);
+  -webkit-mask-image: radial-gradient(circle at 100% 50%, transparent var(--punch), #000 calc(var(--punch) + 0.6px)); mask-image: radial-gradient(circle at 100% 50%, transparent var(--punch), #000 calc(var(--punch) + 0.6px)); }
+.tk img { display: block; width: 100%; height: 100%; }
+.tk-star { position: absolute; width: 32px; height: 32px; background: currentColor; -webkit-mask: url(../../assets/ui/star-back.svg) center / contain no-repeat; mask: url(../../assets/ui/star-back.svg) center / contain no-repeat; }
+.ticket-guest { left: 0; top: 0; width: 190px; height: 84px; transform-origin: 50% 50%; }
+.ticket-guest .tk-star { left: 141px; top: 37px; color: #ffece1; }
+.ticket-site { left: 3.46px; top: 66px; width: 194.773px; height: 85.77px; display: flex; align-items: center; justify-content: center; }
+.ticket-site .tk { position: relative; inset: auto; width: 189.45px; height: 69.597px; transform: rotate(-4.98deg); transform-origin: 50% 50%; }
+.ticket-site .tk-star { left: 26px; top: 21px; color: #3c2a66; }
+.ticket:hover, .ticket:focus-visible { filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35)); }
+.ticket-guest:hover, .ticket-guest:focus-visible { transform: rotate(-2deg) translateY(-26px); }          /* the hovered ticket slides clear of the other */
+.ticket-site:hover .tk, .ticket-site:focus-visible .tk { transform: rotate(0deg) translateY(26px); }
+@property --punch { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@keyframes ticket-punch { from { --punch: 0px; } to { --punch: 15px; } }
+.ticket.punched .tk { animation: ticket-punch 0.4s ease-out forwards; }
+@media (max-width: 899px) { .tickets { transform: scale(1.7); } }                     /* the stage is scaled right down on a phone: keep the tickets easy to read and tap */
+@media (prefers-reduced-motion: reduce) { .ticket, .tk { transition: none; } .ticket.punched .tk { animation: none; --punch: 15px; } }
 
 /* ---------- 5 · Enter / leave ----------
    entrance: the whole composition is conjured out of its own centre (grows from small while it fades in); leaving (a button is pressed):

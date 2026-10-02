@@ -69,6 +69,11 @@
   document.fonts.ready.then(() => requestAnimationFrame(alignGrid));
   addEventListener('resize', () => requestAnimationFrame(() => requestAnimationFrame(alignGrid)));
 
+  // data-start="N": the clip begins (and loops back to) N seconds in — skips the "create a room" intro without re-encoding the footage.
+  // Media events don't bubble, so listen in the capture phase; this also covers the phone layout's cloned <video>.
+  document.addEventListener('loadedmetadata', e => { const v = e.target; if (v.dataset && v.dataset.start) v.currentTime = +v.dataset.start; }, true);
+  document.addEventListener('ended', e => { const v = e.target; if (v.dataset && v.dataset.start) { v.currentTime = +v.dataset.start; v.play().catch(() => {}); } }, true);
+
   // Play/pause the case-study videos as they enter/leave view, same pattern as js/nearu.js.
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const videos = [...document.querySelectorAll('.syncletter-video')];

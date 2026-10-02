@@ -90,7 +90,7 @@ Reuse these approved values; consolidate them into a shared paper token when
 extending the common styles instead of introducing another similar beige.
 
 ### Fonts
-- **Inter** (`var(--font-ui)`) — all UI chrome, body copy.
+- **Ancizar Sans** (`var(--font-ui)`, self-hosted in `assets/fonts/`) — all UI chrome, body copy. Regular/medium are upright; bold/black use the italic file. It is enlarged 122% (`size-adjust` in `css/base.css`) so sizes and baselines match what the layouts were built on; a line that must be bold but upright uses `'Ancizar Sans Upright'`.
 - **Ancizar Serif** (`var(--font-serif)`) — display headings ("Building NearU", the sidebar name).
 - **Blank Script** (`var(--font-script)`) — the one decorative use on the landing page. Don't reuse it elsewhere without asking.
 - A case study's own brand fonts (e.g. NearU's "Futura 100" / "Liberation Sans" swatches) are content about *that product*, not site chrome — they stay scoped to that page's brand section and never leak into `--font-ui`/`--font-serif`.
@@ -381,7 +381,9 @@ does this generically for every bank-sourced link (the one exception is
 `mailto:`, which pops the address card instead of navigating anywhere) — new
 bank entries don't need anything extra. A hand-written `<a>` on a page still
 needs `target="_blank" rel="noopener"` added explicitly.
-The only things that stay same-tab are the sidebar's own EXPLORE nav and the
+The only things that stay same-tab are the sidebar's own EXPLORE nav, the
+**case-study cards in the My Work section** (`home.html` — they open in the same
+tab, the normal flow; Side Quests links still open in a new tab) and the
 pjax shell's internal page routing (`js/shell.js`'s `sidebarHTML()`/router) —
 that's core site chrome, not content, and swapping it to a new tab would
 break the SPA feel the shell is built for.
@@ -397,8 +399,45 @@ break the SPA feel the shell is built for.
 - Commit scoped to what you actually touched — don't stage unrelated
   in-progress work from elsewhere in the tree.
 
+## 8 · Site-wide rules learnt while building the My Work / About / landing updates (2026-10)
+
+### Typography
+- **Ancizar Sans** is the UI/body font everywhere — self-hosted from `assets/fonts/` (variable TTFs), declared in `css/base.css`. **Inter is gone from the project**: never add it back, and never link it from Google Fonts. Ancizar Serif (Google Fonts) stays for headings; Blank Script for the one decorative landing use; Noto Serif Devanagari only for the About page's Hindi greeting.
+- The family is declared with `size-adjust: 122%` + `ascent-override: 79.5%` + `descent-override: 19.7%` so it keeps the size, x-height and **baselines** the layouts were built on. Because of that, text already seated on grid rules stayed on them; re-measure (About paragraphs, case-study audit) if these numbers ever change.
+- **Regular and medium are upright. Bold / black (weight 600+) are italic** — done by mapping those weights to the italic file in `@font-face`, so no per-rule `font-style` is needed. A line that must be bold but upright uses `font-family: 'Ancizar Sans Upright'` (e.g. Syncletter's "I learnt, I wasn't the only one struggling!").
+
+### Crisp text (non-negotiable)
+- Text inside a tilted card must be crisp at rest, not only on hover. A **transform animation inside (or overlapping) a rotated card makes the browser composite the card, which draws its text as a rotated bitmap (soft)**. Animate such things with `margin`/`top`, not `transform` (the floating pills use a `margin-top` keyframe). Don't add `will-change`, `backface-visibility` or `translateZ` to cards.
+
+### Paper effect (every page)
+- `css/shell/paper.css`: every element that draws the graph-paper grid is an isolated stacking context with a `::before` at `z-index: -1` — a 50% cream veil plus a very faint SVG-noise grain. It sits **above the grid and behind all content**; the grid, baselines and layout don't move. Case studies use `#fff1df` as the veil colour so their approved paper colour is unchanged. Keep the grain faint: reading comes first.
+
+### Scrapbook (My Work + About Me; Figma 151:8359)
+- **Corners**: torn star-paper top-left (`assets/scrapbook/corner-tl.png`) on My Work and About Me; cardboard bottom-right (`corner-br.png`) on **My Work only**. About's corner is smaller so it never touches the title. Both are mirrored `<img class="scrap ...">` as the first children of `<main>`; the star paper has a **white line first, then a shadow beyond it** (`drop-shadow` chain, not box-shadow); the cardboard casts a soft shadow along its torn edge.
+- **Cards** (`css/pages/work.css`): 10px radius; every card has a **thumbtack** centred on its top edge, whose colour is the **opposite of the project's colour** (Syncletter green -> red, NearU orange -> blue, NCFE blue -> yellow, Are they Driving? red -> green) via `--pin` / `--pin-in` on the card. The hover "View case study" cursor pill stays (the background eye-star doodles on My Work were removed instead).
+- **The torn paper sheets are DESKTOP-ONLY: they show on the two-column layout and are hidden (`display: none`) on the phone / small-tablet layout (`body.one-col`).** Siddhi asked for them gone on phone; they stay on desktop. Never clip them or add other phone variants.
+- **Torn paper sheet behind each card** (`<span class="card-sheet sheet-...">` placed immediately before its card; `.card-sheet` in `paper.css`): a generated image (`tools/make-paper-sheets.js` -> `assets/scrapbook/sheet-*.webp`, lossless) with rough fibrous edges, soft wrinkles, faint grain and **its own tone** — white (Syncletter), yellowish-cream lighter than the page (NearU), pale blue (NCFE), pale green (Driving). Per-card inline vars: `--x --y --r` (copy the card's), `--dx --dy` (sheet centre vs card centre), `--a` (sheet angle relative to the card), `--sz` (size), `--swing` (hover angle). Each sheet carries a soft `drop-shadow` that follows its torn outline.
+- **Swing (desktop only — mouse + two-column layout; none on phone/tablet/touch)**: hovering a card swings its sheet about the card's pin like a pendulum (its bottom drags out sideways and settles lower, with an overshoot). Syncletter's goes one way (`--swing:-9deg`), NearU's the opposite (`9deg`). **Upcoming cards follow the card above them: NCFE (under Syncletter) swings like Syncletter's but with its tip nearer the other edge (mirrored `--dx` / `--a`); Are they Driving? (under NearU) likewise.** On the phone layout the sheets are bigger/offset so they still show round the card (`body.one-col ...` overrides at the end of `paper.css`).
+- Regenerate sheets with `node tools/make-paper-sheets.js` (needs `npm install sharp --no-save`; dev-only). Tear roughness is set by the displacement `scale` numbers in that file.
+
+### Notifications
+- Any toast/notification pill is centred on the **content area (the page minus the sidebar)**, not on the window: use `left: var(--notify-x, 50%)` with `transform: translateX(-50%)`. `--notify-x` is set in `js/shell.js` `fit()` (half the window when the sidebar is a drawer). The "You can move some elements" hint on About loops (3 s on, every 12 s) until an element is picked up.
+
+### Build / tooling gotchas
+- `css/site.css` is a **generated bundle**: after editing `css/base.css`, `css/shell/*` or `css/pages/{work,decor,guest,quests,about}.css`, run `node tools/bundle-css.js` or `tools/check.js` fails with "css/site.css is stale". `nearu.css` / `syncletter.css` are linked directly, not bundled.
+- A `url()` inside a data-URI SVG trips the checker's `url()` scan: write it `u%72l(%23id)`.
+- Don't let two rules for one selector coexist in a file — the checker warns; merge them.
+- `data-start` on a `<video>` starts it at N seconds and loops back to N (used to skip the Syncletter demo's "create a room" intro without re-encoding).
+- Landing page (`index.html` + `css/pages/landing.css`, Figma 109:6512): tickets (`assets/landing/ticket-*.svg`) straighten on hover; "All aboard to the creative archives of" letters scatter away from the pointer; the orbit ellipse constants in `js/landing.js` (`PIVOT`, `EL`) must be re-fitted if the ring SVG changes.
+- About title (`js/about-title.js`): the name is ransom-note tiles that jumble for **3 s (every 0.25 s)** then settle, then an orange "!" mark (Figma 483:219, `assets/about/exclaim.svg`) jumps in tilted 26deg (tail on the "i"), holds, straightens and slides to stand to the right of the "i". The greeting types the Hindi word -> backspace -> "Hello!" over a 30 s pass, stays on "Hello!" for 2 min, then loops.
+
 ## Minimum text size
 The smallest text on the paper is **16px as rendered** (font-size x canvas scale), desktop and phone. Only text inside product mockups/screenshots may be smaller. Audit with the browser: walk text nodes, skip those inside images/mockups, flag `fontSize * scale < 16`.
 
 ## Same pills, animations and SVGs in every version
 Pill colours, invert/hover animations and every SVG must be present and identical in the desktop, tablet and phone versions. Re-arranging is fine; removing, recolouring or replacing them is not.
+
+### Landing / Welcome Aboard additions (2026-10)
+- Landing text is "Board to the creative archives of SIDDHI". The two tickets never touch each other (even straightened and lifted on hover), each carries the brand tip star (`assets/ui/star-back.svg`, small), and a click punches a semicircle out of the ticket's right edge (`.punched`, `--punch` animated mask). "Be my Guest" slides up like the Thank You -> main site transition: the Welcome Aboard page is preloaded in a hidden iframe (`js/landing.js` `preloadPeek`) and rises under the leaving landing.
+- The Welcome Aboard / Thank You screens (`guest-book.html`) carry the paper veil and two small corners too. On Thank You the drifting stars and fish-bone patches spread over the whole screen but must never touch the text: `js/guest-anim.js` measures the real `.ov-thanks` box (not a hard-coded one) — re-check this whenever the font or type size changes.
+- Compact drawer: the subtitle ("Interaction design @ ANU") shares the name's left edge (`css/shell/compact.css`).
