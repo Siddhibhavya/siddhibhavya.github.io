@@ -9,8 +9,8 @@
 :root {
   --paper-veil: rgba(255, 236, 225, 0.5);
   --paper-speckle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .4 2.2 0 0 0 -1.12'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='u%72l(%23s)'/%3E%3C/svg%3E");
-  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30 0 0 0 0 .19 0 0 0 0 .11 .32 0 0 0 -.128'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='u%72l(%23n)'/%3E%3C/svg%3E");
-  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .05' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .33 0 0 0 0 .22 0 0 0 0 .13 .176 0 0 0 -.068'/%3E%3C/filter%3E%3Crect width='520' height='520' filter='u%72l(%23f)'/%3E%3C/svg%3E");
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30 0 0 0 0 .19 0 0 0 0 .11 .224 0 0 0 -.0896'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='u%72l(%23n)'/%3E%3C/svg%3E");
+  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .05' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .33 0 0 0 0 .22 0 0 0 0 .13 .1232 0 0 0 -.0476'/%3E%3C/filter%3E%3Crect width='520' height='520' filter='u%72l(%23f)'/%3E%3C/svg%3E");
 }
 .nearu-page, .syncletter-page { --paper-veil: rgba(255, 241, 223, 0.5); }
 
@@ -88,3 +88,10 @@ body .main { position: relative; }               /* the sheet fills the page are
 .scrap-br.scrap-sm { right: calc(-70px * var(--stage-s, 1)); width: calc(400px * var(--stage-s, 1)); }
 /* the torn sheets are a desktop-only detail: on the phone / small-tablet layout they are not shown at all */
 body.one-col .card-sheet { display: none; }
+
+/* the nav card: ONE sheet of grain over the whole card (tab and panel together, so there is no seam). Multiplied, so it only shows on the cream, not on the burgundy frame. */
+.sb-inner::after {
+  content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background-image: var(--paper-grain), var(--paper-fibre); background-size: 320px 320px, 520px 520px;
+  mix-blend-mode: multiply;
+}
