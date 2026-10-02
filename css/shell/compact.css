@@ -24,7 +24,7 @@
 .compact .avatar-ring { left: 30px; top: 84px; width: 70px; height: 70px; }
 .compact .avatar-photo { left: 26.6px; top: 90.8px; width: 85.9px; height: 78px; }
 .compact .name { left: 112px; top: 88px; width: auto; text-align: left; font-size: 27px; }
-.compact .role { left: 117px; top: 120px; transform: none; font-size: 13px; }
+.compact .role { left: 112px; top: 120px; transform: none; font-size: 13px; }
 .compact .bio { left: 35px; top: 176px; width: 294px; font-size: 17px; line-height: 1.32; color: rgba(53, 35, 26, 0.8); }
 .compact .connect { bottom: 36px; }
 

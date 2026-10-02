@@ -25,7 +25,7 @@
   --hl-red: #8f2000;                          /* highlighted feature names / key insights in case-study copy (bold): NearU red, two tones darker */
   --highlight: #ff9a00;                       /* the highlighter pen: the stars' yellow ochre (same as the orange string) */
 
-  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-ui: 'Ancizar Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Ancizar Serif', 'Iowan Old Style', Georgia, serif;
   --font-script: 'Blank Script', var(--font-serif);
 
@@ -45,6 +45,7 @@ html { -webkit-text-size-adjust: 100%; cursor: url(../assets/ui/cursor-star.svg)
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-ui);
@@ -91,7 +92,14 @@ ul { list-style: none; }
 .shadow-fixed { position: absolute; left: 0; top: 0; width: 0; height: 0; }
 
 /* ---------- 5 · Fonts ----------
-   Inter + Ancizar Serif come from Google Fonts (linked in each page's <head>). Blank Script is Siddhi's own font. */
+   Ancizar Sans is self-hosted (above); Ancizar Serif comes from Google Fonts (linked in each page's <head>). Blank Script is Siddhi's own font. */
+/* Ancizar Sans (self-hosted variable fonts), enlarged 122% (size-adjust) so letters keep the width and x-height the layouts were built on, with matching ascent/descent so line boxes keep their baselines. Regular/medium (< 600) are upright; bold/black (600+) use the italic file, so every bold is italic "for pizzazz"
+   without touching a single rule. A real font-style: italic still gets the italic file at every weight. */
+@font-face { font-family: 'Ancizar Sans'; font-style: normal; font-weight: 100 599; font-display: swap; size-adjust: 122%; ascent-override: 79.5%; descent-override: 19.7%; line-gap-override: 0%; src: url(../assets/fonts/AncizarSans.ttf) format('truetype'); }
+/* the same upright file for every weight, for the few lines that should be bold but not italic (e.g. the Syncletter "I learnt…" line) */
+@font-face { font-family: 'Ancizar Sans Upright'; font-style: normal; font-weight: 100 900; font-display: swap; size-adjust: 122%; ascent-override: 79.5%; descent-override: 19.7%; line-gap-override: 0%; src: url(../assets/fonts/AncizarSans.ttf) format('truetype'); }
+@font-face { font-family: 'Ancizar Sans'; font-style: normal; font-weight: 600 900; font-display: swap; size-adjust: 122%; ascent-override: 79.5%; descent-override: 19.7%; line-gap-override: 0%; src: url(../assets/fonts/AncizarSans-Italic.ttf) format('truetype'); }
+@font-face { font-family: 'Ancizar Sans'; font-style: italic; font-weight: 100 900; font-display: swap; size-adjust: 122%; ascent-override: 79.5%; descent-override: 19.7%; line-gap-override: 0%; src: url(../assets/fonts/AncizarSans-Italic.ttf) format('truetype'); }
 @font-face { font-family: 'Blank Script'; src: url(../assets/fonts/BlankScript.otf) format('opentype'); font-display: swap; }
 
 /* ---------- 6 · Cursors ---------- */

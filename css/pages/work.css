@@ -10,7 +10,7 @@
   --k: 1.07;                                                     /* card scale: the cards were small for the 1092 x 1024 stage, leaving a wide empty band underneath */
   position: absolute; left: calc(546px + (var(--x) - 561.5px) * var(--k)); top: calc(var(--y) * var(--k)); z-index: 1;
   display: block; width: calc(437.04px * var(--k)); height: calc(437.04px * var(--k));
-  background: var(--card); border: 5px solid var(--maroon); border-radius: 20px;   /* no overflow clip: a rounded clip on a tilted card is drawn as a flat picture and rotated, which softens the text (the images clip themselves, the hover rows fade in) */
+  background: var(--card); border: 5px solid var(--maroon); border-radius: 10px;   /* no overflow clip: a rounded clip on a tilted card is drawn as a flat picture and rotated, which softens the text (the images clip themselves, the hover rows fade in) */
   color: var(--ink);
   transform: rotate(var(--r)); transform-origin: 50% 50%;
   transition: transform 0.6s var(--ease-out), height 0.55s var(--ease-out), box-shadow 0.45s ease;
@@ -28,7 +28,7 @@
 .card-in { position: absolute; left: -5px; top: -5px; zoom: var(--k); }   /* zoom (real layout scale), not transform: scale — text is laid out at its final size, so it stays crisp inside the tilted card */
 .card-in > * { position: absolute; }
 
-.media { display: block; overflow: hidden; border-radius: 15px; background: #d9d9d9; }
+.media { display: block; overflow: hidden; border-radius: 8px; background: #d9d9d9; }
 .media img { width: 100%; height: 100%; object-fit: cover; }
 .nearu-card { box-shadow: -6px 5px 6px rgba(0, 0, 0, 0.25); }
 .nearu-card-media { background: transparent; }
@@ -49,7 +49,8 @@
   font-size: 14px; line-height: 1; color: #7a5c47; white-space: nowrap;
   animation: levitate 5.4s var(--ease-sine) infinite; animation-delay: var(--d, 0s);
 }
-@keyframes levitate { 0%, 100% { transform: translateY(0); } 25% { transform: translateY(-4px); } 75% { transform: translateY(4px); } }
+/* margin, not transform: a transform animation makes the browser composite the card, and a composited tilted card draws its text as a rotated picture (soft) */
+@keyframes levitate { 0%, 100% { margin-top: 0; } 25% { margin-top: -4px; } 75% { margin-top: 4px; } }
 
 .tag {
   left: var(--tl); top: var(--tt); width: var(--tw); height: 21px;
@@ -60,6 +61,10 @@
 .title { left: 24.4px; top: 308.6px; font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 22px; color: var(--ink); white-space: nowrap; }
 .desc { left: 26.3px; top: 341.8px; width: 381px; font-size: 15px; line-height: 1.22; color: var(--brown); }
 .desc.justify { text-align: justify; }
+
+/* the thumbtack on each card, centred on the top edge (Figma "Ellipse 8/9": a 33px head with a 25px darker top, soft shadow). Colour = the opposite of the project's colour (--pin / --pin-in set on each card) */
+.pin { left: 202px; top: -12.5px; width: 33px; height: 33px; border-radius: 50%; background: var(--pin, #a20000); box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); pointer-events: none; z-index: 3; }
+.pin::after { content: ''; position: absolute; left: 4px; top: 4px; width: 25px; height: 25px; border-radius: 50%; background: var(--pin-in, #6c0000); }
 
 /* ---------- 3 · Hover details (role / team / timeline) ---------- */
 .meta { left: 21.3px; top: 426.5px; width: 400px; opacity: 0; transition: opacity 0.3s ease; }
@@ -95,4 +100,6 @@ body.one-col .eye { left: calc((var(--cx) * 0.44 - 59.5) * 1px); top: calc((var(
 /* HIDDEN-UNTIL-READY: unfinished projects are kept in the markup with [hidden]; the wrapper shrinks to the finished cards */
 .card[hidden] { display: none !important; }
 .home-wrap.hide-low, .home-wrap.hide-low:has(.card:hover), .home-wrap.hide-low:has(.card:focus-visible) { --sh: 700px; }
-body.one-col .home-wrap.hide-low, body.one-col .home-wrap.hide-low:has(.card:hover), body.one-col .home-wrap.hide-low:has(.card:focus-visible) { --sh: 1040px; }
+body.one-col .home-wrap.hide-low { --sh: 1040px; }
+/* the last visible card (top 541px) opens to 549px tall on hover: the beige area grows with it so it never slides under the footer */
+body.one-col .home-wrap.hide-low:has(.card:hover), body.one-col .home-wrap.hide-low:has(.card:focus-visible) { --sh: 1170px; }

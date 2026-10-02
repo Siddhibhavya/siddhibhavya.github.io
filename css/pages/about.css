@@ -6,7 +6,7 @@
 
 /* ---------- 1 · Text on the grid ----------
    The page's grid has lines every 47.33px down from y −17.5 and every 47.40px across from x −375.6. Text is set like writing on ruled paper:
-   every text line is exactly one grid row tall (47.33px) and positioned so its BASELINE sits on a line (Inter 24px puts its baseline 32px
+   every text line is exactly one grid row tall (47.33px) and positioned so its BASELINE sits on a line (Ancizar Sans 24px puts its baseline 32px
    below the top of a line box; the Ancizar title, 94.67px tall, puts it 66.4px down). */
 .about-title {
   /* two rows tall, centred on the vertical line 19 across (also the middle of the text block below); its baseline is on grid line 3 (y 124.5) */
@@ -15,9 +15,35 @@
 }
 /* the paragraphs' left edge is on vertical line 11. The first block is 8 rows (in normal case), so the second continues on the same lines. */
 .about-p1, .about-p2 { position: absolute; left: 145.79px; font-size: 24px; line-height: 47.33px; color: var(--ink); }
-.about-p1 { top: 138.83px; width: 764px; text-align: justify; }      /* baselines on lines 5, 6 … (first, blank, line on line 4) */
+.about-p1 { top: 139.83px; width: 764px; text-align: justify; }      /* baselines on lines 5, 6 … ; +1px: the x-height is slightly larger */
 .about-p1 p { margin: 0; }
-.about-p2 { top: 517.47px; width: 794px; white-space: pre-wrap; }   /* 138.83 + 8 rows x 47.33: right under the first block, still on the grid lines */
+.about-p2 { top: 518.47px; width: 794px; white-space: pre-wrap; }   /* 138.83 + 8 rows x 47.33: right under the first block, still on the grid lines */
+
+/* the title's typed greeting (नमस्ते -> Hello!) and the ransom-note name tiles: js/about-title.js */
+.at-greet { display: inline-block; text-align: left; white-space: nowrap; }
+.at-typed { font-family: var(--font-serif), 'Noto Serif Devanagari', 'Nirmala UI', serif; }
+.at-caret { display: inline-block; width: 0.04em; height: 0.8em; margin-left: 0.04em; background: currentColor; vertical-align: -0.05em; animation: at-blink 1.05s steps(1) infinite; }
+@keyframes at-blink { 50% { opacity: 0; } }
+.at-name { white-space: nowrap; }
+/* the "!" (Figma 483:219, assets/about/exclaim.svg): a tapered bar over a square dot, tilted 26deg with the head to the right; the tail overlaps the edge of the last "i".
+   Its width is reserved from the start, so the title never shifts when it lands. */
+.at-tile.at-bang {
+  position: relative; z-index: 2; width: 0.62em; height: 1em; margin-left: -0.38em; padding: 0; vertical-align: baseline;
+  background: none; color: transparent; box-shadow: none; border-radius: 0;
+  transform-origin: 50% 100%; opacity: 0; transform: translateY(-0.6em) scale(0.2) rotate(-20deg);
+}
+/* the mark is drawn by ::before, hanging up out of the tile (so it adds no height to the title line): its head reaches the top of the text, its tail overlaps the "i" */
+.at-tile.at-bang::before { content: ''; position: absolute; left: 0; right: 0; bottom: -0.08em; height: 1.4em; background: url(../../assets/about/exclaim.svg) center bottom / contain no-repeat; }
+.at-bang.is-in { opacity: 1; animation: at-jump 2.2s ease-in-out both; }
+/* jumps in leaning 26deg (head to the right, tail on the "i"), holds a beat, then straightens up to 0deg and slides clear of the "i" to stand just to its right */
+@keyframes at-jump {
+  0% { opacity: 0; transform: translateY(-0.9em) scale(0.2) rotate(-20deg); animation-timing-function: cubic-bezier(0.3, 1.6, 0.5, 1); }
+  22% { opacity: 1; transform: translateY(0) scale(1) rotate(26deg); }
+  50% { opacity: 1; transform: translateY(0) scale(1) rotate(26deg); animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1.4); }
+  80%, 100% { opacity: 1; transform: translateX(0.4em) translateY(0) scale(1) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) { .at-tile.at-bang { opacity: 1; transform: translateX(0.4em); } .at-bang.is-in { animation: none; } }
+.at-tile { display: inline-block; width: 0.8em; padding: 0.04em 0; margin: 0 0.02em; font-size: 0.86em; line-height: 1.1; text-align: center; font-weight: 800; border-radius: 3px; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18); }
 
 /* the orange arc's line runs off the top of the screen. On phones the page starts 64px lower (the top strip, shell/compact.css), so the arc is stretched
    upward by exactly that much, keeping its bottom where it was, and its line still leaves through the top edge instead of stopping in mid-air. */

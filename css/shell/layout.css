@@ -15,7 +15,7 @@ body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100
   overflow: clip;
   background: var(--cream);
 }
-.main { position: relative; flex: 1 1 0; min-width: 0; min-height: 100vh; }
+.main { position: relative; flex: 1 1 0; min-width: 0; min-height: 100vh; min-height: 100dvh; }
 
 /* pages without a sidebar (Welcome Aboard) use the whole 1448 frame; content is re-centred on it (Figma x − 178) */
 body[data-sidebar='none'] { --stage-w: 1448px; }

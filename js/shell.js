@@ -53,6 +53,10 @@
     root.style.setProperty('--sb-s', sb.toFixed(4));
     root.style.setProperty('--sb-h', (compact ? COMPACT_H : Math.max(1024, vh / sb)).toFixed(1) + 'px');
     root.style.setProperty('--fs', Math.max(0.3, u).toFixed(4));
+    // notifications (css/shell/widgets.css, .move-hint and any pill added later) centre on the CONTENT area — the page minus the sidebar — not on the whole window
+    const sbEl = document.querySelector('.sidebar');
+    const contentLeft = compact || !sbEl ? 0 : sbEl.getBoundingClientRect().right;
+    root.style.setProperty('--notify-x', (contentLeft + (vw - contentLeft) / 2).toFixed(1) + 'px');
     const main = document.querySelector('.main');
     if (main) {
       const stageEl = main.querySelector('.stage');
@@ -68,58 +72,7 @@
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
       root.style.setProperty('--stage-s', ss.toFixed(4));
       root.style.setProperty('--stage-m', Math.max(0, (main.clientWidth - sw * ss) / 2).toFixed(1) + 'px');   // where the stage starts inside the main column (it is centred when the window is wider than the design)
-      scatterHome(main, stageEl, ss);
     }
-  }
-
-  // Sample the open background, choosing the most widely separated position each time.
-  function scatterHome(main, stage, scale) {
-    if (!stage || !main.querySelector('.home-wrap')) return;
-    const width = main.clientWidth, height = main.clientHeight;
-    const signature = `${width}:${height}:${scale}`;
-    if (main.dataset.doodleSize === signature && main.querySelector('.home-doodles')) return;
-    main.dataset.doodleSize = signature;
-    stage.querySelectorAll('.eye').forEach((el) => el.remove());
-    main.querySelector('.home-doodles')?.remove();
-    const layer = document.createElement('div');
-    layer.className = 'home-doodles';
-    layer.setAttribute('aria-hidden', 'true');
-    const size = Math.max(0.6, scale), radius = 65 * size;
-    const gap = 180 * size, colorGap = gap * 2.1;
-    const margin = (width - stage.offsetWidth * scale) / 2;
-    const top = stage.parentElement.offsetTop;
-    const cards = [...stage.querySelectorAll('.card')].map((el) => ({
-      left: margin + el.offsetLeft * scale,
-      top: top + el.offsetTop * scale,
-      right: margin + (el.offsetLeft + el.offsetWidth) * scale,
-      bottom: top + (el.offsetTop + 437) * scale
-    }));
-    const palette = ['#ff9a00', '#bb3739', '#033530', '#2c2696'];
-    const placed = [];
-    const count = Math.min(32, Math.max(5, Math.round(width * height / 110000)));
-    for (let i = 0; i < count; i++) {
-      let best = null, bestDistance = -1;
-      for (let attempt = 0; attempt < 350; attempt++) {
-        const x = radius + Math.random() * Math.max(0, width - radius * 2);
-        const y = radius + Math.random() * Math.max(0, height - radius * 2);
-        // Let doodles peek from card edges, but never bury their centers under a card.
-        if (cards.some((r) => x > r.left && x < r.right && y > r.top && y < r.bottom)) continue;
-        const distance = Math.min(...placed.map((p) => Math.hypot(x - p.x, y - p.y)));
-        if (distance < gap || distance <= bestDistance) continue;
-        const colors = palette.filter((color) => placed.every((p) => p.color !== color || Math.hypot(x - p.x, y - p.y) >= colorGap));
-        if (!colors.length) continue;
-        best = { x, y, color: colors[Math.floor(Math.random() * colors.length)] };
-        bestDistance = distance;
-      }
-      if (!best) break; // Preserve spacing when the background has no more room.
-      placed.push(best);
-      const eye = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      eye.setAttribute('viewBox', '0 0 123.952 62.0001');
-      eye.innerHTML = '<use href="#eye-star"/>';
-      eye.style.cssText = `left:${best.x}px;top:${best.y}px;width:${124 * size}px;height:${62 * size}px;color:${best.color};rotate:${Math.random() * 100 - 50}deg`;
-      layer.appendChild(eye);
-    }
-    main.prepend(layer);
   }
 
   /* Case-study pages (work/*.html) set body[data-toc] to a JSON list of {id,label} sections. When present the INDEX
@@ -625,7 +578,8 @@
       const main = document.querySelector('.main');
       setActive(sidebar, PAGE_ID[nameOf(u.pathname)]);       // instant feedback: the pill moves on click, before the fetch returns
       try {
-        const res = await fetch(u.href, { cache: 'no-store' });
+        const ctl = new AbortController(), cut = setTimeout(() => ctl.abort(), 8000);   // a stalled server must not leave the menu dead: after 8 s fall back to a normal navigation
+        let res; try { res = await fetch(u.href, { cache: 'no-store', signal: ctl.signal }); } finally { clearTimeout(cut); }
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
         const next = doc.querySelector('.main');

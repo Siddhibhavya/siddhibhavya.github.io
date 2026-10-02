@@ -42,5 +42,3 @@ body[data-page='about'] .main { --gk: 1.3625; --gx: -375.63; --gy: -17.5; --grid
 /* ---------- 3 · Arc + eyes ---------- */
 .dc-arc { position: absolute; max-width: none; pointer-events: none; }
 .eye { position: absolute; left: calc((var(--cx) - 59.5) * 1px); top: calc((var(--cy) - 29) * 1px); width: 123.952px; height: 62px; margin: -2px 0 0 -2.08px; rotate: var(--r, 0deg); color: var(--c); pointer-events: none; z-index: 0; overflow: visible; }
-.home-doodles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.home-doodles > svg { position: absolute; translate: -50% -50%; overflow: visible; }

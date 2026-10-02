@@ -39,19 +39,35 @@
     const step = (now) => { const k = Math.min(1, (now - t0) / TUNE_FADE_MS); tune.volume = TUNE_VOLUME * (1 - k); if (k < 1) requestAnimationFrame(step); else tune.pause(); };
     requestAnimationFrame(step);
   }
+  /* "Be my Guest": the Welcome Aboard page is loaded invisibly just below the screen (a moment after this page opens), so when the landing slides up and away it
+     rises into view underneath it — the same one-long-page slide the Thank You screen uses to reach the main site (js/guest.js, goHome). When the slide ends the real
+     page opens and is identical to what is on screen. */
+  let peek = null;
+  function preloadPeek() {
+    if (peek || reduceMotion) return;
+    const f = document.createElement('iframe');
+    f.src = 'guest-book'; f.title = ''; f.tabIndex = -1; f.inert = true; f.setAttribute('aria-hidden', 'true');
+    f.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;z-index:5;pointer-events:none;transform:translateY(100%);visibility:hidden';
+    document.body.appendChild(f);
+    peek = f;
+  }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  addEventListener('load', () => setTimeout(preloadPeek, 1500));
   function leave(href, ms, withTune) {
     stage.style.setProperty('--leave-ms', ms + 'ms');
     stage.classList.add('leaving');
+    if (peek && /guest-book/.test(href)) { peek.style.visibility = 'visible'; peek.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: ms, easing: 'cubic-bezier(0.55, 0, 0.35, 1)', fill: 'forwards' }); }
     if (koiEl) koiEl.classList.add('fade');
     if (withTune) setTimeout(fadeTune, ms - TUNE_FADE_MS);
     setTimeout(() => { location.href = href; }, ms);
   }
 
-  stage.querySelectorAll('a.btn').forEach((a) => a.addEventListener('click', (e) => {
+  stage.querySelectorAll('a.ticket').forEach((a) => a.addEventListener('click', (e) => {
     if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
     if (leaving) return;
     leaving = true;
+    a.classList.add('punched');                                       // a semicircle is punched out of the ticket
     const href = a.getAttribute('href');
     try { if (/home(\.html)?$/.test(href)) sessionStorage.setItem('siddhi.enter', '1'); } catch (err) { /* ignore */ }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { location.href = href; return; }
@@ -61,7 +77,7 @@
   }));
   /* ---- phone: scrolling / swiping down anywhere (apart from pressing the two buttons) enters the site, exactly like "To site" ---- */
   const isPhone = () => window.matchMedia('(max-width: 899px)').matches;
-  const enterSite = () => { if (leaving || !isPhone()) return; const a = stage.querySelector('a.btn[href="home"]'); if (a) a.click(); };
+  const enterSite = () => { if (leaving || !isPhone()) return; const a = stage.querySelector('a.ticket[href="home"]'); if (a) a.click(); };
   let touchY = null;
   window.addEventListener('touchstart', (e) => { touchY = e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true });
   window.addEventListener('touchmove', (e) => {
@@ -77,11 +93,11 @@
   });
 
   /* ---- orbit ------------------------------------------------------------------ */
-  const PIVOT = { x: 698.65, y: 522.42 };
+  const PIVOT = { x: 693.84, y: 494.17 };
   const ROT = (-20.59 * Math.PI) / 180;
   const C = Math.cos(ROT), S = Math.sin(ROT);
   // ring-local (unrotated) ellipse, relative to PIVOT
-  const EL = { cx: -0.798, cy: -0.187, a: 385.70, b: 133.80 };
+  const EL = { cx: -0.66, cy: -0.13, a: 343.1, b: 114.4 };
   const PERIOD = 46; // seconds per revolution
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -107,18 +123,21 @@
     }
   }
 
-  /* ---- the host line ("I am your host..."): move the pointer over it and the letters scatter away, then spring back ---- */
+  /* ---- "All aboard to the creative archives of": move the pointer over it and the letters scatter away, then spring back ---- */
   (function scatter() {
-    const line = stage.querySelector('.thisis');
-    if (!line || reduce || !window.matchMedia('(hover: hover)').matches) return;
-    const text = line.textContent;
-    line.setAttribute('aria-label', text);
-    line.textContent = '';
-    const L = [...text].map((c) => {
-      const el = document.createElement('span');
-      el.className = 'ch'; el.setAttribute('aria-hidden', 'true'); el.textContent = c;
-      line.appendChild(el);
-      return { el, x: 0, y: 0, vx: 0, vy: 0, r: 0 };
+    const lines = [...stage.querySelectorAll('.scatter')];
+    if (!lines.length || reduce || !window.matchMedia('(hover: hover)').matches) return;
+    const L = [];
+    lines.forEach((line) => {
+      const text = line.textContent;
+      line.setAttribute('aria-label', text);
+      line.textContent = '';
+      [...text].forEach((c) => {
+        const el = document.createElement('span');
+        el.className = 'ch'; el.setAttribute('aria-hidden', 'true'); el.textContent = c;
+        line.appendChild(el);
+        L.push({ el, x: 0, y: 0, vx: 0, vy: 0, r: 0 });
+      });
     });
     const RADIUS = 120, PUSH = 2.3, SPRING = 0.07, DAMP = 0.84;          // radius in stage px
     let px = -1e4, py = -1e4, raf = 0;
@@ -145,9 +164,10 @@
       if (!busy) L.forEach((l) => { l.x = l.y = l.vx = l.vy = 0; l.el.style.transform = ''; });
     };
     const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const zone = stage.querySelector('.archives');
     document.addEventListener('pointermove', (e) => {
       px = e.clientX; py = e.clientY;
-      const b = line.getBoundingClientRect(), k = stage.getBoundingClientRect().width / stage.offsetWidth || 1, m = RADIUS * k;
+      const b = zone.getBoundingClientRect(), k = stage.getBoundingClientRect().width / stage.offsetWidth || 1, m = RADIUS * k;
       if (px > b.left - m && px < b.right + m && py > b.top - m && py < b.bottom + m) wake();
     }, { passive: true });
     document.addEventListener('pointerleave', () => { px = py = -1e4; });

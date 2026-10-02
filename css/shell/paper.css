@@ -1,0 +1,90 @@
+/* ==================================================================
+   PAPER — a light paper sheet over the graph-paper grid, behind every piece of content (Figma "Rectangle 113", node 478:202:
+   a 50% cream sheet over the page, with a subtle grain).
+   How: each element that draws the grid becomes its own stacking context (isolation) and gets a ::before at z-index -1, which paints above that
+   element's own background (the grid) and below all of its children (text, images, cards). Nothing about the grid or the layout moves.
+   The sheet is a cream veil (the lines read a touch softer, like ruled paper) plus a fine fractal-noise grain kept very faint, so reading stays crisp.
+   Case studies use their approved paper #fff1df as the veil, so their colour is unchanged.
+================================================================== */
+:root {
+  --paper-veil: rgba(255, 236, 225, 0.5);
+  --paper-speckle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .4 2.2 0 0 0 -1.12'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='u%72l(%23s)'/%3E%3C/svg%3E");
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30 0 0 0 0 .19 0 0 0 0 .11 .32 0 0 0 -.128'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='u%72l(%23n)'/%3E%3C/svg%3E");
+  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .05' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .33 0 0 0 0 .22 0 0 0 0 .13 .176 0 0 0 -.068'/%3E%3C/filter%3E%3Crect width='520' height='520' filter='u%72l(%23f)'/%3E%3C/svg%3E");
+}
+.nearu-page, .syncletter-page { --paper-veil: rgba(255, 241, 223, 0.5); }
+
+body .main,
+.nearu-page .nearu-canvas,
+.nearu-page .nu-2,
+.nearu-mobile,
+.syncletter-viewport,
+.syn-mobile { isolation: isolate; }
+
+body .main::before,
+.nearu-page .nearu-canvas::before,
+.nearu-page .nu-2::before,
+.nearu-mobile::before,
+.syncletter-viewport::before,
+.syn-mobile::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-color: var(--paper-veil);
+  background-image: var(--paper-grain), var(--paper-fibre);
+  background-size: 320px 320px, 520px 520px;
+  background-blend-mode: normal;
+  opacity: 1;
+}
+body .main { position: relative; }               /* the sheet fills the page area it sits in */
+.nearu-mobile, .syn-mobile { position: relative; }
+
+/* ---------- Scrapbook corners (Figma 151:8359 "image 32" top-left, "image 35" bottom-right): torn paper tucked into the corners of the page area ----------
+   Home gets both, About Me only the top-left. They hang off the .main corners at the page's own scale, above the grid and behind the content; the white
+   edge and soft shadow follow the torn outline (drop-shadow, not box-shadow). Mirrored, as in the design. */
+.main:has(> .scrap) { overflow-x: clip; }
+.scrap { position: absolute; z-index: -1; max-width: none; height: auto; pointer-events: none; user-select: none; transform: scaleX(-1); }
+/* sizes: the user's reference (Oct 2026) — the top-left paper is a smaller triangle, the bottom-right one a bit smaller */
+.scrap-tl { left: 0; top: calc(-6px * var(--stage-s, 1)); width: calc(415px * var(--stage-s, 1)); filter: drop-shadow(0 calc(5px * var(--stage-s, 1)) 0 #fff) drop-shadow(0 calc(8px * var(--stage-s, 1)) 7px rgba(0, 0, 0, 0.34)); }   /* the white line first, then the shadow beyond it */
+/* the bottom-right paper casts a soft shadow onto the page along its torn edge */
+.scrap-br { right: calc(-105px * var(--stage-s, 1)); bottom: calc(-2px * var(--stage-s, 1)); width: calc(570px * var(--stage-s, 1)); filter: drop-shadow(calc(-4px * var(--stage-s, 1)) calc(3px * var(--stage-s, 1)) 6px rgba(0, 0, 0, 0.32)); }
+.scrap-tl.scrap-sm { width: calc(300px * var(--stage-s, 1)); }   /* About Me: smaller still, so the title stays clear of it */
+
+/* Torn paper sheets tucked behind the My Work cards (assets/scrapbook/sheet-*.webp, made by tools/make-paper-sheets.js): rough fibrous edges, soft wrinkles, a faint
+   grain, and a tone of their own (white / yellowish-cream / pale blue / pale green). Each sits just before its card in the markup and tilts with it: its angle is the
+   card's own angle plus --a, and on hover both straighten together. Syncletter's is Figma 481:213 (377x376, 21.73deg, centre 17.5px left / 8.4px above the card centre).
+   The canvas is 440px (the 377x376 sheet plus room for the torn edge). The shadow is a drop-shadow, so it follows the torn outline. */
+.card-sheet {
+  --k: 1.07; --sz: 1; --e: calc(var(--sz) * var(--szm, 1)); position: absolute; z-index: 0; pointer-events: none;   /* --sz: size multiplier (about the sheet's centre) */
+  width: calc(440px * var(--k) * var(--e)); height: calc(440px * var(--k) * var(--e));
+  left: calc(546px + (var(--x) - 561.5px) * var(--k) + (218.52px + var(--dx) - 220px * var(--e)) * var(--k));
+  top: calc(var(--y) * var(--k) + (218.52px + var(--dy) - 220px * var(--e)) * var(--k));
+  /* the card hangs from its pin: where the pin is, in this box (card centre + the pin's offset turned by the card's own tilt). The whole sheet swings about it on hover. */
+  --pin-x: calc((220px * var(--e) - var(--dx) + cos(var(--r)) * 0px - sin(var(--r)) * -214.52px) * var(--k));
+  --pin-y: calc((220px * var(--e) - var(--dy) + sin(var(--r)) * 0px + cos(var(--r)) * -214.52px) * var(--k));
+  transform-origin: var(--pin-x) var(--pin-y);
+  transition: transform 0.6s var(--ease-out);
+}
+/* the paper itself: tilted with the card (card angle + --a, about the card's centre), its torn outline shadowed */
+.card-sheet::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--sheet) center / 100% 100% no-repeat;
+  filter: drop-shadow(-3px 5px 5px rgba(0, 0, 0, 0.3));
+  transform: rotate(calc(var(--r) + var(--a)));
+  transform-origin: calc((220px * var(--e) - var(--dx)) * var(--k)) calc((220px * var(--e) - var(--dy)) * var(--k));
+}
+.card-sheet[hidden] { display: none; }
+/* desktop only (mouse + two-column layout): hovering a card sets its paper swinging about the card's pin like a pendulum. Its bottom drags out to one side and settles lower in a
+   little arc (Syncletter's to the right, NearU's the opposite way: --swing is the angle), with an overshoot so it rocks into place. Phone / tablet layouts have no swing. */
+@media (hover: hover) and (pointer: fine) {
+  body:not(.one-col) .card-sheet { transition: transform 1.1s cubic-bezier(0.25, 1.9, 0.45, 0.9); }
+  body:not(.one-col) .card-sheet:has(+ .card:hover), body:not(.one-col) .card-sheet:has(+ .card:focus-visible) { transform: rotate(var(--swing, 0deg)); }
+}
+.sheet-white { --sheet: url("../../assets/scrapbook/sheet-white.webp"); }
+.sheet-cream { --sheet: url("../../assets/scrapbook/sheet-cream.webp"); }
+.sheet-blue { --sheet: url("../../assets/scrapbook/sheet-blue.webp"); }
+.sheet-green { --sheet: url("../../assets/scrapbook/sheet-green.webp"); }
+@media (prefers-reduced-motion: reduce) { .card-sheet { transition: none; } }
+
+/* the Welcome Aboard / Thank You screens (guest-book) carry the paper and two smaller corners as well */
+.scrap-br.scrap-sm { right: calc(-70px * var(--stage-s, 1)); width: calc(400px * var(--stage-s, 1)); }
+/* the torn sheets are a desktop-only detail: on the phone / small-tablet layout they are not shown at all */
+body.one-col .card-sheet { display: none; }

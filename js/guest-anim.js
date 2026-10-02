@@ -128,9 +128,15 @@
      guest.css), so every play() looks a little different. */
   function driftDecor(main) {
     const els = [...main.querySelectorAll('.gb-decor .dc')];
-    const TXT = { x0: 167, y0: 331, x1: 1137, y1: 643 };                 // the raw "Thank You / for contributing!" box (measured, .ov-thanks)
+    let TXT = { x0: 60, y0: 300, x1: 1250, y1: 680 };                    // fallback: the "Thank You / for contributing!" box (it is wider since the Ancizar Sans change)
+    // measure the real text instead, in stage coordinates, so nothing can land on it whatever the font or screen size
+    const stageEl = main.querySelector('.stage'), thanksEl = document.querySelector('.ov-thanks');
+    if (stageEl && thanksEl) {
+      const sr = stageEl.getBoundingClientRect(), k = sr.width / 1448, tr = thanksEl.getBoundingClientRect();
+      if (k > 0 && tr.width > 40) TXT = { x0: (tr.left - sr.left) / k - 20, y0: (tr.top - sr.top) / k - 20, x1: (tr.right - sr.left) / k + 20, y1: (tr.bottom - sr.top) / k + 20 };
+    }
     const outsideText = (x, y) => Math.hypot(Math.max(TXT.x0 - x, 0, x - TXT.x1), Math.max(TXT.y0 - y, 0, y - TXT.y1));
-    const GAP = 90, TEXT_MARGIN = 60;   // generous gaps: the trinkets spread right out across the stage instead of huddling
+    const GAP = 90, TEXT_MARGIN = 80;   // generous gaps: the trinkets spread right out across the stage instead of huddling
     // No fade, and it does not leave: each one wanders to a new resting spot nearby, clear of the thank-you text — only the strings (leave(), below)
     // actually exit the screen. Landing spots are chosen the same way js/guest.js scatters the page's own decorations: try a lot of candidate spots
     // (biased rightward, but reaching in any direction so there is always room somewhere), keep the roomiest, shrinking the required gap a little each

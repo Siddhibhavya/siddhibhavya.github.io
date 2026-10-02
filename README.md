@@ -34,11 +34,11 @@ I designed everything in **Figma** first — every frame, every little doodle �
 
 **Fonts**
 
-- **Inter** — almost all the text.
+- **Ancizar Sans** — almost all the text (self-hosted in `assets/fonts/`; bold and black are italic).
 - **Ancizar Serif** — titles, my name, the big "Namaste, I am Siddhi".
 - **Blank Script** — my own handwriting font, used for the word *museum* on the landing page and for signatures in the guest gallery.
 
-Inter and Ancizar Serif load from Google Fonts. Blank Script is included in `assets/fonts/`.
+Ancizar Serif loads from Google Fonts; Ancizar Sans and Blank Script are self-hosted. Blank Script is included in `assets/fonts/`.
 
 ## How it's built
 
@@ -121,3 +121,6 @@ Then open <http://localhost:5173>.
 - Case studies and a résumé PDF are on their way.
 
 Thanks for visiting the museum. 🌟
+
+## Look and feel notes
+Paper veil + grain: `css/shell/paper.css`. Torn paper sheets behind My Work cards: `tools/make-paper-sheets.js`. Rules learnt so far: `CASE-STUDY-GUIDELINES.md` section 8.
