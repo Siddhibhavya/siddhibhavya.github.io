@@ -43,9 +43,9 @@ body .main { position: relative; }               /* the sheet fills the page are
 .main:has(> .scrap) { overflow-x: clip; }
 .scrap { position: absolute; z-index: -1; max-width: none; height: auto; pointer-events: none; user-select: none; transform: scaleX(-1); }
 /* sizes: the user's reference (Oct 2026) — the top-left paper is a smaller triangle, the bottom-right one a bit smaller */
-.scrap-tl { left: 0; top: calc(-6px * var(--stage-s, 1)); width: calc(415px * var(--stage-s, 1)); filter: drop-shadow(0 calc(5px * var(--stage-s, 1)) 0 #fff) drop-shadow(0 calc(8px * var(--stage-s, 1)) 7px rgba(0, 0, 0, 0.34)); }   /* the white line first, then the shadow beyond it */
+.scrap-tl { left: 0; top: calc(-6px * var(--stage-s, 1)); width: calc(332px * var(--stage-s, 1)); filter: drop-shadow(0 calc(5px * var(--stage-s, 1)) 0 #fff) drop-shadow(0 calc(8px * var(--stage-s, 1)) 7px rgba(0, 0, 0, 0.34)); }   /* the white line first, then the shadow beyond it */
 /* the bottom-right paper casts a soft shadow onto the page along its torn edge */
-.scrap-br { right: calc(-105px * var(--stage-s, 1)); bottom: calc(-2px * var(--stage-s, 1)); width: calc(570px * var(--stage-s, 1)); filter: drop-shadow(calc(-4px * var(--stage-s, 1)) calc(3px * var(--stage-s, 1)) 6px rgba(0, 0, 0, 0.32)); }
+.scrap-br { right: calc(-84px * var(--stage-s, 1)); bottom: calc(-2px * var(--stage-s, 1)); width: calc(456px * var(--stage-s, 1)); filter: drop-shadow(calc(-4px * var(--stage-s, 1)) calc(3px * var(--stage-s, 1)) 6px rgba(0, 0, 0, 0.32)); }
 .scrap-tl.scrap-sm { width: calc(300px * var(--stage-s, 1)); }   /* About Me: smaller still, so the title stays clear of it */
 
 /* Torn paper sheets tucked behind the My Work cards (assets/scrapbook/sheet-*.webp, made by tools/make-paper-sheets.js): rough fibrous edges, soft wrinkles, a faint
