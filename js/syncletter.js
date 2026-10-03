@@ -101,18 +101,20 @@
   // Play/pause the case-study videos as they enter/leave view, same pattern as js/nearu.js.
   // Native loading="lazy" misjudges distances on this scaled canvas, so images popped in late. Start loading everything
   // within ~3 screens of the viewport (and warm the rest in order, once idle) — same files, same quality, just earlier.
+  // On a slow or data-saving connection keep the browser's own lazy loading (a narrow margin, no idle warm-up, no video pre-buffering).
+  const lean = (() => { const c = navigator.connection; return !!c && (c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || '')); })();
   const warm = img => { if (img.loading === 'lazy') img.loading = 'eager'; };
   const near = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (!isIntersecting) return;
     near.unobserve(target);
-    if (target.tagName === 'VIDEO') target.preload = 'auto'; else warm(target);
-  }), { rootMargin: '3000px 0px' });
+    if (target.tagName === 'VIDEO') { if (!lean) target.preload = 'auto'; } else warm(target);
+  }), { rootMargin: lean ? '600px 0px' : '3000px 0px' });
   document.querySelectorAll('img[loading="lazy"], video').forEach(el => near.observe(el));
   const idleWarm = () => {
     const rest = [...document.querySelectorAll('img[loading="lazy"]')].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
     (function next() { const img = rest.shift(); if (!img) return; warm(img); setTimeout(next, 150); })();
   };
-  if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm);
+  if (!lean) { if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm); }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const videos = [...document.querySelectorAll('.syncletter-video')];
   const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {

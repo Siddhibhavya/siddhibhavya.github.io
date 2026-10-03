@@ -72,6 +72,14 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **Syncletter decision cards** ("No AI implementation", "Scalability") sit above Reflection: filled cards (grid-exempt), teal border, label chips, key phrases bold red; Reflection onward is pushed down by the `[8300, 14]` entry in `SYN_SHIFTS`. Syncletter alignment also re-runs on `load` and when fonts finish (cold-cache first visits misaligned the headings).
 - **About greeting hugs its text** (no reserved width) so ", I am" stays close to Namaste/Hello.
 
+## 2026-10-04 performance and robustness pass
+- **Minified copies, readable sources** (`tools/build-min.js`): `js/*.min.js` (esbuild, no top-level renaming), `css/intro.min.css` / `css/notfound.min.css` (landing and 404 become one file instead of an @import chain), `css/pages/syncletter.min.css`, and the already-minified `css/site.css`. `tools/check.js` fails when a `.min` is older than its source. `config.js` and `firebase-config.js` stay hand-edited and unminified. NearU waits until its WIP is committed (`--nearu`).
+- **WOFF2 for Ancizar Sans** (lossless, `format('woff2')` first, TTF kept as fallback): -190 KB on a cold load.
+- **Network-aware warming:** the case-study image warm-up and video pre-buffering are skipped on 2g/3g or `saveData`.
+- **Chat endpoint gets an 8 s abort** (it had none); the gallery already had 10 s timeouts, a 1-minute cache and a local fallback.
+- **Cross-device audit tool** `tools/overflow-audit.js` (iframes at 360-2560 px per page): zero overflow, zero broken images.
+- **Several chats may share the repo**: commit only your own files or hunks; see CLAUDE.md.
+
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).

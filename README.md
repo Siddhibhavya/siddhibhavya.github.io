@@ -9,7 +9,7 @@ Hi! I'm Siddhi — a designer tinkering at the intersection of human-computer in
 A small museum of my work, with me as the (slightly over-excited) host.
 
 - **Landing** — a dark, starry entrance with a koi swimming behind it. Press *Be my Guest* to go through.
-- **My Work** — project cards that straighten up and open out when you hover: ( for now each card opens a short summary.)
+- **My Work** — project cards that straighten up and open out when you hover:
 - **About Me** — who I am, on graph paper, with a few things you're allowed to pick up and throw around.
 - **Side Quests** — a collage of things I made just because.
 - **Guest Gallery** and **Welcome Aboard** — visitors draw a card, sign it, and leave it in my gallery.
@@ -124,3 +124,13 @@ Thanks for visiting the museum. 🌟
 
 ## Look and feel notes
 Paper veil + grain: `css/shell/paper.css`. Torn paper sheets behind My Work cards: `tools/make-paper-sheets.js`. Rules learnt so far: `CASE-STUDY-GUIDELINES.md` section 8.
+
+
+---
+
+## Speed and robustness (kept up to date)
+
+- **Minified delivery.** Pages load `js/*.min.js` and the minified CSS bundles; the readable sources stay next to them. Rebuild with `node tools/build-min.js` after editing a source (about 35% smaller before gzip). Fonts are WOFF2 (Ancizar Sans 75 + 79 KB instead of 165 + 171 KB, lossless).
+- **Lazy loading.** Below-the-fold images are `loading="lazy"`; the two case studies also warm images ahead of the scroll on fast connections and keep the browser's own lazy loading on slow or data-saving ones. Videos use `preload="metadata"` plus a poster.
+- **Nothing hangs when a service is down.** The Guest Gallery (Firebase) and the optional chat endpoint have timeouts and fall back to this browser's cards / the written answer bank; page swaps fall back to a normal navigation after 8 s.
+- **Checked across widths** (360 to 2560 px): no horizontal overflow on any page, no broken images, no console errors.
