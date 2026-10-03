@@ -269,12 +269,18 @@
 .syn-wf-text { position: absolute; left: 467px; top: 5728px; width: 836px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
 .syn-rec { position: absolute; left: 448px; top: 640px; width: 857px; height: 574px; border-radius: 20px; background: #075e54; border: 4px solid #02221e; box-sizing: border-box; overflow: hidden; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }   /* the "how it works" recording on a Syncletter-green frame, above the first Try prototype pill (everything below is pushed down by SYN_SHIFT in js/syncletter.js); phone frame is part of the footage */
 .syn-rec video { position: absolute; left: 50%; top: 50%; height: 524px; width: auto; aspect-ratio: 428 / 876; translate: -50% -50%; display: block; }
-/* feature labels: each slides out from beside the phone while its feature is on screen (js/syncletter.js sets .on from the video's time), and slides back when it ends */
-.syn-rec-tag { position: absolute; top: 50%; margin: 0; max-width: 250px; padding: 12px 20px; border: 3px solid #02221e; border-radius: 28px; background: #fff1df; color: #075e54; font-family: var(--font-ui); font-weight: 600; font-size: 22px; line-height: 28px; opacity: 0; visibility: hidden; transition: opacity .35s ease, translate .5s var(--ease-out), visibility 0s linear .5s; }
-.syn-rec-l { right: calc(50% + 150px); text-align: right; translate: 40px -50%; }
-.syn-rec-r { left: calc(50% + 150px); translate: -40px -50%; }
+/* feature call-outs, like a labelled diagram: while a feature is on screen (js/syncletter.js sets .on from the video's time) its label slides out beside the phone and a leader line draws from the label to the spot on the phone's screen; both retract when the feature ends */
+.syn-rec-tag { position: absolute; top: var(--y); width: 190px; margin: 0; font-family: var(--font-ui); font-weight: 600; font-size: 22px; line-height: 28px; color: #fff1df; opacity: 0; visibility: hidden; transition: opacity .35s ease, translate .5s var(--ease-out), visibility 0s linear .5s; z-index: 2; }
+.syn-rec-l { left: 20px; text-align: right; translate: 24px -50%; }
+.syn-rec-r { left: 640px; text-align: left; translate: -24px -50%; }
 .syn-rec-tag.on { opacity: 1; visibility: visible; translate: 0 -50%; transition-delay: 0s; }
-@media (prefers-reduced-motion: reduce) { .syn-rec-tag { transition: none; } }
+.syn-rec-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 1; }
+.syn-rec-lines line { stroke: #3ddc97; stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s var(--ease-out) .05s; }
+.syn-rec-lines .rc-dot { fill: #3ddc97; stroke: #3ddc97; stroke-width: 1; opacity: 0; transition: opacity .25s ease; }
+.syn-rec-lines .rc-ring { fill: none; stroke: #3ddc97; stroke-width: 1.5; opacity: 0; transition: opacity .25s ease; }
+.syn-rec-lines .rc.on line { stroke-dashoffset: 0; }
+.syn-rec-lines .rc.on :is(.rc-dot, .rc-ring) { opacity: 1; transition-delay: .35s; }
+@media (prefers-reduced-motion: reduce) { .syn-rec-tag, .syn-rec-lines :is(line, circle) { transition: none; } }
 .syn-wf-text ul { margin: 0; padding-left: 28px; list-style: disc outside; }
 
 .syn-fc-steps .fc-branch { align-items: flex-start; font-weight: 700; font-size: 16px; line-height: 20px; color: var(--chestnut); }
@@ -356,10 +362,11 @@
   .syn-mobile .sm-el { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 0; }
   .syn-mobile .sm-el-label { margin: 0; font-size: 16px; line-height: 28px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: #fff1df; text-align: center; }
   .syn-mobile .sm-el .syn-grid.sm-el-card { position: static !important; width: auto; height: auto; padding: 0; background: none; display: block; box-shadow: none; }
-  .syn-mobile .sm-rec { width: min(100%, 560px); height: 516px; margin-bottom: 28px; }
-  .syn-mobile .sm-rec video { height: 428px; top: 8px; translate: -50% 0; }
-  .syn-mobile .syn-rec-tag { top: auto; bottom: 14px; left: 50%; right: auto; width: max-content; max-width: calc(100% - 32px); font-size: 18px; text-align: center; translate: -50% 24px; }
-  .syn-mobile .syn-rec-tag.on { translate: -50% 0; }
+  .syn-mobile .sm-rec { width: min(100%, 560px); height: 400px; margin-bottom: 28px; }   /* labels stay on the left and right of the phone here too: smaller phone, 16px labels in the side columns */
+  .syn-mobile .sm-rec video { height: 340px; }
+  .syn-mobile .syn-rec-tag { top: calc(var(--y) * .7067); width: calc(50% - 104px); font-size: 16px; line-height: 20px; }
+  .syn-mobile .syn-rec-l { left: 6px; }
+  .syn-mobile .syn-rec-r { left: calc(50% + 98px); }
   .syn-mobile .sm-wide { width: 100%; height: auto; aspect-ratio: 690 / 344; }
   .syn-mobile .sm-wide.syn-devshot { aspect-ratio: 763 / 313; }
   .syn-mobile .sm-proto { width: 100% !important; height: auto !important; flex-direction: column; gap: 10px; }
