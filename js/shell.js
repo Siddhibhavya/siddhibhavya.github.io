@@ -712,7 +712,9 @@
     const a = document.createElement('a');
     a.className = 'resume-pill'; a.href = links().resume; a.target = '_blank'; a.rel = 'noopener';
     a.innerHTML = '<svg viewBox="0 0 16 18" width="13" height="15" aria-hidden="true"><path d="M3 1h7l4 4v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z M10 1v4h4 M5 9h6 M5 12h6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg><span>Resume</span>';
-    document.body.appendChild(a);
+    const nav = document.createElement('nav');   // a landmark, so the pill is reachable from the screen-reader landmark list (display: contents keeps the layout identical)
+    nav.setAttribute('aria-label', 'Résumé'); nav.style.display = 'contents';
+    nav.appendChild(a); document.body.appendChild(nav);
   }
 
   /* Work cards: over a case study the cursor becomes a coloured "View case study" pill (colour = the card's, data-cs).

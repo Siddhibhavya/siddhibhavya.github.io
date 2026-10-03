@@ -55,6 +55,27 @@
     parent.append(el);
     return el;
   }
+  // Brand board: the four colour swatches re-flowed for phones. Scaled down with the desktop composition every swatch label fell under 16px, collided with its neighbour
+  // and the display "Aa" spilled out of its swatch, so here each swatch is a real box with its own text. Colours and copy are read from the canvas nodes.
+  function brandBoard(parent) {
+    const bg = id => getComputedStyle(source(id)).backgroundColor, txt = id => source(id).textContent.trim(), ink = id => getComputedStyle(source(id)).color;
+    const board = document.createElement('div');
+    board.className = 'nearu-mobile-brand';
+    const swatch = (cls, fill, hexId, extra) =>
+      '<div class="bb-sw ' + cls + '" style="background:' + bg(fill) + ';color:' + ink(hexId) + '">' + (extra || '') + '<span class="bb-hex">' + txt(hexId) + '</span></div>';
+    board.innerHTML =
+      swatch('bb-coral', 1633, 1643, '<span class="bb-aa bb-futura">' + txt(1638) + '</span><span class="bb-font">' + txt(1641) + '</span>') +
+      swatch('bb-blue', 1634, 1644, '<span class="bb-aa bb-liberation">' + txt(1637) + '</span><span class="bb-font">' + txt(1642) + '</span>') +
+      swatch('bb-cream', 1636, 1646) + swatch('bb-yellow', 1635, 1645);
+    parent.append(board);
+  }
+  // Demo recordings: clones of the canvas phones (same shell, video and caption), scaled in fit() to share the column.
+  function recs(parent, sels) {
+    const row = document.createElement('div');
+    row.className = 'nearu-mobile-recs';
+    sels.forEach(sel => row.append(canvas.querySelector(sel).cloneNode(true)));
+    parent.append(row);
+  }
   function section(name, id) {
     const el = document.createElement('section');
     el.id = 'mobile-' + name;
@@ -216,13 +237,17 @@
   facts.innerHTML = fact('Teammates', ['Siddhi Bhavya', 'Ridhi Lakhina', 'Naaysha Doshi']) + fact('Timeline', ['May 2026', 'Jul to Aug 2026']) +
     fact('My Role', ['Design', 'Research', 'Interactions']) + fact('Skills', ['Interaction Design', 'Prototyping', 'Figma']);
   mobile.append(facts);
+  // Try demo pill: a clone of the canvas pill (same label, colours, hover), as wide as the column on phones; the click is delegated in js/nearu-demo.js.
+  mobile.append(canvas.querySelector('.nu-demo').cloneNode(true));
   vid(mobile, 1585, 'is-demo');
 
   let s = section('context', 1537);
   copy(s, 1536, 'nearu-mobile-subtitle'); copy(s, 1547);
   s = section('solution', 1538);
   copy(s, 1549);
-  plate(s, [1521,1522,1575,1576,1577,1578,1579,1580,1630], 480, 2270, 765, 407);
+  plate(s, [1521,1522,1575,1577,1578,1579,1630], 480, 2270, 765, 407);   // the blue frame, logo chip, wordmark film and captions, as before
+  const art = s.querySelector('.nearu-mobile-art-layers');   // the two phone slots hold the buyer / seller recordings
+  ['.nu-rec-seller', '.nu-rec-buyer'].forEach(sel => art.append(canvas.querySelector(sel).cloneNode(true)));
   s = section('ideation', 1539);
   copy(s, 1550);
   copy(s, 1583, 'nearu-mobile-label'); vid(s, 1581, 'is-wire'); plate(s, [1587], 1021, 3030, 260, 84);
@@ -245,7 +270,9 @@
   copy(s, 1544, 'nearu-mobile-label'); copy(s, 1564);
 
   s = section('design', 1543);
-  plate(s, [1633,1634,1635,1636,1637,1638,1640,1641,1642,1643,1644,1645,1646,1647,1664], 473, 8551, 774, 655);
+  copy(s, 1640, 'nearu-mobile-label');
+  brandBoard(s);
+  plate(s, [1647,1664], 509, 8784, 724, 421);   // logo + packaging artwork (original y, before the shift table runs)
   copy(s, 1639, 'nearu-mobile-label');
   phones(s, [1652,1653,1654,1655], [1659,1656,1657,1658]);
   copy(s, 1710);
@@ -256,6 +283,7 @@
   s = section('onboarding', 1674);
   phones(s, [1680,1681,1682,1683]);
   copy(s, 1711);
+  recs(s, ['.nu-rec-onboarding']);
   s = section('scope', 1675);
   copy(s, 1712); copy(s, 1713);
 
@@ -273,6 +301,10 @@
   }
   function fit() {
     if (innerWidth >= 900) return;
+    mobile.querySelectorAll('.nearu-mobile-recs').forEach(row => {
+      const n = row.children.length, gap = 20, room = Math.min(row.clientWidth, 560) - gap * (n - 1);
+      row.querySelectorAll('.nu-rec').forEach(r => r.style.setProperty('--s', Math.min(.5597, room / n / 402).toFixed(4)));
+    });
     plates.forEach(({box,stage,width,height}) => {
       const scale = Math.min(1, box.clientWidth / width);
       stage.style.transform = 'scale(' + scale + ')';
@@ -280,7 +312,7 @@
       box.style.height = Math.ceil(height * scale / 28) * 28 + 'px';
       // Text inside a scaled plate: make each line exactly one paper row (28px) on screen so every line sits on a rule.
       // …and never let it render under 16px: grow the font to 16/scale where the plate is scaled down a lot.
-      [...box.querySelectorAll('.nu-93, .nu-94, .nu-153, .nu-154, .nu-165')].filter(t => !t.classList.contains('nu-165') || t.textContent.trim() === 'Brand').forEach(t => {
+      [...box.querySelectorAll('.nu-93, .nu-94, .nu-153, .nu-154, .nu-165, .nu-84, .nu-85')].filter(t => !t.classList.contains('nu-165') || t.textContent.trim() === 'Logo').forEach(t => {
         t.style.fontSize = ''; t.style.lineHeight = (28 / scale) + 'px';
         const nominal = parseFloat(getComputedStyle(t).fontSize);
         if (nominal * scale < 16) t.style.fontSize = (16 / scale) + 'px';
