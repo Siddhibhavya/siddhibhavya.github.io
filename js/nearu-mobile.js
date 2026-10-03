@@ -63,20 +63,6 @@
     copy(el, id, 'nearu-mobile-heading');
     return el;
   }
-  function card(parent, id) {
-    const box = document.createElement('div');
-    box.className = 'nearu-mobile-card';
-    copy(box, id); parent.append(box);
-  }
-  // The desktop canvas draws this as a mind map (two cards, a centre title, a third card). On a phone the three cards
-  // can't sit side by side at readable size, so keep the map idea: a centre hub on a trunk with cards branching left/right.
-  function mindmap(parent, ids, hubId) {
-    const map = document.createElement('div');
-    map.className = 'nearu-mobile-map';
-    copy(map, hubId, 'nearu-mobile-hub');
-    ids.forEach(id => card(map, id));
-    parent.append(map);
-  }
   // What changed from A to B, shown under the comparison (on the desktop canvas these sit beside each phone).
   function abNotes(box) {
     [['A', 9002], ['B', 9003]].forEach(([tag, id]) => {
