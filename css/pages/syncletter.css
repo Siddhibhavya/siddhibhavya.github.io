@@ -327,10 +327,13 @@
   .syn-mobile .sm-copy :is(p, div, ul) { margin: 0; }
   .syn-mobile .sm-copy li { margin: 0 0 0 22px; }
   .syn-mobile ul.sm-copy { padding: 0; list-style: disc outside; }
+  .syn-mobile .sm-tags { margin-bottom: 0; }
+  .syn-mobile .sm-title { margin-top: 0; margin-bottom: 0; }   /* the 56px title line already carries its own air: no extra row above or below */
   .syn-mobile .sm-title { font-family: var(--font-serif); font-size: 32px; line-height: 56px; color: #39265f; font-weight: 400; }
   .syn-mobile .sm-heading { font-size: 20px; font-weight: 900; color: var(--heading); text-transform: uppercase; }
   .syn-mobile .sm-label { font-weight: 600; color: var(--chestnut); text-transform: uppercase; margin-bottom: 0; }
-  .syn-mobile .sm-lede { font-weight: 600; color: var(--heading); }
+  .syn-mobile .sm-copy.sm-center, .syn-mobile .sm-copy.sm-center :is(p, span, div, li) { text-align: center; }   /* Problem Statement: label and statement centred, as on the desktop canvas */
+  .syn-mobile .sm-lede { font-family: var(--font-serif); font-size: 32px; line-height: 56px; font-weight: 400; color: #39265f; }   /* same face and size as the page title (Building Syncletter) */
   .syn-mobile .sm-learnt { font-weight: 600; }
   .syn-mobile .sm-attrib { color: var(--chestnut); }
   .syn-mobile .syn-stat, .syn-mobile .syn-highlight { font-weight: 700; color: var(--hl-red); }

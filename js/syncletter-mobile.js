@@ -64,7 +64,7 @@
   // ---- context ----
   let s = section('context', '.syn-4');
   copy(s, '.syn-3', 'sm-lede'); copy(s, '.syn-10');
-  copy(s, '.syn-6', 'sm-label'); copy(s, '.syn-18');
+  copy(s, '.syn-6', 'sm-label sm-center'); copy(s, '.syn-18', 'sm-center');
 
   // ---- solution ----
   s = section('solution', '.syn-5');

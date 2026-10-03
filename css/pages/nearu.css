@@ -453,6 +453,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   @media (prefers-reduced-motion: reduce) { .nearu-mobile-tags span { transition: none; } }
   .nearu-mobile .nearu-mobile-copy :is(p, div, ul) { margin: 0; }
   .nearu-mobile .nearu-mobile-copy li { margin: 0 0 0 22px; }
+    .nearu-mobile .nearu-mobile-tags { margin-bottom: 0; }
+  .nearu-mobile .nearu-mobile-title { margin-top: 0; margin-bottom: 0; }
   .nearu-mobile .nearu-mobile-title,
   .nearu-mobile .nearu-mobile-subtitle {
     font-family: var(--font-serif); font-size: 32px; line-height: 56px; color: #39265f;
