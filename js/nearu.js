@@ -120,7 +120,7 @@
       if (refl) refl.style.paddingTop = '0px';
       const exempt = el => {
         for (let n = el; n && n !== paper; n = n.parentElement) {
-          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
+          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-facts,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
           if (n.classList.contains('nearu-mobile-copy')) continue;
           const bg = getComputedStyle(n).backgroundColor;
           if (bg && bg !== 'transparent' && !/rgba\(\d+, \d+, \d+, 0\)/.test(bg)) return true;
