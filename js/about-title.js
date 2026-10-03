@@ -62,19 +62,13 @@
     }
 
     // ---- the greeting ----
-    // reserve the widest of the three words so the rest of the line never jumps while typing
-    const widest = () => {
-      let w = 0;
-      [HINDI, HELLO, 'Namaste'].forEach((s) => { typed.textContent = s; w = Math.max(w, typed.getBoundingClientRect().width); });
-      typed.textContent = ''; greet.style.minWidth = (w / (parseFloat(getComputedStyle(title).fontSize) || 64)) + 'em';
-    };
     async function typeIn(word, per) { const g = clusters(word); typed.textContent = ''; for (let i = 1; i <= g.length; i++) { if (!live()) return; typed.textContent = g.slice(0, i).join(''); await sleep(per); } }
     async function eraseAll(per) { const g = clusters(typed.textContent); for (let i = g.length - 1; i >= 0; i--) { if (!live()) return; typed.textContent = g.slice(0, i).join(''); await sleep(per); } }
 
     (async function loop() {
       await document.fonts.ready;
       if (!live()) return;
-      widest();
+      // no reserved width: the greeting hugs what is typed so ", I am" stays close to it (the rest of the line follows the typing)
       while (live()) {
         spree();                                                          // not awaited: it runs alongside the typing
         // one 30-second pass: type नमस्ते (slow) · hold · backspace · type Hello!

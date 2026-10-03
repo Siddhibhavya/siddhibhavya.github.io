@@ -102,3 +102,8 @@ own facts (no inventions), home card + Figma frame matched to the page,
 - My Work cards already have a pin (yellow for NCFE, green for Driving). Each card also has a torn paper sheet behind it (`<span class="card-sheet ...">`), desktop only: hidden on the phone layout.
 - Case-study cards open in the same tab; notifications centre on the content area; keep tilted-card text crisp (no transform animations inside). Full list: `CASE-STUDY-GUIDELINES.md` section 8.
 
+
+## State after 2026-10-03 (read with CASE-STUDY-GUIDELINES.md section 9)
+- NearU and Syncletter are rebuilt: shorter copy, spider / loop / T-chart, persona on torn paper, memos, film + demo frame with call-outs, centred media. Open item: **recordings of each part of the NearU app** to replace the buyer/seller image, and the NearU prototype link (owner will supply).
+- Moving content: edit the shift tables (`SHIFTS`, `SYN_SHIFTS`), then run `tools/gaps.js` and `tools/grid-audit.js` at 1200 and 400px; fix gaps > ~100px and any overlap before committing.
+- A doc with the original (pre-edit) copy of both pages exists in Claude Docs ("Case studies: original copy"); git `94a7589` has the originals.

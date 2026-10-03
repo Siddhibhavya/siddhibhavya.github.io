@@ -441,3 +441,38 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 - Landing text is "Board to the creative archives of SIDDHI". The two tickets never touch each other (even straightened and lifted on hover), each carries the brand tip star (`assets/ui/star-back.svg`, small), and a click punches a semicircle out of the ticket's right edge (`.punched`, `--punch` animated mask). "Be my Guest" slides up like the Thank You -> main site transition: the Welcome Aboard page is preloaded in a hidden iframe (`js/landing.js` `preloadPeek`) and rises under the leaving landing.
 - The Welcome Aboard / Thank You screens (`guest-book.html`) carry the paper veil and two small corners too. On Thank You the drifting stars and fish-bone patches spread over the whole screen but must never touch the text: `js/guest-anim.js` measures the real `.ov-thanks` box (not a hard-coded one) — re-check this whenever the font or type size changes.
 - Compact drawer: the subtitle ("Interaction design @ ANU") shares the name's left edge (`css/shell/compact.css`).
+
+## 9 · Lessons from the 2026-10-03 round (Syncletter + NearU rebuild)
+
+### Moving content on the absolute canvas: whole-row shift tables
+- When copy grows or shrinks, don't edit 100 `top` values. Both canvases carry a **shift table** run before alignment: `SHIFTS` in `js/nearu.js`, `SYN_SHIFTS` in `js/syncletter.js`. Each entry is `[fromY, rows, exceptClass?]`; thresholds are in the **original Figma y**, all entries that match an element **add up**, and `rows` is a whole number of 41px rows so the paper rules stay aligned. The canvas height (`--flow-extra` / `height !important`) follows the sum.
+- The phone layouts clone nodes by **original** coordinates (cloned before the shifts run), so they are unaffected; new blocks must be cloned whole (`block()` in `js/nearu-mobile.js`) and reflow with their own CSS.
+- Elements placed at their final y in CSS (the Syncletter facts chip, the green frame, the NearU ideation art) are either below no threshold or excluded by class; say so in the comment next to the entry.
+- After any copy change run **`tools/gaps.js`** (paste in the JS tool, or `fetch('/tools/gaps.js')` + `eval`): it lists every empty band taller than 110 canvas px. Target ~80–100px between blocks. Also scan for text boxes that overlap (see the snippet in the 2026-10-03 chat: `p,h1,h2,li` rect intersections).
+
+### Centre media on the content area
+- Videos, diagrams, screenshots, plates and CTA pills centre on the content area to the right of the sidebar: **x = 900 on NearU, 902 on Syncletter** (not on the 448/434 text column). The Figma export left some blocks 20-40px left of it; `XSHIFTS` in `js/nearu.js` and the CSS `left` values fix them. Staggered side-by-side art (A/B phones, ideation videos) is judged as a composition.
+
+### Components added this round (copy the pattern, don't reinvent)
+- **Spider diagram** (`.nu-spider`, "How students sell today"): hub circle + three legs, SVG lines behind; phone = hub, then legs on a trunk line.
+- **T chart** (`.nu-tchart`, "User needs"): two equal columns, equal rows, 4px centre rule; phone keeps two columns. Keep both sides the same number of rows.
+- **Loop diagram** (`loopSVG()` in `js/nearu-mobile.js`): ring of boxes with solid curved arrows and a dark core with dashed arrows; one builder, `LOOP_WIDE` for the canvas, `LOOP_TALL` for phones. Text is real SVG text >= 16px.
+- **Persona on torn paper** (`.nu-persona`): paper = `sheet-white.webp` as a **mask** over a multiplied tan colour (`::after`) with a blurred copy as the shadow (`::before`); the filter route turned olive. Light beige type + light red highlights on the dark paper. The portrait frame hugs the illustration: the image is cropped with percentages (`left/top/width/height` on the `<img>`), and the ribbon (`nu-130`) and the Figma "Hi!" bubble (`assets/work/nearu/hi-bubble.svg`, node 520:16) are positioned in the same percentages.
+- **Insight memos** (`.nearu-insight`): NearU tints, tape strip, folded corner, no clip-path (it would clip the shadow). `p` line-heights stay on `.ins-problem`/`.ins-opp`; only inline children `inherit` (inheriting on the `p` pulled the 41px grid line-height in and misaligned the arrows).
+- **Project facts chip** sits **above** the Syncletter green frame (desktop and phone). Columns share one left edge each; "August 2026" must not wrap.
+
+### Syncletter recording frame
+- One green frame (`.syn-rec`) plays the 24s film first (`.syn-intro-video`, `is-intro`), then fades to the phone demo (`.syn-demo`) whose call-outs appear. The `play`/`ended` capture handlers in `js/syncletter.js` gate the demo until the film ends.
+- **Call-outs** (`.syn-rec-tag` + SVG leader lines): labels only on the left/right of the phone; thin green line + ring drawn from the label to a point on the screen. Target points are **keyframed from the footage** (`data-kf="time:fx:fy|..."`, fractions of the phone video) because the card moves (keyboard). Measure with the canvas flood-fill used on 2026-10-03 (cream `#faf2ea` pixels, largest component). Measure label geometry with `offsetLeft/offsetTop` (they ignore the slide-in `translate`); toggling `.on` to measure made the labels flash.
+
+### Phone layout pitfalls found
+- A stray `::before` with `position:absolute` on a block that becomes `position:static` on phones paints across the whole page: give such blocks `position:relative` on phones.
+- Regex clean-ups of CSS can mangle selectors: after any scripted CSS edit grep for doubled selector fragments.
+- The mobile Reflection text gets its own rule pass at the end of `alignGrid` in `js/nearu.js`; a fixed `top: 1.6px` offset drifts with font metrics.
+- Tag pills on NearU phone are real 28px pills; they sit on the rule **above** (hug the hero), not below.
+
+### Tooling and housekeeping
+- `tools/grid-audit.js` skips `.nu-persona`, `.nu-tchart`, `.nearu-mobile-facts` (filled/paper blocks). Add new filled blocks there and to the `exempt` list in `js/nearu.js`.
+- Browser pane: the pane resizes by itself and can bounce between pages if the user is browsing; test in a **second tab** (`tabs_create`), set the width, reload, then measure with JS. CSS `zoom: .66` on `<html>` gives a wider screenshot but offsets scroll positions.
+- Dead CSS: scan for classes missing from the HTML/JS before deleting (watch for JS-built class names like `sm-fc-` + kind). Never minify or recompress media (no build step by design).
+- Original (pre-edit) copy of both case studies is kept in a Claude doc ("Case studies: original copy") and in git at `94a7589`.
