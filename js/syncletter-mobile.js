@@ -53,6 +53,7 @@
   art(tags, '.syn-15a'); art(tags, '.syn-15b');
   copy(mob, '.syn-2', 'sm-title');
   copy(mob, '.syn-9');
+  art(mob, '.syn-rec', 'sm-rec');
   art(mob, '.syn-17', 'sm-pill');
   const fact = (h, v) => '<div class="sm-fact"><p class="sm-fact-h">' + h + '</p><p class="sm-fact-v">' + v + '</p></div>';
   mob.append(make('div', 'sm-facts',
@@ -105,17 +106,17 @@
   s = section('design', '.syn-8');
   copy(s, '.syn-40');
   copy(s, '.syn-39', 'sm-label');
-  // Elements: the desktop composition (dark plate, 2-column card grid, side labels with their lines), scaled to fit the column
-  const ELX = 371, ELY = 4872, ELW = 1066, ELH = 779;
-  const elBox = make('div', 'sm-elements'), elIn = make('div', 'sm-elements-in'); elBox.append(elIn); s.append(elBox);
-  const place = sel => {
-    const src = q(sel), cs = getComputedStyle(src), el = clean(src.cloneNode(true));
-    el.style.left = (parseFloat(cs.left) - ELX) + 'px'; el.style.top = (parseFloat(cs.top) - ELY) + 'px';
-    elIn.append(el);
-  };
-  place('.syn-1'); place('.syn-grid'); for (let i = 1; i <= 6; i++) place('.syn-el-' + i);
-  const fitElements = () => { const z = Math.min(1, elBox.clientWidth / ELW); elIn.style.zoom = z; };
-  fitElements(); addEventListener('resize', fitElements); new ResizeObserver(fitElements).observe(elBox);
+  // Elements: the same six cards on the same dark plate, stacked in one column at full size (the desktop 2-column composition scaled to a phone
+  // made the side labels unreadably small). Each card keeps its label, now above it in 16px cream type.
+  const plate = make('div', 'sm-elements sm-el-plate');
+  const cards = qa('.syn-grid > .syn-card'), tags6 = qa('.syn-elabel');
+  cards.forEach((card, i) => {
+    const box = make('div', 'sm-el');
+    box.append(make('p', 'sm-el-label', tags6[i] ? tags6[i].textContent.trim() : ''));
+    const wrap = make('div', 'syn-grid sm-el-card'); wrap.append(clean(card.cloneNode(true)));
+    box.append(wrap); plate.append(box);
+  });
+  s.append(plate);
   copy(s, '.syn-41', 'sm-label'); copy(s, '.syn-wf-text');
   art(s, '.syn-slider', 'sm-wide');
   copy(s, '.syn-42', 'sm-label');

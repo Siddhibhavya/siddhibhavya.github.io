@@ -9,6 +9,14 @@
   const viewport = document.querySelector('.syncletter-viewport');
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
+  // Room for the "how it works" recording above the first Try prototype pill: everything from y=700 down moves down by whole paper rows (13 x 41px).
+  const SYN_SHIFT = 533;
+  canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
+    const cs = getComputedStyle(el), top = parseFloat(cs.top);
+    if (cs.position === 'absolute' && top >= 700) el.style.top = (top + SYN_SHIFT) + 'px';
+  });
+  canvas.style.setProperty('--flow-extra', SYN_SHIFT + 'px');
+  window.synFlowExtra = SYN_SHIFT;
   const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
   const CONTENT_W = 1092; // 1448 canvas width - 356 shared sidebar width
   const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
@@ -100,6 +108,22 @@
     if (reduce.matches) video.pause();
     else if (video.getBoundingClientRect().top < innerHeight && video.getBoundingClientRect().bottom > 0) video.play().catch(() => {});
   }));
+
+
+  // Feature labels on the green recording frame: show each tag while the video's own time is inside its [data-in, data-out] window.
+  let tagLoop = 0;
+  function tagTick() {
+    let playing = false;
+    document.querySelectorAll('.syn-rec').forEach(rec => {
+      const v = rec.querySelector('video');
+      if (!v) return;
+      if (!v.paused) playing = true;
+      rec.querySelectorAll('.syn-rec-tag').forEach(tag => tag.classList.toggle('on', !v.paused && v.currentTime >= +tag.dataset.in && v.currentTime < +tag.dataset.out));
+    });
+    tagLoop = playing ? requestAnimationFrame(tagTick) : 0;
+  }
+  document.addEventListener('play', e => { if (e.target.closest && e.target.closest('.syn-rec') && !tagLoop) tagLoop = requestAnimationFrame(tagTick); }, true);
+  document.addEventListener('pause', e => { if (e.target.closest && e.target.closest('.syn-rec')) e.target.closest('.syn-rec').querySelectorAll('.syn-rec-tag').forEach(tag => tag.classList.remove('on')); }, true);
 
   window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };
   if (location.hash) requestAnimationFrame(() => {
