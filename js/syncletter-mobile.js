@@ -53,6 +53,7 @@
   art(tags, '.syn-15a'); art(tags, '.syn-15b');
   copy(mob, '.syn-2', 'sm-title');
   copy(mob, '.syn-9');
+  art(mob, '.syn-intro', 'sm-intro');
   art(mob, '.syn-rec', 'sm-rec');
   art(mob, '.syn-17', 'sm-pill');
   const fact = (h, v) => '<div class="sm-fact"><p class="sm-fact-h">' + h + '</p><p class="sm-fact-v">' + v + '</p></div>';
