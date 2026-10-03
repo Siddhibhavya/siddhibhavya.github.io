@@ -401,7 +401,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-insight .ins-opp { display: flex; align-items: flex-start; gap: 12px; font-family: var(--font-ui); font-weight: 500; font-size: 17px; line-height: 26px; color: #17120E; padding-top: 12px; border-top: 2px dashed rgba(23, 18, 14, .35); }
 .nearu-insight b { font-weight: 800; color: var(--hl-red); }
 .nearu-page .nearu-grid-copy.nearu-insights :is(span, b), .nearu-mobile-insights :is(span, b) { line-height: inherit; }   /* the p's keep their own line-heights (.ins-problem, .ins-opp); only their inline children follow */
-.nearu-insight .ins-arrow { flex: none; width: 14px; height: 16px; margin-top: 6px; }   /* optical: measured so the tip sits at the middle of the lower-case letters (x-height) on the 26px line */
+.nearu-insight .ins-arrow { flex: none; width: 14px; height: 16px; margin-top: 4.7px; }   /* optical: the tip sits at the vertical middle of the capital letters (cap height), measured on the 26px line, as in the Research nav arrow */
+.nearu-mobile-insights .ins-arrow { margin-top: 4.1px; }   /* 18px text on phone */
 .nearu-page .nearu-insights .ins-problem { min-height: 52px; line-height: 26px; }
 .nearu-page .nearu-insights .ins-opp { line-height: 26px; }   /* beat the 41px grid line-height of .nearu-grid-copy p */   /* two lines tall in every memo, so the dashed rules line up across a row */
 .nearu-insight .ins-arrow path { fill: #17120E; }
