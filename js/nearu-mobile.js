@@ -178,7 +178,11 @@
     parent.append(link);
   }
   plate(mobile, [1566], 404, 37, 998, 281);
-  plate(mobile, [1687,1688,1689,1691], 420, 382, 444, 50);
+  // Tag pills: real pills on one paper row (28px), left-aligned, same colours / border / shadow / hover as the canvas ones.
+  const tagRow = document.createElement('div');
+  tagRow.className = 'nearu-mobile-tags';
+  tagRow.innerHTML = '<span>' + source(1689).textContent.trim() + '</span><span>' + source(1691).textContent.trim() + '</span>';
+  mobile.append(tagRow);
   copy(mobile, 1535, 'nearu-mobile-title');
   copy(mobile, 1546);
   plate(mobile, [1552,1553], 414, 766, 930, 260);
@@ -191,8 +195,8 @@
   plate(s, [1521,1522,1575,1576,1577,1578,1579,1580,1630], 480, 2270, 765, 407);
   s = section('ideation', 1539);
   copy(s, 1550);
-  plate(s, [1581,1583,1587], 427, 2976, 899, 247);
-  plate(s, [1582,1584,1596], 470, 3212, 856, 247);
+  plate(s, [1581,1583,1587], 427, 2976, 899, 284);
+  plate(s, [1582,1584,1596], 470, 3301, 863, 284);
   copy(s, 1586);
   const abRow = document.createElement('div');
   abRow.className = 'nearu-mobile-ab';
@@ -232,6 +236,13 @@
   reflection(s);
 
   // Images retain reserved geometry, including before decode on a slow connection.
+  // the tag pills' bottom edge sits on a paper rule (28px rows, phase 20), like Syncletter's
+  function alignTags() {
+    if (innerWidth >= 900) return;
+    tagRow.style.position = 'relative'; tagRow.style.top = '0px';
+    const bottom = tagRow.getBoundingClientRect().bottom - mobile.getBoundingClientRect().top;
+    tagRow.style.top = ((((20 - bottom) % 28) + 28) % 28) + 'px';
+  }
   function fit() {
     if (innerWidth >= 900) return;
     plates.forEach(({box,stage,width,height}) => {
@@ -248,7 +259,8 @@
       });
     });
   }
-  new ResizeObserver(() => { fit(); drawReflLines(); }).observe(mobile);
+  new ResizeObserver(() => { fit(); alignTags(); drawReflLines(); }).observe(mobile);
+  addEventListener('load', () => requestAnimationFrame(alignTags));
   document.fonts.ready.then(drawReflLines);
   fit();
 })();
