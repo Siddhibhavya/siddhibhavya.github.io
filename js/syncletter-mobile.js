@@ -143,6 +143,9 @@
   art(s, '.syn-proto', 'sm-proto');
   copy(s, '.syn-44'); copy(s, '.syn-45');
 
+  // decision cards: the same two cards, stacked
+  art(s, '.syn-decisions', 'sm-decisions');
+
   // ---- reflection ----
   s = section('reflection', '.syn-46');
   copy(s, '.syn-47');

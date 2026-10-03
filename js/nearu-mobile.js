@@ -250,8 +250,12 @@
   ['.nu-rec-seller', '.nu-rec-buyer'].forEach(sel => art.append(canvas.querySelector(sel).cloneNode(true)));
   s = section('ideation', 1539);
   copy(s, 1550);
-  copy(s, 1583, 'nearu-mobile-label'); vid(s, 1581, 'is-wire'); plate(s, [1587], 1021, 3030, 260, 84);
-  copy(s, 1584, 'nearu-mobile-label'); vid(s, 1582, 'is-wire'); plate(s, [1596], 470, 3301, 230, 167);
+  const cap = sel => { const el = canvas.querySelector(sel).cloneNode(true); el.classList.add('nearu-mobile-copy'); s.append(el); return el; };   // her captions, cloned from the canvas
+  const shot = sel => { const el = canvas.querySelector(sel).cloneNode(true); s.append(el); return el; };   // a screenshot board
+  // First look: logo, film, first design screens. Final look: logo, film, final screens, design system. Then the paragraph.
+  copy(s, 1583, 'nearu-mobile-label'); plate(s, [1587], 392, 3026, 300, 97); cap('.nu-cap-near'); vid(s, 1581, 'is-wire'); shot('.nu-ide-first'); cap('.nu-cap-first');
+  copy(s, 1584, 'nearu-mobile-label'); plate(s, [1596], 1208, 3026, 206, 118); cap('.nu-cap-neu'); vid(s, 1582, 'is-wire'); shot('.nu-ide-final'); cap('.nu-cap-final');
+  { const wrap = document.createElement('div'); wrap.className = 'nu-ide-wrap'; ['.nu-ide-variants', '.nu-cap-ds'].forEach(sel => wrap.append(canvas.querySelector(sel).cloneNode(true))); s.append(wrap); }
   copy(s, 1586);
   const abRow = document.createElement('div');
   abRow.className = 'nearu-mobile-ab';
@@ -320,6 +324,8 @@
     });
   }
   new ResizeObserver(() => { fit(); alignTags(); drawReflLines(); }).observe(mobile);
+  addEventListener('resize', () => { fit(); alignTags(); });   // belt and braces: some browsers report the final width only after load / rotation
+  addEventListener('load', () => { fit(); alignTags(); drawReflLines(); });
   addEventListener('load', () => requestAnimationFrame(alignTags));
   document.fonts.ready.then(drawReflLines);
   fit();

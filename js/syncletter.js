@@ -14,9 +14,10 @@
   //  6300: the wireframe slider is 15% bigger, so the user flow below moves down 2 rows
   //  1000: the facts chip moved above the frame, so Context onward closes up 4 rows
   //  1240: one more row between the Context title and its paragraph
+  //  8300: the two decision cards sit above Reflection, so Reflection onward moves down 17 rows (net 14 with the earlier gap close-up)
   //  1850, 2900, 8000, 8300, 8650: shorter copy left big gaps before Solution, Research, the library note, Reflection and the last pill: each moves up 1, 1, 1, 3 and 3 rows
   //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
-  const SYN_SHIFTS = [[700, 22], [1000, -4], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [6300, 2], [8650, -3]];
+  const SYN_SHIFTS = [[700, 22], [1000, -4], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, 14], [6300, 2], [8650, -3]];
   const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const synMoves = [];
   canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
@@ -87,6 +88,9 @@
   }
   window.synAlign = alignGrid;
   document.fonts.ready.then(() => requestAnimationFrame(alignGrid));
+  // fonts that start loading after the first pass (the serif headings on a cold cache) and late images shift the baselines: measure again when they land
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', () => requestAnimationFrame(alignGrid));
+  addEventListener('load', () => { requestAnimationFrame(alignGrid); setTimeout(alignGrid, 800); });
   addEventListener('resize', () => requestAnimationFrame(() => requestAnimationFrame(alignGrid)));
 
   // data-start="N": the clip begins (and loops back to) N seconds in — skips the "create a room" intro without re-encoding the footage.

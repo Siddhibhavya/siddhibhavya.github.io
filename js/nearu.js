@@ -9,17 +9,18 @@
   // Every threshold is in the ORIGINAL Figma y, and all moves for an element add up, so the table reads top to bottom:
   //  700: the intro is one line now, so the project chip and everything below moves up 4 rows
   //  1830: one more row between the Context title and its paragraph (two rows baseline to baseline, so the large title never touches the text)
+  //  1990: the Context paragraph gained a sentence about campus side hustles (about 3 more lines), so Solution and everything after move down 2 rows (trimmed from 3: the gap above Solution was too wide)
   //  2250: tighter gap before the Solution art (1 row up)
-  //  3460: the ideation videos are 15% bigger, so everything below moves down 4 rows (the enlarged art itself is placed in nearu.css)
+  //  3560: Ideation now follows the Frame 28 arrangement (screens board, final film, variants board), which is taller than the old two films, so everything below moves down 23 rows in all (the Ideation art, its captions and the paragraph carry nu-idx and are placed explicitly in nearu.css)
   //  5700: the "How students sell" treemap is shorter than the three cards it replaced, so the ecosystem moves up 4 rows
   //  6300: the loop diagram is taller than the old chart, so what follows moves back down 3 rows
   //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 2 rows (was 3; trimmed 2026-10-03 for less empty paper)
   //  4290: tighter gap before Research (1 row up)
   //  8200: the User Needs T chart is shorter than the old diagram, so Design onward moves up 4 rows
   //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
-  //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 10 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
+  //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 9 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
   //  1030: room for the Try demo pill between the project chip and the demo film (3 rows down). The pill itself (.nu-demo) is placed at its final y in CSS and skipped by the shifts.
-  const SHIFTS = [[700, -4], [1830, 1], [2250, -1], [3460, 4, 'nu-94'], [4290, -1], [5700, -4], [6300, 3], [6880, 2], [8200, -3], [12000, -1], [13400, -1], [1030, 3], [12750, 10, 'nu-245']];
+  const SHIFTS = [[700, -4], [1830, 1], [1990, 2], [2250, -1], [3560, 23, ['nu-idx']], [4290, -1], [5700, -4], [6300, 3], [6880, 2], [8200, -3], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
@@ -29,7 +30,7 @@
     if (!inCanvasSpace(el)) return;
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
     if (cs.position !== 'absolute' || isNaN(top) || el.classList.contains('nu-demo')) return;
-    const rows = SHIFTS.reduce((n, [from, r, except]) => n + (top >= from && !(except && el.classList.contains(except)) ? r : 0), 0);
+    const rows = SHIFTS.reduce((n, [from, r, except]) => n + (top >= from && !([].concat(except || []).some(cls => el.classList.contains(cls))) ? r : 0), 0);
     if (rows) moves.push([el, top + rows * 41]);
   });
   moves.forEach(([el, top]) => { el.style.top = top + 'px'; });
@@ -119,7 +120,7 @@
     1546,1547,1549,1550,1564,1583,1584,1586,1601,1602,1603,1604,1605,
     1614,9004,9006,9010,9012,9013,9014,9015,9016,1621,1639,1640,1656,1657,1658,1659,1660,1661,1662,1663,
     1674,1675,1676,1677,1710,1711,1712,1713,9002,9003];
-  const ruled = ruledIds.map(id => canvas.querySelector('[data-node-id="351:' + id + '"]'));
+  const ruled = ruledIds.map(id => canvas.querySelector('[data-node-id="351:' + id + '"]')).concat([...canvas.querySelectorAll('.nu-ide-cap')]);
   ruled.forEach(el => {
     el.classList.add('nearu-ruled');
     el.style.setProperty('--ruled-line', parseFloat(getComputedStyle(el).fontSize) > 41 ? '82px' : '41px');

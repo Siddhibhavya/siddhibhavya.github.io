@@ -4,7 +4,7 @@
   'use strict';
   if (!document.body.classList.contains('nearu-page')) return;
   const SRC = '../prototype/nearu/index.html';
-  const PHONE_W = 402, PHONE_H = 874, CHROME_H = 150, SIDE_W = 296;   // chrome = title bar + body padding + page margin; SIDE_W = room for the Restart / Back column on both sides
+  const PHONE_W = 402, PHONE_H = 839, CHROME_H = 150, SIDE_W = 296;   // chrome = title bar + body padding + page margin; SIDE_W = room for the Restart / Back column on both sides
   let modal, iframe, opener, scrollY0 = 0;
 
   function build() {
@@ -17,7 +17,7 @@
     modal.innerHTML =
       '<div class="nu-demo-frame">' +
         '<div class="nu-demo-bar"><h2 class="nu-demo-title" id="nu-demo-title">Prototype Demo</h2><button type="button" class="nu-demo-x" data-close aria-label="Close prototype">X</button></div>' +
-        '<div class="nu-demo-body"><div class="nu-demo-screen"><iframe title="NearU prototype"></iframe><i class="nu-key nu-key-l1"></i><i class="nu-key nu-key-l2"></i><i class="nu-key nu-key-l3"></i><i class="nu-key nu-key-r"></i></div>' +
+        '<div class="nu-demo-body"><div class="nu-demo-screen"><iframe title="NearU prototype"></iframe><i class="nu-key nu-key-l1"></i><i class="nu-key nu-key-l2"></i><i class="nu-key nu-key-l3"></i><i class="nu-key nu-key-r"></i><i class="nu-island"></i></div>' +
         '<div class="nu-demo-actions"><button type="button" data-restart>Restart</button><button type="button" data-back>Back</button></div></div>' +
       '</div>';
     iframe = modal.querySelector('iframe');
