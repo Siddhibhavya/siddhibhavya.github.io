@@ -550,14 +550,14 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* Current-ecosystem chart + insight blocks (NearU brand: yellow #FEC12D, blue #0D57CE, black #17120E, off-white #FFFAEB). */
 .nearu-page .nu-eco-label { position: absolute; left: 469px; top: 5726px; margin: 0; font-family: var(--font-ui); font-weight: 500; font-size: 24px; text-transform: uppercase; color: var(--chestnut); white-space: nowrap; }
-.nearu-page .nu-eco { position: absolute; left: 469px; top: 5789px; width: 820px; height: 600px; }
+.nearu-page .nu-eco { position: absolute; left: 490px; top: 5789px; width: 820px; height: 600px; }
 .nu-eco svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .nu-eco text, .nearu-mobile-eco text { font-family: var(--font-ui); }
 .loop-svg .lp-title { font-weight: 700; font-size: 18px; fill: #17120E; } .loop-svg .lp-sub { font-weight: 400; font-size: 16px; fill: #5c3a21; }
 .loop-svg .lp-box { fill: #FFFAEB; stroke: #17120E; stroke-width: 2; } .loop-svg .lp-hl { fill: #FEC12D; } .loop-svg .lp-core { fill: #17120E; }
 .loop-svg .lp-core-t { font-weight: 700; font-size: 24px; fill: #FFFAEB; } .loop-svg .lp-core-s { font-size: 16px; fill: #fec12d; }
 .loop-svg .lp-ring { fill: none; stroke: #17120E; stroke-width: 2; } .loop-svg .lp-dash { fill: none; stroke: #5c3a21; stroke-width: 2; stroke-dasharray: 7 6; }
-.nearu-page .nearu-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; left: 469px; width: 795px; height: auto; }
+.nearu-page .nearu-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; left: 502px; width: 795px; height: auto; }
 .nearu-insight { position: relative; background: #FEC12D; border-radius: 4px; padding: 26px 22px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 7px 9px -3px rgba(23, 18, 14, .35); }
 /* memos in NearU colours: yellow, blue, coral, cream; a strip of tape on top and a folded bottom corner */
 .nearu-insight:nth-child(2) { background: #BCD3F7; } .nearu-insight:nth-child(3) { background: #FDB4B1; } .nearu-insight:nth-child(4) { background: #FFFAEB; }
@@ -604,7 +604,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nu-tm .tm-tag { font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--chestnut); }
 
 /* ---------- User persona on dark torn paper ---------- */
-.nearu-page .nu-persona { position: absolute; left: 440px; top: 6900px; width: 900px; height: 600px; box-sizing: border-box; padding: 70px 80px; isolation: isolate; color: var(--espresso); font-family: var(--font-ui); }
+.nearu-page .nu-persona { position: absolute; left: 450px; top: 6900px; width: 900px; height: 600px; box-sizing: border-box; padding: 70px 80px; isolation: isolate; color: var(--espresso); font-family: var(--font-ui); }
 .nu-persona::before, .nu-persona::after { content: ''; position: absolute; inset: -34px -46px; z-index: -1; pointer-events: none; background: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }
 .nu-persona::before { filter: brightness(0) blur(5px); opacity: .38; translate: -4px 7px; }   /* the paper's soft shadow, following its torn outline */
 .nu-persona::after { background-color: #7b5a3b; background-blend-mode: multiply; -webkit-mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }   /* dark beige: the sheet's own grain and fibres multiplied over tan */
@@ -644,7 +644,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 
 /* ---------- How students sell today: a spider diagram (hub + three legs) ---------- */
-.nearu-page .nu-spider { position: absolute; left: 470px; top: 4821px; width: 822px; height: 640px; font-family: var(--font-ui); color: var(--espresso); }
+.nearu-page .nu-spider { position: absolute; left: 489px; top: 4821px; width: 822px; height: 640px; font-family: var(--font-ui); color: var(--espresso); }
 .nu-spider .sp-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .nu-spider .sp-lines path { fill: none; stroke: #4a1a2c; stroke-width: 4; stroke-linecap: round; }
 .nu-spider .sp-hub { position: absolute; left: 333px; top: 242px; width: 156px; height: 156px; box-sizing: border-box; border-radius: 50%; background: #17120E; color: #FFFAEB; border: 4px solid #4a1a2c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 18px; font-size: 24px; line-height: 28px; font-weight: 700; z-index: 2; }
@@ -658,7 +658,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nu-spider .tm-c { margin-top: auto; padding-top: 10px; border-top: 2px dashed rgba(23, 18, 14, .35); }
 
 /* ---------- User needs: a T chart, two equal columns, three equal rows ---------- */
-.nearu-page .nu-tchart { position: absolute; left: 470px; top: 7630px; width: 822px; height: 410px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 64px repeat(3, 1fr); column-gap: 36px; row-gap: 14px; font-family: var(--font-ui); color: var(--espresso); }
+.nearu-page .nu-tchart { position: absolute; left: 489px; top: 7630px; width: 822px; height: 410px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 64px repeat(3, 1fr); column-gap: 36px; row-gap: 14px; font-family: var(--font-ui); color: var(--espresso); }
 .nu-tchart::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
 .nu-tchart .tc-head { display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #4a1a2c; font-size: 26px; line-height: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--chestnut); padding-bottom: 6px; margin-bottom: 2px; }
 .nu-tchart .tc-cell { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 0 24px; display: flex; align-items: center; font-size: 24px; line-height: 32px; font-weight: 600; }
