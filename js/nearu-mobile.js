@@ -185,7 +185,13 @@
   mobile.append(tagRow);
   copy(mobile, 1535, 'nearu-mobile-title');
   copy(mobile, 1546);
-  plate(mobile, [1552,1553], 414, 766, 930, 260);
+  // Project facts chip: the desktop panel's four columns as a 2 x 2 grid at readable size.
+  const fact = (h, v) => '<div class="nearu-fact"><p class="nearu-fact-h">' + h + '</p><p class="nearu-fact-v">' + v.join('<br>') + '</p></div>';
+  const facts = document.createElement('div');
+  facts.className = 'nearu-mobile-facts';
+  facts.innerHTML = fact('Teammates', ['Siddhi Bhavya', 'Ridhi Lakhina', 'Naaysha Doshi']) + fact('Timeline', ['May 2026', 'Jul to Aug 2026']) +
+    fact('My Role', ['Design', 'Research', 'Interactions']) + fact('Skills', ['Interaction Design', 'Prototyping', 'Figma']);
+  mobile.append(facts);
   plate(mobile, [1585], 458, 1082, 890, 572);
 
   let s = section('context', 1537);

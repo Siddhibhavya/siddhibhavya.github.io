@@ -444,6 +444,10 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
     letter-spacing: normal; white-space: normal; text-align: left;
   }
   .nearu-mobile .nearu-mobile-copy { display: block; }
+  .nearu-mobile-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 12px; box-sizing: border-box; padding: 20px 16px; background: #7b2b3d; border: 8px solid #4a1a2c; border-radius: 11px; color: #f7e9dc; }
+  .nearu-mobile-facts p { margin: 0; }
+  .nearu-fact-h { font-size: 16px; line-height: 28px; font-weight: 600; color: #f7e9dc; }
+  .nearu-fact-v { font-size: 16px; line-height: 24px; font-weight: 400; color: rgba(255, 237, 219, .83); }
   .nearu-mobile .nearu-mobile-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; align-items: center; }
   .nearu-mobile-tags span { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 0 14px; box-sizing: border-box; border-radius: 14px; background: #fde6cf; border: 2px solid rgba(74, 26, 44, .93); box-shadow: 0 2px 2px rgba(0, 0, 0, .25); font: 500 16px/1 var(--font-ui); color: #39265f; white-space: nowrap; transition: scale .3s var(--ease-out); }
   @media (hover: hover) and (pointer: fine) { .nearu-mobile-tags span:hover { scale: 1.025; } }
