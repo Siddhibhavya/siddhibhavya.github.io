@@ -459,40 +459,41 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 }
 
 /* ---------- How students sell today: a spider diagram (hub + three legs) ---------- */
-.nearu-page .nu-spider { position: absolute; left: 489px; top: 4821px; width: 822px; height: 640px; font-family: var(--font-ui); color: var(--espresso); }
+.nearu-page .nu-spider { position: absolute; left: 489px; top: 4821px; width: 822px; height: 590px; font-family: var(--font-ui); color: var(--espresso); }
 .nu-spider .sp-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .nu-spider .sp-lines path { fill: none; stroke: #4a1a2c; stroke-width: 4; stroke-linecap: round; }
-.nu-spider .sp-hub { position: absolute; left: 333px; top: 242px; width: 156px; height: 156px; box-sizing: border-box; border-radius: 50%; background: #17120E; color: #FFFAEB; border: 4px solid #4a1a2c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 18px; font-size: 24px; line-height: 28px; font-weight: 700; z-index: 2; }
-.nu-spider .sp-leg { position: absolute; width: 330px; height: 232px; box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 18px 24px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+.nu-spider .sp-hub { position: absolute; left: 341px; top: 225px; width: 140px; height: 140px; box-sizing: border-box; border-radius: 50%; background: #17120E; color: #FFFAEB; border: 4px solid #4a1a2c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 16px; font-size: 20px; line-height: 24px; font-weight: 700; z-index: 2; }
+.nu-spider .sp-leg { position: absolute; width: 310px; height: 204px; box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 14px 20px; display: flex; flex-direction: column; justify-content: center; gap: 6px; z-index: 1; }   /* the text block sits in the vertical middle of the card */
 .nu-spider .sp-promote { left: 0; top: 0; background: #FFD978; }
 .nu-spider .sp-coord { right: 0; top: 0; background: #BCD3F7; }
-.nu-spider .sp-order { left: 246px; bottom: 0; background: #FDB4B1; }
-.nu-spider .tm-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--hl-red); }
-.nu-spider p { margin: 0; font-size: 20px; line-height: 28px; font-weight: 500; }
+.nu-spider .sp-order { left: 256px; bottom: 0; background: #FDB4B1; }
+.nu-spider .tm-h { margin: 0; font-size: 24px; line-height: 30px; font-weight: 800; color: var(--hl-red); }
+.nu-spider p { margin: 0; font-size: 18px; line-height: 26px; font-weight: 500; }
 .nu-spider b { font-weight: 700; color: var(--hl-red); }
-.nu-spider .tm-c { margin-top: auto; padding-top: 10px; border-top: 2px dashed rgba(23, 18, 14, .35); }
+.nu-spider .tm-c { margin-top: 6px; padding-top: 10px; border-top: 2px dashed rgba(23, 18, 14, .35); }
 
 /* ---------- User needs: a T chart, two equal columns, three equal rows ---------- */
-.nearu-page .nu-tchart { position: absolute; left: 489px; top: 7630px; width: 822px; height: 410px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 64px repeat(3, 1fr); column-gap: 36px; row-gap: 14px; font-family: var(--font-ui); color: var(--espresso); }
+.nearu-page .nu-tchart { position: absolute; left: 489px; top: 7630px; width: 822px; height: 340px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 52px repeat(3, 1fr); column-gap: 36px; row-gap: 12px; font-family: var(--font-ui); color: var(--espresso); }
 .nu-tchart::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
-.nu-tchart .tc-head { display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #4a1a2c; font-size: 26px; line-height: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--chestnut); padding-bottom: 6px; margin-bottom: 2px; }
-.nu-tchart .tc-cell { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 0 24px; display: flex; align-items: center; font-size: 24px; line-height: 32px; font-weight: 600; }
+.nu-tchart .tc-head { display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #4a1a2c; font-size: 22px; line-height: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--chestnut); padding-bottom: 4px; margin-bottom: 2px; }
+.nu-tchart .tc-cell { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 0 22px; display: flex; align-items: center; font-size: 20px; line-height: 28px; font-weight: 600; }
 .nu-tchart .tc-cell b { font-weight: 700; color: var(--hl-red); }
 .nu-tchart .tc-cell.tc-l { background: #BCD3F7; }
 .nu-tchart .tc-cell.tc-r { background: #FFD978; }
 
 @media (max-width: 899px) {
-  .nearu-mobile .nu-spider { position: static; width: auto; height: auto; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+  .nearu-mobile .nu-spider { position: static; width: auto; height: auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
   .nearu-mobile .nu-spider .sp-lines { display: none; }
   .nearu-mobile .nu-spider .sp-hub { position: relative; left: auto; top: auto; flex: none; }
-  .nearu-mobile .nu-spider .sp-leg { position: relative; left: auto; right: auto; top: auto; bottom: auto; width: 100%; height: auto; padding: 22px 24px; }
-  .nearu-mobile .nu-spider .sp-leg::before { content: ''; position: absolute; left: 50%; top: -40px; width: 4px; height: 36px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
+  .nearu-mobile .nu-spider .sp-leg { position: relative; left: auto; right: auto; top: auto; bottom: auto; width: 100%; height: auto; padding: 14px 18px; }
+  .nearu-mobile .nu-spider .sp-leg::before { content: ''; position: absolute; left: 50%; top: -34px; width: 4px; height: 30px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
   .nearu-mobile .nu-spider .sp-hub { margin-bottom: 0; }
-  .nearu-mobile .nu-spider .tm-h { font-size: 28px; line-height: 34px; }
-  .nearu-mobile .nu-spider p { font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-spider .tm-h { font-size: 22px; line-height: 28px; }
+  .nearu-mobile .nu-spider p { font-size: 16px; line-height: 24px; }
+  .nearu-mobile .nu-spider .sp-hub { width: 112px; height: 112px; font-size: 18px; line-height: 22px; }
   .nearu-mobile .nu-tchart { position: relative; left: auto; top: auto; width: auto; height: auto; grid-template-rows: auto; grid-auto-rows: auto; column-gap: 20px; row-gap: 12px; }
-  .nearu-mobile .nu-tchart .tc-head { font-size: 18px; line-height: 24px; }
-  .nearu-mobile .nu-tchart .tc-cell { padding: 14px 14px; font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-tchart .tc-head { font-size: 16px; line-height: 22px; }
+  .nearu-mobile .nu-tchart .tc-cell { padding: 10px 12px; font-size: 16px; line-height: 24px; }
   .nearu-mobile .nu-persona .pp-photo { display: block; width: fit-content; margin: 22px auto 26px; }
   .nearu-mobile .nu-persona .nu-129 { width: min(262px, calc(100vw - 130px)); }
 }
