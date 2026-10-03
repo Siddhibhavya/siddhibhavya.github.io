@@ -10,15 +10,15 @@
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
   // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
-  //  700: room for the "how it works" recording below the intro film and above the first Try prototype pill (28 rows)
+  //  700: room for the "how it works" recording above the first Try prototype pill (17 rows)
   //  6300: the wireframe slider is 15% bigger, so the user flow below moves down 2 rows
   //  1240: one more row between the Context title and its paragraph
   //  1850, 2900, 8000, 8300, 8650: shorter copy left big gaps before Solution, Research, the library note, Reflection and the last pill: each moves up 1, 1, 1, 3 and 3 rows
   //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
-  const SYN_SHIFTS = [[700, 28], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [6300, 2], [8650, -3]];
+  const SYN_SHIFTS = [[700, 17], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [6300, 2], [8650, -3]];
   const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const synMoves = [];
-  canvas.querySelectorAll(':scope > *:not(.syn-rec):not(.syn-intro), :scope > .syn-flow > *').forEach(el => {
+  canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
     if (cs.position !== 'absolute' || isNaN(top)) return;
     const rows = SYN_SHIFTS.reduce((n, [from, r]) => n + (top >= from ? r : 0), 0);
@@ -124,7 +124,7 @@
   // and a leader line (SVG, drawn from the tag to the point data-fx/data-fy of the phone, as fractions of its width/height) draws in and retracts with it.
   const NS = 'http://www.w3.org/2000/svg';
   function layoutCalls(rec) {
-    const video = rec.querySelector('video'), svg = rec.querySelector('.syn-rec-lines');
+    const video = rec.querySelector('.syn-demo'), svg = rec.querySelector('.syn-rec-lines');
     if (!video || !svg) return;
     const fr = rec.getBoundingClientRect(), s = fr.width / rec.offsetWidth || 1, vr = video.getBoundingClientRect();
     const local = (x, y) => [(x - fr.left) / s, (y - fr.top) / s];
@@ -170,7 +170,7 @@
   function tagTick() {
     let playing = false;
     document.querySelectorAll('.syn-rec').forEach(rec => {
-      const v = rec.querySelector('video'), svg = rec.querySelector('.syn-rec-lines');
+      const v = rec.querySelector('.syn-demo'), svg = rec.querySelector('.syn-rec-lines');
       if (!v) return;
       if (!v.paused) playing = true;
       rec.querySelectorAll('.syn-rec-tag').forEach((tag, i) => {
@@ -198,21 +198,20 @@
   document.addEventListener('pause', e => { const rec = e.target.closest && e.target.closest('.syn-rec'); if (rec) clearCalls(rec); }, true);
 
 
-  // The intro film plays first: the demo recording below it waits until the film ends (or is scrolled away), then starts.
-  const introOf = el => { const wrap = el.closest('.syn-canvas, .syn-mobile'); return wrap && wrap.querySelector('.syn-intro video'); };
-  const introRunning = intro => intro && !intro.paused && !intro.ended;
+  // The green frame plays the intro film first; when it ends the film fades out and the phone demo (with its call-outs) fades in and starts.
   document.addEventListener('play', e => {
-    const t = e.target;
-    if (!t.closest) return;
-    if (t.closest('.syn-rec')) { const intro = introOf(t); if (introRunning(intro)) t.pause(); }
-    else if (t.closest('.syn-intro')) { const demo = t.closest('.syn-canvas, .syn-mobile').querySelector('.syn-rec video'); if (demo && !demo.paused) demo.pause(); }
+    const t = e.target, rec = t.closest && t.closest('.syn-rec');
+    if (!rec) return;
+    if (t.classList.contains('syn-demo') && rec.classList.contains('is-intro')) { t.pause(); const film = rec.querySelector('.syn-intro-video'); if (film && film.paused && !film.ended) film.play().catch(() => {}); }
+    else if (t.classList.contains('syn-intro-video') && !rec.classList.contains('is-intro')) t.pause();
   }, true);
   document.addEventListener('ended', e => {
-    const t = e.target;
-    if (!t.closest || !t.closest('.syn-intro')) return;
-    const demo = t.closest('.syn-canvas, .syn-mobile').querySelector('.syn-rec video');
+    const t = e.target, rec = t.closest && t.closest('.syn-rec');
+    if (!rec || !t.classList.contains('syn-intro-video')) return;
+    rec.classList.remove('is-intro');
+    const demo = rec.querySelector('.syn-demo');
     if (!demo || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const r = demo.getBoundingClientRect();
+    const r = rec.getBoundingClientRect();
     if (r.bottom > 0 && r.top < innerHeight) demo.play().catch(() => {});
   }, true);
 
