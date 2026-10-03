@@ -38,6 +38,23 @@
     stage.append(layers); box.append(stage); parent.append(box);
     plates.push({box, stage, width, height});
   }
+  // Videos on phones: the whole 4:3 clip at full column width (the desktop's crop of it cut phones off), watermark corner trimmed by a slight zoom.
+  function vid(parent, id, cls = '') {
+    const v = source(id).querySelector('video').cloneNode(true);
+    v.removeAttribute('data-node-id');
+    const box = document.createElement('div');
+    box.className = 'nearu-mobile-video ' + cls;
+    box.append(v);
+    parent.append(box);
+  }
+  // A designed block (treemap, persona paper) cloned whole: its own CSS reflows it into one column.
+  function block(parent, id, cls = '') {
+    const el = clone(id);
+    el.classList.add('nearu-mobile-block');
+    if (cls) el.classList.add(cls);
+    parent.append(el);
+    return el;
+  }
   function section(name, id) {
     const el = document.createElement('section');
     el.id = 'mobile-' + name;
@@ -73,32 +90,53 @@
       box.append(col);
     });
   }
-  // "Current ecosystem" chart: a tall version of the desktop diagram (same NearU yellow/blue/black), sized for a phone.
+  // "Current ecosystem" as a loop (same design as the reference: boxes on a ring joined by solid arrows, a dark core with dashed arrows from the
+  // boxes that trade there). One builder, two layouts: a wide ring on the desktop canvas, a tall zig-zag ring on phones. Text is real SVG text, 16px or more.
+  const LOOP = [
+    { t: 'Material source', s: ['supplies', 'makers'] },
+    { t: 'Seller', s: ['makes, posts', 'and sells'], hl: 1 },
+    { t: 'Buyer', s: ['finds sellers', 'at fests, DMs'] },
+    { t: 'Commission', s: ['pays a peer', 'to make it'] },
+    { t: 'Other sellers', s: ['swap tips', 'and supplies'] }
+  ];
+  const LOOP_DASHED = [1, 2, 4];
+  function loopSVG(cfg) {
+    const { w, h, bw, bh, core, pos, uid } = cfg, [cx, cy, cw, ch] = core;
+    const edge = (x, y, hw, hh, dx, dy) => { const t = Math.min(hw / Math.abs(dx || 1e-9), hh / Math.abs(dy || 1e-9)); return [x + dx * t, y + dy * t]; };
+    const unit = (dx, dy) => { const l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
+    let ring = '', dash = '', boxes = '';
+    pos.forEach(([x, y], i) => {
+      const [bx, by] = pos[(i + 1) % pos.length], [ux, uy] = unit(bx - x, by - y);
+      const [sx, sy] = edge(x, y, bw / 2 + 6, bh / 2 + 6, ux, uy), [ex, ey] = edge(bx, by, bw / 2 + 8, bh / 2 + 8, -ux, -uy);
+      const mx = (sx + ex) / 2, my = (sy + ey) / 2, [ox, oy] = unit(mx - cx, my - cy), len = Math.hypot(ex - sx, ey - sy);
+      ring += `<path class="lp-ring" d="M${sx.toFixed(1)} ${sy.toFixed(1)} Q${(mx + ox * len * .2).toFixed(1)} ${(my + oy * len * .2).toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" marker-end="url(#${uid}-head)"/>`;
+    });
+    LOOP_DASHED.forEach(i => {
+      const [x, y] = pos[i], [ux, uy] = unit(cx - x, cy - y);
+      const [sx, sy] = edge(x, y, bw / 2 + 6, bh / 2 + 6, ux, uy), [ex, ey] = edge(cx, cy, cw / 2 + 8, ch / 2 + 8, -ux, -uy);
+      dash += `<path class="lp-dash" d="M${sx.toFixed(1)} ${sy.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)}" marker-end="url(#${uid}-head)"/>`;
+    });
+    pos.forEach(([x, y], i) => {
+      const n = LOOP[i];
+      boxes += `<rect class="lp-box${n.hl ? ' lp-hl' : ''}" x="${x - bw / 2}" y="${y - bh / 2}" width="${bw}" height="${bh}" rx="8"/>` +
+        `<text class="lp-title" x="${x}" y="${y - 12}" text-anchor="middle">${n.t}</text>` +
+        n.s.map((t, k) => `<text class="lp-sub" x="${x}" y="${y + 12 + k * 20}" text-anchor="middle">${t}</text>`).join('');
+    });
+    const coreSvg = `<rect class="lp-core" x="${cx - cw / 2}" y="${cy - ch / 2}" width="${cw}" height="${ch}" rx="10"/>` +
+      `<text class="lp-core-t" x="${cx}" y="${cy - 2}" text-anchor="middle">Fests</text><text class="lp-core-s" x="${cx}" y="${cy + 24}" text-anchor="middle">most sales happen here</text>`;
+    return `<svg class="loop-svg" viewBox="0 0 ${w} ${h}" aria-hidden="true"><defs><marker id="${uid}-head" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#17120E"/></marker></defs>${dash}${ring}${boxes}${coreSvg}</svg>`;
+  }
+  const LOOP_WIDE = { w: 820, h: 600, bw: 176, bh: 88, core: [410, 300, 230, 88], pos: [[410, 62], [702, 228], [590, 500], [230, 500], [118, 228]], uid: 'lpd' };
+  const LOOP_TALL = { w: 340, h: 530, bw: 148, bh: 92, core: [170, 320, 190, 88], pos: [[170, 52], [262, 176], [262, 464], [78, 464], [78, 176]], uid: 'lpm' };
+  const desktopEco = canvas.querySelector('.nu-eco');
+  if (desktopEco) desktopEco.innerHTML = loopSVG(LOOP_WIDE);
   function ecosystem(parent) {
     copy(parent, 9004, 'nearu-mobile-label');
-    const K = '#17120E';
-    const nodes = [[56,62,50,'SELLER','y',K],[170,62,50,'MATERIAL|SOURCE','b','#fff'],[284,62,50,'OTHER|SELLER','y',K],
-      [170,232,64,'FEST','r','#fff'],[56,402,50,'BUYER','w',K],[170,402,50,'COMMISSION','b','#fff'],[284,402,50,'SELLER','y',K]];
-    const stops = {"y": [[0, "#FEC12D", 1], [0.62, "#FEC12D", 1], [0.85, "#FEC12D", 0.9], [1, "#FEC12D", 0]], "b": [[0, "#0D57CE", 1], [0.62, "#0D57CE", 1], [0.85, "#0D57CE", 0.9], [1, "#0D57CE", 0]], "w": [[0, "#FFFAEB", 1], [0.62, "#FFFAEB", 1], [0.85, "#FFFAEB", 0.9], [1, "#FFFAEB", 0]], "r": [[0, "#FC5956", 1], [0.62, "#FC5956", 1], [0.85, "#FC5956", 0.9], [1, "#FC5956", 0]]};
-    const defs = Object.entries(stops).map(([k, st]) => `<radialGradient id="eco-${k}-m" cx=".5" cy=".5" r=".5">${st.map(([p,c,o]) => `<stop offset="${p}" stop-color="${c}" stop-opacity="${o}"/>`).join('')}</radialGradient>`).join('');
-    const halo = nodes.map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r-4}" fill="rgba(254,193,45,.5)"/>`).join('');
-    const bridges = [[56,62,284,62],[170,62,170,232],[170,232,170,402],[56,402,284,402]].map(([a,b,c,d]) =>
-      `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="rgba(254,193,45,.5)" stroke-width="40" stroke-linecap="round"/>`).join('');
-    const shapes = nodes.map(([x,y,r,,g]) => `<circle cx="${x}" cy="${y}" r="${r+8}" fill="url(#eco-${g}-m)"/>` + (g === 'w' ? `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${K}" stroke-width="3"/>` : '')).join('');
-    const labels = nodes.map(([x,y,,l,,c]) => l.split('|').map((t,i,a) =>
-      `<text${t === 'FEST' ? ' class="eco-fest"' : ''} x="${x}" y="${y + (i - (a.length - 1) / 2) * 14 + 4}" text-anchor="middle" fill="${c}">${t}</text>`).join('')).join('');
-    const ln = (a,b,c,d,st,en) => `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}"${st ? ' marker-start="url(#eco-head-m)"' : ''}${en ? ' marker-end="url(#eco-head-m)"' : ''}/>`;
-    const links = ln(108,62,118,62,1,1) + ln(222,62,232,62,1,1) + ln(170,120,170,160,1,1) + ln(170,304,170,344,1,1) +
-      ln(108,402,118,402,0,1) + ln(222,402,232,402,0,1);
     const box = document.createElement('div');
     box.className = 'nearu-mobile-eco';
-    box.innerHTML = `<svg viewBox="0 0 340 464" role="img" aria-label="Current campus commerce ecosystem: a seller trades with a material source and other sellers; fests link sellers to buyers; a buyer pays a commission to a seller.">
-      <defs>${defs}
-        <filter id="eco-blur-m" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
-        <filter id="eco-grain-m" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" type="saturate" values="0" result="g"/><feComponentTransfer in="g" result="g2"><feFuncR type="linear" slope=".55" intercept=".5"/><feFuncG type="linear" slope=".55" intercept=".5"/><feFuncB type="linear" slope=".55" intercept=".5"/></feComponentTransfer><feComposite in="g2" in2="SourceAlpha" operator="in" result="gm"/><feBlend in="gm" in2="SourceGraphic" mode="multiply"/></filter>
-        <marker id="eco-head-m" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1 0.5 L11 6 L1 11.5 Z" fill="${K}"/></marker>
-      </defs>
-      <g filter="url(#eco-blur-m)">${halo}${bridges}</g><g filter="url(#eco-grain-m)">${shapes}</g><g class="eco-links">${links}</g><g class="eco-labels">${labels}</g></svg>`;
+    box.setAttribute('role', 'img');
+    box.setAttribute('aria-label', source(9005).getAttribute('aria-label') || '');
+    box.innerHTML = loopSVG(LOOP_TALL);
     parent.append(box);
     const note = document.createElement('ul');
     note.className = 'nearu-mobile-eco-note';
@@ -192,7 +230,7 @@
   facts.innerHTML = fact('Teammates', ['Siddhi Bhavya', 'Ridhi Lakhina', 'Naaysha Doshi']) + fact('Timeline', ['May 2026', 'Jul to Aug 2026']) +
     fact('My Role', ['Design', 'Research', 'Interactions']) + fact('Skills', ['Interaction Design', 'Prototyping', 'Figma']);
   mobile.append(facts);
-  plate(mobile, [1585], 458, 1082, 890, 572);
+  vid(mobile, 1585, 'is-demo');
 
   let s = section('context', 1537);
   copy(s, 1536, 'nearu-mobile-subtitle'); copy(s, 1547);
@@ -201,8 +239,8 @@
   plate(s, [1521,1522,1575,1576,1577,1578,1579,1580,1630], 480, 2270, 765, 407);
   s = section('ideation', 1539);
   copy(s, 1550);
-  plate(s, [1581,1583,1587], 427, 2976, 899, 284);
-  plate(s, [1582,1584,1596], 470, 3301, 863, 284);
+  copy(s, 1583, 'nearu-mobile-label'); vid(s, 1581, 'is-wire'); plate(s, [1587], 1021, 3030, 260, 84);
+  copy(s, 1584, 'nearu-mobile-label'); vid(s, 1582, 'is-wire'); plate(s, [1596], 470, 3301, 230, 167);
   copy(s, 1586);
   const abRow = document.createElement('div');
   abRow.className = 'nearu-mobile-ab';
@@ -213,14 +251,11 @@
 
   s = section('research', 1540);
   copy(s, 1604); copy(s, 1541, 'nearu-mobile-label'); copy(s, 1605);
-  mindmap(s, [1608, 1610, 1613], 1614);   // hub ("HOW STUDENTS SELL TODAY") + its three branches, still a mind map on small screens
+  copy(s, 1614, 'nearu-mobile-label'); block(s, 9020);   // how students sell today: the colourful treemap, stacked
   ecosystem(s);
   copy(s, 1542, 'nearu-mobile-label'); insights(s);
-  copy(s, 1545, 'nearu-mobile-label');
-  plate(s, [1520,1615,1616], 370, 6929, 350, 400);
-  copy(s, 1617);
-  // User needs: the desktop diagram (two boxes under a bracket) can't hold 16px text when scaled to a phone, so stack the two needs as cards.
-  copy(s, 1621, 'nearu-mobile-label'); card(s, 1628); card(s, 1629);
+  block(s, 9022);                                          // user persona on torn paper
+  copy(s, 1621, 'nearu-mobile-label'); block(s, 9021);   // user needs treemap
   copy(s, 1544, 'nearu-mobile-label'); copy(s, 1564);
 
   s = section('design', 1543);

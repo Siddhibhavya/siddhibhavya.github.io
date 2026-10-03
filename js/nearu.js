@@ -5,17 +5,26 @@
   const viewport = document.querySelector('.nearu-viewport');
   const canvas = document.querySelector('.nearu-canvas');
   const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
-  // Rows pushed into the canvas for content that grew (whole 41px paper rows): [fromY, rows, class that must not move].
-  // Ideation videos are 15% bigger: everything from y=3460 down moves 4 rows (the enlarged art itself is placed in nearu.css).
-  const SHIFTS = [[3460, 4, 'nu-94']];
+  // Rows moved in the canvas for content that grew or shrank (whole 41px paper rows): [fromY, rows, class that must not move].
+  // Every threshold is in the ORIGINAL Figma y, and all moves for an element add up, so the table reads top to bottom:
+  //  3460: the ideation videos are 15% bigger, so everything below moves down 4 rows (the enlarged art itself is placed in nearu.css)
+  //  5700: the "How students sell" treemap is shorter than the three cards it replaced, so the ecosystem moves up 7 rows
+  //  6300: the loop diagram is taller than the old chart, so what follows moves back down 3 rows
+  //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 3 rows
+  //  8200: the User Needs treemap is shorter than the old diagram, so Design onward moves up 2 rows
+  const SHIFTS = [[3460, 4, 'nu-94'], [5700, -7], [6300, 3], [6880, 3], [8200, -2]];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
   const inCanvasSpace = el => { const p = el.parentElement; return p === canvas || (p && (p.classList.contains('nu-4') || (getComputedStyle(p).display === 'contents' && inCanvasSpace(p)))); };
-  SHIFTS.forEach(([from, rows, except]) => canvas.querySelectorAll('*').forEach(el => {
-    if (el.classList.contains(except) || !inCanvasSpace(el)) return;
+  const moves = [];
+  canvas.querySelectorAll('*').forEach(el => {
+    if (!inCanvasSpace(el)) return;
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
-    if (cs.position === 'absolute' && top >= from) el.style.top = (top + rows * 41) + 'px';
-  }));
+    if (cs.position !== 'absolute' || isNaN(top)) return;
+    const rows = SHIFTS.reduce((n, [from, r, except]) => n + (top >= from && !(except && el.classList.contains(except)) ? r : 0), 0);
+    if (rows) moves.push([el, top + rows * 41]);
+  });
+  moves.forEach(([el, top]) => { el.style.top = top + 'px'; });
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let scale = 1;
   function fit() {
@@ -81,15 +90,15 @@
   // Measure the real font baseline, rather than estimating it from font size.
   // Filled cards/pills have their own centred typography; all writing on paper
   // follows the same continuous rows, including titles and image captions.
-  const ruledIds = [1535,1536,1537,1538,1539,1540,1541,1542,1543,1544,1545,
+  const ruledIds = [1535,1536,1537,1538,1539,1540,1541,1542,1543,1544,
     1546,1547,1549,1550,1564,1583,1584,1586,1601,1602,1603,1604,1605,
-    1614,9004,9006,9010,9012,9013,9014,9015,9016,1617,1639,1640,1656,1657,1658,1659,1660,1661,1662,1663,
+    1614,9004,9006,9010,9012,9013,9014,9015,9016,1621,1639,1640,1656,1657,1658,1659,1660,1661,1662,1663,
     1674,1675,1676,1677,1710,1711,1712,1713,9002,9003];
   const ruled = ruledIds.map(id => canvas.querySelector('[data-node-id="351:' + id + '"]'));
   ruled.forEach(el => {
     el.classList.add('nearu-ruled');
     el.style.setProperty('--ruled-line', parseFloat(getComputedStyle(el).fontSize) > 41 ? '82px' : '41px');
-    if (el.classList.contains('nu-244')) el.style.top = (9822 + SHIFT_TOTAL) + 'px';
+    if (el.classList.contains('nu-244')) el.style.top = (9799 + SHIFT_TOTAL) + 'px';
   });
   function baseline(el) {
     const line = el.matches('p,h1,h2') ? el : el.querySelector('li,p,.rs-title') || el;
@@ -120,7 +129,7 @@
       if (refl) refl.style.paddingTop = '0px';
       const exempt = el => {
         for (let n = el; n && n !== paper; n = n.parentElement) {
-          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-facts,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
+          if (n.matches('svg,button,a.pill,.nearu-mobile-card,.nearu-mobile-facts,.nu-persona,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
           if (n.classList.contains('nearu-mobile-copy')) continue;
           const bg = getComputedStyle(n).backgroundColor;
           if (bg && bg !== 'transparent' && !/rgba\(\d+, \d+, \d+, 0\)/.test(bg)) return true;
