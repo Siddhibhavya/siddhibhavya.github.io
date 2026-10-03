@@ -421,7 +421,7 @@ break the SPA feel the shell is built for.
 - Regenerate sheets with `node tools/make-paper-sheets.js` (needs `npm install sharp --no-save`; dev-only). Tear roughness is set by the displacement `scale` numbers in that file.
 
 ### Notifications
-- Any toast/notification pill is centred on the **content area (the page minus the sidebar)**, not on the window: use `left: var(--notify-x, 50%)` with `transform: translateX(-50%)`. `--notify-x` is set in `js/shell.js` `fit()` (half the window when the sidebar is a drawer). The "You can move some elements" hint on About loops (3 s on, every 12 s) until an element is picked up.
+- Any toast/notification pill is centred on the **content area (the page minus the sidebar)**, not on the window: use `left: var(--notify-x, 50%)` with `transform: translateX(-50%)`. `--notify-x` is set in `js/shell.js` `fit()` (half the window when the sidebar is a drawer). The "You can move some elements" hint on About shows **once** (3 s, remembered for the session via `sessionStorage`), never in a loop.
 
 ### Build / tooling gotchas
 - `css/site.css` is a **generated bundle**: after editing `css/base.css`, `css/shell/*` or `css/pages/{work,decor,guest,quests,about}.css`, run `node tools/bundle-css.js` or `tools/check.js` fails with "css/site.css is stale". `nearu.css` / `syncletter.css` are linked directly, not bundled.

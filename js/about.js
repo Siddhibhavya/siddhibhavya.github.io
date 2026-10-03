@@ -97,9 +97,8 @@
   }
 
   /* ------------------------------------------------------------------ the "you can move some elements" hint
-     Once a visitor scrolls down the page, a small pill says so for 3 seconds, then comes back every 12 seconds (a loop) while they are scrolled down,
-     until they pick up one of the elements — or leave the page. */
-  const HINT_EVERY = 12000;
+     The first time a visitor scrolls down the page, a small pill says so for 3 seconds. It shows once (remembered for the session), never in a loop. */
+  const seen = () => { try { return sessionStorage.getItem('moveHint') === '1'; } catch (e) { return false; } };
   let onScroll = null, loop = 0, moved = false;
   function showHint() {
     if (!document.querySelector('.dc.drag')) { stopHint(); return; }      // already navigated away
@@ -110,6 +109,8 @@
     document.body.appendChild(pill);
     setTimeout(() => pill.classList.add('out'), 2500);                    // 0.35s in, held, then a 0.5s fade out: gone after 3 seconds
     setTimeout(() => pill.remove(), 3000);
+    try { sessionStorage.setItem('moveHint', '1'); } catch (e) {}
+    stopHint();
   }
   function stopHint() {
     clearInterval(loop); loop = 0;
@@ -122,12 +123,11 @@
       document.body.dataset.hintDrag = '1';
       document.addEventListener('pointerdown', (e) => { if (e.target.closest && e.target.closest('.dc.drag')) { moved = true; stopHint(); } });
     }
-    if (moved) return;
+    if (moved || seen()) return;
     onScroll = () => {
       if (window.scrollY < 150) return;
       window.removeEventListener('scroll', onScroll); onScroll = null;
       showHint();
-      loop = setInterval(showHint, HINT_EVERY);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
   }
