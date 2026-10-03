@@ -129,15 +129,14 @@
     const video = rec.querySelector('.syn-demo'), svg = rec.querySelector('.syn-rec-lines');
     if (!video || !svg) return;
     const fr = rec.getBoundingClientRect(), s = fr.width / rec.offsetWidth || 1, vr = video.getBoundingClientRect();
-    const local = (x, y) => [(x - fr.left) / s, (y - fr.top) / s];
+    const local = (x, y) => [(x - fr.left) / s - rec.clientLeft, (y - fr.top) / s - rec.clientTop];
     rec._geo = { vx: local(vr.left, vr.top)[0], vy: local(vr.left, vr.top)[1], vw: vr.width / s, vh: vr.height / s };
     [...rec.querySelectorAll('.syn-rec-tag')].forEach((tag, i) => {
       const g = svg.children[i];
       if (!g) return;
-      const was = tag.style.transition; tag.style.transition = 'none'; const on = tag.classList.contains('on'); tag.classList.add('on');
-      const tr = tag.getBoundingClientRect(); if (!on) tag.classList.remove('on'); tag.style.transition = was;
+      // layout box (offset*) ignores the slide-in translate, so there is no need to show the tag to measure it; the tag's top is its vertical centre
       const [tx, ty] = local(vr.left + (+tag.dataset.fx) * vr.width, vr.top + (+tag.dataset.fy) * vr.height);
-      const [ax, ay] = tag.classList.contains('syn-rec-l') ? local(tr.right + 10, tr.top + tr.height / 2) : local(tr.left - 10, tr.top + tr.height / 2);
+      const ax = tag.classList.contains('syn-rec-l') ? tag.offsetLeft + tag.offsetWidth + 10 : tag.offsetLeft - 10, ay = tag.offsetTop;
       const line = g.querySelector('line');
       g._anchor = [ax, ay];
       line.setAttribute('x1', ax); line.setAttribute('y1', ay); line.setAttribute('x2', tx); line.setAttribute('y2', ty);
