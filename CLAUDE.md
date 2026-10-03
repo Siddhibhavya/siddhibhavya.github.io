@@ -88,6 +88,8 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   already given.
 - Run `node tools/check.js` after every change; zero errors before calling
   something done.
+- **Pages load minified files** (`js/foo.min.js`, `css/intro.min.css`, `css/notfound.min.css`, `css/pages/syncletter.min.css`, and `css/site.css`). Edit the readable source, then run `node tools/build-min.js` (and `node tools/bundle-css.js` for bundled CSS); `check.js` errors if a `.min` file is older than its source. NearU files are not minified yet (`node tools/build-min.js --nearu` once its WIP is committed). Never hand-edit a `.min` file. Commit source + `.min` together.
+- **Shared working tree:** another chat may have uncommitted work in the same repo (e.g. the NearU prototype). Before committing run `git status`, stage only your own files/hunks (`git apply --cached` on selected hunks if a file is shared), and leave the rest alone.
 - Commit only what was actually asked for or touched — don't stage unrelated
   in-progress work found elsewhere in the tree.
 - **Fonts:** Ancizar Sans only (self-hosted, `size-adjust: 122%`); **never Inter**. Bold/black render italic by design; an upright bold uses `'Ancizar Sans Upright'`. Details: `CASE-STUDY-GUIDELINES.md` section 8.

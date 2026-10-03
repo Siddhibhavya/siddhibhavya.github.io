@@ -261,7 +261,9 @@
 
   const CHAT = S.chat || {};
   async function remoteReply(text, history) {
-    const res = await fetch(CHAT.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: (history || []).slice(-8), system: systemPrompt() }) });
+    const ctl = new AbortController(), cut = setTimeout(() => ctl.abort(), 8000);                  // a stalled endpoint must not leave the chat "thinking": after 8 s fall back to the written bank
+    let res;
+    try { res = await fetch(CHAT.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal, body: JSON.stringify({ message: text, history: (history || []).slice(-8), system: systemPrompt() }) }); } finally { clearTimeout(cut); }
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (!data || !data.text) throw new Error('empty reply');

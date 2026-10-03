@@ -107,3 +107,7 @@ own facts (no inventions), home card + Figma frame matched to the page,
 - NearU and Syncletter are rebuilt: shorter copy, spider / loop / T-chart, persona on torn paper, memos, film + demo frame with call-outs, centred media. Open item: **recordings of each part of the NearU app** to replace the buyer/seller image, and the NearU prototype link (owner will supply).
 - Moving content: edit the shift tables (`SHIFTS`, `SYN_SHIFTS`), then run `tools/gaps.js` and `tools/grid-audit.js` at 1200 and 400px; fix gaps > ~100px and any overlap before committing.
 - A doc with the original (pre-edit) copy of both pages exists in Claude Docs ("Case studies: original copy"); git `94a7589` has the originals.
+
+## Update 2026-10-04 (performance pass done)
+- Site is minified (`tools/build-min.js`), fonts WOFF2, lazy loading network-aware, DB/chat timeouts verified, cross-device overflow audit clean (see CASE-STUDY-GUIDELINES.md section 10 and decisions.md).
+- Still open: NearU prototype integration (another chat), NCFE and "Are they Driving?" case studies + their My Work cards (hidden until ready, search `HIDDEN-UNTIL-READY`), M.I.K.U answers (163 blank in the bank).
