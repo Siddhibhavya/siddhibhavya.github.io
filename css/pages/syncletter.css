@@ -426,25 +426,25 @@
 
 
 /* ---------- Decision cards (above Reflection): flat colour memos pinned to the page, like the My Work cards ---------- */
-.syn-decisions { position: absolute; left: 474px; top: 8220px; width: 857px; display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: stretch; font-family: var(--font-ui); color: #02221e; }
-.syn-dec { position: relative; box-sizing: border-box; border-radius: 22px; padding: 34px 30px 30px; box-shadow: -7px 9px 7px rgba(0, 0, 0, .24); display: flex; flex-direction: column; }
+.syn-decisions { position: absolute; left: 474px; top: 8220px; width: 857px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: stretch; font-family: var(--font-ui); color: #02221e; }
+.syn-dec { position: relative; box-sizing: border-box; border-radius: 20px; padding: 26px 24px 22px; box-shadow: -7px 9px 7px rgba(0, 0, 0, .24); display: flex; flex-direction: column; }
 .syn-dec-a { background: #a3dcae; rotate: -1.3deg; }   /* light green from the spectrum; a slight tilt, a static rotation (no animated transform) so the text stays crisp */
 .syn-dec-b { background: #fbc7a0; rotate: 1.1deg; }    /* peach from the spectrum */
 .syn-dec .pin { position: absolute; left: calc(50% - 16.5px); top: -14px; width: 33px; height: 33px; border-radius: 50%; background: #a20000; box-shadow: 0 4px 4px rgba(0, 0, 0, .25); pointer-events: none; z-index: 3; }   /* the My Work thumbtack: red, the opposite of Syncletter green */
 .syn-dec .pin::after { content: ''; position: absolute; left: 4px; top: 4px; width: 25px; height: 25px; border-radius: 50%; background: #6c0000; }
-.syn-dec-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.syn-dec-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .syn-dec-tag { font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; padding: 3px 12px; border: 2px solid #02221e; border-radius: 16px; white-space: nowrap; }
-.syn-dec-art { width: 170px; height: auto; flex: none; }
-.syn-dec-h { margin: 0 0 22px; font-family: var(--font-ui); font-weight: 900; font-size: 44px; line-height: 50px; color: #02221e; }
-.syn-dec p { margin: 0; padding: 16px 0 0; border-top: 2px solid rgba(2, 34, 30, .85); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
-.syn-dec p + p { margin-top: 16px; }
+.syn-dec-art { width: 130px; height: auto; flex: none; }
+.syn-dec-h { margin: 0 0 16px; font-family: var(--font-ui); font-weight: 900; font-size: 34px; line-height: 40px; color: #02221e; }
+.syn-dec p { margin: 0; padding: 12px 0 0; border-top: 2px solid rgba(2, 34, 30, .85); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.syn-dec p + p { margin-top: 12px; }
 .syn-dec-k { font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; }
-.syn-dec-t { font-size: 20px; line-height: 30px; font-weight: 400; }
+.syn-dec-t { font-size: 18px; line-height: 27px; font-weight: 400; }
 .syn-dec-t b { font-weight: 700; color: var(--hl-red); }
 @media (max-width: 899px) {
   .syn-mobile .sm-decisions { display: grid; grid-template-columns: 1fr; gap: 44px; width: 100%; max-width: 560px; padding-top: 14px; }
-  .syn-mobile .sm-decisions .syn-dec { padding: 30px 22px 26px; }
-  .syn-mobile .sm-decisions .syn-dec-h { font-size: 34px; line-height: 40px; }
-  .syn-mobile .sm-decisions .syn-dec-art { width: 130px; }
-  .syn-mobile .sm-decisions .syn-dec-t { font-size: 18px; line-height: 26px; }
+  .syn-mobile .sm-decisions .syn-dec { padding: 24px 20px 20px; }
+  .syn-mobile .sm-decisions .syn-dec-h { font-size: 28px; line-height: 34px; }
+  .syn-mobile .sm-decisions .syn-dec-art { width: 104px; }
+  .syn-mobile .sm-decisions .syn-dec-t { font-size: 16px; line-height: 24px; }
 }
