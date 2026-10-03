@@ -10,15 +10,17 @@
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
   // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
-  //  700: room for the "how it works" recording above the first Try prototype pill (17 rows)
+  //  700: room for the "how it works" recording (the project facts chip, then the frame) above the first Try prototype pill (22 rows)
   //  6300: the wireframe slider is 15% bigger, so the user flow below moves down 2 rows
+  //  1000: the facts chip moved above the frame, so Context onward closes up 4 rows
   //  1240: one more row between the Context title and its paragraph
   //  1850, 2900, 8000, 8300, 8650: shorter copy left big gaps before Solution, Research, the library note, Reflection and the last pill: each moves up 1, 1, 1, 3 and 3 rows
   //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
-  const SYN_SHIFTS = [[700, 17], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [6300, 2], [8650, -3]];
+  const SYN_SHIFTS = [[700, 22], [1000, -4], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [6300, 2], [8650, -3]];
   const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const synMoves = [];
   canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
+    if (/(^| )syn-13[a-j]?( |$)/.test(el.className)) return;   // the facts chip is placed above the frame in css, not shifted
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
     if (cs.position !== 'absolute' || isNaN(top)) return;
     const rows = SYN_SHIFTS.reduce((n, [from, r]) => n + (top >= from ? r : 0), 0);
