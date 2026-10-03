@@ -64,7 +64,7 @@
 }
 .title { left: 24.4px; top: 308.6px; font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 22px; color: var(--ink); white-space: nowrap; }
 .desc { left: 26.3px; top: 341.8px; width: 381px; font-size: 15px; line-height: 1.22; color: var(--brown); }
-.desc.justify { text-align: justify; }
+.desc.justify { text-align: justify; text-justify: inter-word; hyphens: auto; }   /* hyphenation keeps the wide gaps ("rivers") out of the justified lines on narrow cards */
 
 /* the thumbtack on each card, centred on the top edge (Figma "Ellipse 8/9": a 33px head with a 25px darker top, soft shadow). Colour = the opposite of the project's colour (--pin / --pin-in set on each card) */
 .pin { left: 202px; top: -12.5px; width: 33px; height: 33px; border-radius: 50%; background: var(--pin, #a20000); box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); pointer-events: none; z-index: 3; }

@@ -69,6 +69,7 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **Persona paper is a mask over multiplied tan**, not a CSS filter (filter gave olive). Light type on dark paper.
 - **How students sell = spider diagram, User needs = T chart, Current ecosystem = loop diagram** (chart vocabulary from the user's "graphic organisers" sheet). Keep both T-chart columns equal in rows.
 - **Pruned**: 118 dead NearU CSS rules, unused card/mindmap JS, `syncletter/demo.mp4`, two bracket SVGs. No minification (no build step) and no media recompression.
+- **Syncletter decision cards** ("No AI implementation", "Scalability") sit above Reflection: filled cards (grid-exempt), teal border, label chips, key phrases bold red; Reflection onward is pushed down by the `[8300, 14]` entry in `SYN_SHIFTS`. Syncletter alignment also re-runs on `load` and when fonts finish (cold-cache first visits misaligned the headings).
 - **About greeting hugs its text** (no reserved width) so ", I am" stays close to Namaste/Hello.
 
 ## Checks before committing

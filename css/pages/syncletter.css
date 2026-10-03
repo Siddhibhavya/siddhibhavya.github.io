@@ -423,3 +423,22 @@
 
 /* "I learnt, I wasn't the only one struggling!": bold but upright (the site's bold weights are italic otherwise) */
 .syn-26, .syn-mobile .sm-learnt { font-family: 'Ancizar Sans Upright', var(--font-ui); font-style: normal; }
+
+
+/* ---------- Decision cards (above Reflection): the two product decisions, key phrases in bold red ---------- */
+.syn-decisions { position: absolute; left: 474px; top: 8220px; width: 857px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: stretch; font-family: var(--font-ui); color: var(--espresso); }
+.syn-dec { box-sizing: border-box; background: #faf2ea; border: 4px solid #075e54; border-radius: 20px; padding: 30px 28px 28px; box-shadow: -6px 8px 6px rgba(0, 0, 0, .22); display: flex; flex-direction: column; gap: 18px; }
+.syn-dec-h { margin: 0 0 4px; font-family: var(--font-ui); font-weight: 900; font-size: 40px; line-height: 46px; color: #075e54; }
+.syn-dec p { margin: 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.syn-dec-k { display: inline-block; padding: 2px 12px; border-radius: 14px; background: #075e54; color: #fff1df; font-weight: 700; font-size: 16px; line-height: 24px; letter-spacing: .6px; text-transform: uppercase; }
+.syn-dec-t { font-size: 20px; line-height: 30px; font-weight: 400; }
+.syn-dec-t b { font-weight: 700; color: var(--hl-red); }
+@media (max-width: 899px) {
+  .syn-mobile .sm-decisions { display: grid; grid-template-columns: 1fr; gap: 28px; width: 100%; max-width: 560px; }
+  .syn-mobile .sm-decisions .syn-dec { padding: 26px 22px 24px; }
+  .syn-mobile .sm-decisions .syn-dec-h { font-size: 32px; line-height: 38px; }
+  .syn-mobile .sm-decisions .syn-dec-t { font-size: 18px; line-height: 26px; }
+}
+
+/* Case-study emphasis is bold and upright, never italic (2026-10-04); see css/pages/nearu.css. */
+:is(.syn-canvas, .syn-mobile) :is(b, strong, .syn-stat, .syn-highlight, .syn-semibold, .syn-rec-tag, .sm-learnt, .syn-dec-t b) { font-family: 'Ancizar Sans Upright', var(--font-ui); font-style: normal; }
