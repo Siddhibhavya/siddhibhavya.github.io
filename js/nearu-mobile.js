@@ -268,7 +268,8 @@
     if (innerWidth >= 900) return;
     tagRow.style.position = 'relative'; tagRow.style.top = '0px';
     const bottom = tagRow.getBoundingClientRect().bottom - mobile.getBoundingClientRect().top;
-    tagRow.style.top = ((((20 - bottom) % 28) + 28) % 28) + 'px';
+    const off = (((20 - bottom) % 28) + 28) % 28;
+    tagRow.style.top = (off ? off - 28 : 0) + 'px';   // up to the rule above: the pills hug the hero image instead of the title
   }
   function fit() {
     if (innerWidth >= 900) return;
