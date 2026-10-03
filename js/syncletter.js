@@ -75,6 +75,20 @@
   document.addEventListener('ended', e => { const v = e.target; if (v.dataset && v.dataset.start) { v.currentTime = +v.dataset.start; v.play().catch(() => {}); } }, true);
 
   // Play/pause the case-study videos as they enter/leave view, same pattern as js/nearu.js.
+  // Native loading="lazy" misjudges distances on this scaled canvas, so images popped in late. Start loading everything
+  // within ~3 screens of the viewport (and warm the rest in order, once idle) — same files, same quality, just earlier.
+  const warm = img => { if (img.loading === 'lazy') img.loading = 'eager'; };
+  const near = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    near.unobserve(target);
+    if (target.tagName === 'VIDEO') target.preload = 'auto'; else warm(target);
+  }), { rootMargin: '3000px 0px' });
+  document.querySelectorAll('img[loading="lazy"], video').forEach(el => near.observe(el));
+  const idleWarm = () => {
+    const rest = [...document.querySelectorAll('img[loading="lazy"]')].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    (function next() { const img = rest.shift(); if (!img) return; warm(img); setTimeout(next, 150); })();
+  };
+  if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const videos = [...document.querySelectorAll('.syncletter-video')];
   const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {

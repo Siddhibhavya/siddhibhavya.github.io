@@ -95,14 +95,14 @@
 .syn-13a { left: 1143.5px; width: 115px; }
 .syn-13b { left: 869.25px; width: 250.5px; }
 .syn-13c { left: 590.25px; width: 250.5px; }
-.syn-13d { position: absolute; left: 1159px; top: 925px; width: 168px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 400; line-height: 19px; color: rgba(255,237,219,.83); font-size: 15px; text-align: center; }
-.syn-13e, .syn-13f, .syn-13g, .syn-13h, .syn-13i { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 15px; }
-.syn-13e { left: 540px; top: 925px; width: 149px; line-height: 19px; }
-.syn-13f { left: 1094px; top: 945px; width: 152px; line-height: 22px; }
-.syn-13g { left: 540px; top: 945px; width: 152px; line-height: 22px; }
-.syn-13h { left: 1094px; top: 966px; width: 152px; line-height: 22px; }
-.syn-13i { left: 540px; top: 966px; width: 152px; line-height: 22px; }
-.syn-13j { position: absolute; left: 830px; top: 925px; width: 98px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 15px; line-height: 25px; }
+.syn-13d { position: absolute; left: 1159px; top: 925px; width: 168px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 400; line-height: 21px; color: rgba(255,237,219,.83); font-size: 16px; white-space: nowrap; text-align: center; }
+.syn-13e, .syn-13f, .syn-13g, .syn-13h, .syn-13i { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 16px; white-space: nowrap; }
+.syn-13e { left: 540px; top: 925px; width: 250px; line-height: 21px; }
+.syn-13f { left: 1094px; top: 946px; width: 152px; line-height: 21px; }
+.syn-13g { left: 540px; top: 946px; width: 152px; line-height: 21px; }
+.syn-13h { left: 1094px; top: 967px; width: 152px; line-height: 21px; }
+.syn-13i { left: 540px; top: 967px; width: 152px; line-height: 21px; }
+.syn-13j { position: absolute; left: 830px; top: 925px; width: 98px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 16px; line-height: 25px; }
 
 /* ---------- header image ---------- */
 /* height matches the image's own aspect ratio (885:311) at this width, so cropping never eats into top/bottom —
@@ -122,11 +122,14 @@
 .syn-15a-label, .syn-15b-label { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #003d36; font-size: 16px; line-height: 1; white-space: nowrap; }
 
 /* ---------- "Try prototype" CTAs ---------- */
-.syn-17, .syn-48 { position: absolute; width: 850px; background: #fff1df; color: #39265f; border: 4px solid #4a1a2c; border-radius: 49px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-17, .syn-48 { --pill-bg: #fff1df; --pill-edge: #4a1a2c; --pill-r: 49px; --pill-bw: 4px; position: absolute; width: 850px; color: #39265f; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; transition: color .25s ease; }
 /* Bottom edges meet the next paper rules: 14 + 19*41 = 793; 14 + 189*41 = 7763. */
 .syn-17 { left: 448px; top: 746px; height: 47px; }
 .syn-48 { left: 454px; top: 8699px; height: 48px; }
 .syn-17-label, .syn-48-label { font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 1; text-transform: capitalize; white-space: nowrap; }
+
+:is(.syn-17, .syn-48, .syn-37)::before { content: ''; position: absolute; inset: 0; z-index: -1; box-sizing: border-box; background: var(--pill-bg); border: var(--pill-bw) solid var(--pill-edge); border-radius: var(--pill-r); transition: background-color .25s ease, scale .3s var(--ease-out); }
+:is(.syn-17, .syn-48, .syn-37) { isolation: isolate; }
 
 /* ---------- phone bezel demo ---------- */
 .syn-30 { position: absolute; left: 783px; top: 2097px; width: 513px; height: 532px; background: #02221e; border-radius: 20px; }
@@ -136,7 +139,7 @@
 .syn-32b { position: absolute; left: 482px; top: 4263px; width: 126.018px; height: 124.147px; }
 
 /* ---------- research CTA ---------- */
-.syn-37 { position: absolute; left: 679px; top: 4435px; width: 386px; height: 44px; border: 3px solid #4a1a2c; border-radius: 107px; box-sizing: border-box; color: #7b2b3d; display: flex; align-items: center; justify-content: center; text-align: center; transition: background-color .25s ease, color .25s ease, scale .3s var(--ease-out); transform-origin: center; }
+.syn-37 { --pill-bg: transparent; --pill-edge: #4a1a2c; --pill-r: 107px; --pill-bw: 3px; position: absolute; left: 679px; top: 4435px; width: 386px; height: 44px; box-sizing: border-box; color: #7b2b3d; display: flex; align-items: center; justify-content: center; text-align: center; transition: color .25s ease; }
 .syn-37-label { font-family: var(--font-ui); font-weight: 400; font-size: 24px; line-height: 1; white-space: nowrap; }
 .syn-38 { position: absolute; left: 592px; top: 4329px; height: 63px; max-width: 304px; padding: 8px; background: #faf2ea; border: 1px solid #000; border-radius: 0 11px 11px 11px; box-shadow: 8px 2px 4.05px rgba(0,0,0,.43); display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
 .syn-38 p { margin: 0; font-family: var(--font-ui); font-weight: 400; color: #1e1b17; font-size: 24px; line-height: 22px; }
@@ -189,10 +192,11 @@
 /* ---------- hover interactions (mirrors css/pages/nearu.css's convention) ---------- */
 @media (hover: hover) and (pointer: fine) {
   .syn-14:hover { scale: 1.015; }
-  .syn-17:hover, .syn-48:hover, .syn-37:hover { background-color: #4a1a2c; color: #fff1df; scale: 1.03; }
+  .syn-17:hover, .syn-48:hover, .syn-37:hover { color: #fff1df; }
+  .syn-17:hover::before, .syn-48:hover::before, .syn-37:hover::before { background-color: #4a1a2c; scale: 1.03; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .syn-14, .syn-17, .syn-48, .syn-37, .syn-17-label, .syn-48-label, .syn-37-label {
+  .syn-14, .syn-17, .syn-48, .syn-37, .syn-17::before, .syn-48::before, .syn-37::before, .syn-17-label, .syn-48-label, .syn-37-label {
     transition: none !important; scale: none !important;
   }
 }

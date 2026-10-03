@@ -28,6 +28,20 @@
   // The sidebar (tabs, gooey switch, drawer, Contents scrollspy, chat, Resume pill) is now the real shared one —
   // js/shell.js mounts and runs all of that (body[data-shell="sidebar"], body[data-toc]). This file only owns the
   // canvas/paper scaling and the page's own media.
+  // Native loading="lazy" misjudges distances on this scaled canvas, so images popped in late. Start loading everything
+  // within ~3 screens of the viewport (and warm the rest in order, once idle) — same files, same quality, just earlier.
+  const warm = img => { if (img.loading === 'lazy') img.loading = 'eager'; };
+  const near = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    near.unobserve(target);
+    if (target.tagName === 'VIDEO') target.preload = 'auto'; else warm(target);
+  }), { rootMargin: '3000px 0px' });
+  document.querySelectorAll('img[loading="lazy"], video').forEach(el => near.observe(el));
+  const idleWarm = () => {
+    const rest = [...document.querySelectorAll('img[loading="lazy"]')].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    (function next() { const img = rest.shift(); if (!img) return; warm(img); setTimeout(next, 150); })();
+  };
+  if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm);
   const videos = [...document.querySelectorAll('video')];
   const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting && !reduce.matches) target.play().catch(() => {});
