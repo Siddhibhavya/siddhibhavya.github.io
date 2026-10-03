@@ -62,6 +62,15 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **Footers "Resume" opens the ATS resume** in a new tab (it used to open an email draft).
 - **Unfinished pages** (`ncfe-redesign.html`, `are-they-driving.html`) are noindex stubs that redirect home unless `?preview`. Search `HIDDEN-UNTIL-READY` to un-hide a project (card, sheet, bank entries together).
 
+## 2026-10-03 case-study rebuild
+- **Shift tables instead of re-typing tops** (`SHIFTS` / `SYN_SHIFTS`): whole 41px rows, thresholds in original y, entries add up. Phone layouts clone by original y so they don't care.
+- **Media is centred on the content area** (x 900 NearU / 902 Syncletter), text stays on the text column.
+- **One green frame for film then demo** on Syncletter; call-out targets are keyframed from measured footage, not a single point.
+- **Persona paper is a mask over multiplied tan**, not a CSS filter (filter gave olive). Light type on dark paper.
+- **How students sell = spider diagram, User needs = T chart, Current ecosystem = loop diagram** (chart vocabulary from the user's "graphic organisers" sheet). Keep both T-chart columns equal in rows.
+- **Pruned**: 118 dead NearU CSS rules, unused card/mindmap JS, `syncletter/demo.mp4`, two bracket SVGs. No minification (no build step) and no media recompression.
+- **About greeting hugs its text** (no reserved width) so ", I am" stays close to Namaste/Hello.
+
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).
