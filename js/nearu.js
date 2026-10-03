@@ -5,6 +5,17 @@
   const viewport = document.querySelector('.nearu-viewport');
   const canvas = document.querySelector('.nearu-canvas');
   const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
+  // Rows pushed into the canvas for content that grew (whole 41px paper rows): [fromY, rows, class that must not move].
+  // Ideation videos are 15% bigger: everything from y=3460 down moves 4 rows (the enlarged art itself is placed in nearu.css).
+  const SHIFTS = [[3460, 4, 'nu-94']];
+  const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
+  canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
+  const inCanvasSpace = el => { const p = el.parentElement; return p === canvas || (p && (p.classList.contains('nu-4') || (getComputedStyle(p).display === 'contents' && inCanvasSpace(p)))); };
+  SHIFTS.forEach(([from, rows, except]) => canvas.querySelectorAll('*').forEach(el => {
+    if (el.classList.contains(except) || !inCanvasSpace(el)) return;
+    const cs = getComputedStyle(el), top = parseFloat(cs.top);
+    if (cs.position === 'absolute' && top >= from) el.style.top = (top + rows * 41) + 'px';
+  }));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let scale = 1;
   function fit() {
@@ -15,7 +26,7 @@
     scale = Math.min(1, paperWidth / 1084);
     const inset = (paperWidth - 1084 * scale) / 2;
     canvas.style.transform = `translateX(${inset}px) scale(${scale}) translateX(-356px)`;
-    viewport.style.height = mobile ? 'auto' : `${14409 * scale}px`;
+    viewport.style.height = mobile ? 'auto' : `${(14409 + SHIFT_TOTAL) * scale}px`;
     viewport.style.width = mobile ? '100%' : `${paperWidth}px`;
     // The sidebar now occupies its own column, like the shared Index/M.I.K.U shell.
     viewport.style.marginLeft = '0px';
@@ -78,7 +89,7 @@
   ruled.forEach(el => {
     el.classList.add('nearu-ruled');
     el.style.setProperty('--ruled-line', parseFloat(getComputedStyle(el).fontSize) > 41 ? '82px' : '41px');
-    if (el.classList.contains('nu-244')) el.style.top = '9822px';
+    if (el.classList.contains('nu-244')) el.style.top = (9822 + SHIFT_TOTAL) + 'px';
   });
   function baseline(el) {
     const line = el.matches('p,h1,h2') ? el : el.querySelector('li,p,.rs-title') || el;

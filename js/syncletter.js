@@ -110,20 +110,62 @@
   }));
 
 
-  // Feature labels on the green recording frame: show each tag while the video's own time is inside its [data-in, data-out] window.
+  // Feature call-outs on the green recording frame: each tag shows while the video's own time is inside its [data-in, data-out] window,
+  // and a leader line (SVG, drawn from the tag to the point data-fx/data-fy of the phone, as fractions of its width/height) draws in and retracts with it.
+  const NS = 'http://www.w3.org/2000/svg';
+  function layoutCalls(rec) {
+    const video = rec.querySelector('video'), svg = rec.querySelector('.syn-rec-lines');
+    if (!video || !svg) return;
+    const fr = rec.getBoundingClientRect(), s = fr.width / rec.offsetWidth || 1, vr = video.getBoundingClientRect();
+    const local = (x, y) => [(x - fr.left) / s, (y - fr.top) / s];
+    [...rec.querySelectorAll('.syn-rec-tag')].forEach((tag, i) => {
+      const g = svg.children[i];
+      if (!g) return;
+      const was = tag.style.transition; tag.style.transition = 'none'; const on = tag.classList.contains('on'); tag.classList.add('on');
+      const tr = tag.getBoundingClientRect(); if (!on) tag.classList.remove('on'); tag.style.transition = was;
+      const [tx, ty] = local(vr.left + (+tag.dataset.fx) * vr.width, vr.top + (+tag.dataset.fy) * vr.height);
+      const [ax, ay] = tag.classList.contains('syn-rec-l') ? local(tr.right + 10, tr.top + tr.height / 2) : local(tr.left - 10, tr.top + tr.height / 2);
+      const line = g.querySelector('line');
+      line.setAttribute('x1', ax); line.setAttribute('y1', ay); line.setAttribute('x2', tx); line.setAttribute('y2', ty);
+      g.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', tx); c.setAttribute('cy', ty); });
+    });
+  }
+  function setupCalls(rec) {
+    if (rec.querySelector('.syn-rec-lines')) return;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'syn-rec-lines'); svg.setAttribute('aria-hidden', 'true');
+    rec.querySelectorAll('.syn-rec-tag').forEach(() => {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'rc');
+      g.innerHTML = '<line pathLength="1" x1="0" y1="0" x2="0" y2="0"/><circle class="rc-ring" r="12"/><circle class="rc-dot" r="5"/>';
+      svg.append(g);
+    });
+    rec.prepend(svg);
+    layoutCalls(rec);
+    new ResizeObserver(() => layoutCalls(rec)).observe(rec);
+  }
   let tagLoop = 0;
   function tagTick() {
     let playing = false;
     document.querySelectorAll('.syn-rec').forEach(rec => {
-      const v = rec.querySelector('video');
+      const v = rec.querySelector('video'), svg = rec.querySelector('.syn-rec-lines');
       if (!v) return;
       if (!v.paused) playing = true;
-      rec.querySelectorAll('.syn-rec-tag').forEach(tag => tag.classList.toggle('on', !v.paused && v.currentTime >= +tag.dataset.in && v.currentTime < +tag.dataset.out));
+      rec.querySelectorAll('.syn-rec-tag').forEach((tag, i) => {
+        const on = !v.paused && v.currentTime >= +tag.dataset.in && v.currentTime < +tag.dataset.out;
+        tag.classList.toggle('on', on);
+        if (svg && svg.children[i]) svg.children[i].classList.toggle('on', on);
+      });
     });
     tagLoop = playing ? requestAnimationFrame(tagTick) : 0;
   }
-  document.addEventListener('play', e => { if (e.target.closest && e.target.closest('.syn-rec') && !tagLoop) tagLoop = requestAnimationFrame(tagTick); }, true);
-  document.addEventListener('pause', e => { if (e.target.closest && e.target.closest('.syn-rec')) e.target.closest('.syn-rec').querySelectorAll('.syn-rec-tag').forEach(tag => tag.classList.remove('on')); }, true);
+  const clearCalls = rec => { rec.querySelectorAll('.syn-rec-tag, .rc').forEach(el => el.classList.remove('on')); };
+  document.addEventListener('play', e => {
+    const rec = e.target.closest && e.target.closest('.syn-rec');
+    if (!rec) return;
+    setupCalls(rec); layoutCalls(rec);
+    if (!tagLoop) tagLoop = requestAnimationFrame(tagTick);
+  }, true);
+  document.addEventListener('pause', e => { const rec = e.target.closest && e.target.closest('.syn-rec'); if (rec) clearCalls(rec); }, true);
 
   window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };
   if (location.hash) requestAnimationFrame(() => {
