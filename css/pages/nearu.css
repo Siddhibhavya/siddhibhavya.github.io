@@ -1,3 +1,6 @@
+/* Brand specimen fonts for the Design section: Futura is not installed on most phones and PCs, so Jost (an open Futura-style face) is bundled for weight 100, and Arimo (the same design as Liberation Sans) for the secondary font. Installed Futura / Liberation Sans still win. */
+@font-face { font-family: 'Jost'; font-weight: 100; font-style: normal; font-display: swap; src: url('../../assets/fonts/jost-latin-100-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Arimo'; font-weight: 400; font-style: normal; font-display: swap; src: url('../../assets/fonts/arimo-latin-400-normal.woff2') format('woff2'); }
 /* NearU case study — exact Figma canvas geometry, scoped to this page.
    Like the site's other pages, artwork is composed on its original design canvas.
    Text remains live HTML; media uses original, unflattened local assets. */
@@ -57,8 +60,8 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-5 { position:absolute;display:flex;height:245.859px;align-items:center;justify-content:center;left:478px;top:7090px;width:241.19px; }
 .nearu-page .nu-6 { flex:none;transform:rotate(-141.14deg); }
 .nearu-page .nu-7 { background:#fec12d;height:188.627px;position:relative;border-radius:46px;width:157.754px; }
-.nearu-page .nu-8 { position:absolute;background:#fec22e;height:225px;left:485px;border-radius:17px;top:2270px;width:304px; }
-.nearu-page .nu-9 { position:absolute;height:407px;left:793px;top:2270px;width:445px; }
+
+
 .nearu-page .nu-10 { position:absolute;display:block;inset:0;max-width:none; }
 .nearu-page .nu-18 { overflow-wrap:break-word;position:absolute;font-family:var(--font-serif);font-weight:400;line-height:normal;left:428px;color:#39265f;font-size:64px;top:450px;white-space:nowrap; }
 .nearu-page .nu-19 { overflow-wrap:break-word;position:absolute;font-family:var(--font-serif);font-weight:400;line-height:normal;left:426px;color:#39265f;font-size:62px;top:1764px;width:964px; }
@@ -99,12 +102,12 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 /* the Figma-exported header frame (node 351:1566) as one flattened SVG — its own canvas is 998x281,
    9px larger on every side than the inner 980x263 card the rest of the layout was measured against */
 .nearu-page .nu-61.nearu-header-frame { position:absolute; left:404px; top:37px; width:998px; height:281px; }
-.nearu-page .nearu-header-frame img { display:block; width:100%; height:100%; }.nearu-page .nu-69 { position:absolute;inset:0;overflow:hidden;pointer-events:none; }.nearu-page .nu-78 { position:absolute;inset:0;max-width:none;object-fit:cover;pointer-events:none;width:100%;height:100%; }.nearu-page .nu-81 { position:absolute;left:497px;top:2300px;width:280px;height:152px; }   /* was inset % of the canvas height, which drifts whenever the canvas grows */
-.nearu-page .nu-82 { position:absolute;height:365px;left:1023px;top:2291px;width:183px; }
-.nearu-page .nu-83 { position:absolute;height:166px;left:485px;border-radius:17px;top:2511px;width:304px; }
-.nearu-page .nu-84 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:1099px;font-style:normal;color:#fff1df;font-size:16px;top:2654px;width:53px; }
-.nearu-page .nu-85 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:14px;line-height:normal;left:891px;font-style:normal;color:#fff1df;font-size:16px;top:2654px;width:48px; }
-.nearu-page .nu-86 { position:absolute;height:363px;left:823px;top:2293px;width:182.075px; }
+.nearu-page .nearu-header-frame img { display:block; width:100%; height:100%; }.nearu-page .nu-69 { position:absolute;inset:0;overflow:hidden;pointer-events:none; }.nearu-page .nu-78 { position:absolute;inset:0;max-width:none;object-fit:cover;pointer-events:none;width:100%;height:100%; }
+
+
+
+
+
 .nearu-page .nu-87 { position:absolute;height:284px;left:427px;top:2976px;width:520px; }
 .nearu-page .nu-88 { position:absolute;inset:0;overflow:hidden; }
 .nearu-page .nu-89 { position:absolute;height:284px;left:819px;top:3301px;width:514px; }
@@ -133,15 +136,15 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-129 { position:absolute;height:392px;left:268px;top:6929px;width:627px; }
 .nearu-page .nu-130 { position:absolute;height:97.095px;left:447.55px;top:7197.41px;width:237.805px; }.nearu-page .nu-140 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:470px;font-style:normal;color:var(--chestnut);font-size:24px;top:7570px;text-transform:uppercase;white-space:nowrap; }.nearu-page .nu-153 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:592px;font-style:normal;color:var(--espresso);font-size:24px;top:7752px;width:154px; }
 .nearu-page .nu-154 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:327px;line-height:139.52409029006958%;left:982px;font-style:normal;color:var(--espresso);font-size:24px;top:7827px;width:163px; }
-.nearu-page .nu-155 { position:absolute;left:1100px;top:2327px;width:24px;height:12px; }   /* same: px instead of % of the canvas height */
+
 .nearu-page .nu-156 { position:absolute;background:#716767;height:2px;left:913px;border-radius:104px;box-shadow:0px 4px 4px 0px rgba(0,0,0,0.25);top:4039px;width:198px;transform-origin: 99px -178.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
 .nearu-page .nu-157 { position:absolute;background:#000;height:12px;left:987px;border-radius:3px;top:3687px;width:50px;transform-origin: 25px 173.5px; transition: scale .45s var(--ease-out); pointer-events: none; }
 .nearu-page .nu-158 { position:absolute;background:#fc5956;height:205px;left:509px;top:8619px;width:367px; }
 .nearu-page .nu-159 { position:absolute;background:#0e59d3;height:118px;left:882px;top:8620px;width:365px; }
 .nearu-page .nu-160 { position:absolute;background:#fec12d;height:77px;left:1065px;top:8745px;width:182px; }
 .nearu-page .nu-161 { position:absolute;background:#fffaeb;height:77px;left:882px;top:8745px;width:177px; }
-.nearu-page .nu-162 { overflow-wrap:break-word;position:absolute;font-family:'Liberation Sans',Arial,sans-serif;font-weight:400;line-height:1.53;left:892px;font-style:normal;color:#fffcf2;font-size:96px;top:8591px;letter-spacing:4.8px;white-space:nowrap; }
-.nearu-page .nu-163 { overflow-wrap:break-word;position:absolute;font-family:'Futura','Century Gothic',var(--font-ui);font-weight:100;line-height:1.53;left:567px;font-style:normal;color:#fffcf2;font-size:173px;top:8587px;letter-spacing:8.65px;white-space:nowrap; }
+.nearu-page .nu-162 { overflow-wrap:break-word;position:absolute;font-family:'Liberation Sans',Arimo,Arial,sans-serif;font-weight:400;line-height:1.53;left:892px;font-style:normal;color:#fffcf2;font-size:96px;top:8591px;letter-spacing:4.8px;white-space:nowrap; }
+.nearu-page .nu-163 { overflow-wrap:break-word;position:absolute;font-family:'Futura',Jost,'Century Gothic',var(--font-ui);font-weight:100;line-height:1.53;left:567px;font-style:normal;color:#fffcf2;font-size:173px;top:8587px;letter-spacing:8.65px;white-space:nowrap; }
 .nearu-page .nu-164 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:500;justify-content:center;line-height:0;left:473px;font-style:normal;font-size:24px;color:var(--chestnut);top:9144.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
 .nearu-page .nu-165 { line-height:1.53; }
 .nearu-page .nu-166 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:500;justify-content:center;line-height:0;left:840px;font-style:normal;font-size:24px;color:var(--chestnut);top:8569.5px;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transform:translateY(-50%); }
@@ -201,7 +204,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-225 { position:absolute;display:contents;height:32px;left:732px;top:391px;width:126.491px; }
 .nearu-page .nu-226 { position:absolute;display:flex;height:36px;align-items:center;justify-content:center;left:657px;top:406px;width:104px;transform:translateX(-50%) translateY(-50%); }
 .nearu-page .nu-227 { overflow-wrap:break-word;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:400;height:36px;justify-content:center;line-height:0;font-style:normal;position:relative;color:#39265f;font-size:18px;text-align:center;width:104px; }.nearu-page .nu-244 { overflow-wrap:break-word;position:absolute;display:block;font-family:var(--font-ui);font-weight:400;left:470px;font-style:normal;color:var(--espresso);font-size:24px;text-align:left;top:9799px;width:822px; }
-.nearu-page .nu-245 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:466px;font-style:normal;color:var(--espresso);font-size:24px;top:12572px;width:831px; }
+.nearu-page .nu-245 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:12721px;width:440px; }
 .nearu-page .nu-246 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:448px;font-style:normal;color:var(--espresso);font-size:24px;top:12815px;width:831px; }
 .nearu-page .nu-247 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:0;left:448px;font-style:normal;color:var(--espresso);font-size:24px;top:13020px;width:831px; }
 .nearu-page .nu-248 { line-height:160.60924530029297%;margin-bottom:0; }
@@ -236,16 +239,16 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .kabir-greeting {
   position: absolute; left: 112px; top: 224px; width: 76px; height: 44.8789px;   /* stretched narrower to hug "HI" (the SVG is a stretchy pill, drawn wide for the longer site-wide nudge phrase) */
   z-index: 2; pointer-events: none; opacity: 0; visibility: hidden;
-  translate: -8px 3px; scale: .94; transform-origin: right top;
+  translate: 0 10px; scale: .5; transform-origin: 20% 100%;   /* pops up from its tail, never sideways: the portrait clips overflow, so no start offset may push it past the left edge */
   filter: drop-shadow(0 4px 6px rgba(25,5,35,.18));
-  transition: opacity .4s ease, translate .5s var(--ease-out), scale .5s var(--ease-out), visibility .4s;
+  transition: opacity .35s ease, translate .45s cubic-bezier(.34, 1.56, .64, 1), scale .45s cubic-bezier(.34, 1.56, .64, 1), visibility 0s linear .35s;
 }
 .kabir-greeting > img { display: block; width: 100%; height: 100%; }
 .kabir-greeting > span {
   position: absolute; left: 8px; top: 12px; width: 50px; height: 26px;
   font: 600 20px/26px var(--font-ui); text-align: center; color: #f7e9dc;
 }
-.kabir-greeting.is-visible { opacity: 1; visibility: visible; translate: 0 0; scale: 1; }
+.kabir-greeting.is-visible { opacity: 1; visibility: visible; translate: 0 0; scale: 1; transition-delay: 0s; }
 @media (hover: hover) and (pointer: fine) {
   .nearu-phone-frame:hover { scale: 1.015; }
   .nearu-page :is(.nearu-canvas,.nearu-mobile-art-layers):has(.nu-105:hover) :is(.nu-156,.nu-157) { scale: 1.015; }
@@ -255,6 +258,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
     transition: none !important; scale: none !important;
   }
   .kabir-greeting { transition: none; translate: none; scale: none; }
+  .kabir-greeting:not(.is-visible) { opacity: 0; }
 }
 /* Case-study shell uses the same native sticky boundary as the Index/M.I.K.U
    layout. Hover transforms never change layout or the paper's text baselines. */
@@ -306,6 +310,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nearu-mobile-copy :is(p, div, ul) { margin: 0; }
   .nearu-mobile .nearu-mobile-copy li { margin: 0 0 0 22px; }
     .nearu-mobile .nearu-mobile-title { margin-top: 0; margin-bottom: 0; }
+  .nearu-mobile .nearu-mobile-subtitle { margin-bottom: 0; }   /* the 56px serif line already carries its own air */
   .nearu-mobile .nearu-mobile-title,
   .nearu-mobile .nearu-mobile-subtitle {
     font-family: var(--font-serif); font-size: 32px; line-height: 56px; color: #39265f;
@@ -435,10 +440,10 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nu-persona .kabir-greeting > img { display: block; width: 100%; height: 100%; }
 .nu-persona .pp-list { position: absolute; left: 470px; top: 182px; width: 350px; margin: 0; padding-left: 22px; list-style: disc; font-size: 20px; line-height: 28px; font-weight: 500; color: #fff1df; }
 .nu-persona .pp-list li { margin: 0 0 12px; }
-.nu-persona .pp-list b { font-weight: 700; color: #ffb3a6; }
+.nu-persona .pp-list b { font-weight: 700; color: #fff; }
 
 /* ---------- phone / small tablet: the new blocks, the loop diagram, full videos, memos ---------- */
-@media (max-width: 899px) {  .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
+@media (max-width: 899px) {  .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 60px 48px 64px; margin-top: 28px; margin-bottom: 28px; }
   .nearu-mobile .nu-persona::before, .nearu-mobile .nu-persona::after { inset: -22px -22px; }
   .nearu-mobile .nu-persona .pp-photo, .nearu-mobile .nu-persona .pp-list { position: static; width: auto; }
   .nearu-mobile .nu-persona .pp-photo { margin: 22px 0 26px; }
@@ -490,4 +495,106 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-tchart .tc-cell { padding: 14px 14px; font-size: 18px; line-height: 26px; }
   .nearu-mobile .nu-persona .pp-photo { display: block; width: fit-content; margin: 22px auto 26px; }
   .nearu-mobile .nu-persona .nu-129 { width: min(262px, calc(100vw - 130px)); }
+}
+
+/* ---------- "Try demo" pill (same pill as Syncletter's Try prototype) + the prototype pop-up ---------- */
+/* Desktop: centred under the project chip and the demo film (centre x 903), bottom edge on a paper rule: 14 + 23*41 = 957, so top 910 + height 47. Placed at its final y; js/nearu.js skips it in the shift table. */
+.nearu-page .nu-demo { --pill-bg: #fff1df; --pill-edge: #4a1a2c; --pill-r: 49px; --pill-bw: 4px; position: absolute; left: 478px; top: 910px; width: 850px; height: 47px; padding: 0; border: 0; background: none; cursor: pointer; color: #39265f; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; isolation: isolate; transition: color .25s ease; }
+.nearu-page .nu-demo::before { content: ''; position: absolute; inset: 0; z-index: -1; box-sizing: border-box; background: var(--pill-bg); border: var(--pill-bw) solid var(--pill-edge); border-radius: var(--pill-r); transition: background-color .25s ease, scale .3s var(--ease-out); }
+.nearu-page .nu-demo-label { font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 1; text-transform: capitalize; white-space: nowrap; }
+.nearu-page .nu-demo:focus-visible { outline: 3px solid #39265f; outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .nearu-page .nu-demo:hover { color: #fff1df; }
+  .nearu-page .nu-demo:hover::before { background-color: #4a1a2c; scale: 1.03; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nearu-page .nu-demo, .nearu-page .nu-demo::before { transition: none !important; scale: none !important; }
+}
+@media (max-width: 899px) {
+  .nearu-page .nearu-mobile .nu-demo { position: relative; left: auto; top: auto; display: flex; width: min(100%, 350px); height: 56px; margin-left: auto; margin-right: auto; }
+  .nearu-page .nearu-mobile .nu-demo-label { font-size: 20px; }
+}
+
+/* The pop-up: a window (Figma 208:2521): NearU-blue title bar, white body, yellow Restart / Back pills; the prototype sits in the middle as a phone. */
+.nu-demo-modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; background: rgba(27, 11, 46, .62); animation: nu-demo-in .25s ease; }
+.nu-demo-modal[hidden] { display: none; }
+@keyframes nu-demo-in { from { opacity: 0; } to { opacity: 1; } }
+.nu-demo-frame { flex: none; display: flex; flex-direction: column; overflow: hidden; border-radius: 30px; background: #f1e7c8; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }
+.nu-demo-bar { position: relative; flex: none; display: flex; align-items: center; justify-content: center; height: 52px; background: #0d57ce; }
+.nu-demo-title { margin: 0; font-family: 'Ancizar Sans Upright', var(--font-ui); font-weight: 600; font-size: 24px; line-height: 1; color: #fff; }
+.nu-demo-x { position: absolute; right: 16px; top: 50%; translate: 0 -50%; width: 40px; height: 40px; padding: 0; border: 0; background: none; color: #fff; font-family: 'Ancizar Sans Upright', var(--font-ui); font-weight: 600; font-size: 24px; line-height: 1; cursor: pointer; }
+.nu-demo-x:focus-visible, .nu-demo-actions button:focus-visible { outline: 3px solid #17120e; outline-offset: 2px; }
+.nu-demo-body { position: relative; display: flex; justify-content: center; padding: 24px 148px; background: #f1e7c8; }
+.nu-demo-actions { position: absolute; right: 24px; top: 36px; display: flex; flex-direction: column; gap: 22px; }
+.nu-demo-actions button { height: 40px; min-width: 112px; padding: 0 20px; border: 3px solid #17120e; border-radius: 20px; background: #fec12d; color: #17120e; font-family: 'Ancizar Sans Upright', var(--font-ui); font-weight: 600; font-size: 16px; line-height: 1; cursor: pointer; transition: background-color .2s ease, scale .2s ease; }
+@media (hover: hover) and (pointer: fine) { .nu-demo-actions button:hover { background: #17120e; color: #fec12d; } }
+/* The phone (modern handset): the prototype is drawn at 402 x 874 and scaled as one piece (--s). Dark bezel ring with a thin outer edge, side keys and a dynamic island. */
+.nu-demo-screen { position: relative; width: calc(402px * var(--s, 1)); height: calc(874px * var(--s, 1)); border-radius: calc(58px * var(--s, 1)); box-shadow: 0 0 0 calc(2px * var(--s, 1)) #4a4a4a, 0 calc(18px * var(--s, 1)) calc(36px * var(--s, 1)) rgba(23, 18, 14, .28); }
+.nu-demo-screen iframe { position: absolute; left: 0; top: 0; width: 402px; height: 874px; border: 0; background: #fffcf1; border-radius: 58px; transform: scale(var(--s, 1)); transform-origin: top left; }
+.nu-demo-screen::after { content: ''; position: absolute; inset: 0; box-sizing: border-box; border: calc(10px * var(--s, 1)) solid #17120e; border-radius: calc(58px * var(--s, 1)); pointer-events: none; }
+.nu-key { position: absolute; width: calc(4px * var(--s, 1)); background: #17120e; border-radius: calc(2px * var(--s, 1)); pointer-events: none; }
+.nu-key-l1, .nu-key-l2, .nu-key-l3 { left: calc(-4px * var(--s, 1)); border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.nu-key-l1 { top: calc(118px * var(--s, 1)); height: calc(32px * var(--s, 1)); }
+.nu-key-l2 { top: calc(180px * var(--s, 1)); height: calc(60px * var(--s, 1)); }
+.nu-key-l3 { top: calc(252px * var(--s, 1)); height: calc(60px * var(--s, 1)); }
+.nu-key-r { right: calc(-4px * var(--s, 1)); top: calc(200px * var(--s, 1)); height: calc(96px * var(--s, 1)); border-top-left-radius: 0; border-bottom-left-radius: 0; }
+/* Phones: the window is the whole screen; Restart / Back sit in a row under the title bar and the prototype fills the rest at its own size. */
+.nu-demo-modal.is-fluid { padding: 0; background: #f1e7c8; }
+.nu-demo-modal.is-fluid .nu-demo-frame { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
+.nu-demo-modal.is-fluid .nu-demo-body { flex: 1; min-height: 0; flex-direction: column; padding: 0; }
+.nu-demo-modal.is-fluid .nu-demo-actions { position: static; order: -1; flex-direction: row; justify-content: center; gap: 12px; padding: 8px 16px; }
+.nu-demo-modal.is-fluid .nu-demo-screen { flex: 1; width: 100%; height: auto; min-height: 0; box-shadow: none; border-radius: 0; }
+.nu-demo-modal.is-fluid .nu-demo-screen iframe { width: 100%; height: 100%; border-radius: 0; transform: none; }
+.nu-demo-modal.is-fluid .nu-demo-screen::after, .nu-demo-modal.is-fluid .nu-key { display: none; }
+@media (prefers-reduced-motion: reduce) { .nu-demo-modal { animation: none; } .nu-demo-actions button { transition: none; } }
+
+/* Phone brand board (js/nearu-mobile.js brandBoard): 14 paper rows tall (6 + 5 + 3 rows of 28px), every label 16px or more and inside its own swatch. */
+@media (max-width: 899px) {
+  .nearu-mobile-brand { display: grid; grid-template-columns: 1fr 1fr; width: 100%; box-sizing: border-box; }
+  .nearu-mobile-brand .bb-sw { position: relative; box-sizing: border-box; overflow: hidden; min-width: 0; font-family: 'Liberation Sans', Arimo, Arial, sans-serif; }
+  .nearu-mobile-brand .bb-coral { grid-column: 1 / -1; height: 168px; }
+  .nearu-mobile-brand .bb-blue { grid-column: 1 / -1; height: 140px; }
+  .nearu-mobile-brand .bb-cream, .nearu-mobile-brand .bb-yellow { height: 84px; }
+  .nearu-mobile-brand .bb-hex, .nearu-mobile-brand .bb-font { position: absolute; margin: 0; font-size: 16px; line-height: 20px; letter-spacing: .55px; white-space: nowrap; }
+  .nearu-mobile-brand .bb-hex { top: 12px; right: 12px; }
+  .nearu-mobile-brand .bb-font { left: 12px; bottom: 12px; max-width: calc(100% - 24px); white-space: normal; }
+  .nearu-mobile-brand .bb-aa { position: absolute; left: 50%; top: 50%; translate: -50% -52%; line-height: 1; white-space: nowrap; color: #fffcf2; }
+  .nearu-mobile-brand .bb-futura { font-family: Futura, Jost, 'Century Gothic', 'Trebuchet MS', sans-serif; font-weight: 100; font-size: 112px; letter-spacing: 6px; }
+  .nearu-mobile-brand .bb-liberation { font-family: 'Liberation Sans', Arimo, Arial, sans-serif; font-weight: 400; font-size: 72px; letter-spacing: 3px; }
+}
+@media (max-width: 339px) { .nearu-mobile-brand .bb-blue { height: 168px; } }
+
+.nearu-page .nu-8 { position:absolute;background:#fec22e;height:225px;left:485px;border-radius:17px;top:2270px;width:304px; }
+.nearu-page .nu-9 { position:absolute;height:407px;left:793px;top:2270px;width:445px; }
+.nearu-page .nu-81 { position:absolute;left:497px;top:2300px;width:280px;height:152px; }   /* was inset % of the canvas height, which drifts whenever the canvas grows */
+.nearu-page .nu-83 { position:absolute;height:166px;left:485px;border-radius:17px;top:2511px;width:304px; }
+.nearu-page .nu-84 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:auto;line-height:normal;left:1033px;font-style:normal;color:#fff1df;font-size:16px;top:2641px;width:163px;text-align:center; }
+.nearu-page .nu-85 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:auto;line-height:normal;left:832.5px;font-style:normal;color:#fff1df;font-size:16px;top:2641px;width:163px;text-align:center; }
+.nearu-page .nu-155 { position:absolute;left:1100px;top:2327px;width:24px;height:12px; }   /* same: px instead of % of the canvas height */
+
+/* ---------- Demo recordings (Solution: buyer + seller, Onboarding): text on the left, the phone recording on the right, no backing panel ---------- */
+/* The phone shell (ring, island, keys) is the pop-up's .nu-demo-screen; --s is the scale of the 402 x 874 handset (225px wide here). */
+.nearu-page .nu-rec { position: absolute; margin: 0; --s: .5597; width: calc(402px * var(--s)); }
+.nearu-page .nu-rec-art { --s: .395; }   /* Solution phones: 159 x 345, inside the blue frame with the captions fully visible under them. Centres: seller 914, buyer 1114 (before the +39 content-area shift)
+*/
+.nearu-page .nu-rec-seller { left: 834.5px; top: 2284px; }
+.nearu-page .nu-rec-buyer { left: 1035px; top: 2284px; }
+.nearu-page .nu-rec-onboarding { left: 990px; top: 12613px; }
+.nu-demo-screen video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; border-radius: calc(58px * var(--s, 1)); background: #fffcf1; }
+@media (max-width: 899px) {
+  .nearu-mobile .nearu-mobile-recs .nu-rec { position: relative; left: auto; top: auto; margin-left: auto; margin-right: auto; }
+  .nearu-mobile-recs { display: flex; justify-content: center; gap: 20px; }
+  .nearu-mobile-recs .nu-rec { margin: 0; }
+}
+
+/* Phone plate (scaled artwork): smaller handsets so the captions, which are enlarged to 16px as rendered, stay inside the blue frame (it ends at y 2677). Same centres as on desktop. */
+.nearu-page .nearu-mobile-art-layers .nu-rec-art { --s: .33; }
+.nearu-page .nearu-mobile-art-layers .nu-rec-seller { left: 847.5px; top: 2292px; }
+.nearu-page .nearu-mobile-art-layers .nu-rec-buyer { left: 1048px; top: 2292px; }
+.nearu-page .nearu-mobile-art-layers :is(.nu-84, .nu-85) { top: 2586px; }
+
+/* Phone / tablet rhythm (2026-10-03): section titles sit one row above their first line, and sections are one row apart (the 56px serif line already carries air). */
+@media (max-width: 899px) {
+  .nearu-mobile .nearu-mobile-heading { margin-bottom: 0; }
+  .nearu-mobile section { padding-top: 0; }
 }

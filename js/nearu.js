@@ -8,17 +8,18 @@
   // Rows moved in the canvas for content that grew or shrank (whole 41px paper rows): [fromY, rows, class that must not move].
   // Every threshold is in the ORIGINAL Figma y, and all moves for an element add up, so the table reads top to bottom:
   //  700: the intro is one line now, so the project chip and everything below moves up 4 rows
-  //  1830: one more row between the Context title and its paragraph
+  //  1830: one more row between the Context title and its paragraph (two rows baseline to baseline, so the large title never touches the text)
   //  2250: tighter gap before the Solution art (1 row up)
   //  3460: the ideation videos are 15% bigger, so everything below moves down 4 rows (the enlarged art itself is placed in nearu.css)
   //  5700: the "How students sell" treemap is shorter than the three cards it replaced, so the ecosystem moves up 4 rows
   //  6300: the loop diagram is taller than the old chart, so what follows moves back down 3 rows
-  //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 3 rows
-  //  7560: breathing room under the persona paper (1 row down)
+  //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 2 rows (was 3; trimmed 2026-10-03 for less empty paper)
   //  4290: tighter gap before Research (1 row up)
   //  8200: the User Needs T chart is shorter than the old diagram, so Design onward moves up 4 rows
   //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
-  const SHIFTS = [[700, -4], [1830, 1], [2250, -1], [3460, 4, 'nu-94'], [4290, -1], [5700, -4], [6300, 3], [6880, 3], [7560, 1], [8200, -3], [12000, -1], [13400, -1]];
+  //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 10 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
+  //  1030: room for the Try demo pill between the project chip and the demo film (3 rows down). The pill itself (.nu-demo) is placed at its final y in CSS and skipped by the shifts.
+  const SHIFTS = [[700, -4], [1830, 1], [2250, -1], [3460, 4, 'nu-94'], [4290, -1], [5700, -4], [6300, 3], [6880, 2], [8200, -3], [12000, -1], [13400, -1], [1030, 3], [12750, 10, 'nu-245']];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
@@ -27,14 +28,14 @@
   canvas.querySelectorAll('*').forEach(el => {
     if (!inCanvasSpace(el)) return;
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
-    if (cs.position !== 'absolute' || isNaN(top)) return;
+    if (cs.position !== 'absolute' || isNaN(top) || el.classList.contains('nu-demo')) return;
     const rows = SHIFTS.reduce((n, [from, r, except]) => n + (top >= from && !(except && el.classList.contains(except)) ? r : 0), 0);
     if (rows) moves.push([el, top + rows * 41]);
   });
   moves.forEach(([el, top]) => { el.style.top = top + 'px'; });
   // Media and diagram blocks sit centred on the content area (centre x = 900, right of the sidebar), not on the text column: the solution art and the two feature rows
   // came out of Figma 22-39px left of it, so their classes move right together with their captions.
-  const XSHIFTS = [[['nu-8', 'nu-9', 'nu-81', 'nu-82', 'nu-83', 'nu-84', 'nu-85', 'nu-86', 'nu-155'], 39],
+  const XSHIFTS = [[['nu-8', 'nu-9', 'nu-81', 'nu-83', 'nu-84', 'nu-85', 'nu-155', 'nu-rec-seller', 'nu-rec-buyer'], 39],
     [['nu-176', 'nu-179', 'nu-180', 'nu-182', 'nu-184', 'nu-195', 'nu-186', 'nu-187', 'nu-189', 'nu-190'], 22]];
   XSHIFTS.forEach(([classes, dx]) => classes.forEach(cls => canvas.querySelectorAll(':scope .' + cls).forEach(el => {
     if (inCanvasSpace(el)) el.style.left = (parseFloat(getComputedStyle(el).left) + dx) + 'px';
@@ -64,6 +65,13 @@
   // canvas/paper scaling and the page's own media.
   // Native loading="lazy" misjudges distances on this scaled canvas, so images popped in late. Start loading everything
   // within ~3 screens of the viewport (and warm the rest in order, once idle) — same files, same quality, just earlier.
+  // Quality first: on a normal connection everything loads at once (full-size images, whole videos). Only a slow or data-saving connection keeps the lazy behaviour below.
+  const link = navigator.connection || {};
+  const slowNet = !!link.saveData || /(^|-)2g|3g/.test(link.effectiveType || '');
+  if (!slowNet) {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
+    document.querySelectorAll('video').forEach(v => { v.preload = 'auto'; });
+  }
   const warm = img => { if (img.loading === 'lazy') img.loading = 'eager'; };
   const near = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (!isIntersecting) return;
@@ -82,20 +90,23 @@
     else target.pause();
   }), { rootMargin: '150px' });
   videos.forEach(video => { video.muted = true; observer.observe(video); });
-  // Reuse the site's M.I.K.U speech-bubble asset; reveal with the portrait, then away on its own after 30s.
-  let kabirTimer = 0;
+  // Kabir's "Hi!" bubble pops up when the portrait scrolls into view and fades out by itself after 8s. One timer per portrait (the canvas and the phone layout
+  // each hold a copy; a shared timer let the hidden copy cancel the visible one's fade-out). Replays whenever the portrait comes back into view.
+  const kabirTimers = new WeakMap();
   const greetings = new IntersectionObserver(entries => {
     entries.forEach(({ target, isIntersecting }) => {
       const bubble = target.querySelector('.kabir-greeting');
-      clearTimeout(kabirTimer);
+      clearTimeout(kabirTimers.get(target));
       if (isIntersecting) {
+        bubble.classList.remove('is-visible');
+        void bubble.offsetWidth;   // restart the pop-up if it was still fading
         bubble.classList.add('is-visible');
-        kabirTimer = setTimeout(() => bubble.classList.remove('is-visible'), 30000);
+        kabirTimers.set(target, setTimeout(() => bubble.classList.remove('is-visible'), 8000));
       } else {
         bubble.classList.remove('is-visible');
       }
     });
-  }, { threshold: .25 });
+  }, { threshold: .4 });
   document.querySelectorAll('.nu-129:has(.kabir-greeting)').forEach(portrait => greetings.observe(portrait));
   reduce.addEventListener('change', () => videos.forEach(video => {
     if (reduce.matches) video.pause();
@@ -143,7 +154,7 @@
       if (refl) refl.style.paddingTop = '0px';
       const exempt = el => {
         for (let n = el; n && n !== paper; n = n.parentElement) {
-          if (n.matches('svg,button,a.pill,.nearu-mobile-facts,.nu-persona,.nu-tchart,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
+          if (n.matches('svg,button,a.pill,.nearu-mobile-facts,.nearu-mobile-brand,.nu-persona,.nu-tchart,.nearu-mobile-refl,figure,video,.nu-39,.nu-40,.nu-41,.nu-42,.nu-43,.nu-44,.nu-45,.nu-46,.nu-47,.nu-48,.nu-49,.nu-50,.nu-51,.nu-52,.nu-53,.nu-54')) return true; // last group = the details box, which has its own typography
           if (n.classList.contains('nearu-mobile-copy')) continue;
           const bg = getComputedStyle(n).backgroundColor;
           if (bg && bg !== 'transparent' && !/rgba\(\d+, \d+, \d+, 0\)/.test(bg)) return true;
