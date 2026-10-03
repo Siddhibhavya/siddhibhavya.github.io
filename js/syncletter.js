@@ -11,8 +11,10 @@
   if (!viewport || !canvas) return;
   // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
   //  700: room for the "how it works" recording above the first Try prototype pill (17 rows)
+  //  1240: one more row between the Context title and its paragraph
+  //  1850, 2900, 8000, 8300, 8650: shorter copy left big gaps before Solution, Research, the library note, Reflection and the last pill: each moves up 1, 1, 1, 3 and 3 rows
   //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
-  const SYN_SHIFTS = [[700, 17], [1500, -3]];
+  const SYN_SHIFTS = [[700, 17], [1240, 1], [1500, -3], [1850, -1], [2900, -1], [8000, -1], [8300, -3], [8650, -3]];
   const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const synMoves = [];
   canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {

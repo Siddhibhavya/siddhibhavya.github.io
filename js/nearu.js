@@ -7,13 +7,20 @@
   const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
   // Rows moved in the canvas for content that grew or shrank (whole 41px paper rows): [fromY, rows, class that must not move].
   // Every threshold is in the ORIGINAL Figma y, and all moves for an element add up, so the table reads top to bottom:
+  //  700: the intro is one line now, so the project chip and everything below moves up 3 rows
+  //  1830: one more row between the Context title and its paragraph
+  //  2250: tighter gap before the Solution art (1 row up)
   //  3460: the ideation videos are 15% bigger, so everything below moves down 4 rows (the enlarged art itself is placed in nearu.css)
   //  5700: the "How students sell" treemap is shorter than the three cards it replaced, so the ecosystem moves up 4 rows
   //  6300: the loop diagram is taller than the old chart, so what follows moves back down 3 rows
   //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 3 rows
-  //  8200: the User Needs treemap is shorter than the old diagram, so Design onward moves up 2 rows
-  const SHIFTS = [[3460, 4, 'nu-94'], [5700, -4], [6300, 3], [6880, 3], [8200, -2]];
+  //  7560: breathing room under the persona paper (1 row down)
+  //  4290: tighter gap before Research (1 row up)
+  //  8200: the User Needs T chart is shorter than the old diagram, so Design onward moves up 3 rows
+  //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
+  const SHIFTS = [[700, -3], [1830, 1], [2250, -1], [3460, 4, 'nu-94'], [4290, -1], [5700, -4], [6300, 3], [6880, 3], [7560, 1], [8200, -3], [12000, -1], [13400, -1]];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
+  const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
   const inCanvasSpace = el => { const p = el.parentElement; return p === canvas || (p && (p.classList.contains('nu-4') || (getComputedStyle(p).display === 'contents' && inCanvasSpace(p)))); };
   const moves = [];
@@ -98,7 +105,7 @@
   ruled.forEach(el => {
     el.classList.add('nearu-ruled');
     el.style.setProperty('--ruled-line', parseFloat(getComputedStyle(el).fontSize) > 41 ? '82px' : '41px');
-    if (el.classList.contains('nu-244')) el.style.top = (9799 + SHIFT_TOTAL) + 'px';
+    if (el.classList.contains('nu-244')) el.style.top = (9799 + shiftAt(9799)) + 'px';
   });
   function baseline(el) {
     const line = el.matches('p,h1,h2') ? el : el.querySelector('li,p,.rs-title') || el;
