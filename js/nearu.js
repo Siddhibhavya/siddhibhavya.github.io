@@ -32,6 +32,13 @@
     if (rows) moves.push([el, top + rows * 41]);
   });
   moves.forEach(([el, top]) => { el.style.top = top + 'px'; });
+  // Media and diagram blocks sit centred on the content area (centre x = 900, right of the sidebar), not on the text column: the solution art and the two feature rows
+  // came out of Figma 22-39px left of it, so their classes move right together with their captions.
+  const XSHIFTS = [[['nu-8', 'nu-9', 'nu-81', 'nu-82', 'nu-83', 'nu-84', 'nu-85', 'nu-86', 'nu-155'], 39],
+    [['nu-176', 'nu-179', 'nu-180', 'nu-182', 'nu-184', 'nu-195', 'nu-186', 'nu-187', 'nu-189', 'nu-190'], 22]];
+  XSHIFTS.forEach(([classes, dx]) => classes.forEach(cls => canvas.querySelectorAll(':scope .' + cls).forEach(el => {
+    if (inCanvasSpace(el)) el.style.left = (parseFloat(getComputedStyle(el).left) + dx) + 'px';
+  })));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let scale = 1;
   function fit() {
