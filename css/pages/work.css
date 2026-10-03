@@ -42,15 +42,19 @@
 .phone img { position: absolute; left: -0.05%; top: 0; height: 100%; width: 121.71%; }
 .glyph { left: 286.3px; top: 213.8px; width: 74px; height: 71px; }
 
-/* the three floating pills: ±4px, slow sine drift, each on its own phase */
+/* the three floating pills: ±4px, slow sine drift, each on its own phase.
+   Each pill (shape + text) is ONE flattened compositor layer that moves with transform, so it glides at sub-pixel precision on the GPU. The old margin-top drift
+   re-laid-out the text every frame and snapped it to whole pixels, which read as a stepped, "draggy" float (eye strain). Trade-off: a composited layer inside the
+   tilted card is resampled once at the tilt, a hair softer than static text; the card still straightens on hover. */
 .pill {
   display: flex; align-items: center; justify-content: center;
   background: #faf2e9; border: 1px solid #033530; border-radius: 28px; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 14px; line-height: 1; color: #7a5c47; white-space: nowrap;
+  will-change: transform; transform: translate3d(0, 0, 0);
   animation: levitate 5.4s var(--ease-sine) infinite; animation-delay: var(--d, 0s);
 }
-/* margin, not transform: a transform animation makes the browser composite the card, and a composited tilted card draws its text as a rotated picture (soft) */
-@keyframes levitate { 0%, 100% { margin-top: 0; } 25% { margin-top: -4px; } 75% { margin-top: 4px; } }
+@keyframes levitate { 0%, 100% { transform: translate3d(0, 0, 0); } 25% { transform: translate3d(0, -4px, 0); } 75% { transform: translate3d(0, 4px, 0); } }
+@media (prefers-reduced-motion: reduce) { .pill { animation: none; will-change: auto; } }
 
 .tag {
   left: var(--tl); top: var(--tt); width: var(--tw); height: 21px;
