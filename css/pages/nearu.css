@@ -216,7 +216,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-125 { position:absolute;display:contents;left:709px;top:5393px; }
 .nearu-page .nu-126 { position:absolute;background:rgba(237,214,192,0.54);border-width:6px;border-color:#4a1a2c;border-style:solid;height:275px;left:709px;border-radius:24px;top:5393px;width:366px; }
 .nearu-page .nu-127 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:600;height:220.921px;line-height:0;left:748px;font-style:normal;color:var(--chestnut);font-size:20px;top:5432.12px;width:279px;white-space:normal; }
-.nearu-page .nu-128 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:592px;width:600px;text-align:center;font-style:normal;font-size:24px;color:var(--chestnut);top:5254px;text-transform:uppercase;white-space:nowrap; }
+.nearu-page .nu-128 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:470px;width:600px;text-align:left;font-style:normal;font-size:24px;color:var(--chestnut);top:4757px;text-transform:uppercase;white-space:nowrap; }
 .nearu-page .nu-129 { position:absolute;height:392px;left:268px;top:6929px;width:627px; }
 .nearu-page .nu-130 { position:absolute;height:97.095px;left:447.55px;top:7197.41px;width:237.805px; }
 .nearu-page .nu-131 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:557px;line-height:0;left:711px;font-style:normal;color:var(--espresso);font-size:24px;top:6993px;width:568px;white-space:normal; }
@@ -228,8 +228,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-137 { position:absolute;background:rgba(237,214,192,0.54);border-width:7px;border-color:#4a1a2c;border-style:solid;height:79px;left:676px;border-radius:28px;top:7560px;width:364px; }
 .nearu-page .nu-138 { position:absolute;background:rgba(237,214,192,0.54);border-width:7px;border-color:#4a1a2c;border-style:solid;height:374px;left:556px;border-radius:20px;top:7726px;width:235px; }
 .nearu-page .nu-139 { position:absolute;background:rgba(237,214,192,0.54);border-width:7px;border-color:#4a1a2c;border-style:solid;height:374px;left:941px;border-radius:20px;top:7797px;width:230px; }
-.nearu-page .nu-140 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:600;line-height:172.36661911010742%;left:791px;font-style:normal;color:var(--espresso);font-size:24px;top:7579px;white-space:nowrap; left: 676px; top: 7560px; width: 364px; height: 79px;
-  display: flex; align-items: center; justify-content: center; line-height: 1; }
+.nearu-page .nu-140 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:470px;font-style:normal;color:var(--chestnut);font-size:24px;top:7570px;text-transform:uppercase;white-space:nowrap; }
 .nearu-page .nu-141 { position:absolute;height:90px;left:660px;top:7636px;width:171px; }
 .nearu-page .nu-142 { position:absolute;inset:-0.38% -0.85% 0 -5.07%; }
 .nearu-page .nu-143 { display:block;max-width:none; }
@@ -323,7 +322,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-241 { flex:none;transform:rotate(-7.81deg) skewX(0.01deg); }
 .nearu-page .nu-242 { height:24.596px;position:relative;width:26.445px; }
 .nearu-page .nu-243 { position:absolute;background:#39265f;height:14px;left:-31px;top:14409px;width:1471px; }
-.nearu-page .nu-244 { overflow-wrap:break-word;position:absolute;display:flex;flex-direction:column;font-family:var(--font-ui);font-weight:400;justify-content:center;line-height:0;left:553px;font-style:normal;color:var(--espresso);font-size:24px;text-align:justify;top:9877.5px;letter-spacing:1.2px;width:649px;transform:translateY(-50%); }
+.nearu-page .nu-244 { overflow-wrap:break-word;position:absolute;display:block;font-family:var(--font-ui);font-weight:400;left:470px;font-style:normal;color:var(--espresso);font-size:24px;text-align:left;top:9799px;width:822px; }
 .nearu-page .nu-245 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:466px;font-style:normal;color:var(--espresso);font-size:24px;top:12572px;width:831px; }
 .nearu-page .nu-246 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:160.60924530029297%;left:448px;font-style:normal;color:var(--espresso);font-size:24px;top:12815px;width:831px; }
 .nearu-page .nu-247 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:0;left:448px;font-style:normal;color:var(--espresso);font-size:24px;top:12938px;width:831px; }
@@ -469,8 +468,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-card > .nearu-mobile-copy { margin: 0; }
   /* Mind map: centre hub on a trunk, cards branch alternately left and right (keeps the desktop diagram's idea). */
   .nearu-mobile-eco svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; overflow: visible; }
-  .nearu-mobile .nearu-mobile-eco text { font-size: 16px; letter-spacing: 0; }
-  .nearu-mobile .nearu-mobile-eco text.eco-fest { font-size: 16px; }
   .nearu-mobile-eco-note { margin: 0; padding-left: 22px; font-family: var(--font-ui); font-weight: 500; font-size: 16px; line-height: 28px; color: var(--espresso); }
   .nearu-mobile-insights { display: grid; gap: 16px; }
   /* Reflection on small screens: the same five uniform circles, stacked, with a thick line bending between them (drawn in JS). */
@@ -482,7 +479,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-refl .refl-c b { font-weight: 800; font-size: 24px; line-height: 26px; }
   .nearu-mobile-refl .refl-c span { font-weight: 700; font-size: 16px; letter-spacing: 0; line-height: 18px; text-transform: uppercase; }
   .nearu-mobile-refl .rs-title { display: block; font-weight: 800; font-size: 18px; line-height: 28px; }
-  .nearu-mobile-refl .rs-text { display: block; position: relative; top: 1.6px; font-weight: 500; font-size: 16px; line-height: 28px; }
+  .nearu-mobile-refl .rs-text { display: block; position: relative; top: 0; font-weight: 500; font-size: 16px; line-height: 28px; }
   .nearu-mobile-refl-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .nearu-mobile-refl-line path { fill: none; stroke: #17120E; stroke-opacity: .85; stroke-width: 4; stroke-linecap: round; }
   /* A/B comparison: notes stacked under the phones on narrow screens; on wide ones they flank the phones like the desktop canvas. */
@@ -553,26 +550,32 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* Current-ecosystem chart + insight blocks (NearU brand: yellow #FEC12D, blue #0D57CE, black #17120E, off-white #FFFAEB). */
 .nearu-page .nu-eco-label { position: absolute; left: 469px; top: 5726px; margin: 0; font-family: var(--font-ui); font-weight: 500; font-size: 24px; text-transform: uppercase; color: var(--chestnut); white-space: nowrap; }
-.nearu-page .nu-eco { position: absolute; left: 469px; top: 5789px; width: 795px; height: 520px; }
+.nearu-page .nu-eco { position: absolute; left: 469px; top: 5789px; width: 820px; height: 600px; }
 .nu-eco svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.nu-eco text, .nearu-mobile-eco text { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: .3px; }
-.nu-eco .eco-links line, .nearu-mobile-eco .eco-links line { stroke: #17120E; stroke-width: 3; stroke-dasharray: 7 7; }
+.nu-eco text, .nearu-mobile-eco text { font-family: var(--font-ui); }
+.loop-svg .lp-title { font-weight: 700; font-size: 18px; fill: #17120E; } .loop-svg .lp-sub { font-weight: 400; font-size: 16px; fill: #5c3a21; }
+.loop-svg .lp-box { fill: #FFFAEB; stroke: #17120E; stroke-width: 2; } .loop-svg .lp-hl { fill: #FEC12D; } .loop-svg .lp-core { fill: #17120E; }
+.loop-svg .lp-core-t { font-weight: 700; font-size: 24px; fill: #FFFAEB; } .loop-svg .lp-core-s { font-size: 16px; fill: #fec12d; }
+.loop-svg .lp-ring { fill: none; stroke: #17120E; stroke-width: 2; } .loop-svg .lp-dash { fill: none; stroke: #5c3a21; stroke-width: 2; stroke-dasharray: 7 6; }
 .nearu-page .nearu-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; left: 469px; width: 795px; height: auto; }
-.nearu-insight { background: #FFFAEB; border: 4px solid #17120E; border-radius: 24px; padding: 16px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
+.nearu-insight { position: relative; background: #FEC12D; border-radius: 4px; padding: 26px 22px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 7px 9px -3px rgba(23, 18, 14, .35); }
+/* memos in NearU colours: yellow, blue, coral, cream; a strip of tape on top and a folded bottom corner */
+.nearu-insight:nth-child(2) { background: #BCD3F7; } .nearu-insight:nth-child(3) { background: #FDB4B1; } .nearu-insight:nth-child(4) { background: #FFFAEB; }
+.nearu-insight::before { content: ''; position: absolute; left: 50%; top: -11px; width: 74px; height: 22px; margin-left: -37px; background: rgba(255, 250, 235, .72); border: 1px solid rgba(23, 18, 14, .12); rotate: -3deg; }
+.nearu-insight::after { content: ''; position: absolute; right: 0; bottom: 0; width: 26px; height: 26px; background: linear-gradient(to top left, #fff1df 50%, rgba(23, 18, 14, .22) 50%); box-shadow: -2px -2px 3px rgba(23, 18, 14, .12); }
 .nearu-insight p { margin: 0; }
-.nearu-insight .ins-problem { font-family: var(--font-ui); font-weight: 500; font-size: 17px; line-height: 24px; color: var(--espresso); }
-.nearu-insight .ins-opp { display: flex; align-items: flex-start; gap: 12px; font-family: var(--font-ui); font-weight: 500; font-size: 17px; line-height: 24px; color: #17120E; }
+.nearu-insight .ins-problem { font-family: var(--font-ui); font-weight: 600; font-size: 19px; line-height: 26px; color: #17120E; }
+.nearu-insight .ins-opp { display: flex; align-items: flex-start; gap: 12px; font-family: var(--font-ui); font-weight: 500; font-size: 17px; line-height: 24px; color: #17120E; padding-top: 12px; border-top: 2px dashed rgba(23, 18, 14, .35); }
 .nearu-insight b { font-weight: 800; color: var(--hl-red); }
-.nearu-page .nearu-grid-copy.nearu-insights :is(p, span, b), .nearu-mobile-insights :is(p, span, b) { line-height: 24px; }
+.nearu-page .nearu-grid-copy.nearu-insights :is(p, span, b), .nearu-mobile-insights :is(p, span, b) { line-height: inherit; }
 .nearu-insight .ins-arrow { flex: none; width: 14px; height: 16px; margin-top: 4px; }
-.nearu-insight .ins-arrow path { fill: var(--hl-red); }
+.nearu-insight .ins-arrow path { fill: #17120E; }
 
 /* feature names + key insights in body copy: NearU red, bold (same red as the insight blocks) */
 .nu-hl { font-weight: 700; color: var(--hl-red); }
 
 /* one-line note under the ecosystem diagram */
 .nearu-page .nu-eco-note { position: absolute; left: 469px; top: 6330px; margin: 0; padding-left: 22px; width: 795px; font-family: var(--font-ui); font-weight: 500; font-size: 20px; line-height: 41px; color: var(--espresso); list-style: disc; }
-.nu-eco .eco-fest { font-size: 24px; }
 
 /* ---------- Reflection: a horizontal flow of five steps along a looping line, text semi-overlapping the circles ---------- */
 .nearu-page .nu-refl-h { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:900;line-height:normal;left:426px;font-style:normal;color:var(--heading);font-size:24px;top:13440px;text-transform:uppercase;width:194px; }
@@ -589,3 +592,68 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .refl-step[data-node-id="351:9014"] { left: 793px; top: 13520px; }
 .nearu-page .refl-step[data-node-id="351:9015"] { left: 968px; top: 14122px; }
 .nearu-page .refl-step[data-node-id="351:9016"] { left: 1143px; top: 13520px; }
+
+
+/* ---------- Research treemaps (How students sell today / User needs): tiles sized by weight, NearU tints, key words bold red ---------- */
+.nearu-page .nu-tm { position: absolute; left: 470px; width: 822px; display: grid; gap: 8px; font-family: var(--font-ui); color: var(--espresso); }
+.nearu-page .nu-tm-sell { top: 4821px; height: 574px; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; }
+.nearu-page .nu-tm-needs { top: 7630px; height: 410px; grid-template-columns: 1fr 1fr 1.25fr; grid-template-rows: 1.3fr 1fr; }
+.nu-tm .tm { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 22px 26px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.nu-tm .tm p { margin: 0; font-size: 20px; line-height: 28px; font-weight: 500; }
+.nu-tm .tm b { font-weight: 700; color: var(--hl-red); }
+.nu-tm .tm-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--hl-red); }
+.nu-tm .tm-c { margin-top: auto !important; padding-top: 12px; border-top: 2px dashed rgba(23, 18, 14, .35); }
+.nu-tm-sell .tm-promote { grid-row: 1 / span 2; background: #FFD978; padding: 30px 32px; }
+.nu-tm-sell .tm-promote .tm-h { font-size: 46px; line-height: 52px; }
+.nu-tm-sell .tm-promote p { font-size: 24px; line-height: 34px; }
+.nu-tm-sell .tm-coord { background: #BCD3F7; } .nu-tm-sell .tm-order { background: #FDB4B1; }
+.nu-tm .tm-tag { font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--chestnut); }
+.nu-tm-needs .tm p { font-size: 22px; line-height: 30px; font-weight: 600; }
+.nu-tm-needs .tm .tm-big { font-size: 36px; line-height: 44px; font-weight: 700; margin-top: auto; }
+.nu-tm-needs .tm-b1 { grid-column: 1 / span 2; grid-row: 1; background: #BCD3F7; }
+.nu-tm-needs .tm-b2 { grid-column: 1; grid-row: 2; background: #DCE8FA; }
+.nu-tm-needs .tm-b3 { grid-column: 2; grid-row: 2; background: #A9C4F2; }
+.nu-tm-needs .tm-s1 { grid-column: 3; grid-row: 1; background: #FFD978; }
+.nu-tm-needs .tm-s2 { grid-column: 3; grid-row: 2; background: #FFE9A8; }
+
+/* ---------- User persona on dark torn paper ---------- */
+.nearu-page .nu-persona { position: absolute; left: 440px; top: 6900px; width: 900px; height: 600px; box-sizing: border-box; padding: 70px 80px; isolation: isolate; color: var(--espresso); font-family: var(--font-ui); }
+.nu-persona::before, .nu-persona::after { content: ''; position: absolute; inset: -34px -46px; z-index: -1; pointer-events: none; background: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }
+.nu-persona::before { filter: brightness(0) blur(5px); opacity: .38; translate: -4px 7px; }   /* the paper's soft shadow, following its torn outline */
+.nu-persona::after { background-color: #c9a87c; background-blend-mode: multiply; -webkit-mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }   /* dark beige: the sheet's own grain and fibres multiplied over tan */
+.nu-persona .pp-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--espresso); }
+.nu-persona .pp-sub { margin: 6px 0 0; font-size: 22px; line-height: 30px; font-weight: 700; color: var(--espresso); }
+.nu-persona .pp-photo { position: absolute; left: 80px; top: 182px; width: 350px; box-sizing: border-box; padding: 12px; background: #fff1df; border: 4px solid #4a1a2c; border-radius: 8px; box-shadow: -6px 8px 6px rgba(0, 0, 0, .3); }
+.nearu-page .nu-persona .nu-129 { position: relative; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 627 / 392; overflow: visible; }
+.nu-persona .nu-129 > img { display: block; width: 100%; height: 100%; }
+.nearu-page .nu-persona .nu-130 { position: absolute; left: 28.6%; top: 68.5%; width: 37.9%; height: auto; }
+.nu-persona .nu-130 img { display: block; width: 100%; height: auto; }
+.nu-persona .kabir-greeting { left: 3%; top: calc(68.5% - 49px); }
+.nu-persona .pp-list { position: absolute; left: 470px; top: 182px; width: 350px; margin: 0; padding-left: 22px; list-style: disc; font-size: 20px; line-height: 28px; font-weight: 500; }
+.nu-persona .pp-list li { margin: 0 0 12px; }
+.nu-persona .pp-list b { font-weight: 700; color: var(--hl-red); }
+
+/* ---------- phone / small tablet: the new blocks, the loop diagram, full videos, memos ---------- */
+@media (max-width: 899px) {
+  .nearu-mobile .nearu-mobile-block.nu-tm { position: static; width: auto; height: auto; grid-template-columns: 1fr; grid-template-rows: none; gap: 12px; }
+  .nearu-mobile .nu-tm .tm { grid-column: auto !important; grid-row: auto !important; }
+  .nearu-mobile .nu-tm .tm p { font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-tm .tm-h { font-size: 28px; line-height: 34px; }
+  .nearu-mobile .nu-tm-sell .tm-promote .tm-h { font-size: 36px; line-height: 42px; }
+  .nearu-mobile .nu-tm-sell .tm-promote p { font-size: 20px; line-height: 30px; }
+  .nearu-mobile .nu-tm-needs .tm .tm-big { font-size: 28px; line-height: 36px; margin-top: 0; }
+  .nearu-mobile .nu-tm-needs .tm p { font-size: 20px; line-height: 28px; }
+  .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
+  .nearu-mobile .nu-persona::before, .nearu-mobile .nu-persona::after { inset: -22px -22px; }
+  .nearu-mobile .nu-persona .pp-photo, .nearu-mobile .nu-persona .pp-list { position: static; width: auto; }
+  .nearu-mobile .nu-persona .pp-photo { margin: 22px 0 26px; }
+  .nearu-mobile .nu-persona .pp-sub { font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-persona .pp-list { font-size: 18px; line-height: 26px; }
+  .nearu-mobile-video { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 11px; background: #000; }
+  .nearu-mobile-video video.nearu-video { position: absolute; left: -5%; top: 0; width: 110%; height: 110%; object-fit: cover; }
+  .nearu-mobile-video.is-wire::after { content: ''; position: absolute; inset: 0; background: rgba(100, 95, 95, .36); mix-blend-mode: color-burn; pointer-events: none; }
+  .nearu-mobile-insights { gap: 28px; }
+  .nearu-mobile-insights .nearu-insight { padding: 28px 24px 26px; }
+  .nearu-mobile-insights .ins-problem { font-size: 20px; line-height: 28px; }
+  .nearu-mobile-insights .ins-opp { font-size: 18px; line-height: 26px; }
+}
