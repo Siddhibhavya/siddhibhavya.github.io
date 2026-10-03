@@ -19,11 +19,13 @@ a.q-link:hover, a.q-link:focus-visible { text-decoration: underline; text-underl
 .q img { width: 100%; height: 100%; object-fit: cover; }
 .q-poster { left: 42px; top: 50px; width: 266px; height: 354px; border: 5px solid var(--maroon-edge); border-radius: 5px; box-shadow: -7px 11px 4px rgba(0, 0, 0, 0.25); }
 .q-poster img { border-radius: 0; }
-/* hover summary: a yellow scroll (Figma 511:222) that rolls down out of the project's picture — text is never scaled, only the box's height opens */
-.q-scroll { position: absolute; left: 78px; top: 130px; width: 249px; z-index: 3; display: grid; grid-template-rows: 0fr; background: #ffe278; border-radius: 0 0 15px 15px; box-shadow: -4px 6px 6px rgba(0, 0, 0, 0.25); overflow: hidden; pointer-events: none; transition: grid-template-rows 0.55s var(--ease-out); }
+/* hover summary: one yellow scroll (Figma 511:222) shared by every project; js/quests.js moves it next to the hovered picture and its height rolls open. Text is never scaled. */
+.q-scroll { position: absolute; width: 249px; z-index: 30; display: grid; grid-template-rows: 0fr; background: #ffe278; border-radius: 0 0 15px 15px; box-shadow: -4px 6px 6px rgba(0, 0, 0, 0.25); overflow: hidden; pointer-events: none; visibility: hidden; transition: grid-template-rows 0.55s var(--ease-out), visibility 0s linear 0.55s; }
 .q-scroll p { min-height: 0; margin: 0; padding: 0 14px; font-size: 16px; line-height: 1.3; color: #000; transition: padding 0.55s var(--ease-out); }
-.q:hover .q-scroll, .q:focus-within .q-scroll { grid-template-rows: 1fr; }
-.q:hover .q-scroll p, .q:focus-within .q-scroll p { padding: 14px; }
+.q-scroll.open { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.q-scroll.open p { padding: 14px; }
+body.compact .q-scroll { display: none; }
+@media (prefers-reduced-motion: reduce) { .q-scroll, .q-scroll p { transition: none; } }
 .q-brain { left: 636px; top: 45px; width: 253px; height: 380px; border: 5px solid var(--maroon-edge); border-radius: 10px; box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25); overflow: hidden; }
 .q-abstract { left: 342px; top: 668px; width: 256px; height: 222px; border: 5px solid var(--maroon-edge); border-radius: 10px; box-shadow: -8px 8px 4px rgba(0, 0, 0, 0.25); overflow: hidden; }
 /* Album, Mystery Game and Temple Study are links (§8) — their border/position live there, next to the frame they open. */
