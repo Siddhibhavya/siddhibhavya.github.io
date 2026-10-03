@@ -90,19 +90,14 @@
 /* ---------- Details Background (skills/timeline/tools) ---------- */
 /* box made taller than Figma's literal 114px, and every row nudged down 20px, so the header+rows block
    (96px tall) actually centers in the box instead of hugging the top with all the slack left at the bottom */
-.syn-13 { position: absolute; left: 454px; top: 872px; width: 844px; height: 136px; background: #7b2b3d; border: 8px solid #4a1a2c; border-radius: 11px; box-sizing: border-box; }
-.syn-13a, .syn-13b, .syn-13c { position: absolute; top: 892px; height: 51px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #f7e9dc; font-size: 20px; text-align: center; }
-.syn-13a { left: 1143.5px; width: 115px; }
-.syn-13b { left: 869.25px; width: 250.5px; }
-.syn-13c { left: 590.25px; width: 250.5px; }
-.syn-13d { position: absolute; left: 1159px; top: 925px; width: 168px; transform: translateX(-50%); margin: 0; font-family: var(--font-ui); font-weight: 400; line-height: 21px; color: rgba(255,237,219,.83); font-size: 16px; white-space: nowrap; text-align: center; }
-.syn-13e, .syn-13f, .syn-13g, .syn-13h, .syn-13i { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 16px; white-space: nowrap; }
-.syn-13e { left: 540px; top: 925px; width: 250px; line-height: 21px; }
-.syn-13f { left: 1094px; top: 946px; width: 152px; line-height: 21px; }
-.syn-13g { left: 540px; top: 946px; width: 152px; line-height: 21px; }
-.syn-13h { left: 1094px; top: 967px; width: 152px; line-height: 21px; }
-.syn-13i { left: 540px; top: 967px; width: 152px; line-height: 21px; }
-.syn-13j { position: absolute; left: 830px; top: 925px; width: 98px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 16px; line-height: 25px; }
+.syn-13 { position: absolute; left: 480px; top: 640px; width: 844px; height: 136px; background: #7b2b3d; border: 8px solid #4a1a2c; border-radius: 11px; box-sizing: border-box; }
+/* the project facts chip sits above the green recording frame (final canvas coordinates: it is not moved by the shifts in js/syncletter.js); three left-aligned columns, one left edge each */
+.syn-13a, .syn-13b, .syn-13c { position: absolute; top: 652px; width: 240px; margin: 0; font-family: var(--font-ui); font-weight: 500; line-height: 38px; color: #f7e9dc; font-size: 20px; text-align: left; white-space: nowrap; }
+.syn-13c { left: 536px; } .syn-13b { left: 796px; } .syn-13a { left: 1056px; }
+.syn-13d, .syn-13e, .syn-13f, .syn-13g, .syn-13h, .syn-13i, .syn-13j { position: absolute; width: 240px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: rgba(255,237,219,.83); font-size: 16px; line-height: 21px; text-align: left; white-space: nowrap; }
+.syn-13e, .syn-13g, .syn-13i, .syn-13j { } .syn-13e { left: 536px; top: 697px; } .syn-13g { left: 536px; top: 718px; } .syn-13i { left: 536px; top: 739px; }
+.syn-13j { left: 796px; top: 697px; }
+.syn-13d { left: 1056px; top: 697px; } .syn-13f { left: 1056px; top: 718px; } .syn-13h { left: 1056px; top: 739px; }
 
 /* ---------- header image ---------- */
 /* height matches the image's own aspect ratio (885:311) at this width, so cropping never eats into top/bottom —
@@ -267,7 +262,7 @@
 
 /* supporting text under the Wireframes label */
 .syn-wf-text { position: absolute; left: 467px; top: 5728px; width: 836px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
-.syn-rec { position: absolute; left: 474px; top: 640px; width: 857px; height: 738px; border-radius: 20px; background: #075e54; border: 4px solid #02221e; box-sizing: border-box; overflow: hidden; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }   /* the "how it works" recording on a Syncletter-green frame, above the first Try prototype pill (everything below is pushed down by SYN_SHIFT in js/syncletter.js); phone frame is part of the footage */
+.syn-rec { position: absolute; left: 474px; top: 822px; width: 857px; height: 738px; border-radius: 20px; background: #075e54; border: 4px solid #02221e; box-sizing: border-box; overflow: hidden; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }   /* the "how it works" recording on a Syncletter-green frame, above the first Try prototype pill (everything below is pushed down by SYN_SHIFT in js/syncletter.js); phone frame is part of the footage */
 /* the green frame first plays the 24s film (nearly the full frame), then the film fades out and the phone demo with its call-outs fades in */
 .syn-rec .syn-intro-video { position: absolute; left: 50%; top: 50%; width: calc(100% - 44px); height: auto; aspect-ratio: 1440 / 646; translate: -50% -50%; border-radius: 12px; object-fit: cover; display: block; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
 .syn-rec.is-intro .syn-intro-video { opacity: 1; visibility: visible; transition-delay: 0s; }

@@ -627,7 +627,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-tm .tm { grid-column: auto !important; grid-row: auto !important; }
   .nearu-mobile .nu-tm .tm p { font-size: 18px; line-height: 26px; }
   .nearu-mobile .nu-tm .tm-h { font-size: 28px; line-height: 34px; }
-  .nearu-mobile   .nearu-mobile   .nearu-mobile   .nearu-mobile   .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
+  .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
   .nearu-mobile .nu-persona::before, .nearu-mobile .nu-persona::after { inset: -22px -22px; }
   .nearu-mobile .nu-persona .pp-photo, .nearu-mobile .nu-persona .pp-list { position: static; width: auto; }
   .nearu-mobile .nu-persona .pp-photo { margin: 22px 0 26px; }
@@ -679,5 +679,5 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-tchart .tc-head { font-size: 18px; line-height: 24px; }
   .nearu-mobile .nu-tchart .tc-cell { padding: 14px 14px; font-size: 18px; line-height: 26px; }
   .nearu-mobile .nu-persona .pp-photo { display: block; width: fit-content; margin: 22px auto 26px; }
-  .nearu-mobile .nu-persona .nu-129 { width: min(262px, 100%); }
+  .nearu-mobile .nu-persona .nu-129 { width: min(262px, calc(100vw - 130px)); }
 }
