@@ -596,42 +596,30 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* ---------- Research treemaps (How students sell today / User needs): tiles sized by weight, NearU tints, key words bold red ---------- */
 .nearu-page .nu-tm { position: absolute; left: 470px; width: 822px; display: grid; gap: 8px; font-family: var(--font-ui); color: var(--espresso); }
-.nearu-page .nu-tm-sell { top: 4821px; height: 574px; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; }
-.nearu-page .nu-tm-needs { top: 7630px; height: 410px; grid-template-columns: 1fr 1fr 1.25fr; grid-template-rows: 1.3fr 1fr; }
 .nu-tm .tm { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 22px 26px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
 .nu-tm .tm p { margin: 0; font-size: 20px; line-height: 28px; font-weight: 500; }
 .nu-tm .tm b { font-weight: 700; color: var(--hl-red); }
 .nu-tm .tm-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--hl-red); }
 .nu-tm .tm-c { margin-top: auto !important; padding-top: 12px; border-top: 2px dashed rgba(23, 18, 14, .35); }
-.nu-tm-sell .tm-promote { grid-row: 1 / span 2; background: #FFD978; padding: 30px 32px; }
-.nu-tm-sell .tm-promote .tm-h { font-size: 46px; line-height: 52px; }
-.nu-tm-sell .tm-promote p { font-size: 24px; line-height: 34px; }
-.nu-tm-sell .tm-coord { background: #BCD3F7; } .nu-tm-sell .tm-order { background: #FDB4B1; }
 .nu-tm .tm-tag { font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--chestnut); }
-.nu-tm-needs .tm p { font-size: 22px; line-height: 30px; font-weight: 600; }
-.nu-tm-needs .tm .tm-big { font-size: 36px; line-height: 44px; font-weight: 700; margin-top: auto; }
-.nu-tm-needs .tm-b1 { grid-column: 1 / span 2; grid-row: 1; background: #BCD3F7; }
-.nu-tm-needs .tm-b2 { grid-column: 1; grid-row: 2; background: #DCE8FA; }
-.nu-tm-needs .tm-b3 { grid-column: 2; grid-row: 2; background: #A9C4F2; }
-.nu-tm-needs .tm-s1 { grid-column: 3; grid-row: 1; background: #FFD978; }
-.nu-tm-needs .tm-s2 { grid-column: 3; grid-row: 2; background: #FFE9A8; }
 
 /* ---------- User persona on dark torn paper ---------- */
 .nearu-page .nu-persona { position: absolute; left: 440px; top: 6900px; width: 900px; height: 600px; box-sizing: border-box; padding: 70px 80px; isolation: isolate; color: var(--espresso); font-family: var(--font-ui); }
 .nu-persona::before, .nu-persona::after { content: ''; position: absolute; inset: -34px -46px; z-index: -1; pointer-events: none; background: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }
 .nu-persona::before { filter: brightness(0) blur(5px); opacity: .38; translate: -4px 7px; }   /* the paper's soft shadow, following its torn outline */
-.nu-persona::after { background-color: #c9a87c; background-blend-mode: multiply; -webkit-mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }   /* dark beige: the sheet's own grain and fibres multiplied over tan */
-.nu-persona .pp-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--espresso); }
-.nu-persona .pp-sub { margin: 6px 0 0; font-size: 22px; line-height: 30px; font-weight: 700; color: var(--espresso); }
-.nu-persona .pp-photo { position: absolute; left: 80px; top: 182px; width: 350px; box-sizing: border-box; padding: 12px; background: #fff1df; border: 4px solid #4a1a2c; border-radius: 8px; box-shadow: -6px 8px 6px rgba(0, 0, 0, .3); }
-.nearu-page .nu-persona .nu-129 { position: relative; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 627 / 392; overflow: visible; }
-.nu-persona .nu-129 > img { display: block; width: 100%; height: 100%; }
-.nearu-page .nu-persona .nu-130 { position: absolute; left: 28.6%; top: 68.5%; width: 37.9%; height: auto; }
+.nu-persona::after { background-color: #7b5a3b; background-blend-mode: multiply; -webkit-mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; mask: url("../../assets/scrapbook/sheet-white.webp") center / 100% 100% no-repeat; }   /* dark beige: the sheet's own grain and fibres multiplied over tan */
+.nu-persona .pp-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: #fff1df; }
+.nu-persona .pp-sub { margin: 6px 0 0; font-size: 22px; line-height: 30px; font-weight: 700; color: #fff1df; }
+.nu-persona .pp-photo { position: absolute; left: 80px; top: 182px; width: auto; box-sizing: border-box; padding: 10px; background: #fff1df; border: 4px solid #4a1a2c; border-radius: 8px; box-shadow: -6px 8px 6px rgba(0, 0, 0, .3); }
+.nearu-page .nu-persona .nu-129 { position: relative; left: auto; top: auto; width: 262px; height: auto; aspect-ratio: 730 / 780; overflow: hidden; }
+.nearu-page .nu-persona .nu-129 > img { position: absolute; inset: auto; max-width: none; left: -41.1%; top: -12.8%; width: 201.6%; height: 117.9%; object-fit: fill; display: block; }
+.nearu-page .nu-persona .nu-130 { position: absolute; left: 16.6%; top: 67.9%; width: 76.4%; height: auto; }
 .nu-persona .nu-130 img { display: block; width: 100%; height: auto; }
-.nu-persona .kabir-greeting { left: 3%; top: calc(68.5% - 49px); }
-.nu-persona .pp-list { position: absolute; left: 470px; top: 182px; width: 350px; margin: 0; padding-left: 22px; list-style: disc; font-size: 20px; line-height: 28px; font-weight: 500; }
+.nu-persona .kabir-greeting { left: 2%; top: 44%; width: 82px; height: 39px; }
+.nu-persona .kabir-greeting > img { display: block; width: 100%; height: 100%; }
+.nu-persona .pp-list { position: absolute; left: 470px; top: 182px; width: 350px; margin: 0; padding-left: 22px; list-style: disc; font-size: 20px; line-height: 28px; font-weight: 500; color: #fff1df; }
 .nu-persona .pp-list li { margin: 0 0 12px; }
-.nu-persona .pp-list b { font-weight: 700; color: var(--hl-red); }
+.nu-persona .pp-list b { font-weight: 700; color: #ffb3a6; }
 
 /* ---------- phone / small tablet: the new blocks, the loop diagram, full videos, memos ---------- */
 @media (max-width: 899px) {
@@ -639,11 +627,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-tm .tm { grid-column: auto !important; grid-row: auto !important; }
   .nearu-mobile .nu-tm .tm p { font-size: 18px; line-height: 26px; }
   .nearu-mobile .nu-tm .tm-h { font-size: 28px; line-height: 34px; }
-  .nearu-mobile .nu-tm-sell .tm-promote .tm-h { font-size: 36px; line-height: 42px; }
-  .nearu-mobile .nu-tm-sell .tm-promote p { font-size: 20px; line-height: 30px; }
-  .nearu-mobile .nu-tm-needs .tm .tm-big { font-size: 28px; line-height: 36px; margin-top: 0; }
-  .nearu-mobile .nu-tm-needs .tm p { font-size: 20px; line-height: 28px; }
-  .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
+  .nearu-mobile   .nearu-mobile   .nearu-mobile   .nearu-mobile   .nearu-mobile .nearu-mobile-block.nu-persona { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 52px 30px; margin-top: 40px; margin-bottom: 56px; }
   .nearu-mobile .nu-persona::before, .nearu-mobile .nu-persona::after { inset: -22px -22px; }
   .nearu-mobile .nu-persona .pp-photo, .nearu-mobile .nu-persona .pp-list { position: static; width: auto; }
   .nearu-mobile .nu-persona .pp-photo { margin: 22px 0 26px; }
@@ -656,4 +640,44 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile-insights .nearu-insight { padding: 28px 24px 26px; }
   .nearu-mobile-insights .ins-problem { font-size: 20px; line-height: 28px; }
   .nearu-mobile-insights .ins-opp { font-size: 18px; line-height: 26px; }
+}
+
+
+/* ---------- How students sell today: a spider diagram (hub + three legs) ---------- */
+.nearu-page .nu-spider { position: absolute; left: 470px; top: 4821px; width: 822px; height: 640px; font-family: var(--font-ui); color: var(--espresso); }
+.nu-spider .sp-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.nu-spider .sp-lines path { fill: none; stroke: #4a1a2c; stroke-width: 4; stroke-linecap: round; }
+.nu-spider .sp-hub { position: absolute; left: 333px; top: 242px; width: 156px; height: 156px; box-sizing: border-box; border-radius: 50%; background: #17120E; color: #FFFAEB; border: 4px solid #4a1a2c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 18px; font-size: 24px; line-height: 28px; font-weight: 700; z-index: 2; }
+.nu-spider .sp-leg { position: absolute; width: 330px; height: 232px; box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 18px 24px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+.nu-spider .sp-promote { left: 0; top: 0; background: #FFD978; }
+.nu-spider .sp-coord { right: 0; top: 0; background: #BCD3F7; }
+.nu-spider .sp-order { left: 246px; bottom: 0; background: #FDB4B1; }
+.nu-spider .tm-h { margin: 0; font-size: 30px; line-height: 36px; font-weight: 800; color: var(--hl-red); }
+.nu-spider p { margin: 0; font-size: 20px; line-height: 28px; font-weight: 500; }
+.nu-spider b { font-weight: 700; color: var(--hl-red); }
+.nu-spider .tm-c { margin-top: auto; padding-top: 10px; border-top: 2px dashed rgba(23, 18, 14, .35); }
+
+/* ---------- User needs: a T chart, two equal columns, three equal rows ---------- */
+.nearu-page .nu-tchart { position: absolute; left: 470px; top: 7630px; width: 822px; height: 410px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 64px repeat(3, 1fr); column-gap: 36px; row-gap: 14px; font-family: var(--font-ui); color: var(--espresso); }
+.nu-tchart::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
+.nu-tchart .tc-head { display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #4a1a2c; font-size: 26px; line-height: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--chestnut); padding-bottom: 6px; margin-bottom: 2px; }
+.nu-tchart .tc-cell { box-sizing: border-box; border: 4px solid #4a1a2c; border-radius: 16px; padding: 0 24px; display: flex; align-items: center; font-size: 24px; line-height: 32px; font-weight: 600; }
+.nu-tchart .tc-cell b { font-weight: 700; color: var(--hl-red); }
+.nu-tchart .tc-cell.tc-l { background: #BCD3F7; }
+.nu-tchart .tc-cell.tc-r { background: #FFD978; }
+
+@media (max-width: 899px) {
+  .nearu-mobile .nu-spider { position: static; width: auto; height: auto; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+  .nearu-mobile .nu-spider .sp-lines { display: none; }
+  .nearu-mobile .nu-spider .sp-hub { position: relative; left: auto; top: auto; flex: none; }
+  .nearu-mobile .nu-spider .sp-leg { position: relative; left: auto; right: auto; top: auto; bottom: auto; width: 100%; height: auto; padding: 22px 24px; }
+  .nearu-mobile .nu-spider .sp-leg::before { content: ''; position: absolute; left: 50%; top: -40px; width: 4px; height: 36px; margin-left: -2px; background: #4a1a2c; border-radius: 2px; }
+  .nearu-mobile .nu-spider .sp-hub { margin-bottom: 0; }
+  .nearu-mobile .nu-spider .tm-h { font-size: 28px; line-height: 34px; }
+  .nearu-mobile .nu-spider p { font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-tchart { position: relative; left: auto; top: auto; width: auto; height: auto; grid-template-rows: auto; grid-auto-rows: auto; column-gap: 20px; row-gap: 12px; }
+  .nearu-mobile .nu-tchart .tc-head { font-size: 18px; line-height: 24px; }
+  .nearu-mobile .nu-tchart .tc-cell { padding: 14px 14px; font-size: 18px; line-height: 26px; }
+  .nearu-mobile .nu-persona .pp-photo { display: block; width: fit-content; margin: 22px auto 26px; }
+  .nearu-mobile .nu-persona .nu-129 { width: min(262px, 100%); }
 }

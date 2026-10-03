@@ -9,12 +9,19 @@
   const viewport = document.querySelector('.syncletter-viewport');
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
-  // Room for the "how it works" recording above the first Try prototype pill: everything from y=700 down moves down by whole paper rows (13 x 41px).
-  const SYN_SHIFT = 533;
+  // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
+  //  700: room for the "how it works" recording above the first Try prototype pill (13 rows)
+  //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
+  const SYN_SHIFTS = [[700, 13], [1500, -3]];
+  const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
+  const synMoves = [];
   canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
     const cs = getComputedStyle(el), top = parseFloat(cs.top);
-    if (cs.position === 'absolute' && top >= 700) el.style.top = (top + SYN_SHIFT) + 'px';
+    if (cs.position !== 'absolute' || isNaN(top)) return;
+    const rows = SYN_SHIFTS.reduce((n, [from, r]) => n + (top >= from ? r : 0), 0);
+    if (rows) synMoves.push([el, top + rows * 41]);
   });
+  synMoves.forEach(([el, top]) => { el.style.top = top + 'px'; });
   canvas.style.setProperty('--flow-extra', SYN_SHIFT + 'px');
   window.synFlowExtra = SYN_SHIFT;
   const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
