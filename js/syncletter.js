@@ -10,9 +10,9 @@
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
   // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
-  //  700: room for the "how it works" recording above the first Try prototype pill (13 rows)
+  //  700: room for the "how it works" recording above the first Try prototype pill (17 rows)
   //  1500: the Context copy got shorter, so the Problem Statement and everything below move back up 3 rows
-  const SYN_SHIFTS = [[700, 13], [1500, -3]];
+  const SYN_SHIFTS = [[700, 17], [1500, -3]];
   const SYN_SHIFT = SYN_SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const synMoves = [];
   canvas.querySelectorAll(':scope > *:not(.syn-rec), :scope > .syn-flow > *').forEach(el => {
@@ -125,6 +125,7 @@
     if (!video || !svg) return;
     const fr = rec.getBoundingClientRect(), s = fr.width / rec.offsetWidth || 1, vr = video.getBoundingClientRect();
     const local = (x, y) => [(x - fr.left) / s, (y - fr.top) / s];
+    rec._geo = { vx: local(vr.left, vr.top)[0], vy: local(vr.left, vr.top)[1], vw: vr.width / s, vh: vr.height / s };
     [...rec.querySelectorAll('.syn-rec-tag')].forEach((tag, i) => {
       const g = svg.children[i];
       if (!g) return;
@@ -133,6 +134,7 @@
       const [tx, ty] = local(vr.left + (+tag.dataset.fx) * vr.width, vr.top + (+tag.dataset.fy) * vr.height);
       const [ax, ay] = tag.classList.contains('syn-rec-l') ? local(tr.right + 10, tr.top + tr.height / 2) : local(tr.left - 10, tr.top + tr.height / 2);
       const line = g.querySelector('line');
+      g._anchor = [ax, ay];
       line.setAttribute('x1', ax); line.setAttribute('y1', ay); line.setAttribute('x2', tx); line.setAttribute('y2', ty);
       g.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', tx); c.setAttribute('cy', ty); });
     });
@@ -150,6 +152,17 @@
     layoutCalls(rec);
     new ResizeObserver(() => layoutCalls(rec)).observe(rec);
   }
+  // Where on the phone a feature's leader points can move while the feature plays (the card slides up when the keyboard opens), so a tag may carry
+  // data-kf="time:fx:fy|time:fx:fy…" keyframes (measured from the footage); the point is interpolated from the video's own clock.
+  const kfCache = new WeakMap();
+  function targetAt(tag, t) {
+    let kf = kfCache.get(tag);
+    if (!kf) { kf = tag.dataset.kf ? tag.dataset.kf.split('|').map(p => p.split(':').map(Number)) : null; kfCache.set(tag, kf || []); }
+    if (!kf || !kf.length) return [+tag.dataset.fx, +tag.dataset.fy];
+    if (t <= kf[0][0]) return [kf[0][1], kf[0][2]];
+    for (let i = 1; i < kf.length; i++) if (t <= kf[i][0]) { const [t0, x0, y0] = kf[i - 1], [t1, x1, y1] = kf[i], k = (t - t0) / (t1 - t0 || 1); return [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k]; }
+    const last = kf[kf.length - 1]; return [last[1], last[2]];
+  }
   let tagLoop = 0;
   function tagTick() {
     let playing = false;
@@ -160,7 +173,14 @@
       rec.querySelectorAll('.syn-rec-tag').forEach((tag, i) => {
         const on = !v.paused && v.currentTime >= +tag.dataset.in && v.currentTime < +tag.dataset.out;
         tag.classList.toggle('on', on);
-        if (svg && svg.children[i]) svg.children[i].classList.toggle('on', on);
+        const g = svg && svg.children[i];
+        if (!g) return;
+        g.classList.toggle('on', on);
+        if (on && rec._geo && g._anchor) {
+          const [fx, fy] = targetAt(tag, v.currentTime), x = rec._geo.vx + fx * rec._geo.vw, y = rec._geo.vy + fy * rec._geo.vh;
+          const line = g.querySelector('line'); line.setAttribute('x2', x); line.setAttribute('y2', y);
+          g.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', x); c.setAttribute('cy', y); });
+        }
       });
     });
     tagLoop = playing ? requestAnimationFrame(tagTick) : 0;
