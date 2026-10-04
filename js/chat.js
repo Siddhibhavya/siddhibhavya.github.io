@@ -146,8 +146,13 @@
   const SECRET = /\bshiv\b/i;
   const suggestable = (e) => !/^talk-/.test(e.id) && !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
 
+  /* On a case-study page (work/<project>.html) the suggested questions are about that very project: its own topic in the bank (answered ones only). */
+  const PROJECT_TOPICS = { nearu: 'NearU', syncletter: 'Syncletter' };   // add the new project here (page slug -> its topic name in the bank)
+  const projectTopic = () => { const m = /\/work\/([a-z0-9-]+)/i.exec(location.pathname); return m ? PROJECT_TOPICS[m[1].toLowerCase()] || null : null; };
+  const projectQs = () => { const t = projectTopic(); return t ? BANK.filter((e) => e.cat === t && filled(e) && suggestable(e)).map((e) => e.q) : []; };
   const starters = (n) => {
-    const pool = BANK.filter((e) => e.starter && suggestable(e)).map((e) => e.q);
+    const mine = projectQs();
+    const pool = mine.length ? mine : BANK.filter((e) => e.starter && suggestable(e)).map((e) => e.q);
     const base = pool.length ? pool : ['What’s your favorite project?', 'Tell me about your side projects?', 'What does your design process look like?'];
     return base.slice().sort(() => Math.random() - 0.5).slice(0, n).map(ask);
   };
@@ -184,7 +189,6 @@
     if (has('syncletter', 'jargon', 'idiom')) return about(P.syncletter);
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
     if (P.ncfe && has('ncfe', 'financ')) return about(P.ncfe);
-    if (P.driving && has('driving', 'kalahandi', 'accident')) return about(P.driving);
     if (has('ats')) return { text: 'What is the Job Description?', actions: [raw('Product designer', S.links.resumeAtsProduct), raw('Interaction designer', S.links.resumeAtsInteraction)] };
     if (has('resume', 'cv')) return { text: 'Do you want the site résumé or an ATS friendly one? For the ATS one, what is the Job Description?', actions: [raw('Site résumé', S.links.resume), raw('ATS: Product designer', S.links.resumeAtsProduct), raw('ATS: Interaction designer', S.links.resumeAtsInteraction)] };
     if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'Pick whichever suits you. They’re also under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
@@ -288,12 +292,14 @@
     const at = entry ? BANK.indexOf(entry) : -1, dist = (x) => { const d = BANK.indexOf(x) - at; return d > 0 ? d : -3 * d; };
     const starters = shuffled(pool.filter((x) => x.starter));
     // 1st: leads on from the answer just given
-    const first = take((entry ? pool.filter((x) => x.cat === entry.cat).sort((p, q) => dist(p) - dist(q))[0] : null) || starters[0] || shuffled(pool)[0]);
+    const topic = projectTopic(), mine = topic ? shuffled(pool.filter((x) => x.cat === topic)) : [];   // on a case study, the project's own questions come first
+    const near = entry && (!topic || entry.cat === topic) ? pool.filter((x) => x.cat === entry.cat).sort((p, q) => dist(p) - dist(q))[0] : null;
+    const first = take(near || mine[0] || starters[0] || shuffled(pool)[0]);
     // 3rd: design practice
     let last = null;
     for (const cat of PRACTICE) { last = take(shuffled(pool.filter((x) => x.cat === cat && !taken.has(x)))[0]); if (last) break; }
     // 2nd: random
-    const middle = take(shuffled(pool.filter((x) => !taken.has(x)))[0]);
+    const middle = take(mine.find((x) => !taken.has(x)) || shuffled(pool.filter((x) => !taken.has(x)))[0]);
     const out = [first, middle, last].filter(Boolean);
     for (const x of starters.concat(shuffled(pool))) { if (out.length >= 3) break; if (take(x)) out.push(x); }   // a slot that couldn't be filled
     return out.slice(0, 3).map((x) => ask(x.q));
@@ -329,6 +335,7 @@
       return reply(text, history).then((r) => { r.actions = (r.actions || []).map((a) => (a._raw ? { label: a.label, href: '', raw: a._raw } : a)); return r; });
     },
     systemPrompt,
+    projectStarters(n) { buildIndex(); return projectQs().sort(() => Math.random() - 0.5).slice(0, n); },   // the starter buttons on a case-study page
     rank(text) { buildIndex(); return rank(text).slice(0, 5).map((r) => ({ q: r.e.q, score: +r.score.toFixed(2), answered: filled(r.e) })); }
   };
 })();

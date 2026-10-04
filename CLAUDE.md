@@ -26,7 +26,7 @@ Keep that doc updated as new lessons come up — it's meant to carry across
 chats, not just this one.
 
 **`NEXT-CHAT-PLAYBOOK.md`** (project root) is the short hand-off for building
-the two remaining case studies (NCFE redesign, Are they Driving?) efficiently:
+the two remaining case studies (NCFE redesign, plus a new project that replaces the removed "Are they Driving?") efficiently:
 state, Figma frame ids, the fast build recipe, and token-saving habits.
 
 ## Working style

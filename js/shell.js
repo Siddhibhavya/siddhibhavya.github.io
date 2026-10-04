@@ -526,6 +526,8 @@
     const syncTyping = () => thread.classList.toggle('is-typing', input.value.length > 0);
     input.addEventListener('input', syncTyping);
     form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; send(v); syncTyping(); });
+    const mineQs = window.SiddhiLM && window.SiddhiLM.projectStarters ? window.SiddhiLM.projectStarters(3) : [];   // on a case-study page the opening suggestions are about that project
+    if (mineQs.length) sidebar.querySelectorAll('.lm-suggest button').forEach((b, i) => { if (mineQs[i]) b.querySelector('span').textContent = mineQs[i]; else b.remove(); });
     thread.querySelectorAll('.lm-suggest button').forEach((b) => b.addEventListener('click', () => { send(b.querySelector('span').textContent); input.value = ''; syncTyping(); }));
 
     sidebar.querySelector('.lm-clear').addEventListener('click', () => {

@@ -88,6 +88,9 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **Landing → Welcome Aboard (Be my Guest) is faster:** `GUEST_MS` 2200 → 1500 ms, easing `cubic-bezier(0.4,0,0.2,1)` (the old ease-in barely moved for the first third), and the rise starts on the press instead of after `tune.play()` resolves (that wait showed as a pause in a screen recording). The tune fades over the last 550 ms as before.
 - Map of all docs and the audit: `PROJECT-MAP.md`.
 
+- **M.I.K.U on case-study pages:** `work/*.html` now load `bank.min.js` + `chat.min.js` before the shell (they were missing, so the chat said it had not loaded). The opening suggestions and the follow-up questions there come from that project's own bank topic (`PROJECT_TOPICS` in `js/chat.js`, slug to topic name); other pages are unchanged. `projectStarters` must call `buildIndex()` first because the bank is built lazily.
+- **Removed the Are they Driving? project** (page, card, config, bank entries, image); a new project takes its slot. See NEXT-CHAT-PLAYBOOK.md.
+
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).

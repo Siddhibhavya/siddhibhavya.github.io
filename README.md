@@ -63,7 +63,7 @@ firebase/   the Firestore security rules + setup steps for the shared gallery
 - **The gooey Index ⇄ M.I.K.U tab.** The sidebar's folder tab isn't a picture — it's drawn in SVG and melts from one side to the other like liquid when you switch tabs (a blur + contrast trick, animated by hand so the leading edge shoots ahead and the trailing edge catches up).
 - **Welcome Aboard.** Draw a card, sign it on the line, pick a colour and press *Create*. Then everything happens in one unbroken take: the cards slide, two strings (a thick green one and a thin orange one, traced from my Figma frames) are pulled across the screen, "Thank You" rises, the strings are fed off to the right, and you're gently returned to the main site. Your card then joins the shared Guest Gallery for everyone to see.
 - **Things you can move on About.** The stars, the fish-bone patch and the dino can be picked up and thrown — they slide, bounce off the edges and tilt as you drag. Tap one and it spins or wobbles. (A little pill tells you this the first time you scroll.)
-- **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Syncletter, yellow for NearU, blue for NCFE, red for *Are they Driving?* — that follows you around.
+- **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Syncletter, yellow for NearU, blue for NCFE — that follows you around.
 
 Also: the default cursor is a little white star, and it glows on the dark parts of the site.
 

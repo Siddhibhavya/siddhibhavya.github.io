@@ -6,7 +6,7 @@ graph TD
   MAP[PROJECT-MAP.md<br/>this file]
   DEV[tools/DEV-NOTES.md<br/>folder map, script order, shell rules]
   CSG[CASE-STUDY-GUIDELINES.md<br/>§1 brand+paper+Contents · §3 bugs · §4 centring · §5 media weight · §8 look&feel · §9-13 rounds]
-  PLAY[NEXT-CHAT-PLAYBOOK.md<br/>NCFE + Driving build recipe, hidden projects]
+  PLAY[NEXT-CHAT-PLAYBOOK.md<br/>NCFE + new project build recipe, hidden projects]
   DEC[decisions.md<br/>why the code is the way it is]
   PERF[Perf audit 2026-10-04<br/>see section below]
 
@@ -18,7 +18,7 @@ graph TD
   CSG --> SYN[work/syncletter.html + js/syncletter.js - scaled desktop canvas, DONE]
   CSG --> NU[work/nearu.html + js/nearu.js + nearu-mobile.js - own phone layout, WIP files uncommitted]
   PLAY --> NCFE[ncfe-redesign HIDDEN-UNTIL-READY]
-  PLAY --> DRV[are-they-driving HIDDEN-UNTIL-READY]
+  PLAY --> NEWP[new project slot in home.html HIDDEN-UNTIL-READY]
   CLAUDE --> GATE{{Done = check.js clean AND grid-audit zero off-grid on desktop + phone}}
 ```
 

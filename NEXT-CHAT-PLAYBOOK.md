@@ -111,3 +111,6 @@ own facts (no inventions), home card + Figma frame matched to the page,
 ## Update 2026-10-04 (performance pass done)
 - Site is minified (`tools/build-min.js`), fonts WOFF2, lazy loading network-aware, DB/chat timeouts verified, cross-device overflow audit clean (see CASE-STUDY-GUIDELINES.md section 10 and decisions.md).
 - Still open: NearU prototype integration (another chat), NCFE and "Are they Driving?" case studies + their My Work cards (hidden until ready, search `HIDDEN-UNTIL-READY`), M.I.K.U answers (163 blank in the bank).
+
+## Update 2026-10-04 (later): "Are they Driving?" removed
+Siddhi is replacing it with an entirely new project. Removed: `work/are-they-driving.html`, `assets/work/driving-road.jpg`, its My Work card + sheet (home.html now has a "NEW PROJECT SLOT" comment with the old position vars), its entry in `js/config.js`, all `are-they-driving-*` bank entries, the chat.js `P.driving` shortcut, and the Driving mentions in `projects-5` / `projects-9` / `design-process-30`. For the new project: add its card, `work/<slug>.html`, config entry, a bank topic, and register the slug in `PROJECT_TOPICS` in `js/chat.js` so M.I.K.U's suggestions on that page are about it. Case-study pages must load `bank.min.js` and `chat.min.js` before `shell.min.js` (they did not before, so M.I.K.U said "chat brain did not load" there).
