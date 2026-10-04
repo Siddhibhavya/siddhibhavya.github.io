@@ -26,7 +26,7 @@
      "Be my Guest" also plays the welcome tune, and the two go hand in hand: they start together on the press, the tune fades out over its last
      moments, and the next page opens as both end (GUEST_MS). Skip Intro has no tune and leaves quicker (QUICK_MS).
      Browsers only allow sound after a click, which is why it starts on the press and not when the page opens. ---- */
-  const GUEST_MS = 2200;                                              // rise + tune together (the tune's loud part is its first ~2s, then a long tail)
+  const GUEST_MS = 1500;                                              // rise + tune together (the tune's loud part is its first ~2s, then a long tail)
   const QUICK_MS = 950;                                               // the exit without the tune (also the fallback if the browser blocks sound)
   const TUNE_VOLUME = 0.7, TUNE_FADE_MS = 550;
   const koiEl = document.getElementById('koi');
@@ -56,7 +56,7 @@
   function leave(href, ms, withTune) {
     stage.style.setProperty('--leave-ms', ms + 'ms');
     stage.classList.add('leaving');
-    if (peek && /guest-book/.test(href)) { peek.style.visibility = 'visible'; peek.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: ms, easing: 'cubic-bezier(0.55, 0, 0.35, 1)', fill: 'forwards' }); }
+    if (peek && /guest-book/.test(href)) { peek.style.visibility = 'visible'; peek.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: ms, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' }); }
     if (koiEl) koiEl.classList.add('fade');
     if (withTune) setTimeout(fadeTune, ms - TUNE_FADE_MS);
     setTimeout(() => { location.href = href; }, ms);
@@ -72,8 +72,9 @@
     try { if (/home(\.html)?$/.test(href)) sessionStorage.setItem('siddhi.enter', '1'); } catch (err) { /* ignore */ }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { location.href = href; return; }
     if (!/guest-book(\.html)?$/.test(href)) { leave(href, QUICK_MS, false); return; }
-    const started = tune.play();                                      // the rise starts the moment the sound does, so they stay together
-    if (started && started.then) started.then(() => leave(href, GUEST_MS, true), () => leave(href, QUICK_MS, false)); else leave(href, GUEST_MS, true);
+    const started = tune.play();                                      // the rise starts at once with the press (waiting for the sound's promise added a visible pause); the tune begins alongside
+    leave(href, GUEST_MS, true);
+    if (started && started.catch) started.catch(() => {});
   }));
   /* ---- phone: scrolling / swiping down anywhere (apart from pressing the two buttons) enters the site, exactly like "To site" ---- */
   const isPhone = () => window.matchMedia('(max-width: 899px)').matches;

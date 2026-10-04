@@ -85,6 +85,7 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **NearU media loading (`js/nearu.js`):** no blanket `preload=auto` / eager images. Observers start images ~2400 px ahead and videos ~3 screens ahead (600 px on slow links). Why: the old pass pulled ~22 MB at once, buffered 14 video decoders and loaded the hidden phone layout's 7 duplicate videos and 30 images. Same files, same quality. Safari/Firefox have no `navigator.connection`, so slow links are detected from the throughput of files already downloaded (under 1.5 Mbit/s).
 - **Grid alignment is coalesced (`queueAlign`):** fonts-ready, load, +800 ms, resize (120 ms debounce) and the paper ResizeObserver share one scheduled pass. The desktop pass reads every baseline, then writes every `top` (one layout, not one per text block). Why: it ran 4-6 times at load with forced reflow (342 ms + 123 ms long tasks).
 - **NearU files are minified** (`node tools/build-min.js --nearu`); `work/nearu.html` loads the `.min` files.
+- **Landing → Welcome Aboard (Be my Guest) is faster:** `GUEST_MS` 2200 → 1500 ms, easing `cubic-bezier(0.4,0,0.2,1)` (the old ease-in barely moved for the first third), and the rise starts on the press instead of after `tune.play()` resolves (that wait showed as a pause in a screen recording). The tune fades over the last 550 ms as before.
 - Map of all docs and the audit: `PROJECT-MAP.md`.
 
 ## Checks before committing
