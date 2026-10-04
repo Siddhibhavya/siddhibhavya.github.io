@@ -16,6 +16,7 @@
 
 body .main,
 .nearu-page .nearu-viewport,
+.nearu-page .nearu-canvas,
 .nearu-page .nu-2,
 .nearu-mobile,
 .syncletter-viewport,
@@ -23,6 +24,7 @@ body .main,
 
 body .main::before,
 .nearu-page .nearu-viewport::before,
+.nearu-page .nearu-canvas::before,
 .nearu-page .nu-2::before,
 .nearu-mobile::before,
 .syncletter-viewport::before,
