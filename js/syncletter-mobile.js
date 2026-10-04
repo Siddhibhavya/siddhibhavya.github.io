@@ -144,6 +144,7 @@
   copy(s, '.syn-44'); copy(s, '.syn-45');
 
   // decision cards: the same two cards, stacked
+  copy(s, '.syn-dec-sub', 'sm-label');
   art(s, '.syn-decisions', 'sm-decisions');
 
   // ---- reflection ----

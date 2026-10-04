@@ -426,7 +426,8 @@
 
 
 /* ---------- Decision cards (above Reflection): flat colour memos pinned to the page, like the My Work cards ---------- */
-.syn-decisions { position: absolute; left: 474px; top: 8220px; width: 857px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: stretch; font-family: var(--font-ui); color: #02221e; }
+.syn-dec-sub { position: absolute; left: 467px; top: 8180px; margin: 0; font-family: var(--font-ui); font-weight: 500; color: var(--chestnut); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
+.syn-decisions { position: absolute; left: 474px; top: 8261px; width: 857px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: stretch; font-family: var(--font-ui); color: #02221e; }
 .syn-dec { position: relative; box-sizing: border-box; border-radius: 20px; padding: 26px 24px 22px; box-shadow: -7px 9px 7px rgba(0, 0, 0, .24); display: flex; flex-direction: column; }
 .syn-dec-a { background: #a3dcae; rotate: -1.3deg; }   /* light green from the spectrum; a slight tilt, a static rotation (no animated transform) so the text stays crisp */
 .syn-dec-b { background: #fbc7a0; rotate: 1.1deg; }    /* peach from the spectrum */
