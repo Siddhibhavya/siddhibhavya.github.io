@@ -254,3 +254,14 @@
     if (target) window.scrollTo(0, target.getBoundingClientRect().top + scrollY - (innerWidth < 900 ? 70 : 25));
   });
 })();
+
+// A big board that fails to arrive (dropped connection, memory pressure) is asked for again, up to twice, instead of leaving a broken-image box.
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.closest('.nu-ide')) return;
+  const n = +(img.dataset.retry || 0);
+  if (n >= 2) return;
+  img.dataset.retry = n + 1;
+  const src = img.getAttribute('src');
+  setTimeout(() => { img.removeAttribute('src'); img.setAttribute('src', src); }, 600 * (n + 1));
+}, true);
