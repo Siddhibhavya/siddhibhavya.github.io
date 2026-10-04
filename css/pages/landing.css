@@ -68,6 +68,7 @@ body.landing { background: var(--plum); color: #fff; overflow: hidden; height: 1
 @keyframes ticket-punch { from { --punch: 0px; } to { --punch: 15px; } }
 .ticket.punched .tk { animation: ticket-punch 0.4s ease-out forwards; }
 @media (max-width: 899px) { .tickets { transform: scale(1.7); } }                     /* the stage is scaled right down on a phone: keep the tickets easy to read and tap */
+@media (min-width: 900px) { .tickets { transform: scale(1.5); } }                    /* desktop only: bigger tickets, label and star scale with them */
 @media (prefers-reduced-motion: reduce) { .ticket, .tk { transition: none; } .ticket.punched .tk { animation: none; --punch: 15px; } }
 
 /* ---------- 5 · Enter / leave ----------
