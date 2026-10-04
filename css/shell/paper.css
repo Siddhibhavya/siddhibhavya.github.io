@@ -15,14 +15,14 @@
 .nearu-page, .syncletter-page { --paper-veil: rgba(255, 241, 223, 0.5); }
 
 body .main,
-.nearu-page .nearu-canvas,
+.nearu-page .nearu-viewport,
 .nearu-page .nu-2,
 .nearu-mobile,
 .syncletter-viewport,
 .syn-mobile { isolation: isolate; }
 
 body .main::before,
-.nearu-page .nearu-canvas::before,
+.nearu-page .nearu-viewport::before,
 .nearu-page .nu-2::before,
 .nearu-mobile::before,
 .syncletter-viewport::before,
