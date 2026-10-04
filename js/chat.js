@@ -183,8 +183,8 @@
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
     if (P.ncfe && has('ncfe', 'financ')) return about(P.ncfe);
     if (P.driving && has('driving', 'kalahandi', 'accident')) return about(P.driving);
-    if (has('ats')) return { text: 'Here is the ATS friendly résumé.', actions: [raw('Open ATS friendly résumé', S.links.resumeAts)] };
-    if (has('resume', 'cv')) return { text: 'Do you want the site résumé or the ATS friendly one?', actions: [raw('Site résumé', S.links.resume), raw('ATS friendly', S.links.resumeAts)] };
+    if (has('ats')) return { text: 'What is the Job Description?', actions: [raw('Product designer', S.links.resumeAtsProduct), raw('Interaction designer', S.links.resumeAtsInteraction)] };
+    if (has('resume', 'cv')) return { text: 'Do you want the site résumé or an ATS friendly one? For the ATS one, what is the Job Description?', actions: [raw('Site résumé', S.links.resume), raw('ATS: Product designer', S.links.resumeAtsProduct), raw('ATS: Interaction designer', S.links.resumeAtsInteraction)] };
     if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram. They’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
     if (has('guest', 'gallery')) return { text: 'The Guest Gallery is an art installation by visitors. Draw a little card, sign it and leave it there.', actions: [go('Guest Gallery', 'guest-gallery.html'), go('Draw a card', 'guest-book.html')] };
     return null;

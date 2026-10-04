@@ -10,7 +10,9 @@ window.SITE = {
     linkedin: 'https://www.linkedin.com/in/siddhi-bhavya/',
     instagram: 'https://www.instagram.com/alongsiddhi/?hl=en',
     resume: 'https://drive.google.com/file/d/1ALWAW4Qm_FeONfaqu2hGZuBhEG89Ushw/view?usp=drive_link',   // the site résumé — the Resume pill in the top-right corner
-    resumeAts: 'https://drive.google.com/file/d/1zJQg8Z51ZCetirIovAvApxQkgCxdzwo7/view?usp=sharing'   // the ATS-friendly résumé — "Resume" under Connect with me! and in the footer
+    resumeAts: 'https://drive.google.com/file/d/1glJcDXhLOTeQw0tKKb_2Yy8bJEzlt3n2/view?usp=sharing',   // the ATS-friendly résumé the footer "Resume" opens (the interaction designer one)
+    resumeAtsInteraction: 'https://drive.google.com/file/d/1glJcDXhLOTeQw0tKKb_2Yy8bJEzlt3n2/view?usp=sharing',   // MIKU asks which job description, then opens one of these two
+    resumeAtsProduct: 'https://drive.google.com/file/d/1zJQg8Z51ZCetirIovAvApxQkgCxdzwo7/view?usp=sharing'
   },
 
   // Sidebar + footer navigation. `lm` opens the M.I.K.U tab instead of navigating.
