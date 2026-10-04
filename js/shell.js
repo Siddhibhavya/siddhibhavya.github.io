@@ -463,7 +463,7 @@
         el.appendChild(box);
         el.classList.add('has-img');
       }
-      const links = (m.actions || []).filter((a) => !a.ask), asks = (m.actions || []).filter((a) => a.ask);
+      const seenLinks = new Set(), links = (m.actions || []).filter((a) => { if (a.ask) return false; const k = a.label + '|' + (a.href || a._raw || ''); return seenLinks.has(k) ? false : (seenLinks.add(k), true); }), asks = (m.actions || []).filter((a) => a.ask);
       if (links.length) {                                             // links and buttons stay inside the bubble…
         const row = document.createElement('div');
         row.className = 'msg-actions';

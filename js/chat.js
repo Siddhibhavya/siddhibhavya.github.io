@@ -93,11 +93,11 @@
       'Nice attempt, but I’m staying in character. What would you like to know about my work?'
     ],
     offtopic: [
-      'That’s outside my little museum! I only know about me: design, projects, side quests, hobbies.',
+      'That’s outside what I know! I only know about me: design, projects, side quests, hobbies.',
       'I’m the wrong bot for that one. Ask me about my work or what I get up to instead?'
     ],
     private: [
-      'I keep that one private. If you want to reach me, email, LinkedIn and Instagram are the doors that are open.'
+      'I keep that one private. If you want to reach me, these are the doors that are open:'
     ],
     kind: [
       'Let’s keep it kind. I’m happy to chat about my work, though.'
@@ -154,23 +154,25 @@
   /* The everyday replies (hello, thanks, bye, how are you, what can I ask, "are you a bot?", "no answer yet", "I don't understand") live in the question bank too,
      under "Small talk", so they can be reworded or given pictures in the bank editor. A reply written there wins; the wording in this file is only what is
      used if that entry is missing or blank. `said(id, fallback)` does the swap and keeps the fallback's own buttons (suggested questions) plus any links added in the bank. */
+  // The same button never shows twice in one answer (a hard-coded fallback and the bank can both add Email, for instance).
+  const uniqActions = (list) => { const seen = new Set(); return list.filter((a) => { const k = (a.ask ? 'ask:' + a.ask : a.label + '|' + (a.href || a._raw || '')); if (seen.has(k)) return false; seen.add(k); return true; }); };
   function said(id, fallback) {
     const e = BANK.find((x) => x.id === id);
     if (!e || !filled(e)) return fallback;
     return Object.assign({}, fallback, {
       text: answerOf(e) || fallback.text,
       images: imgsOf(e).map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '', caption: i.caption || '' })),
-      actions: (fallback.actions || []).concat((e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))))
+      actions: uniqActions((fallback.actions || []).concat((e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href)))))
     });
   }
   function smallTalk(t) {
     const n = t.trim().split(/\s+/).length;
-    if (n <= 5 && /^(hi+|hii+|hello+|hey+|heya|namaste|yo|hola|sup|good (morning|evening|afternoon))\b/.test(t)) return said('talk-hello', { kind: 'talk', text: pick(['Namaste! Ask me anything about my work, how I design, or what I do for fun.', 'Hey, welcome to my museum! What are you curious about?']), actions: starters(3) });
+    if (n <= 5 && /^(hi+|hii+|hello+|hey+|heya|namaste|yo|hola|sup|good (morning|evening|afternoon))\b/.test(t)) return said('talk-hello', { kind: 'talk', text: pick(['Namaste! Ask me anything about my work, how I design, or what I do for fun.', 'Hey, welcome! What are you curious about?']), actions: starters(3) });
     if (n <= 6 && /\b(thanks|thank you|thx|cheers|appreciate)\b/.test(t)) return said('talk-thanks', { kind: 'talk', text: pick(['Anytime! Anything else you’re curious about?', 'Happy to help. Come back with more questions whenever you like.']), actions: [] });
-    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return said('talk-bye', { kind: 'talk', text: 'Bye for now, and thanks for wandering through my museum!', actions: [go('Leave a card', 'guest-book.html')] });
+    if (n <= 5 && /\b(bye|goodbye|see ya|cya|good night)\b/.test(t)) return said('talk-bye', { kind: 'talk', text: 'Bye for now, and thanks for stopping by!', actions: [go('Leave a card', 'guest-book.html')] });
     if (/how (are|r) (you|u)\b|hows it going|whats up\b/.test(t)) return said('talk-how-are-you', { kind: 'talk', text: 'Doing good, surrounded by koi and half-finished projects, which is my favourite state. How about you?', actions: starters(2) });
     if (/\b(are you|r u|youre)\s+(a |an |the )?(real|human|bot|ai|llm|robot|chatbot|machine|actual)\b|\bwho (made|built|created|programmed|trained) you\b|\bwhat are you\b|\bare you (chatgpt|gpt|claude|gemini)\b/.test(t)) {
-      return said('talk-are-you-a-bot', { kind: 'talk', text: 'No, I am not an AI. I am a system bot that lives on this site and matches your question to answers Siddhi wrote herself. For more questions, Email or a DM is the way!', actions: [raw('Email', S.links.email), raw('Instagram', S.links.instagram), go('About Me', 'about.html')] });
+      return said('talk-are-you-a-bot', { kind: 'talk', text: 'No, I am not an AI. I am a system bot that lives on this site and matches your question to answers Siddhi wrote herself. For more questions, reach me here:', actions: [raw('Email', S.links.email), raw('Instagram', S.links.instagram), go('About Me', 'about.html')] });
     }
     if (/\bwhat can (you|i)\b.{0,15}\b(do|ask)\b|\bhelp\b$|\bhow do (i|you) work\b|\bwhat should i ask\b/.test(t)) return said('talk-what-can-you-do', { kind: 'talk', text: 'Ask me about my projects, how I think about design, my side quests, hobbies, studies, or how to reach me. Here are a few to start with:', actions: starters(4) });
     return null;
@@ -185,7 +187,7 @@
     if (P.driving && has('driving', 'kalahandi', 'accident')) return about(P.driving);
     if (has('ats')) return { text: 'What is the Job Description?', actions: [raw('Product designer', S.links.resumeAtsProduct), raw('Interaction designer', S.links.resumeAtsInteraction)] };
     if (has('resume', 'cv')) return { text: 'Do you want the site résumé or an ATS friendly one? For the ATS one, what is the Job Description?', actions: [raw('Site résumé', S.links.resume), raw('ATS: Product designer', S.links.resumeAtsProduct), raw('ATS: Interaction designer', S.links.resumeAtsInteraction)] };
-    if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'You can reach me by email, LinkedIn or Instagram. They’re under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
+    if (has('contact', 'email', 'reach', 'linkedin', 'instagram')) return { text: 'Pick whichever suits you. They’re also under “Connect with me!” and in the footer.', actions: [raw('Email', S.links.email), raw('LinkedIn', S.links.linkedin), raw('Instagram', S.links.instagram)] };
     if (has('guest', 'gallery')) return { text: 'The Guest Gallery is an art installation by visitors. Draw a little card, sign it and leave it there.', actions: [go('Guest Gallery', 'guest-gallery.html'), go('Draw a card', 'guest-book.html')] };
     return null;
   }
@@ -212,7 +214,7 @@
       return no ? { kind: 'talk', noFollow: true, text: pick(['Alright, no problem.', 'Okay! I’m here if you want to know anything else.']), actions: [] }
                 : { kind: 'talk', text: pick(['Glad we’re on the same page! Here are a few more things you could ask:', 'Nice! Want to know more? Try one of these:']), actions: [] };
     }
-    if (no) return { kind: 'talk', noFollow: true, text: pick(['No worries. I’ll be right here if you think of something.', 'All good! Come back with a question whenever you like.', 'Fair enough. Thanks for stopping by my museum.']), actions: [] };
+    if (no) return { kind: 'talk', noFollow: true, text: pick(['No worries. I’ll be right here if you think of something.', 'All good! Come back with a question whenever you like.', 'Fair enough. Thanks for stopping by.']), actions: [] };
     const firstAsk = (prev.actions || []).find((a) => a.ask);
     if (/did you mean/i.test(prev.text) && firstAsk) return localReply(firstAsk.ask, []);
     if (/project/i.test(prev.text)) return localReply('What projects have you worked on?', []);
@@ -232,7 +234,7 @@
     if (top && top.score >= STRONG) {
       const a = answerOf(top.e), im = imgsOf(top.e);
       if (a || im.length) return { kind: 'bank', entry: top.e, text: a || pick(['Here you go:', 'Easier to show than tell:', 'Have a look:']), images: im.map((i) => ({ src: i.src, alt: i.alt || '', poster: i.poster || '', href: i.href || '', caption: i.caption || '' })), actions: (top.e.go || []).map((g) => (g.raw ? raw(g.label, g.raw) : go(g.label, g.href))) };
-      return said('talk-not-written', { kind: 'bank', text: 'Hmm. Maybe you should Mail/DM me for that one:', actions: contactActions() });
+      return said('talk-not-written', { kind: 'bank', text: 'Hmm. I haven’t written that one down yet. Ask me directly:', actions: contactActions() });
     }
     const jailed = j.soft();                                   // not a question about Siddhi at all: homework, code jobs, trivia
     if (jailed) return jailed;
@@ -240,7 +242,7 @@
     if (old) return Object.assign({ kind: 'legacy' }, old);
     const maybe = ranked.filter((r) => r.score >= MAYBE && filled(r.e) && suggestable(r.e)).slice(0, 3);
     if (maybe.length) return { kind: 'maybe', text: 'Not sure I caught that. Did you mean one of these?', actions: maybe.map((r) => ask(r.e.q)) };
-    return said('talk-no-match', { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these, or just email me.', actions: starters(3).concat([raw('Email', S.links.email)]) });
+    return said('talk-no-match', { kind: 'none', text: 'Hmm, I don’t have a good answer to that one. I’m best on my projects, how I design, my side quests and what I do for fun. Try one of these, or reach me below.', actions: starters(3).concat([raw('Email', S.links.email)]) });
   }
 
   /* the personality + rules + answers, for when a real language model sits behind SITE.chat.endpoint */

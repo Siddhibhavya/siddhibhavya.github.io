@@ -1,12 +1,12 @@
 # How I made it
 
-Hi! I'm Siddhi — a designer tinkering at the intersection of human-computer interaction, accessibility and efficiency. This is my portfolio, and I wanted it to feel like a little museum you wander through rather than a page you scroll past. This file is the behind-the-scenes tour: what it is, how I designed it, how it's built, and how I keep it going.
+Hi! I'm Siddhi — a designer tinkering at the intersection of human-computer interaction, accessibility and efficiency. This is my portfolio, and I wanted it to feel like a scrapbook on graph paper you wander through rather than a page you scroll past. This file is the behind-the-scenes tour: what it is, how I designed it, how it's built, and how I keep it going.
 
 ---
 
 ## What the site is
 
-A small museum of my work, with me as the (slightly over-excited) host.
+A scrapbook of my work, with me (and M.I.K.U) as the slightly over-excited host.
 
 - **Landing** — a dark, starry entrance with a koi swimming behind it. Press *Be my Guest* to go through.
 - **My Work** — project cards that straighten up and open out when you hover:
@@ -36,7 +36,7 @@ I designed everything in **Figma** first — every frame, every little doodle �
 
 - **Ancizar Sans** — almost all the text (self-hosted in `assets/fonts/`; bold and black are italic).
 - **Ancizar Serif** — titles, my name, the big "Namaste, I am Siddhi".
-- **Blank Script** — my own handwriting font, used for the word *museum* on the landing page and for signatures in the guest gallery.
+- **Blank Script** — my own handwriting font, used for signatures in the guest gallery.
 
 Ancizar Serif loads from Google Fonts; Ancizar Sans and Blank Script are self-hosted. Blank Script is included in `assets/fonts/`.
 
@@ -120,7 +120,7 @@ Then open <http://localhost:5173>.
 - The shared gallery runs on the free plan, so if it ever gets very busy Firebase may pause it until the next day — the gallery then quietly shows each visitor their own cards.
 - Case studies and a résumé PDF are on their way.
 
-Thanks for visiting the museum. 🌟
+Thanks for visiting. 🌟
 
 ## Look and feel notes
 Paper veil + grain: `css/shell/paper.css`. Torn paper sheets behind My Work cards: `tools/make-paper-sheets.js`. Rules learnt so far: `CASE-STUDY-GUIDELINES.md` section 8.
