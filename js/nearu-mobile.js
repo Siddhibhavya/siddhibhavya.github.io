@@ -253,9 +253,13 @@
   const cap = sel => { const el = canvas.querySelector(sel).cloneNode(true); el.classList.add('nearu-mobile-copy'); s.append(el); return el; };   // her captions, cloned from the canvas
   const shot = sel => { const el = canvas.querySelector(sel).cloneNode(true); s.append(el); return el; };   // a screenshot board
   // First look: logo, film, first design screens. Final look: logo, film, final screens, design system. Then the paragraph.
-  copy(s, 1583, 'nearu-mobile-label'); plate(s, [1587], 392, 3026, 300, 97); cap('.nu-cap-near'); vid(s, 1581, 'is-wire'); shot('.nu-ide-first'); cap('.nu-cap-first');
-  copy(s, 1584, 'nearu-mobile-label'); plate(s, [1596], 1208, 3026, 206, 118); cap('.nu-cap-neu'); vid(s, 1582, 'is-wire'); shot('.nu-ide-final'); cap('.nu-cap-final');
-  { const wrap = document.createElement('div'); wrap.className = 'nu-ide-wrap'; ['.nu-ide-variants', '.nu-cap-ds'].forEach(sel => wrap.append(canvas.querySelector(sel).cloneNode(true))); s.append(wrap); }
+  copy(s, 1583, 'nearu-mobile-label'); plate(s, [1587], 392, 3026, 240, 78); cap('.nu-cap-near'); vid(s, 1581, 'is-wire'); shot('.nu-ide-first'); cap('.nu-cap-first');
+  copy(s, 1584, 'nearu-mobile-label'); plate(s, [1596], 1260, 3026, 154, 88); cap('.nu-cap-neu'); vid(s, 1582, 'is-wire');
+  // Final screens and the design system sit side by side (two columns) on phones and tablets.
+  { const row = document.createElement('div'); row.className = 'nearu-mobile-final-row';
+    const left = document.createElement('div'); left.append(canvas.querySelector('.nu-ide-final').cloneNode(true));
+    const wrap = document.createElement('div'); wrap.className = 'nu-ide-wrap'; ['.nu-ide-variants', '.nu-cap-ds'].forEach(sel => wrap.append(canvas.querySelector(sel).cloneNode(true)));
+    const note = canvas.querySelector('.nu-cap-final').cloneNode(true); note.classList.add('nearu-mobile-copy'); const right = document.createElement('div'); right.append(wrap, note); row.append(left, right); s.append(row); }   // the caption fills the space under the design-system board
   copy(s, 1586);
   const abRow = document.createElement('div');
   abRow.className = 'nearu-mobile-ab';

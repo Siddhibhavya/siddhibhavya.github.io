@@ -1,7 +1,8 @@
 # Project rules for Claude
 
-Plain HTML/CSS/JS portfolio site, no build step. Read `tools/DEV-NOTES.md`
-first for the folder map and how the site fits together.
+Plain HTML/CSS/JS portfolio site, no build step. Read `PROJECT-MAP.md` first
+(one-page graph of every doc + the perf audit), then `tools/DEV-NOTES.md` for
+the folder map and how the site fits together.
 
 ## Read this before touching a case-study page (`work/*.html`)
 

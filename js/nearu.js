@@ -11,7 +11,7 @@
   //  1830: one more row between the Context title and its paragraph (two rows baseline to baseline, so the large title never touches the text)
   //  1990: the Context paragraph gained a sentence about campus side hustles (about 3 more lines), so Solution and everything after move down 2 rows (trimmed from 3: the gap above Solution was too wide)
   //  2250: tighter gap before the Solution art (1 row up)
-  //  3560: Ideation now follows the Frame 28 arrangement (screens board, final film, variants board), which is taller than the old two films, so everything below moves down 23 rows in all (the Ideation art, its captions and the paragraph carry nu-idx and are placed explicitly in nearu.css)
+  //  3560: Ideation now follows the Frame 28 arrangement (screens board, final film, variants board), which is taller than the old two films, so everything below moves down 24 rows in all (the Ideation art, its captions and the paragraph carry nu-idx and are placed explicitly in nearu.css)
   //  5700: the "How students sell" treemap is shorter than the three cards it replaced, so the ecosystem moves up 4 rows
   //  6300: the loop diagram is taller than the old chart, so what follows moves back down 3 rows
   //  6880: the insight memos are taller than the old boxes, so the persona paper and everything after move down 2 rows (was 3; trimmed 2026-10-03 for less empty paper)
@@ -20,7 +20,7 @@
   //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
   //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 9 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
   //  1030: room for the Try demo pill between the project chip and the demo film (3 rows down). The pill itself (.nu-demo) is placed at its final y in CSS and skipped by the shifts.
-  const SHIFTS = [[700, -4], [1830, 1], [1990, 2], [2250, -1], [3560, 23, ['nu-idx']], [4290, -1], [5700, -4], [6300, 3], [6880, 2], [8200, -3], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
+  const SHIFTS = [[700, -4], [1830, 1], [1990, 2], [2250, -1], [3560, 24, ['nu-idx']], [4290, -1], [5700, -5], [6300, 3], [6880, 2], [8200, -4], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
@@ -66,25 +66,34 @@
   // canvas/paper scaling and the page's own media.
   // Native loading="lazy" misjudges distances on this scaled canvas, so images popped in late. Start loading everything
   // within ~3 screens of the viewport (and warm the rest in order, once idle) — same files, same quality, just earlier.
-  // Quality first: on a normal connection everything loads at once (full-size images, whole videos). Only a slow or data-saving connection keeps the lazy behaviour below.
-  const link = navigator.connection || {};
-  const slowNet = !!link.saveData || /(^|-)2g|3g/.test(link.effectiveType || '');
-  if (!slowNet) {
-    document.querySelectorAll('img[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
-    document.querySelectorAll('video').forEach(v => { v.preload = 'auto'; });
-  }
+  // Same files, same quality, delivered when needed: the observer below starts each image/video ~2 screens before it is reached.
+  // (A blanket eager/preload=auto pass used to pull all ~22 MB at once, including the hidden phone layout's duplicate videos and images, and buffer 14 decoders.)
+  // Fast connection: videos start buffering ~3 screens ahead, images ~2. Slow / data-saving: the narrow lazy margin, no idle warm-up, no pre-buffering.
+  // Chrome/Edge report the connection; Safari and Firefox don't, so there we time the files already downloaded (a slow link shows up as a low throughput).
+  const lean = (() => {
+    const c = navigator.connection;
+    if (c) return !!(c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || ''));
+    const slow = performance.getEntriesByType('resource').filter(e => e.transferSize > 60000 && e.duration > 0).map(e => e.transferSize * 8 / e.duration);   // kbit/s
+    return slow.length > 1 && slow.sort((x, y) => x - y)[Math.floor(slow.length / 2)] < 1500;
+  })();
   const warm = img => { if (img.loading === 'lazy') img.loading = 'eager'; };
   const near = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (!isIntersecting) return;
     near.unobserve(target);
-    if (target.tagName === 'VIDEO') target.preload = 'auto'; else warm(target);
-  }), { rootMargin: '3000px 0px' });
-  document.querySelectorAll('img[loading="lazy"], video').forEach(el => near.observe(el));
+    if (target.tagName === 'VIDEO') { if (!lean) target.preload = 'auto'; } else warm(target);
+  }), { rootMargin: lean ? '600px 0px' : '2400px 0px' });
+  document.querySelectorAll('img[loading="lazy"]').forEach(el => near.observe(el));
+  const nearVideos = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    nearVideos.unobserve(target);
+    if (!lean) target.preload = 'auto';
+  }), { rootMargin: lean ? '600px 0px' : Math.round(innerHeight * 3) + 'px 0px' });
+  document.querySelectorAll('video').forEach(el => nearVideos.observe(el));
   const idleWarm = () => {
-    const rest = [...document.querySelectorAll('img[loading="lazy"]')].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    const rest = [...document.querySelectorAll('img[loading="lazy"]')].filter(img => img.offsetParent).sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
     (function next() { const img = rest.shift(); if (!img) return; warm(img); setTimeout(next, 150); })();
   };
-  if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm);
+  if (!lean) { if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm); }
   const videos = [...document.querySelectorAll('video')];
   const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting && !reduce.matches) target.play().catch(() => {});
@@ -139,11 +148,12 @@
   function alignGrid() {
     if (innerWidth >= 900) {
       const origin = canvas.getBoundingClientRect().top;
-      ruled.forEach(el => {
+      // Read every baseline first, then write every top: one layout instead of one per text block (these boxes are absolute, so they cannot affect each other).
+      const tops = ruled.map(el => {
         const y = (baseline(el) - origin) / scale;
-        const delta = 14 + Math.round((y - 14) / 41) * 41 - y;
-        el.style.top = (parseFloat(getComputedStyle(el).top) + delta) + 'px';
+        return parseFloat(getComputedStyle(el).top) + 14 + Math.round((y - 14) / 41) * 41 - y;
       });
+      ruled.forEach((el, i) => { el.style.top = tops[i] + 'px'; });
     } else {
       const paper = document.querySelector('.nearu-mobile');
       // One top-to-bottom pass over every line of text on the paper (labels, headings, captions, insight rows, before/after lists,
@@ -220,10 +230,13 @@
       });
     }
   }
-  document.fonts.ready.then(() => requestAnimationFrame(alignGrid));
+  // Every trigger goes through one scheduler: calls that land together run the alignment once (it forces layout, so repeats are expensive).
+  let alignTimer = 0;
+  const queueAlign = (wait = 0) => { clearTimeout(alignTimer); alignTimer = setTimeout(() => requestAnimationFrame(alignGrid), wait); };
+  document.fonts.ready.then(() => queueAlign());
   // Images/SVG art settle after the first pass and shift the text below them: measure again once the page has loaded.
-  addEventListener('load', () => { requestAnimationFrame(alignGrid); setTimeout(alignGrid, 800); });
-  addEventListener('resize', () => requestAnimationFrame(() => requestAnimationFrame(alignGrid)));
+  addEventListener('load', () => { queueAlign(); setTimeout(() => queueAlign(), 800); });
+  addEventListener('resize', () => queueAlign(120));
   // The phone art re-scales (js/nearu-mobile.js) after our pass and moves everything below it: re-align whenever the paper's height changes.
   (function watchPaper() {
     const paper = document.querySelector('.nearu-mobile');
@@ -232,7 +245,7 @@
     new ResizeObserver(() => {
       if (busy || innerWidth >= 900) return;
       busy = true;
-      requestAnimationFrame(() => { alignGrid(); requestAnimationFrame(() => { busy = false; }); });
+      queueAlign(); setTimeout(() => { busy = false; }, 200);
     }).observe(paper);
   })();
   window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };

@@ -108,9 +108,9 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 
 
-.nearu-page .nu-87 { position:absolute;height:268px;left:392px;top:3174px;width:491px; }
+.nearu-page .nu-87 { position:absolute;height:268px;left:392px;top:3215px;width:491px; }
 .nearu-page .nu-88 { position:absolute;inset:0;overflow:hidden; }
-.nearu-page .nu-89 { position:absolute;height:271px;left:923px;top:3174px;width:491px; }
+.nearu-page .nu-89 { position:absolute;height:271px;left:923px;top:3215px;width:491px; }
 .nearu-page .nu-90 { position:absolute;inset:0;pointer-events:none; }
 .nearu-page .nu-91 { position:absolute;inset:0; }
 .nearu-page .nu-92 { position:absolute;background:rgba(100,95,95,0.36);inset:0;mix-blend-mode:color-burn; }
@@ -118,10 +118,10 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-94 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:923px;font-style:normal;color:var(--espresso);font-size:32px;top:2976px;white-space:nowrap; }
 .nearu-page .nu-95 { position:absolute;height:572px;left:458px;border-radius:11px;top:1082px;width:890px; }
 .nearu-page .nu-96 { position:absolute;inset:0;overflow:hidden;border-radius:11px; }
-.nearu-page .nu-97 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:126px;line-height:0;left:392px;font-style:normal;color:var(--espresso);font-size:24px;top:3884px;width:400px;white-space:normal; }
-.nearu-page .nu-98 { line-height:41px;margin-bottom:0; }.nearu-page .nu-100 { position:absolute;height:97px;left:392px;top:3026px;width:300px; }
-.nearu-page .nu-101 { position:absolute;height:118px;left:1208px;overflow:clip;top:3026px;width:206px; }
-.nearu-page .nu-102 { position:absolute;height:110px;left:10px;top:4px;width:186px; }
+.nearu-page .nu-97 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:126px;line-height:0;left:392px;font-style:normal;color:var(--espresso);font-size:24px;top:3925px;width:400px;white-space:normal; }
+.nearu-page .nu-98 { line-height:41px;margin-bottom:0; }.nearu-page .nu-100 { position:absolute;height:78px;left:392px;top:3026px;width:240px; }
+.nearu-page .nu-101 { position:absolute;height:88px;left:1260px;overflow:clip;top:3026px;width:154px; }
+.nearu-page .nu-102 { position:absolute;height:82px;left:8px;top:3px;width:138px; }
 .nearu-page .nu-103 { position:absolute;height:385px;left:691px;top:3616px;width:202px; }   /* A/B phone comparison recentred in the content column (+61px, was left of true centre) */
 .nearu-page .nu-104 { position:absolute;height:121%;left:-51.18%;max-width:none;top:-10.47%;width:302.5%; }
 /* Figma shadows the transparent phone silhouette, not its rectangular image slot.
@@ -616,18 +616,18 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* Ideation (Figma 525:15): two columns, First look | Final look; each screenshot sits under the version it belongs to.
    All pieces carry 'nu-idx' (excluded from the lower shift rows) and use original-y values = final y + 164. Page fonts, not the Figma ones. */
-.nearu-page .nu-ide-first { left: 392px; top: 3456px; width: 491px; height: 265px; }
+.nearu-page .nu-ide-first { left: 392px; top: 3456px; width: 491px; height: 265px; top:3497px;}
 .nearu-page .nu-ide-first img { left: 0; top: 0; width: 100%; height: 100%; }
-.nearu-page .nu-ide-final { left: 923px; top: 3456px; width: 491px; height: 478px; }
+.nearu-page .nu-ide-final { left: 923px; top: 3456px; width: 491px; height: 478px; top:3497px;}
 .nearu-page .nu-ide-final img { left: -0.05%; top: 0; width: 204.58%; height: 100%; }
-.nearu-page .nu-ide-variants { left: 923px; top: 4086px; width: 491px; height: 393px; }
+.nearu-page .nu-ide-variants { left: 923px; top: 4086px; width: 491px; height: 393px; top:4127px;}
 .nearu-page .nu-ide-variants img { left: -100.68%; top: -5.8%; width: 200.72%; height: 133.86%; }
-.nearu-page .nu-ide-cap { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; font-size: 18px; line-height: 41px; color: var(--espresso); }
-.nearu-page .nu-cap-near { left: 712px; top: 3036px; width: 172px; }
-.nearu-page .nu-cap-neu { left: 923px; top: 3036px; width: 260px; }
-.nearu-page .nu-cap-first { left: 392px; top: 3731px; width: 400px; }
-.nearu-page .nu-cap-final { left: 923px; top: 3944px; width: 440px; }
-.nearu-page .nu-cap-ds { left: 1042px; top: 4101px; width: 190px; color: #fff; font-size: 22px; z-index: 2; pointer-events: none; }
+.nearu-page .nu-ide-cap { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 400; font-size: 18px; line-height: 41px; color: var(--espresso); font-size:24px;}
+.nearu-page .nu-cap-near { left: 712px; top: 3036px; width: 172px; left:652px;width:230px;}
+.nearu-page .nu-cap-neu { left: 923px; top: 3036px; width: 260px; width:320px;}
+.nearu-page .nu-cap-first { left: 392px; top: 3731px; width: 400px; top:3772px;}
+.nearu-page .nu-cap-final { left: 923px; top: 3944px; width: 440px; top:3985px;}
+.nearu-page .nu-cap-ds { left: 1042px; top: 4101px; width: 190px; color: #fff; font-size: 22px; z-index: 2; pointer-events: none; top:4142px;font-size:28px;width:230px;}
 @media (max-width: 899px) {
   .nearu-mobile .nu-ide-cap { font-size: 16px; line-height: 28px; }
   .nearu-mobile .nu-ide-wrap { position: relative; }
@@ -642,3 +642,14 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 
 /* Case-study emphasis is bold and upright, never italic (2026-10-04): the bold weights of Ancizar Sans are italic by design, so emphasis, card titles, labels and list heads use the upright family. Section headings keep the brand style. */
 :is(.nearu-canvas, .nearu-mobile) :is(b, strong, .nu-hl, .tm-h, .pp-h, .pp-sub, .nearu-fact-h, .nearu-insight .ins-problem, .nearu-insight .ins-opp, .pp-list b, .tc-head, .tc-cell b, .rs-title, .nu-ab, .nearu-mobile-ab-col) { font-family: 'Ancizar Sans Upright', var(--font-ui); font-style: normal; }
+.nearu-page .nu-102 > img { width: 100%; height: 100%; }   /* the NEAR logo is drawn smaller than its original 186 x 110 box */
+
+/* Phones and tablets: the Ideation logos and screenshot boards are drawn smaller (the films keep the full column width). */
+@media (max-width: 899px) {
+  .nearu-page .nearu-mobile .nu-ide-first { width: 76%; max-width: 380px; }
+  .nearu-mobile .nearu-mobile-final-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .nearu-mobile .nearu-mobile-final-row > div { min-width: 0; }
+  .nearu-page .nearu-mobile .nearu-mobile-final-row .nu-ide { width: 100%; }
+  .nearu-mobile .nu-ide-wrap .nu-cap-ds { font-size: 16px; line-height: 28px; left: 26%; top: 3%; width: 70%; }
+  .nearu-mobile .nearu-mobile-art:has(.nu-100), .nearu-mobile .nearu-mobile-art:has(.nu-101) { width: 44%; max-width: 170px; }
+}
