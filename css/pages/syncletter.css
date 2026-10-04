@@ -435,7 +435,7 @@
 .syn-dec-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .syn-dec-tag { font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; padding: 3px 12px; border: 2px solid #02221e; border-radius: 16px; white-space: nowrap; }
 .syn-dec-art { width: 130px; height: auto; flex: none; }
-.syn-dec-h { margin: 0 0 16px; font-family: var(--font-ui); font-weight: 900; font-size: 34px; line-height: 40px; color: #02221e; }
+.syn-dec-h { margin: 0 0 16px; font-family: var(--font-ui); font-weight: 900; font-size: 24px; line-height: 30px; text-transform: uppercase; color: #02221e; }
 .syn-dec p { margin: 0; padding: 12px 0 0; border-top: 2px solid rgba(2, 34, 30, .85); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .syn-dec p + p { margin-top: 12px; }
 .syn-dec-k { font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; }
@@ -444,7 +444,7 @@
 @media (max-width: 899px) {
   .syn-mobile .sm-decisions { display: grid; grid-template-columns: 1fr; gap: 44px; width: 100%; max-width: 560px; padding-top: 14px; }
   .syn-mobile .sm-decisions .syn-dec { padding: 24px 20px 20px; }
-  .syn-mobile .sm-decisions .syn-dec-h { font-size: 28px; line-height: 34px; }
+  .syn-mobile .sm-decisions .syn-dec-h { font-size: 24px; line-height: 30px; }
   .syn-mobile .sm-decisions .syn-dec-art { width: 104px; }
   .syn-mobile .sm-decisions .syn-dec-t { font-size: 16px; line-height: 24px; }
 }
