@@ -290,6 +290,12 @@
   /* ------------------------------------------------------------------ 5 · Boot */
   if ($('#gallery')) initGallery();
   if ($('#pad')) initBook();
+  /* Get the main page ready while the visitor is still drawing (idle time, a couple of seconds after this page has loaded), not only after they press
+     Share: by the time Thank You is on screen it is already there, so the slide up starts at once instead of waiting for the main page to download. */
+  if ($('#pad') && !reduce && !(navigator.connection && navigator.connection.saveData)) {
+    const warmHome = () => (window.requestIdleCallback ? requestIdleCallback(preloadHome, { timeout: 4000 }) : setTimeout(preloadHome, 0));
+    if (document.readyState === 'complete') setTimeout(warmHome, 2000); else addEventListener('load', () => setTimeout(warmHome, 2000), { once: true });
+  }
   // after an in-place page swap the shell calls this to build the gallery on the new content
   (window.SiddhiPages = window.SiddhiPages || {}).gallery = () => { const g = $('#gallery'); if (g && !g.querySelector('.gc')) initGallery(); };
 })();

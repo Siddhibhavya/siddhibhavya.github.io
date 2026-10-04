@@ -80,6 +80,32 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **Cross-device audit tool** `tools/overflow-audit.js` (iframes at 360-2560 px per page): zero overflow, zero broken images.
 - **Several chats may share the repo**: commit only your own files or hunks; see CLAUDE.md.
 
+## 2026-10-04 later: lag and slide-up fixes
+- **Thank You → main site slide-up:**  now warms the main page (, hidden  iframe) in idle time ~2 s after Welcome Aboard loads, not only 4.85 s after Share. Why: the download started late,  then waited up to 1.2 s and often fell back to sliding away alone. Skipped for reduced motion and ; the old 4.85 s trigger stays as a fallback (the function is idempotent).
+- **NearU media loading ():** no blanket  / eager images. One IntersectionObserver per kind: images ~2400 px ahead, videos ~3 screens ahead (600 px on slow links). Why: the old pass pulled ~22 MB at once, buffered 14 video decoders and loaded the hidden phone layout's 7 duplicate videos and 30 images. Same files, same quality. Safari/Firefox have no , so slow links are detected from the throughput of files already downloaded (< 1.5 Mbit/s).
+- **Grid alignment is coalesced ():** fonts-ready, load, +800 ms, resize (120 ms debounce) and the paper ResizeObserver all share one scheduled pass. The desktop pass reads every baseline, then writes every  (one layout, not one per text block). Why: it ran 4-6 times at load with forced reflow (342 ms + 123 ms long tasks).
+- **NearU files are minified** (js/shell.min.js                      53662 ->   28457
+js/chat.min.js                       28942 ->   18583
+js/bank.min.js                       85942 ->   80314
+js/koi.min.js                        24467 ->   12770
+js/landing.min.js                    11605 ->    5683
+js/guest.min.js                      20838 ->    9111
+js/guest-anim.min.js                 27227 ->   12770
+js/guest-remote.min.js                7160 ->    3351
+js/about.min.js                       8006 ->    3822
+js/about-title.min.js                 6297 ->    2978
+js/quests.min.js                      4706 ->    3313
+js/notfound.min.js                    4503 ->    2117
+js/wordfilter.min.js                  3218 ->    1340
+js/highlight.min.js                   3792 ->    1623
+js/syncletter.min.js                 15515 ->    8235
+js/syncletter-mobile.min.js          12397 ->    7477
+css/pages/syncletter.min.css         45952 ->   36017
+css/intro.min.css                    14110 ->    8122
+css/notfound.min.css                 10769 ->    5910
+total 389108 -> 251993 (35% smaller before gzip));  loads the  files.
+- Map of all docs and the audit: .
+
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).
