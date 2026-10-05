@@ -91,6 +91,8 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **M.I.K.U on case-study pages:** `work/*.html` now load `bank.min.js` + `chat.min.js` before the shell (they were missing, so the chat said it had not loaded). The opening suggestions and the follow-up questions there come from that project's own bank topic (`PROJECT_TOPICS` in `js/chat.js`, slug to topic name); other pages are unchanged. `projectStarters` must call `buildIndex()` first because the bank is built lazily.
 - **Removed the Are they Driving? project** (page, card, config, bank entries, image); a new project takes its slot. See NEXT-CHAT-PLAYBOOK.md.
 
+- **Service worker no longer forces a server round trip for every script (2026-10-05).** Commit 8b87c63 made CSS/JS/HTML `fetch(req,{cache:'no-cache'})` network-first; on the live site that put ~30 scripts behind a revalidation each (measured in Chrome on the live site: DOMContentLoaded 7.4 s, load 47 s with the worker vs 2.0 s / 9.8 s without). Now: HTML network first with a 3 s limit; CSS/JS/JSON stale-while-revalidate; p5 cache first; `CACHE` is stamped per deploy by `scripts/build-public.js`, which drops the old cache. Cost: after a deploy the first reload can still show the previous CSS/JS; the next shows the new one.
+
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).
