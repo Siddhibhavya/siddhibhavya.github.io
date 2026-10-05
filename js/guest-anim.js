@@ -126,8 +126,53 @@
      Each one wanders off on its own loose, randomised path that generally trends left-to-right (never back the way it came), so the whole
      background feels like it's flowing past, roughly finishing as "Thank You" settles in. Driven here (not the old straight-line CSS fly-off in
      guest.css), so every play() looks a little different. */
+  /* Desktop: each patch glides to its resting spot from the Figma thank-you frame (node 163:9215) and stops dead there — no wander, no sway.
+     Centres/rotations are the frame's own; `w` is the Figma box width so the same star artwork can stand in for a smaller one (scale). Any
+     patch the frame doesn't have leaves the stage the nearest way. */
+  const REST = [
+    { star: 1, x: 233, y: 204.5, w: 270, r: 0 }, { star: 1, x: 1215, y: 827.5, w: 270, r: 0 },
+    { star: 1, x: 56.5, y: 833, w: 193, r: 0 }, { star: 1, x: 1178.5, y: 43.5, w: 211, r: 0 },
+    { star: 1, x: 1025.5, y: 338, w: 115, r: 0 }, { star: 1, x: 920.5, y: 678, w: 115, r: 0 }, { star: 1, x: 594.5, y: 873, w: 115, r: 0 },
+    { star: 0, x: 368, y: 774.5, w: 221.56, r: 129.04 }, { star: 0, x: 810, y: 161.5, w: 221.56, r: 129.04 },
+    { star: 0, x: 1459, y: 518, w: 221.56, r: 51.41 }, { star: 0, x: 71, y: 39, w: 221.56, r: -26.21 },
+    { star: 0, x: 905, y: 957, w: 155.72, r: -103.84 }
+  ];
+  function driftToRest(els) {
+    const info = els.map((el) => {
+      const n = (v) => parseFloat(el.style.getPropertyValue(v)) || 0;
+      return { el, cx: n('--cx'), cy: n('--cy'), w: n('--w'), r: n('--r'), star: !el.classList.contains('fish') };
+    });
+    const used = new Set(), jobs = [];
+    // biggest targets choose first; each takes the unused patch of its kind that is closest in size, then in distance
+    [...REST].sort((a, b) => b.w - a.w).forEach((t) => {
+      let best = null, bs = Infinity;
+      info.forEach((it) => {
+        if (used.has(it) || it.star !== !!t.star) return;
+        const s = Math.abs(it.w - t.w) * 4 + Math.hypot(it.cx - t.x, it.cy - t.y) * 0.1;
+        if (s < bs) { bs = s; best = it; }
+      });
+      if (best) { used.add(best); jobs.push({ it: best, t }); }
+    });
+    const group = jobs.concat(info.filter((it) => !used.has(it)).map((it) => ({ it, t: null })));
+    group.forEach(({ it, t }, i) => {
+      const dur = 3200 + (i % 4) * 160, delay = (i % 5) * 70, ease = 'cubic-bezier(.22,.8,.3,1)';   // quick start, long soft landing
+      let tx, ty, tr, ts = 1;
+      if (t) {
+        tx = t.x - it.cx; ty = t.y - it.cy; ts = t.w / it.w;
+        tr = (((t.r - it.r) % 360) + 540) % 360 - 180;               // the short way round to the resting angle
+      } else {                                                          // not in the frame: slide off the nearest side
+        tx = (it.cx < 724 ? -1 : 1) * (it.cx < 724 ? it.cx + 320 : 1448 - it.cx + 320); ty = 0; tr = (it.cx < 724 ? -1 : 1) * 40;
+      }
+      it.el.animate([
+        { translate: '0px 0px', rotate: it.r + 'deg', scale: 1 },
+        { translate: `${tx.toFixed(1)}px ${ty.toFixed(1)}px`, rotate: (it.r + tr).toFixed(2) + 'deg', scale: ts.toFixed(4) }
+      ], { duration: dur, delay, easing: ease, fill: 'forwards' });
+    });
+  }
+
   function driftDecor(main) {
     const els = [...main.querySelectorAll('.gb-decor .dc')];
+    if (!document.body.classList.contains('book-phone')) return driftToRest(els);
     let TXT = { x0: 60, y0: 300, x1: 1250, y1: 680 };                    // fallback: the "Thank You / for contributing!" box (it is wider since the Ancizar Sans change)
     // measure the real text instead, in stage coordinates, so nothing can land on it whatever the font or screen size
     const stageEl = main.querySelector('.stage'), thanksEl = document.querySelector('.ov-thanks');
