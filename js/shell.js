@@ -778,6 +778,28 @@
     if (!footer) { footer = document.createElement('footer'); footer.className = 'footer'; layout.parentNode.appendChild(footer); }
     footer.innerHTML = footerHTML();
     window.KOI_CONFIG = { mount: '#footer-koi', bg: [25, 5, 35], hoverOnly: true };   // the koi sketch (js/koi.js) reads this when p5 starts
+    lazyKoi();
+  }
+
+  /* The footer koi needs p5 (1 MB, 256 KB gzip). It is only fetched when the footer is about to come into view (or once the browser has been idle for a while),
+     not on every page's first load. koi.js goes first (it defines setup/draw), then p5, which starts the sketch itself once it has loaded. Same fish, same footer. */
+  let koiLoading = false;
+  function lazyKoi() {
+    if (koiLoading || window.p5 || !document.getElementById('footer-koi')) return;
+    const start = () => {
+      if (koiLoading) return;
+      if (document.readyState !== 'complete') { addEventListener('load', () => setTimeout(start, 0), { once: true }); return; }   // the sketch sizes itself to the footer strip, so wait until the page is laid out, as when it used to start on load
+      koiLoading = true;
+      ['js/koi.min.js', 'assets/vendor/p5.min.js'].forEach((src) => {
+        const sc = document.createElement('script'); sc.src = R + src; sc.async = false; document.head.appendChild(sc);
+      });
+    };
+    const host = document.getElementById('footer-koi');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '800px 0px' });
+      io.observe(host);
+    } else start();
+    (window.requestIdleCallback || ((f) => setTimeout(f, 6000)))(start, { timeout: 8000 });   // a quiet moment: have it ready before the visitor scrolls down
   }
 
   /* Tidy address: someone who arrives on /home.html (an old link or bookmark) sees /home in the address bar. Both work on GitHub Pages. */
