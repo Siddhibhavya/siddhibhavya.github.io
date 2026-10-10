@@ -278,8 +278,9 @@
   copy(s, 1544, 'nearu-mobile-label'); copy(s, 1564);
 
   s = section('design', 1543);
-  copy(s, 1640, 'nearu-mobile-label');
+  copy(s, 1640, 'nearu-mobile-label').classList.add('nearu-mobile-center');
   brandBoard(s);
+  copy(s, 1650, 'nearu-mobile-label');   // the "Logo" label is a real 16px line above the artwork on phones (inside the scaled plate it shrank and was clipped)
   plate(s, [1647,1664], 509, 8784, 724, 421);   // logo + packaging artwork (original y, before the shift table runs)
   copy(s, 1639, 'nearu-mobile-label');
   phones(s, [1652,1653,1654,1655], [1659,1656,1657,1658]);
