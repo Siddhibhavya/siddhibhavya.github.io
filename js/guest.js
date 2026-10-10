@@ -178,7 +178,7 @@
     const slots = posterSlots(queue.length), reps = Math.ceil(queue.length / PER);
     let shelves = '';
     const maxX = Math.max(...slots.map((p) => p.x + p.w)), shift = 0, M = BOX_X;
-    for (let r = 1; r < reps; r++) shelves += '<img class="gal-shelf" src="' + ROOT + 'assets/gallery/shelf.png" alt="" style="--x:' + Math.round((r - 1) * PITCH + M + CLUSTER_W + SHELF_GAP) + '" width="194" height="232">';
+    for (let r = 1; r < reps; r++) shelves += '<img class="gal-shelf" src="' + ROOT + 'assets/gallery/shelf.webp" alt="" style="--x:' + Math.round((r - 1) * PITCH + M + CLUSTER_W + SHELF_GAP) + '" width="194" height="232">';
     slots.forEach((p, i) => put(p.x + shift, p.y, p.w, i % PER === 0, p.h));
     html += shelves;
     scroller._snaps = [];                                                                              // places the wall may rest: each set back at its starting place in the window, and each shelf centred

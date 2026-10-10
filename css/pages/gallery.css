@@ -29,7 +29,6 @@ body[data-page='gallery']:not([data-fit]) .gb-more:hover { background: var(--car
 .gal-scroll.dragging { cursor: grabbing; user-select: none; }
 .gal-scroll.dragging .gf { pointer-events: none; }
 .gal-track { position: relative; height: 100%; }
-.gal-tube, .gal-glow { display: none; }
 
 /* ---------- 3 · Frames, laid out like the reference room: thin black / oak / white moulding; the wide mat is the guest's own card colour (--b moulding, --m mat) ---------- */
 .gf { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); padding: calc(var(--b) * 1px); cursor: pointer; transition: margin-top 0.2s var(--ease-out), box-shadow 0.2s; text-align: left;
@@ -46,18 +45,7 @@ body[data-page='gallery']:not([data-fit]) .gb-more:hover { background: var(--car
 .gf.fresh { animation: fade-in 0.45s ease both; }
 
 /* ---------- 4 · Strings + scraps (the line animation: two strings draw themselves across the wall, paper scraps hang from them) ---------- */
-.gal-string path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gal-draw 1.8s var(--ease-out) 0.3s forwards; filter: drop-shadow(1px 3px 2px rgba(60, 30, 10, 0.4)); }
-.gal-string .g { stroke: #075e54; stroke-width: 4; }
-.gal-string .o { stroke: #ff9a00; stroke-width: 3; animation-delay: 0.55s; }
 @keyframes gal-draw { to { stroke-dashoffset: 0; } }
-.gal-nail { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #d9dde0, #5b646b); box-shadow: 1px 3px 3px rgba(10, 35, 70, 0.5); pointer-events: none; }
-.gal-polaroid { position: absolute; width: 46px; height: 54px; margin-left: -23px; padding: 4px 4px 11px; background: #fffdf8; box-shadow: 2px 5px 6px rgba(60, 30, 10, 0.42); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
-.gal-polaroid img { width: 100%; height: 100%; object-fit: cover; background: #fff; }
-.gal-polaroid .peg, .gal-tile .peg { position: absolute; left: 50%; top: -10px; width: 7px; height: 18px; margin-left: -3px; border-radius: 3px; background: linear-gradient(90deg, #d9b98d, #b88f5e 55%, #9a7449); box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.42); }
-.gal-polaroid .peg::after, .gal-tile .peg::after { content: ''; position: absolute; left: 50%; top: 9px; bottom: 3px; width: 1.5px; margin-left: -0.5px; background: rgba(60, 35, 15, 0.55); }
-.gal-scrap { position: absolute; width: 40px; height: 52px; margin: 0 0 0 -20px; background: var(--sc, #fffdf8); box-shadow: 2px 4px 5px rgba(60, 30, 10, 0.4); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
-.gal-scrap::before { content: ''; position: absolute; left: 50%; top: -9px; width: 30px; height: 16px; margin-left: -15px; background: rgba(255, 154, 0, 0.7); mix-blend-mode: multiply; }
-.gal-scrap::after { content: ''; position: absolute; inset: 7px; border: 1.5px solid rgba(27, 11, 46, 0.35); }
 
 /* ---------- 5 · Signature card (appears when a signed frame is clicked) ---------- */
 .gf-card { position: absolute; left: 12px; top: calc(100% + 8px); z-index: 4; min-width: 130px; max-width: 240px; padding: 8px 18px 6px 14px; background: #fff; border-radius: 4px; box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.25); opacity: 0; visibility: hidden; translate: 0 -6px; transition: opacity 0.2s, translate 0.2s, visibility 0s 0.2s; pointer-events: none; }
@@ -66,14 +54,9 @@ body[data-page='gallery']:not([data-fit]) .gb-more:hover { background: var(--car
 .gf-card b { display: block; padding-top: 10px; font-weight: 400; font-family: var(--font-script); font-size: 30px; line-height: 1.05; color: #1b1b5e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 @media (prefers-reduced-motion: reduce) { .gf, .gf-card { transition: none; } .gf.fresh { animation: none; } .gal-string path { animation: none; stroke-dashoffset: 0; } }
-.gal-tile { position: absolute; width: 28px; height: 36px; margin-left: -14px; display: flex; align-items: center; justify-content: center; background: var(--tb); color: var(--tc); font: 700 18px/1 var(--font-serif); border-radius: 3px; box-shadow: 2px 5px 6px rgba(60, 30, 10, 0.42), inset 0 0 0 1.5px rgba(255, 255, 255, 0.25); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
 /* the lettered cord hangs fixed over the wall (only the posters scroll) */
 .gal-top { position: absolute; left: 234px; top: 81px; width: 662px; height: 150px; z-index: 4; pointer-events: none; }
 .gal-top > * { pointer-events: auto; }
-.gal-cord { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
-.gal-cord path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gal-draw 1.6s var(--ease-out) 0.3s forwards; filter: drop-shadow(1px 3px 2px rgba(60, 30, 10, 0.4)); }
-.gal-cord .g { stroke: #075e54; stroke-width: 4; } .gal-cord .o { stroke: #ff9a00; stroke-width: 3; animation-delay: 0.5s; }
-.gal-top .gal-tile { position: absolute; }
 /* "Create something!" keeps the site's pill, set like a memo on the wall: a little crooked, straightening on hover */
 body[data-page='gallery']:not([data-fit]) .gal-top .gal-cta { position: absolute; width: 260px; height: 50px; font-size: 24px; white-space: nowrap; rotate: -2deg; transition: rotate 0.25s var(--ease-out), background-color 0.2s ease, color 0.2s ease, margin-top 0.25s var(--ease-out); }
 body[data-page='gallery']:not([data-fit]) .gal-top .gal-cta:hover { rotate: 0deg; transform: none; margin-top: -3px; }
@@ -87,5 +70,7 @@ body[data-page='gallery']:not([data-fit]) .stage > .dc { z-index: 1; }   /* the 
 /* patches stuck on the room's walls (they scale with the room); the dino stands the right way up */
 .gal-win .dc.on-wall { z-index: 5; }
 .gal-win .dc.dino img { transform: none; }
-.gal-vine-l3 { left: 150px; top: 60px; height: 400px; } .gal-vine-l4 { left: 262px; top: 70px; height: 330px; }
-.gal-vine-r3 { left: 835px; top: 270px; height: 340px; transform: scaleX(-1); } .gal-vine-r4 { left: 905px; top: 250px; height: 300px; transform: scaleX(-1); }
+/* a paper stash tag pinned beside the button: "Scroll to explore" */
+.gal-stash { position: absolute; left: 536px; top: 20px; display: flex; align-items: center; gap: 8px; padding: 8px 16px 8px 14px; background: var(--pill); color: var(--ink); border: 2px solid var(--maroon-edge); border-radius: 6px; font: 500 16px/1.2 var(--font-ui); white-space: nowrap; rotate: 4deg; box-shadow: -3px 4px 5px rgba(60, 30, 10, 0.35); pointer-events: none; }
+.gal-stash .arr { width: 13px; height: 15px; background: currentColor; -webkit-mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; }
+.gal-stash::before { content: ''; position: absolute; left: 50%; top: -9px; width: 7px; height: 16px; margin-left: -3px; border-radius: 3px; background: linear-gradient(90deg, #d9b98d, #b88f5e 55%, #9a7449); box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.4); }
