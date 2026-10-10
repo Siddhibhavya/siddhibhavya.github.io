@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   if (!document.body.classList.contains('nearu-page')) return;
-  const SRC = '../prototype/nearu/index.html';
+  const SRC = '../prototype/nearu/index.html?v=1.0.2.' + 20261011;   // bump with each prototype build so a stale cached copy is never shown
   const PHONE_W = 402, PHONE_H = 839, CHROME_H = 150, SIDE_W = 296;   // chrome = title bar + body padding + page margin; SIDE_W = room for the Restart / Back column on both sides
   let modal, iframe, opener, scrollY0 = 0;
 
