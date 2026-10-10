@@ -1,389 +1,168 @@
-/* Welcome Aboard: the "Create" choreography (guest-book.html only). Loaded after js/guest.js, which calls SiddhiGuest.play(mine, past, card).
-
-   Cards flip and shrink, then the cards and two broad strings leave together.
-   Thank You reveals from the left, settles with a small bounce, then slides up into Home. */
+/* Welcome Aboard: the "Create" animation (guest-book.html only). js/guest.js saves the card and calls SiddhiGuest.play(mine, past, card); this file only performs.
+   Its own scene (a rough baby-blue plaster wall, NOT the gallery's room photo). About 4.5 s of motion, then the caption holds ~2.6 s so it can be read, then goHome() slides up.
+     0.0  your card flips into the middle of the wall as the drawing
+     0.7  EXPLODED VIEW, huge and centred: glass, mat, drawing, backing and the four moulding bars (in your card colour) float apart in 3D, with measure lines
+     1.6  the pieces come back together into the finished frame
+     2.1  it is hung: a nail, a wire, one swing and it settles
+     2.8  it scales down into its place on the gallery wall (same layout as the gallery page) while the other frames scale in around it
+     3.9  the wall slides out to the left and "Thank You / for contributing!" swoops across the bare wall like a gallery caption
+   Click or Esc skips the wait. Reduced motion: no movement, just the caption. */
 (function () {
   'use strict';
   const G = window.SiddhiGuest;
-  if (!G) { console.error('[guest-anim] js/guest.js must load first'); return; }
-  const { $, reduce, cardEl, goHome } = G;
+  if (!G || !document.querySelector('#pad')) return;
+  const { reduce, goHome, frameHTML, posterSlots, cardEl } = G;
+  const ROOT = document.body.dataset.root || '';
+  const ART = 421 / 642;
+  const T = { flip: 700, explode: 700, holdTo: 1600, assemble: 500, hang: 700, pull: 800, slideAt: 3900, slide: 600, thanksAt: 4100, readTo: 9900 };
+  const out = 'cubic-bezier(0.22, 1, 0.36, 1)', inout = 'cubic-bezier(0.65, 0, 0.35, 1)';
+  const S = 'fill:both';
 
-  /* ------------------------------------------------------------------ 1 · Timing (ms) — change the feel here */
-  const T = 6450;                    // two extra seconds for strings/cards, then the text and Home
-  const D = 240;                    // gentle follow-through keeps the reference loops clearly defined
-  const FLIGHT = 1100;               // one complete flip as our card shrinks into the strip
-  const HOLD = 1600;                 // reduced-motion reading time before Home
-  const SLIDE_MS = 4850, EXIT_K = 9.2;   // cards and strings finish together
-  const THANKS_MS = 3000;            // reveal while the strings are still in frame
-  const STRING_MS = 2850;            // original path clock, stretched across SLIDE_MS
-  const ORANGE_DELAY = 120;          // the orange line follows a beat behind the green one
-  const STEP = [-194, 62];           // the strip's slide per Figma step (state 1 -> 2)
-  const SLOTS = [{ x: 86, y: 184 }, { x: 470, y: 538 }, { x: 846, y: 192 }, { x: 1230, y: 546 }];   // Figma slots; the 4th is the third "past" card entering at the edge
-  const CARD = { w: 507, h: 274, pl: 12, pt: 8, pw: 436, ph: 257 };
-
-  /* Reference Figma curves, including the portions passing behind the cards. */
-  const GREEN = [
-    { off: [-72, 171.1595916748047], d: 'M0 670.04931640625C0 670.04931640625 392.9632263183594 303.3006896972656 719.5211791992188 624.5504150390625C1046.0791320800781 945.8001403808594 1325 551.8403472900391 945.29931640625 197.66749572753906C565.5986328125 -156.50535583496094 1318 10.34039306640625 1305 343.84033203125C1292 677.3402709960938 1519.5 715.3403930664062 1519.5 629.840576171875' },
-    { off: [-13.5, 189.89683532714844], d: 'M1465 148.10317993164062C1422 174.10316467285156 770.1932678222656 -231.46615600585938 918.241943359375 199.3489990234375C1066.2906188964844 630.1641540527344 1014.6979064941406 885.3195495605469 702.1506958007812 586.56982421875C389.6034851074219 287.8200988769531 0 609.1031494140625 0 609.1031494140625' },
-    { off: [-8.5, 30.608810424804688], d: 'M1457.5 40.39117431640625C1183.5 -66.10879516601562 676.5 31.612884521484375 1096.5 409.89117431640625C1516.5 788.1694641113281 757.7991943359375 1062.4247436523438 539.5 732.3911743164062C321.2008056640625 402.35760498046875 0 302.39117431640625 0 302.39117431640625' }
-  ];
-  const ORANGE = [
-    { off: [-1, 17], d: 'M0 0C0 0 72.86075592041016 190.03260040283203 164.5 275.5C258.5666046142578 363.23128509521484 331.85939025878906 406.0883483886719 459.5 422C578.6712875366211 436.8558683395386 650.3555755615234 409.4907646179199 761.5 364C893.15380859375 310.11486053466797 922.3675537109375 196.93949127197266 1057 151C1166.4710159301758 113.64613342285156 1236.5817794799805 116.89418077468872 1352 124.5C1394.799560546875 127.32040143013 1461 138 1461 138' },
-    { off: [7.5, 166], d: 'M0 0C125.8208999633789 45.57537841796875 194.37943267822266 83.68888854980469 299.5 166.5C428.4195556640625 268.0592956542969 438.2151641845703 391.64893341064453 572.5 486C725.2831420898438 593.3483276367188 840.7490692138672 666.0822277069092 1025.5 639C1232.6660766601562 608.631986618042 1442.5 302 1442.5 302' },
-    { off: [-5.5, 9.722223281860352], d: 'M0 438.77783203125C33.814720153808594 332.25054931640625 154.64603424072266 110.25404739379883 250.5 52.77783966064453C352.84010314941406 -8.587604522705078 752.5 -105.72225952148438 977.5 357.2777404785156C1202.5 820.2777404785156 1327.328456878662 498.9440689086914 1382 584.77734375C1422.8142776489258 648.85498046875 1427 719.2777709960938 1457 764.27734375' }
-  ];
-
-  /* ------------------------------------------------------------------ 3 · String maths */
-  const PHONE = window.matchMedia('(max-width: 759px)').matches;                   // phones do the same shape with about half the points: far less work per frame
-  const BODY_N = PHONE ? 150 : 301, LEAD_N = PHONE ? 12 : 24, LEAD_LEN = 900;      // samples along the line; straight lead-in/out so it reaches any screen edge
-  const lerp = (a, b, f) => a + (b - a) * f;
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const unit = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
-  const bez = (a, b, c, d, w) => { const u = 1 - w; return [u * u * u * a[0] + 3 * u * u * w * b[0] + 3 * u * w * w * c[0] + w * w * w * d[0], u * u * u * a[1] + 3 * u * u * w * b[1] + 3 * u * w * w * c[1] + w * w * w * d[1]]; };
-  // Quintic Hermite keeps both velocity and acceleration continuous at the middle shape.
-  const curve = (a, b, c, d, u) => {
-    const v0 = (c - a) / 2, v1 = (d - b) / 2, delta = c - b;
-    return b + v0 * u + u * u * u * ((10 * delta - 6 * v0 - 4 * v1) + u * ((-15 * delta + 8 * v0 + 7 * v1) + u * (6 * delta - 3 * v0 - 3 * v1)));
-  };
-  const stringEase = (x) => { const u = Math.min(1, Math.max(0, x)); return u * u * u * (10 + u * (-15 + 6 * u)); };
-  const sm = (a, b, x) => { const v = Math.min(1, Math.max(0, (x - a) / (b - a))); return v * v * (3 - 2 * v); };
-  const polyD = (pts) => {                                          // a smooth curve through the points: quadratic curves between the mid-points of neighbours (no visible corners)
-    const n = pts.length, f = (v) => v.toFixed(2);
-    if (n < 3) return 'M' + pts.map((q) => f(q[0]) + ' ' + f(q[1])).join('L');
-    let d = 'M' + f(pts[0][0]) + ' ' + f(pts[0][1]);
-    for (let i = 1; i < n - 1; i++) d += 'Q' + f(pts[i][0]) + ' ' + f(pts[i][1]) + ' ' + f((pts[i][0] + pts[i + 1][0]) / 2) + ' ' + f((pts[i][1] + pts[i + 1][1]) / 2);
-    return d + 'L' + f(pts[n - 1][0]) + ' ' + f(pts[n - 1][1]);
-  };
-
-  /* A Figma path (absolute cubic Beziers) -> [tail ... head] points, tail = the left end. The three states of a line don't all run the same way
-     in Figma and don't have the same number of segments, so every line is resampled evenly by arc length: point i of one state then corresponds
-     to point i of the next. */
-  function sampleKey(raw) {
-    const nums = raw.d.match(/-?\d*\.?\d+(?:e-?\d+)?/gi).map(Number), ctl = [];
-    for (let i = 0; i < nums.length; i += 2) ctl.push([nums[i] + raw.off[0], nums[i + 1] + raw.off[1]]);
-    if (ctl[0][0] > ctl[ctl.length - 1][0]) ctl.reverse();
-    const dense = [ctl[0]], cum = [0];
-    for (let c = 0; c + 3 < ctl.length; c += 3) {
-      for (let j = 1; j <= 90; j++) {
-        const w = j / 90, p = bez(ctl[c], ctl[c + 1], ctl[c + 2], ctl[c + 3], w), q = dense[dense.length - 1];
-        dense.push(p); cum.push(cum[cum.length - 1] + Math.hypot(p[0] - q[0], p[1] - q[1]));
-      }
-    }
-    const body = [], total = cum[cum.length - 1];
-    for (let i = 0, k = 0; i < BODY_N; i++) {
-      const target = (total * i) / (BODY_N - 1);
-      while (k < cum.length - 2 && cum[k + 1] < target) k++;
-      const span = cum[k + 1] - cum[k] || 1, f = (target - cum[k]) / span;
-      body.push([lerp(dense[k][0], dense[k + 1][0], f), lerp(dense[k][1], dense[k + 1][1], f)]);
-    }
-    const td = unit(body[0], body[4]), hd = unit(body[BODY_N - 1], body[BODY_N - 5]), out = [];
-    const tail = body[0], head = body[BODY_N - 1];
-    const left = [tail[0] - LEAD_LEN, tail[1] + td[1] * 180];
-    const right = [head[0] + LEAD_LEN, head[1] + hd[1] * 180];
-    for (let j = 0; j < LEAD_N; j++) out.push(bez(left, [left[0] + 300, left[1]], [tail[0] + td[0] * 180, tail[1] + td[1] * 180], tail, j / LEAD_N));
-    for (const p of body) out.push(p);
-    for (let j = 1; j <= LEAD_N; j++) out.push(bez(head, [head[0] + hd[0] * 180, head[1] + hd[1] * 180], [right[0] - 300, right[1]], right, j / LEAD_N));
-    return out;
-  }
-  const keysOf = (states) => states.map((r) => sampleKey(r));
-  const KEYS_G = keysOf(GREEN), KEYS_O = keysOf(ORANGE);
-  const NP = KEYS_G[0].length;
-
-  /* Every point travels the same route through the three states, but starts later the further it is from the head. So where two states don't
-     line up (the angles differ) the head goes to the next shape first and the body follows through behind it, instead of the whole line wobbling. */
-  const keyPoint = (KEYS, i, p) => {                                 // smooth position, velocity and acceleration through all three states
-    const A = KEYS[0][i], B = KEYS[1][i], C = KEYS[2][i];
-    const [a, b, c, d, u] = p <= 1 ? [A, A, B, C, p] : [A, B, C, C, p - 1];
-    return [curve(a[0], b[0], c[0], d[0], u), curve(a[1], b[1], c[1], d[1], u)];
-  };
-  function stringD(KEYS, t, delay, exit = 0) {
-    const pts = new Array(NP);
-    t -= delay;
-    for (let i = 0; i < NP; i++) {
-      const tau = Math.min(1, Math.max(0, (t - D * (1 - i / (NP - 1))) / (STRING_MS - D - delay)));
-      pts[i] = keyPoint(KEYS, i, 2 * stringEase(tau));
-    }
-    // Reveal by distance, not sample index: the long lead-in and dense loops move at the same pace.
-    const lengths = [0];
-    for (let i = 1; i < NP; i++) lengths.push(lengths[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
-    const front = stringEase(t / 1150) * lengths[NP - 1];
-    const back = exit * lengths[NP - 1];
-    if (back >= front) return '';
-    const at = (distance) => {
-      let n = 0;
-      while (n < NP - 2 && lengths[n + 1] < distance) n++;
-      const f = (distance - lengths[n]) / (lengths[n + 1] - lengths[n] || 1);
-      return [lerp(pts[n][0], pts[n + 1][0], f), lerp(pts[n][1], pts[n + 1][1], f)];
-    };
-    // The head draws left-to-right; the tail follows along that same continuous curve.
-    const seg = [at(back)];
-    for (let i = 1; i < NP - 1; i++) if (lengths[i] > back && lengths[i] < front) seg.push(pts[i]);
-    seg.push(at(front));
-    return polyD(seg);
-  }
-
-  /* ------------------------------------------------------------------ 3b · Background stars and fish-bone patches
-     Each one wanders off on its own loose, randomised path that generally trends left-to-right (never back the way it came), so the whole
-     background feels like it's flowing past, roughly finishing as "Thank You" settles in. Driven here (not the old straight-line CSS fly-off in
-     guest.css), so every play() looks a little different. */
-  /* Desktop: each patch glides to its resting spot from the Figma thank-you frame (node 163:9215) and stops dead there — no wander, no sway.
-     Centres/rotations are the frame's own; `w` is the Figma box width so the same star artwork can stand in for a smaller one (scale). Any
-     patch the frame doesn't have leaves the stage the nearest way. */
-  const REST = [
-    { star: 1, x: 233, y: 204.5, w: 270, r: 0 }, { star: 1, x: 1215, y: 827.5, w: 270, r: 0 },
-    { star: 1, x: 56.5, y: 833, w: 193, r: 0 }, { star: 1, x: 1178.5, y: 43.5, w: 211, r: 0 },
-    { star: 1, x: 1025.5, y: 338, w: 115, r: 0 }, { star: 1, x: 920.5, y: 678, w: 115, r: 0 }, { star: 1, x: 594.5, y: 873, w: 115, r: 0 },
-    { star: 0, x: 368, y: 774.5, w: 221.56, r: 129.04 }, { star: 0, x: 810, y: 161.5, w: 221.56, r: 129.04 },
-    { star: 0, x: 1459, y: 518, w: 221.56, r: 51.41 }, { star: 0, x: 71, y: 39, w: 221.56, r: -26.21 },
-    { star: 0, x: 905, y: 957, w: 155.72, r: -103.84 }
-  ];
-  function driftToRest(els) {
-    const info = els.map((el) => {
-      const n = (v) => parseFloat(el.style.getPropertyValue(v)) || 0;
-      return { el, cx: n('--cx'), cy: n('--cy'), w: n('--w'), r: n('--r'), star: !el.classList.contains('fish') };
-    });
-    const used = new Set(), jobs = [];
-    // biggest targets choose first; each takes the unused patch of its kind that is closest in size, then in distance
-    [...REST].sort((a, b) => b.w - a.w).forEach((t) => {
-      let best = null, bs = Infinity;
-      info.forEach((it) => {
-        if (used.has(it) || it.star !== !!t.star) return;
-        const s = Math.abs(it.w - t.w) * 4 + Math.hypot(it.cx - t.x, it.cy - t.y) * 0.1;
-        if (s < bs) { bs = s; best = it; }
-      });
-      if (best) { used.add(best); jobs.push({ it: best, t }); }
-    });
-    const group = jobs.concat(info.filter((it) => !used.has(it)).map((it) => ({ it, t: null })));
-    group.forEach(({ it, t }, i) => {
-      const dur = 3200 + (i % 4) * 160, delay = (i % 5) * 70, ease = 'cubic-bezier(.22,.8,.3,1)';   // quick start, long soft landing
-      let tx, ty, tr, ts = 1;
-      if (t) {
-        tx = t.x - it.cx; ty = t.y - it.cy; ts = t.w / it.w;
-        tr = (((t.r - it.r) % 360) + 540) % 360 - 180;               // the short way round to the resting angle
-      } else {                                                          // not in the frame: slide off the nearest side
-        tx = (it.cx < 724 ? -1 : 1) * (it.cx < 724 ? it.cx + 320 : 1448 - it.cx + 320); ty = 0; tr = (it.cx < 724 ? -1 : 1) * 40;
-      }
-      it.el.animate([
-        { translate: '0px 0px', rotate: it.r + 'deg', scale: 1 },
-        { translate: `${tx.toFixed(1)}px ${ty.toFixed(1)}px`, rotate: (it.r + tr).toFixed(2) + 'deg', scale: ts.toFixed(4) }
-      ], { duration: dur, delay, easing: ease, fill: 'forwards' });
-    });
-  }
-
-  function driftDecor(main) {
-    const els = [...main.querySelectorAll('.gb-decor .dc')];
-    if (!document.body.classList.contains('book-phone')) return driftToRest(els);
-    let TXT = { x0: 60, y0: 300, x1: 1250, y1: 680 };                    // fallback: the "Thank You / for contributing!" box (it is wider since the Ancizar Sans change)
-    // measure the real text instead, in stage coordinates, so nothing can land on it whatever the font or screen size
-    const stageEl = main.querySelector('.stage'), thanksEl = document.querySelector('.ov-thanks');
-    if (stageEl && thanksEl) {
-      const sr = stageEl.getBoundingClientRect(), k = sr.width / 1448, tr = thanksEl.getBoundingClientRect();
-      if (k > 0 && tr.width > 40) TXT = { x0: (tr.left - sr.left) / k - 20, y0: (tr.top - sr.top) / k - 20, x1: (tr.right - sr.left) / k + 20, y1: (tr.bottom - sr.top) / k + 20 };
-    }
-    const outsideText = (x, y) => Math.hypot(Math.max(TXT.x0 - x, 0, x - TXT.x1), Math.max(TXT.y0 - y, 0, y - TXT.y1));
-    const GAP = 90, TEXT_MARGIN = 80;   // generous gaps: the trinkets spread right out across the stage instead of huddling
-    // No fade, and it does not leave: each one wanders to a new resting spot nearby, clear of the thank-you text — only the strings (leave(), below)
-    // actually exit the screen. Landing spots are chosen the same way js/guest.js scatters the page's own decorations: try a lot of candidate spots
-    // (biased rightward, but reaching in any direction so there is always room somewhere), keep the roomiest, shrinking the required gap a little each
-    // round if the bigger ones can't otherwise fit — so 15 of them can share the screen without a visitor's card and the text ending up crowded.
-    const items = els.map((el) => {
-      const cx = parseFloat(el.style.getPropertyValue('--cx')) || 0, cy = parseFloat(el.style.getPropertyValue('--cy')) || 0;
-      const w = parseFloat(el.style.getPropertyValue('--w')) || 200, h = parseFloat(el.style.getPropertyValue('--h')) || 200;
-      const baseR = parseFloat(el.style.getPropertyValue('--r')) || 0;
-      const fish = el.classList.contains('fish');
-      const swayX = rand(12, 30), swayY = rand(10, 26), swayR = rand(4, 12);
-      const bodyHalf = (fish ? 0.35 : 0.42) * Math.max(w, h);            // how much room it really takes up (same formula as js/guest.js, scatterDecor)
-      const reach = bodyHalf + Math.max(swayX, swayY);                  // plus the sway it will do
-      return { el, cx, cy, baseR, swayX, swayY, swayR, bodyHalf, reach, dxEnd: 0, dyEnd: 0 };
-    }).sort((a, b) => b.bodyHalf - a.bodyHalf);                          // biggest (pickiest) first
-    for (let squeeze = 1, round = 0; round < 14; round++, squeeze *= 0.92) {
-      const placed = []; let ok = true;
-      for (const it of items) {
-        let best = null;
-        for (let k = 0; k < 900 && (!best || k < 400); k++) {
-          const fx = rand(it.reach * 0.6, 1448 - it.reach * 0.6), fy = rand(it.reach * 0.6, 1024 - it.reach * 0.6);   // anywhere on the stage; the roomiest candidate wins, so they fan out evenly
-          const dx = fx - it.cx, dy = fy - it.cy;
-          if (fx < it.reach * 0.6 || fx > 1448 - it.reach * 0.6 || fy < it.reach * 0.6 || fy > 1024 - it.reach * 0.6) continue;   // stays on the stage
-          if (outsideText(fx, fy) < it.reach + TEXT_MARGIN - 20) continue;                                                        // clear of the text
-          let room = Infinity;
-          for (const p of placed) room = Math.min(room, Math.hypot(p.fx - fx, p.fy - fy) - (p.it.bodyHalf + it.bodyHalf + GAP) * squeeze);
-          if (room < 0) continue;
-          const score = Math.min(room, (Math.min(fx, 1448 - fx, fy, 1024 - fy) - it.reach * 0.6) * 2 + 60);   // prefer spots that also keep off the very edges
-          if (!best || score > best.score) best = { fx, fy, room, score };
-        }
-        if (!best) { ok = false; break; }
-        placed.push({ it, fx: best.fx, fy: best.fy });
-      }
-      if (!ok) continue;
-      // Relax: nudge every spot away from its neighbours a little at a time (staying on the stage and clear of the text), so the trinkets fan out
-      // evenly over the whole screen with real distance between them instead of huddling in the first places that fit.
-      for (let iter = 0; iter < 120; iter++) {
-        for (const a of placed) {
-          let mx = 0, my = 0;
-          for (const b of placed) {
-            if (a === b) continue;
-            const dx = a.fx - b.fx, dy = a.fy - b.fy, d = Math.hypot(dx, dy) || 1, want = a.it.bodyHalf + b.it.bodyHalf + 200;
-            if (d < want) { const f = (want - d) * 0.06; mx += (dx / d) * f; my += (dy / d) * f; }
-          }
-          const nx = a.fx + mx, ny = a.fy + my, r = a.it.reach;
-          if (nx < r * 0.6 || nx > 1448 - r * 0.6 || ny < r * 0.6 || ny > 1024 - r * 0.6) continue;
-          if (outsideText(nx, ny) < r + TEXT_MARGIN - 20) continue;
-          a.fx = nx; a.fy = ny;
-        }
-      }
-      for (const { it, fx, fy } of placed) { it.dxEnd = fx - it.cx; it.dyEnd = fy - it.cy; }
-      break;                                                             // everyone found a spot: done (if every round fails, they simply don't drift)
-    }
-    items.forEach(({ el, baseR, swayX, swayY, swayR, dxEnd, dyEnd }) => {
-      const dx1 = dxEnd * rand(0.25, 0.4), dy1 = rand(-60, 60);          // a light wander first, not yet committed to a direction
-      const dx2 = dxEnd * rand(0.65, 0.85), dy2 = rand(-100, 100);       // picking up speed, heading right
-      const spin = rand(-35, 35);
-      // after it settles (by ~40% in), a slow figure-of-eight-ish sway around that spot — small, so it never wanders back onto the text
-      el.animate([
-        { translate: '0px 0px', rotate: baseR + 'deg', offset: 0 },
-        { translate: `${dx1.toFixed(0)}px ${dy1.toFixed(0)}px`, rotate: (baseR + spin * 0.4).toFixed(1) + 'deg', offset: 0.16 },
-        { translate: `${dx2.toFixed(0)}px ${dy2.toFixed(0)}px`, rotate: (baseR + spin * 0.75).toFixed(1) + 'deg', offset: 0.32 },
-        { translate: `${dxEnd.toFixed(0)}px ${dyEnd.toFixed(0)}px`, rotate: (baseR + spin).toFixed(1) + 'deg', offset: 0.42, easing: 'ease-in-out' },
-        { translate: `${(dxEnd + swayX).toFixed(0)}px ${(dyEnd - swayY).toFixed(0)}px`, rotate: (baseR + spin + swayR).toFixed(1) + 'deg', offset: 0.6, easing: 'ease-in-out' },
-        { translate: `${(dxEnd - swayX * 0.7).toFixed(0)}px ${(dyEnd + swayY).toFixed(0)}px`, rotate: (baseR + spin - swayR).toFixed(1) + 'deg', offset: 0.8, easing: 'ease-in-out' },
-        { translate: `${(dxEnd + swayX * 0.4).toFixed(0)}px ${(dyEnd - swayY * 0.5).toFixed(0)}px`, rotate: (baseR + spin + swayR * 0.5).toFixed(1) + 'deg', offset: 1 }
-      ], { duration: rand(5400, 6000), delay: rand(0, 300), easing: 'cubic-bezier(.32,0,.67,1)', fill: 'forwards' });
-    });
-  }
-
-  /* ------------------------------------------------------------------ 4 · play() */
-  function play(mine, past, card) {
+  G.play = function (mine, past, card) {
     document.body.classList.add('gb-playing');
     document.documentElement.style.overflow = 'hidden';
     window.scrollTo(0, 0);
-    const layout = $('.layout'), sidebar = $('#sidebar'), main = $('#main');
-    const title = $('.gb-title'), sub = $('.gb-sub'), paper = $('.gb-paper');
+    const layout = document.querySelector('.layout'), main = document.querySelector('#main'), sidebar = document.querySelector('#sidebar');
+    const vw = layout.clientWidth, vh = layout.clientHeight;
+    // the exploded frame is huge: as wide as the screen allows, and it must still fit when its pieces spread out
+    const Wf = Math.round(Math.min(vw * 0.78, (vh * 0.62) / (ART + 0.32), 860));
+    const b = Math.round(Wf * 0.045), m = Math.round(Wf * 0.085), t = b + m, aw = Wf - 2 * t, ah = Math.round(aw * ART), Hf = ah + 2 * t;
+    const col = mine.color || '#bb3739';
+    const img = '<img src="' + mine.img + '" alt="">';
+    const bars = [
+      ['top', 'left:0;top:0;width:' + Wf + 'px;height:' + b + 'px;clip-path:polygon(0 0,100% 0,calc(100% - ' + b + 'px) 100%,' + b + 'px 100%)'],
+      ['bottom', 'left:0;bottom:0;width:' + Wf + 'px;height:' + b + 'px;clip-path:polygon(' + b + 'px 0,calc(100% - ' + b + 'px) 0,100% 100%,0 100%)'],
+      ['left', 'left:0;top:0;width:' + b + 'px;height:' + Hf + 'px;clip-path:polygon(0 0,100% ' + b + 'px,100% calc(100% - ' + b + 'px),0 100%)'],
+      ['right', 'right:0;top:0;width:' + b + 'px;height:' + Hf + 'px;clip-path:polygon(0 ' + b + 'px,100% 0,100% 100%,0 calc(100% - ' + b + 'px))']
+    ].map((p) => '<i class="xp xp-bar xp-' + p[0] + '" style="background:#1d1a19;' + p[1] + '"></i>').join('');
+    const nailY = -Math.round(Hf * 0.16);
+    const slots = posterSlots(17), cards = [mine].concat(past.slice(0, 3));
+    const wallHTML = slots.map((p, i) => frameHTML(cards[i] || { color: ['#bb3739', '#249343', '#f5a01e', '#2c2696'][i % 4], name: '', img: '' }, p.x, p.y, p.w, false, false, p.h)).join('');
 
     const ov = document.createElement('div');
-    ov.className = 'gb-ov';
-    ov.innerHTML = `<div class="gb-ov-stage">
-        <svg class="gb-trail gb-trail-o" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
-        <svg class="gb-trail gb-trail-g" width="1448" height="1024" viewBox="0 0 1448 1024" aria-hidden="true"><path d=""/></svg>
-        <h2 class="ov-title">Welcome Aboard</h2>
-        <p class="ov-sub">Draw yourself a little <span class="hl">drawing</span>! Exhibit in my <span class="hl">guest gallery</span>!</p>
-        <div class="ov-strip"></div>
-        <p class="ov-thanks" role="status" tabindex="-1" aria-label="Thank You for contributing!"><span class="ov-reveal" aria-hidden="true"><span>Thank You</span></span><span class="ov-reveal" aria-hidden="true"><span>for contributing!</span></span></p>
-      </div>`;
+    ov.className = 'anim';
+    ov.innerHTML =
+      '<svg class="anim-lines" viewBox="0 0 1448 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path class="g" pathLength="1" transform="translate(-72 171.16)" d="M0 670.04931640625C0 670.04931640625 392.9632263183594 303.3006896972656 719.5211791992188 624.5504150390625C1046.0791320800781 945.8001403808594 1325 551.8403472900391 945.29931640625 197.66749572753906C565.5986328125 -156.50535583496094 1318 10.34039306640625 1305 343.84033203125C1292 677.3402709960938 1519.5 715.3403930664062 1519.5 629.840576171875"/><path class="o" pathLength="1" transform="translate(-1 17)" d="M0 0C0 0 72.86075592041016 190.03260040283203 164.5 275.5C258.5666046142578 363.23128509521484 331.85939025878906 406.0883483886719 459.5 422C578.6712875366211 436.8558683395386 650.3555755615234 409.4907646179199 761.5 364C893.15380859375 310.11486053466797 922.3675537109375 196.93949127197266 1057 151C1166.4710159301758 113.64613342285156 1236.5817794799805 116.89418077468872 1352 124.5C1394.799560546875 127.32040143013 1461 138 1461 138"/></svg><div class="anim-group"><div class="anim-wall">' + wallHTML + '</div></div>' +
+      '<div class="xf" style="width:' + Wf + 'px;height:' + Hf + 'px;margin:' + (-Hf / 2) + 'px 0 0 ' + (-Wf / 2) + 'px">' +
+        '<svg class="xf-measure" width="' + Wf + '" height="' + Hf + '" viewBox="0 0 ' + Wf + ' ' + Hf + '" aria-hidden="true"><path d="M0 ' + (Hf + 46) + 'H' + Wf + 'M0 ' + (Hf + 34) + 'V' + (Hf + 58) + 'M' + Wf + ' ' + (Hf + 34) + 'V' + (Hf + 58) + 'M-46 0V' + Hf + 'M-58 0H-34M-58 ' + Hf + 'H-34M' + t + ' ' + (Hf + 14) + 'V' + (Hf + 34) + 'M' + (Wf - t) + ' ' + (Hf + 14) + 'V' + (Hf + 34) + '"/></svg>' +
+        '<div class="xf-swing" style="transform-origin:50% ' + nailY + 'px">' +
+          '<svg class="xf-wire" width="' + Wf + '" height="' + Hf + '" viewBox="0 0 ' + Wf + ' ' + Hf + '" aria-hidden="true"><path d="M' + Wf / 2 + ' ' + nailY + 'L' + (b + 6) + ' 2M' + Wf / 2 + ' ' + nailY + 'L' + (Wf - b - 6) + ' 2"/></svg>' +
+          '<div class="xf-rig">' +
+            '<i class="xp xp-back" style="inset:0"></i>' +
+            '<i class="xp xp-draw" style="left:' + t + 'px;top:' + t + 'px;width:' + aw + 'px;height:' + ah + 'px">' + img + '</i>' +
+            '<i class="xp xp-mat" style="left:' + b + 'px;top:' + b + 'px;width:' + (Wf - 2 * b) + 'px;height:' + (Hf - 2 * b) + 'px;border-width:' + m + 'px;border-color:' + col + '"></i>' +
+            '<i class="xp xp-glass" style="left:' + b + 'px;top:' + b + 'px;width:' + (Wf - 2 * b) + 'px;height:' + (Hf - 2 * b) + 'px"></i>' + bars +
+          '</div></div>' +
+        '<i class="xf-nail" style="left:' + (Wf / 2) + 'px;top:' + nailY + 'px"></i></div>' +
+      '<p class="anim-thanks" role="status" tabindex="-1" aria-label="Thank You for contributing!" style="font-size:' + Math.round(Math.min(120, vw * 0.88 / 7.7, vh * 0.2)) + 'px"><span aria-hidden="true">Thank You</span><span aria-hidden="true">for contributing!</span><i aria-hidden="true"></i></p>';
     layout.appendChild(ov);
-    const ovStage = $('.gb-ov-stage', ov), trailG = $('.gb-trail-g path', ov), trailO = $('.gb-trail-o path', ov), trailOsvg = $('.gb-trail-o', ov), thanks = $('.ov-thanks', ov), strip = $('.ov-strip', ov);
-    const titleEl = $('.ov-title', ov), subEl = $('.ov-sub', ov);
-    const thanksLines = [...thanks.querySelectorAll('.ov-reveal > span')];
-    // Pick each letter's height once, so it bounces smoothly instead of jittering each frame.
-    const thanksChars = thanksLines.map((line) => {
-      const chars = [...line.textContent].map((letter) => {
-        const el = document.createElement('span');
-        el.className = 'ov-char'; el.textContent = letter === ' ' ? '\u00a0' : letter;
-        return { el, height: 5 + Math.floor(Math.random() * 5) };
-      });
-      line.replaceChildren(...chars.map(({ el }) => el));
-      return chars;
-    });
-    if (window.SiddhiHighlight) window.SiddhiHighlight.scan(subEl, { instant: true });                // the highlights come along, already drawn, so nothing pops when the subtitle glides away
-    // the whole scene is one full screen: contained in the window, centred. On a phone or a portrait tablet the wide scene can't be shrunk to the width of the
-    // screen (everything would be tiny) — it is fitted to the height instead and only the middle of it is seen: Thank You is drawn to fit that (guest.css) and the
-    // strip of cards is shifted so that our card lands in the middle of the screen, with the other cards sliding in from the right.
-    const W = layout.clientWidth, H = layout.clientHeight, NARROW = W < 900;
-    const s = NARROW ? Math.min(1, H / 1024, W / 640) : Math.min(1, W / 1448, H / 1024);
-    const SX = NARROW ? 724 - (SLOTS[0].x + CARD.w / 2) : 0;         // the strip's shift to the right, in stage px
-    if (NARROW) { ovStage.classList.add('narrow'); ovStage.style.setProperty('--thanks-fs', Math.min(128, Math.floor((W / s) * 0.8 / 7.7)) + 'px'); }   // the two lines are about 7.7 em wide
-    ovStage.style.setProperty('--ov-s', s);
-    ovStage.style.setProperty('--ov-x', (W - 1448 * s) / 2 + 'px');
-    ovStage.style.setProperty('--ov-y', (H - 1024 * s) / 2 + 'px');
-
-    if (reduce) {                                                    // reduced motion: no choreography, straight to the thank-you, everything simply appears
-      main.style.transition = 'opacity .3s'; main.style.opacity = '0';
-      if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
-      strip.remove(); titleEl.remove(); subEl.remove();
-      trailOsvg.remove(); trailG.parentNode.remove();
-      thanks.style.opacity = '1';
-      thanksLines.forEach((line) => { line.style.transform = 'translateX(0)'; line.parentNode.style.clipPath = 'inset(0)'; });
-      setTimeout(goHome, HOLD);
+    const $ = (s) => ov.querySelector(s), $$ = (s) => [...ov.querySelectorAll(s)];
+    const group = $('.anim-group'), wall = $('.anim-wall'), xf = $('.xf'), swing = $('.xf-swing'), rig = $('.xf-rig'), thanks = $('.anim-thanks'), rule = $('.anim-thanks i');
+    const frames = $$('.anim-wall .gf'), hero = frames[0];
+    // the wall is the gallery's wall layout, scaled up so the whole set of frames fills the screen, and centred
+    const gx = frames.map((f) => [parseFloat(f.style.getPropertyValue('--x')), parseFloat(f.style.getPropertyValue('--y')), parseFloat(f.style.getPropertyValue('--w')), parseFloat(f.style.getPropertyValue('--h'))]);
+    const x0 = Math.min(...gx.map((g) => g[0])), x1 = Math.max(...gx.map((g) => g[0] + g[2])), y0 = Math.min(...gx.map((g) => g[1])), y1 = Math.max(...gx.map((g) => g[1] + g[3]));
+    const ws = Math.min(2.6, (vw * 0.94) / (x1 - x0), (vh * 0.9) / (y1 - y0));
+    wall.style.cssText = 'left:' + (vw / 2 - ws * (x0 + x1) / 2) + 'px;top:' + (vh / 2 - ws * (y0 + y1) / 2) + 'px;scale:' + ws;
+    let done = false;
+    const timers = [];
+    const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+    const onKey = (e) => { if (e.key === 'Escape') finish(); };
+    const finish = () => {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      ov.removeEventListener('click', finish); removeEventListener('keydown', onKey);
+      goHome();
+    };
+    if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
+    main.classList.add('gb-leaving');
+    group.style.visibility = 'hidden'; xf.style.visibility = 'hidden';
+    if (reduce) {
+      main.style.opacity = '0'; xf.style.display = 'none';
+      thanks.style.opacity = '1'; rule.style.scale = '1';
+      thanks.focus({ preventScroll: true });
+      later(finish, 1800);
       return;
     }
+    const A = (el, kf, o) => el.animate(kf, Object.assign({ fill: 'both' }, o));
+    const P = (sel) => $(sel);
+    const hideParts = ['.xp-back', '.xp-mat', '.xp-glass', '.xp-bar'];
+    hideParts.forEach((s) => $$(s).forEach((e) => { e.style.opacity = '0'; }));
+    $('.xf-measure').style.opacity = '0'; $('.xf-wire').style.opacity = '0'; $('.xf-nail').style.opacity = '0';
+    ov.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 450, fill: 'both' });
+    main.style.transition = 'opacity .5s'; main.style.opacity = '0';
+    // the two strings, as in the original: the head runs across the screen, then the tail follows it off the right while the caption swoops in (as in the original)
+    [['.g', 0], ['.o', 150]].forEach(([sel, d]) => {
+      A($('.anim-lines ' + sel), [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 1500, delay: 300 + d, easing: out });
+      later(() => A($('.anim-lines ' + sel), [{ strokeDashoffset: 0 }, { strokeDashoffset: -1 }], { duration: 1900, easing: inout }), T.thanksAt + d);
+    });
 
-    // where everything is right now, in overlay design px
-    const r0 = ovStage.getBoundingClientRect(), k = r0.width / 1448;
-    const conv = (r) => ({ x: (r.left - r0.left) / k, y: (r.top - r0.top) / k, w: r.width / k, h: r.height / k });
-    const c0 = conv(card.getBoundingClientRect()), p0 = conv(paper.getBoundingClientRect());
-    const tr = conv(title.getBoundingClientRect()), sr = conv(sub.getBoundingClientRect());
-    const tdx = tr.x + tr.w / 2 - 742.5, tdy = tr.y + tr.h / 2 - 54, sdx = sr.x + sr.w / 2 - 723.5, sdy = sr.y + sr.h / 2 - 120;
+    // 0: the card flips onto the middle of the wall as the drawing
+    const lr = layout.getBoundingClientRect(), from = card.getBoundingClientRect();
+    const draw = $('.xp-draw');
+    xf.style.visibility = 'visible';
+    draw.style.opacity = '0';
+    const dr = draw.getBoundingClientRect();
+    const fly = document.createElement('div');
+    fly.className = 'anim-fly';
+    fly.style.background = getComputedStyle(card).backgroundColor;
+    ov.appendChild(fly);
+    const box = (r) => ({ left: r.left - lr.left + 'px', top: r.top - lr.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+    A(fly, [Object.assign(box(from), { transform: 'perspective(1800px) rotateY(0deg)', borderRadius: '10px' }), Object.assign(box(dr), { transform: 'perspective(1800px) rotateY(360deg)', borderRadius: '0px' })], { duration: T.flip, easing: out });
+    later(() => { draw.style.opacity = '1'; fly.remove(); }, T.flip + 10);
 
-    // cards: ours + the previous three, all inside one strip that slides as a unit
-    const mineEl = cardEl(mine, 'strip'), others = past.map((c) => cardEl(c, 'strip'));
-    [mineEl, ...others].forEach((el, i) => { el.style.left = SLOTS[i].x + 'px'; el.style.top = SLOTS[i].y + 'px'; strip.appendChild(el); });
-    const paperMine = $('.gc-paper', mineEl), sigMine = $('.gc-sig', mineEl);
-    const rightEdge = (W / s + 1448) / 2 + 30;                       // just past the right end of the screen, in stage px
-    const fromRight = others.map((_, i) => rightEdge - SX - SLOTS[i + 1].x);
-    const leftEdge = (1448 - W / s) / 2;
-    // Include the final card, overflowing signatures and shadows, even on very wide viewports.
-    const stripRight = Math.max(...[mineEl, ...others].map((el, i) => SLOTS[i].x + Math.max(CARD.w, el.scrollWidth)));
-    const exitSteps = Math.max(EXIT_K, (stripRight + SX - leftEdge + 64) / -STEP[0]);
+    // 1: exploded view. Everything floats apart in depth (and sideways for the moulding); the rig turns so the depth reads
+    const z = (px, x, y) => 'translate3d(' + (x || 0) + 'px,' + (y || 0) + 'px,' + px + 'px)';
+    const spread = { '.xp-back': z(-230), '.xp-draw': z(-95), '.xp-mat': z(5), '.xp-glass': z(130), '.xp-top': z(250, 0, -Hf * 0.2), '.xp-bottom': z(250, 0, Hf * 0.2), '.xp-left': z(250, -Wf * 0.15, 0), '.xp-right': z(250, Wf * 0.15, 0) };
+    const exploded = 'rotateY(-24deg) rotateX(12deg)';
+    later(() => {
+      Object.keys(spread).forEach((s) => { const e = $(s); A(e, [{ opacity: s === '.xp-draw' ? 1 : 0, transform: 'none' }, { opacity: 1, transform: spread[s] }], { duration: T.explode, easing: out }); });
+      A(rig, [{ transform: 'none' }, { transform: exploded }], { duration: T.explode, easing: out });
+      A($('.xf-measure'), [{ opacity: 0 }, { opacity: 1 }], { duration: 500, easing: 'ease-out' });
+    }, T.flip);
+    // a slow turn while it is held, so the pieces stay alive on screen
+    later(() => { A(rig, [{ transform: exploded }, { transform: 'rotateY(-14deg) rotateX(8deg)' }], { duration: T.holdTo - T.flip - T.explode, easing: 'ease-in-out' }); }, T.flip + T.explode);
 
-    const apply = (elapsed) => {
-      const t = Math.max(0, elapsed);                                // rAF timestamps can precede our start time by a hair
-      const x = Math.min(1, t / T), f = stringEase(t / FLIGHT);
-      // the strip slides the whole time (already moving while our card lands in it) and simply slides out of the screen
-      const kk = exitSteps * stringEase(t / SLIDE_MS);
-      strip.style.transform = `translate(${STEP[0] * kk + SX}px, ${STEP[1] * (0.25 * kk + 0.75 * (1 - Math.exp(-kk)))}px)`;
-      // our card scales down from the drawing pad into slot 1
-      Object.assign(mineEl.style, { left: lerp(c0.x - SX, SLOTS[0].x, f) + 'px', top: lerp(c0.y, SLOTS[0].y, f) + 'px', width: lerp(c0.w, CARD.w, f) + 'px', height: lerp(c0.h, CARD.h, f) + 'px' });
-      Object.assign(paperMine.style, { left: lerp(p0.x - c0.x, CARD.pl, f) + 'px', top: lerp(p0.y - c0.y, CARD.pt, f) + 'px', width: lerp(p0.w, CARD.pw, f) + 'px', height: lerp(p0.h, CARD.ph, f) + 'px' });
-      mineEl.style.transform = `perspective(1800px) rotateY(${360 * f}deg)`;
-      sigMine.style.opacity = String(sm(0.4, 1, f));
-      // the previous three start sliding from the very end of the screen, one after another
-      others.forEach((el, i) => { const g = stringEase((t - 180 - i * 160) / 1250); el.style.translate = `${fromRight[i] * (1 - g)}px 0`; });
-      // title + subtitle glide left as the sidebar leaves, then fade
-      const fo = String(1 - sm(0.12, 0.38, x));
-      titleEl.style.translate = `${tdx * (1 - f)}px ${tdy * (1 - f)}px`; titleEl.style.opacity = fo;
-      subEl.style.translate = `${sdx * (1 - f)}px ${sdy * (1 - f)}px`; subEl.style.opacity = fo;
-      // Left-to-right reveal, with a staggered 5–9px upward bounce for each character.
+    // 2: assemble
+    const tA = T.holdTo;
+    later(() => {
+      Object.keys(spread).forEach((s) => A($(s), [{ transform: spread[s] }, { transform: 'none' }], { duration: T.assemble, easing: inout }));
+      A(rig, [{ transform: 'rotateY(-14deg) rotateX(8deg)' }, { transform: 'none' }], { duration: T.assemble, easing: inout });
+      A($('.xf-measure'), [{ opacity: 1 }, { opacity: 0 }], { duration: T.assemble, easing: 'ease-in' });
+    }, tA);
+
+    // 3: hang it: nail, wire, one swing
+    const tH = tA + T.assemble;
+    later(() => {
+      A($('.xf-nail'), [{ opacity: 0, scale: '0.2' }, { opacity: 1, scale: '1' }], { duration: 220, easing: out });
+      A($('.xf-wire'), [{ opacity: 0 }, { opacity: 1 }], { duration: 260, delay: 120 });
+      A(swing, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-4deg)', offset: 0.3 }, { transform: 'rotate(2.4deg)', offset: 0.6 }, { transform: 'rotate(-1deg)', offset: 0.82 }, { transform: 'rotate(0deg)' }], { duration: T.hang, easing: 'ease-in-out', delay: 140 });
+    }, tH);
+
+    // 4: scale down into its place on the wall while the other frames scale in around it
+    const tP = tH + T.hang + 40;
+    later(() => {
+      group.style.visibility = 'visible';
+      hero.style.opacity = '0';
+      const hr = hero.getBoundingClientRect(), fr = xf.getBoundingClientRect(), k = hr.width / fr.width;
+      A($('.xf-wire'), [{ opacity: 1 }, { opacity: 0 }], { duration: 250 }); A($('.xf-nail'), [{ opacity: 1 }, { opacity: 0 }], { duration: 250 });
+      A(xf, [{ transform: 'none' }, { transform: 'translate(' + (hr.left + hr.width / 2 - fr.left - fr.width / 2) + 'px,' + (hr.top + hr.height / 2 - fr.top - fr.height / 2) + 'px) scale(' + k + ')' }], { duration: T.pull, easing: inout });
+      A(xf, [{ opacity: 1 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }], { duration: T.pull });
+      A(hero, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], { duration: T.pull });
+      frames.slice(1).forEach((f, i) => A(f, [{ opacity: 0, scale: '0.8' }, { opacity: 1, scale: '1' }], { duration: 450, delay: 120 + i * 55, easing: out }));
+    }, tP);
+
+    // 5: the wall slides out; the caption swoops in across the bare wall, then stays
+    later(() => { A(group, [{ transform: 'translateX(0)' }, { transform: 'translateX(' + -(vw + 80) + 'px)' }], { duration: T.slide, easing: inout }); }, T.slideAt);
+    later(() => {
       thanks.style.opacity = '1';
-      thanksLines.forEach((line, i) => {
-        const elapsed = t - THANKS_MS - i * 120;
-        const reveal = stringEase(elapsed / 850);
-        const offset = -28 * (1 - reveal);
-        line.parentNode.style.clipPath = `inset(0 ${100 * (1 - reveal)}% 0 0)`;
-        line.style.transform = `translateX(${offset}px)`;
-        thanksChars[i].forEach(({ el, height }, j) => {
-          const bounce = Math.min(1, Math.max(0, (elapsed - 450 - j * 18) / 420));
-          const lift = bounce === 1 ? 0 : -height * Math.pow(Math.sin(Math.PI * bounce), 2);
-          el.style.transform = `translateY(${lift}px)`;
-        });
-      });
-      const stringTime = Math.min(t / SLIDE_MS, 1) * STRING_MS;
-      const lineExit = stringEase((stringTime - 1350) / (STRING_MS - 1350));
-      trailG.setAttribute('d', stringD(KEYS_G, stringTime, 0, lineExit));
-      trailO.setAttribute('d', stringD(KEYS_O, stringTime, ORANGE_DELAY, lineExit));
-      // Cards and strings finish together while the thank-you remains visible.
-      if (t >= SLIDE_MS) {
-        strip.style.visibility = 'hidden';
-        trailG.parentNode.style.visibility = trailOsvg.style.visibility = 'hidden';
-      }
-    };
-
-    apply(0);                                                        // paint the first frame before the originals disappear (no flash)
-    main.classList.add('gb-leaving');
-    driftDecor(main);
-    card.style.visibility = 'hidden'; title.style.visibility = 'hidden'; sub.style.visibility = 'hidden';
-    if (sidebar) { sidebar.classList.add('gb-out'); sidebar.inert = true; }
-
-    const start = performance.now();
-    const frame = (now) => {
-      const t = Math.max(0, now - start);
-      apply(Math.min(t, T));
-      if (t < T) return requestAnimationFrame(frame);
-      strip.remove(); titleEl.remove(); subEl.remove();
-      thanks.focus({ preventScroll: true });
-      trailOsvg.remove(); trailG.parentNode.remove();
-      goHome();                                                   // bounce has settled; immediately start the upward handoff
-    };
-    requestAnimationFrame(frame);
-  }
-
-  G.play = play;
+      A(thanks, [{ translate: (vw + 400) + 'px 0', rotate: '-5deg', opacity: 0 }, { opacity: 1, offset: 0.15 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 2850, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+      A(rule, [{ scale: '0 1' }, { scale: '1 1' }], { duration: 900, delay: 1900, easing: out });
+      later(() => thanks.focus({ preventScroll: true }), 1200);
+    }, T.thanksAt);
+    later(finish, T.readTo);
+    ov.addEventListener('click', finish);
+    addEventListener('keydown', onKey);
+  };
 })();

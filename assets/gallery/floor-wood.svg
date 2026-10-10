@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="240" viewBox="0 0 420 240"><defs><filter id="w" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".005 .22" numOctaves="3" seed="7" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .22 0 0 0 0 .12 0 0 0 0 .04 0 0 0 .6 0"/></filter></defs>
+<rect y="0" width="420" height="48" fill="#b98f62"/><rect y="48" width="420" height="48" fill="#a9804f"/><rect y="96" width="420" height="48" fill="#c49b6d"/><rect y="144" width="420" height="48" fill="#b08558"/><rect y="192" width="420" height="48" fill="#bd9468"/>
+<g stroke="#4a2c12" stroke-opacity=".55" stroke-width="2"><path d="M0 48H420M0 96H420M0 144H420M0 192H420M0 0H420"/><path d="M140 0V48M300 48V96M60 96V144M250 96V144M200 144V192M360 192V240M110 192V240"/></g>
+<rect width="420" height="240" filter="url(#w)"/></svg>

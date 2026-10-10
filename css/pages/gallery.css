@@ -1,0 +1,91 @@
+/* ==================================================================
+   PAGES · GALLERY — the Guest Gallery (guest-gallery.html). An editorial header on the paper, then a front-on 3D room: rough baby-blue plaster wall,
+   crown moulding, tube light, baseboard, a wood floor in perspective with a rug, the desk/monitor/books/plant (Figma assets) standing on it.
+   Only the WALL moves: frames, shelf and the strings of paper scraps scroll sideways (js/guest.js, renderGallery); the floor planks slide with it.
+   Stage px: the room window is 1184 x 804 at (-58, 196). Clicking a frame shows the guest's signature card.
+   Contents: 1 Header · 2 Room · 3 Frames · 4 Strings + scraps · 5 Signature card · 6 Furniture
+================================================================== */
+
+body[data-page='gallery']:not([data-fit]) .main { overflow-x: clip; }
+
+/* ---------- 1 · Header (editorial: set left, a rule under it, the hint on the right) ---------- */
+body[data-page='gallery']:not([data-fit]) .gb-title { font-family: var(--font-serif); color: var(--maroon); font-size: 76px; line-height: 1; letter-spacing: -0.01em; }
+body[data-page='gallery']:not([data-fit]) .gb-sub { font-size: 26px; color: rgba(27, 11, 46, 0.82); }
+.gal-tape { position: absolute; left: 471px; top: 6px; width: 150px; height: 30px; rotate: -5deg; background: repeating-linear-gradient(135deg, rgba(255, 154, 0, 0.55) 0 10px, rgba(255, 154, 0, 0.35) 10px 20px); mix-blend-mode: multiply; pointer-events: none;
+  clip-path: polygon(0 12%, 4% 0, 9% 14%, 14% 0, 100% 0, 100% 100%, 95% 88%, 90% 100%, 85% 86%, 80% 100%, 0 100%); }
+/* "Create something!" wears the site's pill: rounded, maroon with its edge, cream text; on hover it inverts like the Resume pill */
+body[data-page='gallery']:not([data-fit]) .gb-more { z-index: 5; border-radius: 30px; border: 2px solid var(--maroon-edge); color: var(--card); font-size: 20px; font-weight: 500; box-shadow: 0 8px 22px rgba(25, 5, 35, 0.3); transition: background-color 0.2s ease, color 0.2s ease, transform 0.25s var(--ease-out); }
+body[data-page='gallery']:not([data-fit]) .gb-more:hover { background: var(--card); color: var(--maroon); transform: translateY(-1px); }
+.move-hint .arr { flex: none; width: 15px; height: 17px; background: currentColor; -webkit-mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; }   /* the brand arrow (assets/ui/nav-arrow.svg), in the pill's own text colour */
+
+/* ---------- 2 · Room: a photo of a real room (assets/gallery/room.webp, its wall wiped clean), zoomed so the wall, desk and lamp fill the window ---------- */
+.gal-win { position: absolute; left: -58px; top: 152.9px; width: 1184px; height: 987px; overflow: hidden; transform: scale(1.1); transform-origin: 50% 0; background: #e9d6c0; }
+.gal-wall { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.gal-photo { position: absolute; left: -118px; top: 0; width: 1421px; height: 1184px; max-width: none; user-select: none; }
+/* the wall is the only thing that moves: frames and strings slide inside the window between the two corners of the photographed wall, above the lamp */
+.gal-scroll { position: absolute; left: 234px; top: 81px; width: 662px; height: 426px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; cursor: grab; outline-offset: -4px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); }
+.gal-scroll::-webkit-scrollbar { display: none; }
+.gal-scroll.dragging { cursor: grabbing; user-select: none; }
+.gal-scroll.dragging .gf { pointer-events: none; }
+.gal-track { position: relative; height: 100%; }
+.gal-tube, .gal-glow { display: none; }
+
+/* ---------- 3 · Frames, laid out like the reference room: thin black / oak / white moulding; the wide mat is the guest's own card colour (--b moulding, --m mat) ---------- */
+.gf { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); padding: calc(var(--b) * 1px); cursor: pointer; transition: margin-top 0.2s var(--ease-out), box-shadow 0.2s; text-align: left;
+  box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.4), 3px 5px 7px rgba(60, 30, 10, 0.2); }
+.gf:hover, .gf:focus-visible, .gf.open { margin-top: -4px; box-shadow: 2px 5px 7px rgba(60, 30, 10, 0.42), 9px 15px 18px rgba(60, 30, 10, 0.24); }
+.gf-black { background: #1d1a19; } .gf-oak { background: linear-gradient(135deg, #d0a974, #b38655 50%, #c49a67); } .gf-white { background: #f6f1e8; box-shadow: inset 0 0 0 1px rgba(60, 40, 20, 0.14), 1px 2px 3px rgba(60, 30, 10, 0.4), 3px 5px 7px rgba(60, 30, 10, 0.2); }
+.gf-mat { display: block; width: 100%; height: 100%; padding: calc(var(--m) * 1px); background: var(--c); box-shadow: inset 0 0 0 1px rgba(60, 40, 20, 0.1); }
+.gf-in { position: relative; display: block; width: 100%; height: 100%; background: #fbf8ef; overflow: hidden; box-shadow: 0 0 0 1px rgba(60, 40, 20, 0.2); }
+.gf-in img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }   /* ink soaks into the paper */
+/* paper and light on the drawing: a fine paper grain, light falling from the upper left (the room's window), a soft shade where the mat's edge casts onto the paper, a faint glass sheen */
+.gf-in::before { content: ''; position: absolute; inset: 0; background: url(../../assets/gallery/wall-grain.svg), linear-gradient(135deg, #fffdf6, #f6f0e2); background-blend-mode: multiply; opacity: 0.9; z-index: 0; }
+.gf-in::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; box-shadow: inset 2px 3px 6px rgba(40, 20, 5, 0.32), inset -1px -1px 3px rgba(40, 20, 5, 0.12);
+  background: linear-gradient(135deg, rgba(255, 244, 214, 0.5), rgba(255, 244, 214, 0) 45%), linear-gradient(115deg, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.22) 60%, rgba(255, 255, 255, 0) 70%), linear-gradient(0deg, rgba(60, 30, 10, 0.1), rgba(60, 30, 10, 0) 40%); }
+.gf.fresh { animation: fade-in 0.45s ease both; }
+
+/* ---------- 4 · Strings + scraps (the line animation: two strings draw themselves across the wall, paper scraps hang from them) ---------- */
+.gal-string path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gal-draw 1.8s var(--ease-out) 0.3s forwards; filter: drop-shadow(1px 3px 2px rgba(60, 30, 10, 0.4)); }
+.gal-string .g { stroke: #075e54; stroke-width: 4; }
+.gal-string .o { stroke: #ff9a00; stroke-width: 3; animation-delay: 0.55s; }
+@keyframes gal-draw { to { stroke-dashoffset: 0; } }
+.gal-nail { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #d9dde0, #5b646b); box-shadow: 1px 3px 3px rgba(10, 35, 70, 0.5); pointer-events: none; }
+.gal-polaroid { position: absolute; width: 46px; height: 54px; margin-left: -23px; padding: 4px 4px 11px; background: #fffdf8; box-shadow: 2px 5px 6px rgba(60, 30, 10, 0.42); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
+.gal-polaroid img { width: 100%; height: 100%; object-fit: cover; background: #fff; }
+.gal-polaroid .peg, .gal-tile .peg { position: absolute; left: 50%; top: -10px; width: 7px; height: 18px; margin-left: -3px; border-radius: 3px; background: linear-gradient(90deg, #d9b98d, #b88f5e 55%, #9a7449); box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.42); }
+.gal-polaroid .peg::after, .gal-tile .peg::after { content: ''; position: absolute; left: 50%; top: 9px; bottom: 3px; width: 1.5px; margin-left: -0.5px; background: rgba(60, 35, 15, 0.55); }
+.gal-scrap { position: absolute; width: 40px; height: 52px; margin: 0 0 0 -20px; background: var(--sc, #fffdf8); box-shadow: 2px 4px 5px rgba(60, 30, 10, 0.4); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
+.gal-scrap::before { content: ''; position: absolute; left: 50%; top: -9px; width: 30px; height: 16px; margin-left: -15px; background: rgba(255, 154, 0, 0.7); mix-blend-mode: multiply; }
+.gal-scrap::after { content: ''; position: absolute; inset: 7px; border: 1.5px solid rgba(27, 11, 46, 0.35); }
+
+/* ---------- 5 · Signature card (appears when a signed frame is clicked) ---------- */
+.gf-card { position: absolute; left: 12px; top: calc(100% + 8px); z-index: 4; min-width: 130px; max-width: 240px; padding: 8px 18px 6px 14px; background: #fff; border-radius: 4px; box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.25); opacity: 0; visibility: hidden; translate: 0 -6px; transition: opacity 0.2s, translate 0.2s, visibility 0s 0.2s; pointer-events: none; }
+.gf-card::before { content: ''; position: absolute; left: 0; top: 0; width: 22px; height: 12px; background: var(--c); border-radius: 4px 0 4px 0; }
+.gf.open .gf-card { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 0.2s, translate 0.2s; }
+.gf-card b { display: block; padding-top: 10px; font-weight: 400; font-family: var(--font-script); font-size: 30px; line-height: 1.05; color: #1b1b5e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (prefers-reduced-motion: reduce) { .gf, .gf-card { transition: none; } .gf.fresh { animation: none; } .gal-string path { animation: none; stroke-dashoffset: 0; } }
+.gal-tile { position: absolute; width: 28px; height: 36px; margin-left: -14px; display: flex; align-items: center; justify-content: center; background: var(--tb); color: var(--tc); font: 700 18px/1 var(--font-serif); border-radius: 3px; box-shadow: 2px 5px 6px rgba(60, 30, 10, 0.42), inset 0 0 0 1.5px rgba(255, 255, 255, 0.25); rotate: var(--sr, 0deg); transform-origin: 50% 0; pointer-events: none; }
+/* the lettered cord hangs fixed over the wall (only the posters scroll) */
+.gal-top { position: absolute; left: 234px; top: 81px; width: 662px; height: 150px; z-index: 4; pointer-events: none; }
+.gal-top > * { pointer-events: auto; }
+.gal-cord { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.gal-cord path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gal-draw 1.6s var(--ease-out) 0.3s forwards; filter: drop-shadow(1px 3px 2px rgba(60, 30, 10, 0.4)); }
+.gal-cord .g { stroke: #075e54; stroke-width: 4; } .gal-cord .o { stroke: #ff9a00; stroke-width: 3; animation-delay: 0.5s; }
+.gal-top .gal-tile { position: absolute; }
+/* "Create something!" keeps the site's pill, set like a memo on the wall: a little crooked, straightening on hover */
+body[data-page='gallery']:not([data-fit]) .gal-top .gal-cta { position: absolute; width: 260px; height: 50px; font-size: 24px; white-space: nowrap; rotate: -2deg; transition: rotate 0.25s var(--ease-out), background-color 0.2s ease, color 0.2s ease, margin-top 0.25s var(--ease-out); }
+body[data-page='gallery']:not([data-fit]) .gal-top .gal-cta:hover { rotate: 0deg; transform: none; margin-top: -3px; }
+.gal-shelf { position: absolute; left: calc(var(--x) * 1px); top: 130px; width: 194px; height: 232px; max-width: none; pointer-events: none; filter: drop-shadow(5px 8px 7px rgba(40, 20, 5, 0.4)); }
+body[data-page='gallery']:not([data-fit]) ~ .move-hint, .move-hint { font-size: 16px; }   /* the smallest text is 16px */
+/* the ivy from the supplied vine sheet hangs over both ends of the scrolling wall, hiding where frames slide out of view */
+.gal-vine { position: absolute; top: 72px; height: 380px; width: auto; max-width: none; z-index: 6; pointer-events: none; filter: drop-shadow(3px 5px 5px rgba(40, 20, 5, 0.35)); }
+.gal-vine-l1 { left: 190px; } .gal-vine-l2 { left: 232px; height: 290px; }
+.gal-vine-r1 { left: 903px; top: 279px; height: 270px; } .gal-vine-r2 { left: 934px; top: 279px; height: 215px; }   /* the right ivy hangs in the marked strip of the right wall, below the shelf */
+body[data-page='gallery']:not([data-fit]) .stage > .dc { z-index: 1; }   /* the star and fish-bone patches bleed off the top edge, one layer below the Menu and Resume pills */
+/* patches stuck on the room's walls (they scale with the room); the dino stands the right way up */
+.gal-win .dc.on-wall { z-index: 5; }
+.gal-win .dc.dino img { transform: none; }
+.gal-vine-l3 { left: 150px; top: 60px; height: 400px; } .gal-vine-l4 { left: 262px; top: 70px; height: 330px; }
+.gal-vine-r3 { left: 835px; top: 270px; height: 340px; transform: scaleX(-1); } .gal-vine-r4 { left: 905px; top: 250px; height: 300px; transform: scaleX(-1); }

@@ -10,14 +10,27 @@
    below the top of a line box; the Ancizar title, 94.67px tall, puts it 66.4px down). */
 .about-title {
   /* two rows tall, centred on the vertical line 19 across (also the middle of the text block below); its baseline is on grid line 3 (y 124.5) */
-  position: absolute; left: 164.5px; top: 57.1px; width: 721px; text-align: center; white-space: nowrap;
+  position: absolute; left: 216.5px; top: 57.1px; width: 721px; text-align: center; white-space: nowrap;
   font-family: var(--font-serif); font-size: 64px; line-height: 94.67px; font-weight: 400; color: var(--ink);
 }
-/* the paragraphs' left edge is on vertical line 11. The first block is 8 rows (in normal case), so the second continues on the same lines. */
-.about-p1, .about-p2 { position: absolute; left: 145.79px; font-size: 24px; line-height: 47.33px; color: var(--ink); }
-.about-p1 { top: 139.83px; width: 764px; text-align: justify; }      /* baselines on lines 5, 6 … ; +1px: the x-height is slightly larger */
-.about-p1 p { margin: 0; }
-.about-p2 { top: 518.47px; width: 794px; white-space: pre-wrap; }   /* 138.83 + 8 rows x 47.33: right under the first block, still on the grid lines */
+/* the paragraphs (Figma "About Me", updated): 24px Ancizar Sans on 47.33px rows; each block's top is 47.33 n - 49.5 so its baselines sit on the grid rules */
+.about-t { position: absolute; margin: 0; font-size: 24px; line-height: 47.33px; color: var(--ink); text-align: justify; }
+.about-t.t1 { left: 243px; top: 187.15px; width: 473px; }
+.about-t.t2 { left: 385px; top: 565.8px; width: 623px; }
+.about-t.t3 { left: 152px; top: 897.1px; width: 443px; }
+.about-t.t4 { left: 346px; top: 1228.6px; width: 627px; text-align: center; }
+/* @SideQuests: on hover (or keyboard focus) the words become a pill that opens Side Quests */
+.sq-link { position: relative; z-index: 1; display: inline-block; color: inherit; transition: color 0.2s ease; }
+/* the brand pill (maroon, 2px edge, 10px 20px 10px 16px padding, fully rounded) grows out from behind the words and pops above everything on hover */
+.sq-link::before { content: ''; position: absolute; inset: 1px -17px 1px -15px; z-index: -1; border-radius: 30px; background: var(--maroon); border: 2px solid var(--maroon-edge); box-shadow: 0 8px 22px rgba(25, 5, 35, 0.3); opacity: 0; scale: 0.7; transition: opacity 0.2s ease, scale 0.25s var(--ease-out); }
+.sq-link:hover, .sq-link:focus-visible { z-index: 400; color: var(--card); }
+.sq-link:hover::before, .sq-link:focus-visible::before { opacity: 1; scale: 1.08; }
+.about-t:has(.sq-link:hover), .about-t:has(.sq-link:focus-visible) { z-index: 400; }
+/* the weaving patch, top left: a maroon ring around the picture */
+.dc.weave { border-radius: 50%; border: 8px solid var(--maroon-edge); background: var(--pill); overflow: hidden; }
+.dc.weave img { position: static; left: auto; top: auto; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.rc.sword img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(-4px 5px 4px rgba(0, 0, 0, 0.28)); }
+.cap.sm { font-size: 20px; }
 
 /* the title's typed greeting (नमस्ते -> Hello!) and the ransom-note name tiles: js/about-title.js */
 .at-greet { display: inline-block; text-align: left; white-space: nowrap; }
@@ -60,7 +73,7 @@ body.compact .dc-arc { transform-origin: 50% 100%; transform: scaleY(calc(1 + 64
 
 /* ---------- 3 · Books, board, vinyl ---------- */
 .book { filter: drop-shadow(var(--dx) var(--dy) 4px rgba(0, 0, 0, 0.25)); }
-.book img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }   /* whole cover, no crop */
+.book img { width: 100%; height: 100%; object-fit: contain; }   /* the whole cover, never cropped (boxes are the cover's own 9:16 shape at Figma's widths) */   /* whole cover, no crop */
 .board { overflow: hidden; }
 .board img { position: absolute; height: 137.73%; left: -60.46%; top: -18.09%; width: 229.34%; }
 .vinyl img { width: 100%; height: 100%; animation: vinyl-spin 20s linear infinite; }
@@ -84,3 +97,25 @@ a.vinyl-link { display: block; transition: scale 0.4s var(--ease-out); }
 .dc.drag img { pointer-events: none; -webkit-user-drag: none; }
 .dc.drag:hover { scale: 1.06; }
 .dc.drag.grabbing { scale: 1.14; filter: drop-shadow(0 10px 10px rgba(25, 5, 35, 0.35)); transition: scale 0.15s ease, filter 0.15s ease, rotate 0.25s var(--ease-out); }
+.cap.left { justify-content: flex-start; align-items: flex-end; text-align: left; white-space: normal; }
+.cap.sk { font-size: 20px; white-space: nowrap; }
+.cap.pl { justify-content: flex-start; align-items: flex-end; text-align: left; white-space: nowrap; }
+/* a polaroid is one unit: frame, photo and caption turn together. The photo has the same margin left, right and top; the caption sits in the strip below it. */
+.rc.frame.pol { position: absolute; --shd: -6px 7px 6px; }
+.pol .photo { position: absolute; }
+.pol .pcap { position: absolute; margin: 0; display: flex; align-items: center; font-size: 24px; line-height: 1.18; color: rgba(14, 3, 20, 0.84); white-space: nowrap; }
+.pol .pcap.small { font-size: 24px; }
+.pol .pcap.center { justify-content: center; } .pol .pcap.left { justify-content: flex-start; } .pol .pcap.right { justify-content: flex-end; }
+/* "A playlist for you" runs round the underside of the record */
+.vinyl-arc { position: absolute; width: 400px; height: 400px; z-index: 3; }
+.vinyl-arc text { font: 400 24px var(--font-ui); fill: #000; }
+.vinyl-arc:hover text { fill: var(--maroon); }
+.pol .pcap.wrap { white-space: normal; align-items: flex-start; padding-top: 4px; }
+/* the two books (Figma component 577:24, exported whole with its own tilt and shadow) */
+.about-lastreads { position: absolute; margin: 0; width: 150px; text-align: center; font-size: 24px; line-height: 1.18; color: #000; z-index: 2; }
+.pol.ghost { background: none; border-color: transparent; box-shadow: none; pointer-events: none; }
+.pol.nocap .pcap { visibility: hidden; }   /* its caption is drawn again above the sword (the ghost copy) */
+.pol.ghost .pcap { color: rgba(14, 3, 20, 0.84); }
+.about-books { position: absolute; width: 484px; height: 426px; }
+.about-books .bk { position: absolute; left: 0; top: 0; transform-origin: 0 0; object-fit: fill; filter: drop-shadow(-5px 6px 5px rgba(0, 0, 0, 0.3)); }   /* each cover at its own Figma size and tilt */
+.pol .pcap.sk { font-size: 20px; }
