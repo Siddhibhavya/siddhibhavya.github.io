@@ -138,7 +138,7 @@
     [404, 0, 80, 80], [404, 88, 80, 66], [404, 162, 80, 91], [404, 261, 80, 64],
     [492, 0, 56, 100], [492, 108, 56, 60], [492, 176, 56, 55], [492, 239, 56, 86]];
   function cluster() { return TEMPLATE.map((t) => ({ x: BOX_X + t[0], y: BOX_Y + t[1], w: t[2], h: t[3], hero: !!t[4] })); }
-  const SHELF_GAP = 44, PER = TEMPLATE.length, PITCH = CLUSTER_W + 2 * SHELF_GAP + 194;   // the shelf (the Figma asset, 194 wide) is the space between two sets
+  const SHELF_GAP = 96, PER = TEMPLATE.length, PITCH = CLUSTER_W + 2 * SHELF_GAP + 194;   // the shelf (the Figma asset, 194 wide) is the space between two sets
   function posterSlots(n) {
     const base = cluster(), hero = base.find((p) => p.hero), cx = (p) => p.x + p.w / 2, cy = (p) => p.y + p.h / 2;
     const order = base.slice().sort((a, b) => Math.hypot(cx(a) - cx(hero), cy(a) - cy(hero)) - Math.hypot(cx(b) - cx(hero), cy(b) - cy(hero))), out = [];
@@ -189,6 +189,7 @@
     track.innerHTML = html;
     track.style.width = Math.max(WALL_W, right + END_PAD, scroller._snaps[scroller._snaps.length - 1] + WALL_W / 2) + 'px';   // the last set can always be centred                                                // the wall ends just after the last frame: no empty stretch
     wireWall(stage, scroller);
+    scroller.dispatchEvent(new Event('scroll'));                                                       // refresh the arrows for this set of frames
     if (window.SiddhiShell) window.SiddhiShell.fit();
     scrollHint(stage);
   }
@@ -225,6 +226,13 @@
       settling = true;
       scroller.scrollTo({ left: best, behavior: reduce ? 'auto' : 'smooth' });
     };
+    const prev = $('.gal-prev', stage), next = $('.gal-next', stage);
+    const stops = () => (scroller._snaps || []).map((c) => Math.max(0, Math.min(scroller.scrollWidth - scroller.clientWidth, c - scroller.clientWidth / 2)));
+    const step = (dir) => { const s = stops(), x = scroller.scrollLeft, to = dir > 0 ? s.find((v) => v > x + 4) : s.slice().reverse().find((v) => v < x - 4); if (to != null) scroller.scrollTo({ left: to, behavior: reduce ? 'auto' : 'smooth' }); };
+    const arrows = () => { const s = stops(), x = scroller.scrollLeft; if (prev) prev.disabled = !s.some((v) => v < x - 4); if (next) next.disabled = !s.some((v) => v > x + 4); };
+    if (prev) prev.addEventListener('click', () => step(-1));
+    if (next) next.addEventListener('click', () => step(1));
+    scroller.addEventListener('scroll', arrows, { passive: true }); arrows();
     scroller.addEventListener('scroll', () => { clearTimeout(settleT); if (!drag) settleT = setTimeout(settle, settling ? 90 : 180); });
     scroller.addEventListener('scroll', () => { if (hint && scroller.scrollLeft > 20) hint.classList.add('gone'); if (win) win.style.setProperty('--sx', scroller.scrollLeft.toFixed(0)); }, { passive: true });
     scroller.addEventListener('wheel', (e) => {

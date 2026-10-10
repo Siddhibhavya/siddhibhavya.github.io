@@ -70,7 +70,10 @@ body[data-page='gallery']:not([data-fit]) .stage > .dc { z-index: 1; }   /* the 
 /* patches stuck on the room's walls (they scale with the room); the dino stands the right way up */
 .gal-win .dc.on-wall { z-index: 5; }
 .gal-win .dc.dino img { transform: none; }
-/* a paper stash tag pinned beside the button: "Scroll to explore" */
-.gal-stash { position: absolute; left: 536px; top: 20px; display: flex; align-items: center; gap: 8px; padding: 8px 16px 8px 14px; background: var(--pill); color: var(--ink); border: 2px solid var(--maroon-edge); border-radius: 6px; font: 500 16px/1.2 var(--font-ui); white-space: nowrap; rotate: 4deg; box-shadow: -3px 4px 5px rgba(60, 30, 10, 0.35); pointer-events: none; }
-.gal-stash .arr { width: 13px; height: 15px; background: currentColor; -webkit-mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; }
-.gal-stash::before { content: ''; position: absolute; left: 50%; top: -9px; width: 7px; height: 16px; margin-left: -3px; border-radius: 3px; background: linear-gradient(90deg, #d9b98d, #b88f5e 55%, #9a7449); box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.4); }
+/* previous / next arrows (the brand arrow) beside the wall; they step the wall along with the sideways scroll */
+.gal-nav { position: absolute; top: 236px; z-index: 8; width: 60px; height: 60px; border-radius: 50%; background: var(--maroon); border: 2px solid var(--maroon-edge); color: var(--card); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 22px rgba(25, 5, 35, 0.3); transition: background-color 0.2s ease, color 0.2s ease, scale 0.25s var(--ease-out), opacity 0.2s ease; }
+.gal-prev { left: 168px; } .gal-next { left: 951px; }
+.gal-nav .arr { width: 22px; height: 26px; background: currentColor; -webkit-mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; mask: url(../../assets/ui/nav-arrow.svg) center / contain no-repeat; }
+.gal-prev .arr { transform: scaleX(-1); }
+.gal-nav:hover:not(:disabled), .gal-nav:focus-visible { background: var(--card); color: var(--maroon); scale: 1.08; }
+.gal-nav:disabled { opacity: 0.35; cursor: default; }
