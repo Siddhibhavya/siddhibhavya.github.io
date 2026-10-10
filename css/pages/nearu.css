@@ -73,7 +73,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-25 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:469px;font-style:normal;font-size:24px;color:var(--chestnut);top:6423px;text-transform:uppercase;white-space:nowrap; }
 .nearu-page .nu-26 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:900;line-height:normal;left:426px;font-style:normal;color:var(--heading);font-size:24px;top:8514px;text-transform:uppercase;width:94px; }
 .nearu-page .nu-27 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:500;line-height:normal;left:470px;font-style:normal;font-size:24px;color:var(--chestnut);top:8268px;text-transform:uppercase;white-space:nowrap; }.nearu-page .nu-29 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:235px;line-height:57px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:542px;width:938px; }
-.nearu-page .nu-30 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:252px;line-height:41px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:1831px;width:938px; }.nearu-page .nu-32 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:168px;line-height:42px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:2074px;width:938px; }
+.nearu-page .nu-30 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:123px;line-height:41px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:1831px;width:938px; }.nearu-page .nu-32 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:168px;line-height:42px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:2074px;width:938px; }
 .nearu-page .nu-33 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:84px;line-height:42px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:2811px;width:938px; }
 .nearu-page .nu-34 { position:absolute;display:flex;align-items:center;justify-content:center;left:-52px;width:434.931px;height:434.931px;top:-22px; }
 .nearu-page .nu-35 { flex:none;transform:rotate(-85.26deg); }
@@ -584,7 +584,9 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 */
 .nearu-page .nu-rec-seller { left: 834.5px; top: 2284px; }
 .nearu-page .nu-rec-buyer { left: 1035px; top: 2284px; }
-.nearu-page .nu-rec-onboarding { left: 990px; top: 12613px; }
+.nearu-page .nu-rec-onboarding, .nearu-page .nu-rec-dark { --s: .5; }
+.nearu-page .nu-rec-onboarding { left: 934px; top: 12613px; }
+.nearu-page .nu-rec-dark { left: 1160px; top: 12613px; }
 .nu-demo-screen video { position: absolute; left: calc(15px * var(--s, 1)); top: calc(15px * var(--s, 1)); display: block; width: calc(372px * var(--s, 1)); height: calc(809px * var(--s, 1)); object-fit: cover; border-radius: calc(45px * var(--s, 1)); background: #fffcf1; }
 @media (max-width: 899px) {
   .nearu-mobile .nearu-mobile-recs .nu-rec { position: relative; left: auto; top: auto; margin-left: auto; margin-right: auto; }
@@ -653,3 +655,15 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-ide-wrap .nu-cap-ds { font-size: 16px; line-height: 28px; left: 26%; top: 3%; width: 70%; }
   .nearu-mobile .nearu-mobile-art:has(.nu-100), .nearu-mobile .nearu-mobile-art:has(.nu-101) { width: 44%; max-width: 170px; }
 }
+
+/* Context: What kind of gigs? (pastel pills with a sketch beside each, two columns). Original-y values; the shift table moves them (class nu-gigs is excluded from the lower rows). */
+.nearu-page .nu-gigs-label { position: absolute; margin: 0; left: 434px; top: 1995px; width: 938px; font-family: var(--font-ui); font-weight: 700; font-size: 24px; line-height: 41px; color: var(--chestnut); }
+.nearu-page .nu-gigs-table { position: absolute; left: 434px; top: 2077px; width: 938px; margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; grid-auto-rows: 82px; }
+.nu-gigs-table li { display: flex; align-items: center; gap: 20px; }
+.nu-gig-pill { display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 236px; height: 46px; padding: 0 24px; border-radius: 999px; font-family: var(--font-ui); font-weight: 400; font-size: 22px; line-height: 1; color: var(--espresso); }
+.nu-gig-sketch { flex: none; width: 96px; height: 64px; fill: none; stroke: var(--espresso); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.g-yellow { background: #fff0c4; } .g-blue { background: #dbe8ff; } .g-lav { background: #e7e1ef; } .g-coral { background: #ffe0e1; } .g-peach { background: #ffe5cc; } .g-pink { background: #f8d2d9; } .g-green { background: #dff1dc; } .g-mint { background: #d8f1ec; }
+.nearu-mobile .nu-gigs-table { position: static; width: 100%; column-gap: 12px; grid-auto-rows: auto; row-gap: 14px; }
+.nearu-mobile .nu-gigs-table li { flex-wrap: wrap; gap: 6px 10px; }
+.nearu-mobile .nu-gig-pill { min-width: 0; height: 36px; padding: 0 16px; font-size: 16px; }
+.nearu-mobile .nu-gig-sketch { width: 64px; height: 42px; }

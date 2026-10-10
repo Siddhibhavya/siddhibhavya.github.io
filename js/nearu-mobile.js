@@ -242,7 +242,7 @@
   vid(mobile, 1585, 'is-demo');
 
   let s = section('context', 1537);
-  copy(s, 1536, 'nearu-mobile-subtitle'); copy(s, 1547);
+  copy(s, 1536, 'nearu-mobile-subtitle'); copy(s, 1547); copy(s, 9100, 'nearu-mobile-label'); block(s, 9101, 'nearu-mobile-gigs');
   s = section('solution', 1538);
   copy(s, 1549);
   plate(s, [1521,1522,1575,1577,1578,1579,1630], 480, 2270, 765, 407);   // the blue frame, logo chip, wordmark film and captions, as before
@@ -291,7 +291,7 @@
   s = section('onboarding', 1674);
   phones(s, [1680,1681,1682,1683]);
   copy(s, 1711);
-  recs(s, ['.nu-rec-onboarding']);
+  recs(s, ['.nu-rec-onboarding', '.nu-rec-dark']);
   s = section('scope', 1675);
   copy(s, 1712); copy(s, 1713);
 
