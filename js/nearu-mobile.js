@@ -264,7 +264,7 @@
   const abRow = document.createElement('div');
   abRow.className = 'nearu-mobile-ab';
   s.append(abRow);
-  plate(abRow, [1599,1600,1601,1602,1631,1632], 671, 3608, 460, 452);   // x/width follow nu-103's desktop left:691 (recentred +61px) and nu-105's right edge at 1105 — keep in sync if either moves
+  plate(abRow, [1599,1600,1601,1602,1631], 671, 3608, 460, 480);   // x/width follow nu-103's desktop left:691 (recentred +61px) and nu-105's right edge at 1105 — keep in sync if either moves
   abNotes(abRow);
   copy(s, 1603);
 
@@ -286,6 +286,7 @@
   phones(s, [1652,1653,1654,1655], [1659,1656,1657,1658]);
   copy(s, 1710);
   phones(s, [1667,1668,1672,1670], [1660,1661,1662,1663]);
+  phones(s, [9301,9302], [9303,9304]);   // Collab + Messages (commissions)
   copy(s, 1676, 'nearu-mobile-label'); flow(s, 1678);
   copy(s, 1677, 'nearu-mobile-label'); flow(s, 1684);
 

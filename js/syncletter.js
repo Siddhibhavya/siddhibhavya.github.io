@@ -42,6 +42,7 @@
     const scale = Math.min(1, paperWidth / CONTENT_W);
     const inset = (paperWidth - CONTENT_W * scale) / 2;
     canvas.style.transform = `translateX(${inset}px) scale(${scale}) translateX(-356px)`;
+    canvas.style.setProperty('--ts', mobile ? 1 : Math.min(1 / scale, 1.3).toFixed(3));   // titles stay near their full size when the page shrinks
     viewport.style.height = `${(CANVAS_H + (window.synFlowExtra || 0)) * scale}px`;
     viewport.style.width = `${paperWidth}px`;
     viewport.style.marginLeft = '0px';

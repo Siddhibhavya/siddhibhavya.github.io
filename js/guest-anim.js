@@ -14,7 +14,7 @@
   const { reduce, goHome, frameHTML, posterSlots, cardEl } = G;
   const ROOT = document.body.dataset.root || '';
   const ART = 421 / 642;
-  const T = { flip: 700, explode: 700, holdTo: 1600, assemble: 500, hang: 700, pull: 800, slideAt: 3900, slide: 600, thanksAt: 4100, readTo: 9900 };
+  const T = { flip: 700, explode: 700, holdTo: 1600, assemble: 500, hang: 700, pull: 800, slideAt: 4600, slide: 1600, thanksAt: 5300, readTo: 11800 };
   const out = 'cubic-bezier(0.22, 1, 0.36, 1)', inout = 'cubic-bezier(0.65, 0, 0.35, 1)';
   const S = 'fill:both';
 
@@ -56,6 +56,15 @@
         '<i class="xf-nail" style="left:' + (Wf / 2) + 'px;top:' + nailY + 'px"></i></div>' +
       '<p class="anim-thanks" role="status" tabindex="-1" aria-label="Thank You for contributing!" style="font-size:' + Math.round(Math.min(120, vw * 0.88 / 7.7, vh * 0.2)) + 'px"><span aria-hidden="true">Thank You</span><span aria-hidden="true">for contributing!</span><i aria-hidden="true"></i></p>';
     layout.appendChild(ov);
+    // the stars and fish-bone patches of Welcome Aboard stay pinned exactly where they are, all through the animation
+    const stg = document.querySelector('.stage'), decor = document.querySelector('.gb-decor');
+    if (stg && decor) {
+      const sr = stg.getBoundingClientRect(), lr0 = layout.getBoundingClientRect(), pins = document.createElement('div');
+      pins.className = 'anim-pins'; pins.style.cssText = 'left:' + (sr.left - lr0.left) + 'px;top:' + (sr.top - lr0.top) + 'px;scale:' + (sr.width / stg.offsetWidth);
+      const dec = decor.cloneNode(true); [...dec.children].forEach((d, i) => { if (i % 2) d.remove(); });   // half as many patches as the page itself, so the wall stays calm
+      pins.appendChild(dec);
+      ov.insertBefore(pins, ov.firstChild);
+    }
     const $ = (s) => ov.querySelector(s), $$ = (s) => [...ov.querySelectorAll(s)];
     const group = $('.anim-group'), wall = $('.anim-wall'), xf = $('.xf'), swing = $('.xf-swing'), rig = $('.xf-rig'), thanks = $('.anim-thanks'), rule = $('.anim-thanks i');
     const frames = $$('.anim-wall .gf'), hero = frames[0];
@@ -94,7 +103,7 @@
     main.style.transition = 'opacity .5s'; main.style.opacity = '0';
     // the two strings, as in the original: the head runs across the screen, then the tail follows it off the right while the caption swoops in (as in the original)
     [['.g', 0], ['.o', 150]].forEach(([sel, d]) => {
-      A($('.anim-lines ' + sel), [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 1500, delay: 300 + d, easing: out });
+      A($('.anim-lines ' + sel), [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 1800, delay: 2700 + d, easing: out, fill: 'both' });
       later(() => A($('.anim-lines ' + sel), [{ strokeDashoffset: 0 }, { strokeDashoffset: -1 }], { duration: 1900, easing: inout }), T.thanksAt + d);
     });
 
@@ -157,8 +166,9 @@
     later(() => { A(group, [{ transform: 'translateX(0)' }, { transform: 'translateX(' + -(vw + 80) + 'px)' }], { duration: T.slide, easing: inout }); }, T.slideAt);
     later(() => {
       thanks.style.opacity = '1';
-      A(thanks, [{ translate: (vw + 400) + 'px 0', rotate: '-5deg', opacity: 0 }, { opacity: 1, offset: 0.15 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 2850, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
-      A(rule, [{ scale: '0 1' }, { scale: '1 1' }], { duration: 900, delay: 1900, easing: out });
+      // typed out on the wall: each line is uncovered letter by letter, the second line after the first
+      [...thanks.querySelectorAll('span')].forEach((l, i) => { const n = l.textContent.length; A(l, [{ clipPath: 'inset(-0.1em 100% -0.2em 0)' }, { clipPath: 'inset(-0.1em 0 -0.2em 0)' }], { duration: n * 85, delay: i * (9 * 85 + 250), easing: 'steps(' + n + ', end)' }); });
+      A(rule, [{ scale: '0 1' }, { scale: '1 1' }], { duration: 700, delay: 2900, easing: out });
       later(() => thanks.focus({ preventScroll: true }), 1200);
     }, T.thanksAt);
     later(finish, T.readTo);

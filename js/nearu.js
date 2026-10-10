@@ -20,7 +20,7 @@
   //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
   //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 9 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
   //  1030: room for the Try demo pill between the project chip and the demo film (3 rows down). The pill itself (.nu-demo) is placed at its final y in CSS and skipped by the shifts.
-  const SHIFTS = [[700, -4], [1830, 1], [1990, 2, 'nu-gigs'], [1990, 13, 'nu-gigs'], [2250, -1], [3100, 2, 'nu-capx'], [3560, 24, ['nu-idx']], [4290, -1], [5700, -5], [6300, 3], [6880, 2], [8200, -4], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
+  const SHIFTS = [[700, -4], [1830, 1], [1990, 2, 'nu-gigs'], [1990, 13, 'nu-gigs'], [2250, -1], [3100, 2, 'nu-capx'], [3560, 24, ['nu-idx']], [4290, -1], [5700, -5], [6300, 3], [6880, 2], [8200, -4], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245'], [10500, 13, 'nu-row3']];   // 10500: two more core-feature phones (Collab, Messages) in a third row, so Onboarding and everything after move down 13 rows (the new row itself is placed at its final y)
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
@@ -51,6 +51,7 @@
     scale = Math.min(1, paperWidth / 1084);
     const inset = (paperWidth - 1084 * scale) / 2;
     canvas.style.transform = `translateX(${inset}px) scale(${scale}) translateX(-356px)`;
+    canvas.style.setProperty('--ts', mobile ? 1 : Math.min(1 / scale, 1.3).toFixed(3));   // titles stay near their full size when the page shrinks
     viewport.style.height = mobile ? 'auto' : `${(14409 + SHIFT_TOTAL) * scale}px`;
     viewport.style.width = mobile ? '100%' : `${paperWidth}px`;
     // The sidebar now occupies its own column, like the shared Index/M.I.K.U shell.

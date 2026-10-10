@@ -33,7 +33,7 @@
 .syn-1 { position: absolute; left: 491px; top: 4872px; width: 820px; height: 779px; background: #4a1a2c; border-radius: 12px; }
 
 /* ---------- intro / eyebrows ---------- */
-.syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 64px; white-space: nowrap; line-height: normal; }
+.syn-2 { position: absolute; left: 448px; top: 442px; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: calc(64px * var(--ts, 1)); white-space: nowrap; line-height: normal; }
 .syn-3 { position: absolute; left: 448px; top: 1099px; width: 951px; margin: 0; font-family: var(--font-serif); font-weight: 400; color: #39265f; font-size: 62px; line-height: 104.895%; }
 .syn-4, .syn-5, .syn-7, .syn-8, .syn-46 { position: absolute; margin: 0; font-family: var(--font-ui); font-weight: 900; color: var(--heading); font-size: 24px; text-transform: uppercase; white-space: nowrap; }
 .syn-4 { left: 450px; top: 1047px; }

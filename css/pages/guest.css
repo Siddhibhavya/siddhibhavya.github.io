@@ -9,7 +9,7 @@
 .gb-content { position: absolute; left: 0; top: 0; width: 1448px; height: 1024px; }
 
 /* .gb-title / .gb-sub are also used by the gallery, which positions them inline */
-.gb-title { position: absolute; left: 724px; top: 62px; transform: translate(-50%, -50%); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--ink); white-space: nowrap; }
+.gb-title { position: absolute; left: 724px; top: 62px; transform: translate(-50%, -50%); font-family: var(--font-serif); font-size: 64px; line-height: 1.18; font-weight: 400; color: var(--maroon); white-space: nowrap; }
 .gb-sub { position: absolute; left: 724px; top: 114px; transform: translate(-50%, -50%); font-size: 24px; line-height: 1.18; color: rgba(0, 0, 0, 0.8); white-space: nowrap; }   /* 20% lighter, on both pages */
 
 .gb-card { position: absolute; left: 336px; top: 184px; width: 776px; height: var(--card-h, 450.395px); background: #bb3739; border-radius: 10px; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); transition: background-color 0.3s ease; }
@@ -17,7 +17,7 @@
 .gb-paper canvas { display: block; touch-action: none; cursor: crosshair; }
 
 /* the word "Signature" stays as the label; what you type goes ON the line, in Blank Script */
-.gb-siglabel { position: absolute; left: 414px; top: calc(684px + var(--pdy, 0px)); font-size: 20px; line-height: 1.18; color: var(--ink); pointer-events: none; transition: opacity 0.25s ease; }
+.gb-siglabel { position: absolute; left: 414px; top: calc(684px + var(--pdy, 0px)); font-family: var(--font-script); font-size: 24px; line-height: 1.18; color: var(--ink); pointer-events: none; transition: opacity 0.25s ease; }
 .gb-siglabel.dim { opacity: 0.3; }
 .gb-sig {
   position: absolute; left: 413px; top: calc(692px + var(--pdy, 0px)); width: 622px; height: 54px; padding: 0 10px 1px; border: 0; background: transparent; outline-offset: -2px;
@@ -116,14 +116,15 @@ body.book-phone .dc { scale: 0.55; }
 .gc-strip .gc-sig.typed { top: 284px; font-size: 46px; }
 
 /* ---------- 5 · Create animation (js/guest-anim.js): its own scene, a rough baby-blue plaster wall, the exploded frame, the gallery wall and the wall caption ---------- */
-.anim { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 50; overflow: hidden; background: url(../../assets/gallery/wallpaper.webp) 0 0 / 360px auto repeat, #7f9ab5; outline: none; cursor: pointer; }
-.anim::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 45%, rgba(255, 255, 255, 0.3), rgba(20, 50, 90, 0) 60%), radial-gradient(ellipse at 50% 50%, rgba(20, 50, 90, 0) 55%, rgba(20, 50, 90, 0.3)); pointer-events: none; }
+.anim { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 50; overflow: hidden; background: url(../../assets/gallery/wall-rough.svg) 0 0 / 420px auto, linear-gradient(180deg, #f6e4d4, #f0d9c4 55%, #e8cfb7); background-blend-mode: multiply; outline: none; cursor: pointer; }
+.anim::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url(../../assets/gallery/wallpaper.webp) 0 0 / 360px auto repeat; mix-blend-mode: hard-light; opacity: 0.45; }
+.anim-pins { position: absolute; z-index: 1; width: 1448px; height: 1024px; transform-origin: 0 0; pointer-events: none; }
 .anim-group { position: absolute; inset: 0; z-index: 2; }
 .anim-lines { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
-.anim-lines path { fill: none; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; filter: drop-shadow(2px 4px 3px rgba(10, 30, 60, 0.4)); }
+.anim-lines path { fill: none; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
 .anim-lines .g { stroke: #075e54; stroke-width: 16; } .anim-lines .o { stroke: #ff9a00; stroke-width: 10; }
 .anim-wall { position: absolute; width: 784px; height: 505px; transform-origin: 0 0; }
-.anim .gf { pointer-events: none; transition: none; animation: none; }
+.anim .gf { pointer-events: none; transition: none; animation: none; box-shadow: 1px 2px 3px rgba(60, 30, 10, 0.35); }
 .xf { position: absolute; left: 50%; top: 50%; z-index: 3; perspective: 1800px; }
 .xf-measure { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
 .xf-measure path { fill: none; stroke: #1b0b2e; stroke-opacity: 0.55; stroke-width: 1.5; }
@@ -132,17 +133,16 @@ body.book-phone .dc { scale: 0.55; }
 .xf-wire path { fill: none; stroke: rgba(30, 20, 15, 0.75); stroke-width: 1.6; }
 .xf-nail { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e3e6e8, #5b646b); box-shadow: 2px 4px 4px rgba(20, 50, 90, 0.5); }
 .xp { position: absolute; display: block; transform-style: preserve-3d; }
-.xp-back { background: #c9b79a; box-shadow: 4px 8px 16px rgba(20, 50, 90, 0.4); }
+.xp-back { background: #c9b79a; }
 .xp-draw { background: #fff; box-shadow: 0 0 0 1px rgba(60, 40, 20, 0.2); }
 .xp-draw img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .xp-mat { border-style: solid; box-sizing: border-box; background: transparent; box-shadow: inset 0 0 0 1px rgba(60, 40, 20, 0.12); }
 .xp-glass { box-sizing: border-box; border: 1px solid rgba(255, 255, 255, 0.75); background: linear-gradient(115deg, rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, 0.4) 48%, rgba(255, 255, 255, 0) 62%), rgba(255, 255, 255, 0.08); }
 .xp-bar { box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.3), inset -1px -1px 1px rgba(0, 0, 0, 0.5); }
 .anim-fly { position: absolute; z-index: 5; pointer-events: none; box-shadow: -9px 10px 4px rgba(0, 0, 0, 0.25); }
-/* the caption is a framed museum plaque hung on the wallpaper: oak ring, black moulding, cream mat */
-.anim-thanks { position: absolute; z-index: 4; left: 50%; top: 50%; margin: 0; transform: translate(-50%, -50%); text-align: center; white-space: nowrap; font-family: var(--font-serif); font-weight: 400; line-height: 1.08; letter-spacing: -0.01em; color: var(--maroon); opacity: 0; outline: none;
-  padding: 0.38em 0.6em 0.3em; background: #fcfaf5; border: 0.07em solid #1d1a19; box-shadow: 0 0 0 0.06em #b38655, inset 0 0 0 0.04em rgba(60, 40, 20, 0.18), 8px 14px 24px rgba(10, 30, 60, 0.45); }
-.anim-thanks span { display: block; }
+/* the caption is lettered straight onto the wall (no frame), typed out */
+.anim-thanks { position: absolute; z-index: 4; left: 50%; top: 50%; margin: 0; transform: translate(-50%, -50%); text-align: center; white-space: nowrap; font-family: var(--font-serif); font-weight: 400; line-height: 1.08; letter-spacing: -0.01em; color: var(--maroon); opacity: 0; outline: none; mix-blend-mode: multiply; text-shadow: 0 1px 0 rgba(255, 236, 214, 0.5); }
+.anim-thanks span { display: table; margin: 0 auto; will-change: translate, rotate, opacity; }
 .anim-thanks i { display: block; width: 60%; height: 3px; margin: 0.22em auto 0; background: var(--maroon); opacity: 0.85; scale: 0 1; }
 body.gb-playing { overflow: hidden; }
 body.gb-playing > .footer { display: none; }
@@ -153,3 +153,10 @@ body.gb-playing > .footer { display: none; }
 .gb-leaving .gb-ctl { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
 /* Create pressed: the stars and fish-bone patches wander off left-to-right (js/guest-anim.js, driftDecor animates them directly) */
 .gb-leaving .dc { will-change: translate, rotate; }
+/* smoother: every animated layer gets its own compositor layer, and the heavy shadows on moving parts are dropped */
+.anim-group, .anim-wall, .xf, .xf-swing, .xf-rig, .xp, .anim-fly, .anim-thanks, .anim-lines path { will-change: transform, opacity; backface-visibility: hidden; }
+/* Welcome Aboard wears the same wall as the Create animation: plaster texture, a peach tint, and the wallpaper laid over it */
+body[data-fit='screen'] .main::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url(../../assets/gallery/wallpaper.webp) 0 0 / 360px auto repeat, url(../../assets/gallery/wall-rough.svg) 0 0 / 420px auto, linear-gradient(180deg, #f6e4d4, #f0d9c4 55%, #e8cfb7);
+  background-blend-mode: hard-light, multiply, normal; opacity: 0.55; }
+body[data-fit='screen'] .scrap { z-index: 5; opacity: 1; }   /* the torn paper corners sit on top, at full strength */

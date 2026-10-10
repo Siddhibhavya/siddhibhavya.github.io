@@ -70,6 +70,7 @@
         ss = Math.min(1, Math.max(ss, QUESTS_MIN, (vh - footerHeight - topGap) / stageEl.offsetHeight));
       }
       if (body.dataset.fit === 'screen') ss = Math.min(ss, vh / ((stageEl && stageEl.offsetHeight) || 1024));   // welcome-aboard pages fit one full screen
+      if (body.dataset.fitheight && !compact && stageEl) { const hs = vh / (parseFloat(getComputedStyle(main.querySelector('.stage-wrap')).getPropertyValue('--sh')) || stageEl.offsetHeight); if (hs >= ss * 0.8) ss = Math.min(ss, hs); }   // Guest Gallery: fit the window height, but on a wide, short window (it would shrink by more than 20%) keep the normal size and scroll
       root.style.setProperty('--stage-s', ss.toFixed(4));
       root.style.setProperty('--stage-m', Math.max(0, (main.clientWidth - sw * ss) / 2).toFixed(1) + 'px');   // where the stage starts inside the main column (it is centred when the window is wider than the design)
     }
@@ -596,6 +597,7 @@
 
         body.dataset.page = pageId;
         if (doc.body.dataset.fit) body.dataset.fit = doc.body.dataset.fit; else delete body.dataset.fit;
+        if (doc.body.dataset.fitheight) body.dataset.fitheight = '1'; else delete body.dataset.fitheight;
         document.title = doc.title;
         main.innerHTML = next.innerHTML;
         if (push) history.pushState({ shell: 1 }, '', u.href);
