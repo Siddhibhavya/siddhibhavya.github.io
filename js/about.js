@@ -97,7 +97,7 @@
   }
 
   /* ------------------------------------------------------------------ the "you can move some elements" hint
-     The first time a visitor scrolls down the page, a small pill says so for 3 seconds. It shows once (remembered for the session), never in a loop. */
+     The first time a visitor scrolls down the page, a small pill says so for 3 seconds. It shows once per page load (every refresh), never in a loop. */
   const seen = () => { try { return sessionStorage.getItem('moveHint') === '1'; } catch (e) { return false; } };
   let onScroll = null, loop = 0, moved = false;
   function showHint() {
@@ -123,7 +123,7 @@
       document.body.dataset.hintDrag = '1';
       document.addEventListener('pointerdown', (e) => { if (e.target.closest && e.target.closest('.dc.drag')) { moved = true; stopHint(); } });
     }
-    if (moved || seen()) return;
+    if (moved) return;
     onScroll = () => {
       if (window.scrollY < 150) return;
       window.removeEventListener('scroll', onScroll); onScroll = null;
