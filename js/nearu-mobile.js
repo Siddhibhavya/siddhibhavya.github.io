@@ -64,8 +64,8 @@
     const swatch = (cls, fill, hexId, extra) =>
       '<div class="bb-sw ' + cls + '" style="background:' + bg(fill) + ';color:' + ink(hexId) + '">' + (extra || '') + '<span class="bb-hex">' + txt(hexId) + '</span></div>';
     board.innerHTML =
-      swatch('bb-coral', 1633, 1643, '<span class="bb-aa bb-futura">' + txt(1638) + '</span><span class="bb-font">' + txt(1641) + '</span>') +
-      swatch('bb-blue', 1634, 1644, '<span class="bb-aa bb-liberation">' + txt(1637) + '</span><span class="bb-font">' + txt(1642) + '</span>') +
+      swatch('bb-coral', 1633, 1643, '<img class="bb-aa bb-futura" alt="Aa in Futura" src="../assets/work/nearu/brand-aa-futura.svg"><span class="bb-font">' + txt(1641) + '</span>') +
+      swatch('bb-blue', 1634, 1644, '<img class="bb-aa bb-liberation" alt="Aa in Liberation Sans" src="../assets/work/nearu/brand-aa-liberation.svg"><span class="bb-font">' + txt(1642) + '</span>') +
       swatch('bb-cream', 1636, 1646) + swatch('bb-yellow', 1635, 1645);
     parent.append(board);
   }
@@ -253,8 +253,8 @@
   const cap = sel => { const el = canvas.querySelector(sel).cloneNode(true); el.classList.add('nearu-mobile-copy'); s.append(el); return el; };   // her captions, cloned from the canvas
   const shot = sel => { const el = canvas.querySelector(sel).cloneNode(true); s.append(el); return el; };   // a screenshot board
   // First look: logo, film, first design screens. Final look: logo, film, final screens, design system. Then the paragraph.
-  copy(s, 1583, 'nearu-mobile-label'); plate(s, [1587], 392, 3026, 240, 78); cap('.nu-cap-near'); vid(s, 1581, 'is-wire'); shot('.nu-ide-first'); cap('.nu-cap-first');
-  copy(s, 1584, 'nearu-mobile-label'); plate(s, [1596], 1260, 3026, 154, 88); cap('.nu-cap-neu'); vid(s, 1582, 'is-wire');
+  copy(s, 1583, 'nearu-mobile-label'); plate(s, [1587], 392, 3026, 370, 120); cap('.nu-cap-near'); vid(s, 1581, 'is-wire'); shot('.nu-ide-first'); cap('.nu-cap-first');
+  copy(s, 1584, 'nearu-mobile-label'); plate(s, [1596], 923, 3026, 203, 120); cap('.nu-cap-neu'); vid(s, 1582, 'is-wire');
   // Final screens and the design system sit side by side (two columns) on phones and tablets.
   { const row = document.createElement('div'); row.className = 'nearu-mobile-final-row';
     const left = document.createElement('div'); left.append(canvas.querySelector('.nu-ide-final').cloneNode(true));

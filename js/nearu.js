@@ -20,7 +20,7 @@
   //  12000 and 13400: tighter gaps before Onboarding and Reflection (1 row up each)
   //  12750: the Onboarding paragraph now sits beside a 489px phone recording, so Scope and everything after move down 9 rows (the paragraph itself is excluded). The Solution row needs no entry: its recordings end 64px above Ideation as before.
   //  1030: room for the Try demo pill between the project chip and the demo film (3 rows down). The pill itself (.nu-demo) is placed at its final y in CSS and skipped by the shifts.
-  const SHIFTS = [[700, -4], [1830, 1], [1990, 2, 'nu-gigs'], [1990, 13, 'nu-gigs'], [2250, -1], [3560, 24, ['nu-idx']], [4290, -1], [5700, -5], [6300, 3], [6880, 2], [8200, -4], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
+  const SHIFTS = [[700, -4], [1830, 1], [1990, 2, 'nu-gigs'], [1990, 13, 'nu-gigs'], [2250, -1], [3100, 2, 'nu-capx'], [3560, 24, ['nu-idx']], [4290, -1], [5700, -5], [6300, 3], [6880, 2], [8200, -4], [12000, -1], [13400, -1], [1030, 3], [12750, 9, 'nu-245']];
   const SHIFT_TOTAL = SHIFTS.reduce((n, [, rows]) => n + rows * 41, 0);
   const shiftAt = y => SHIFTS.reduce((n, [from, rows, except]) => n + (y >= from ? rows * 41 : 0), 0);
   canvas.style.setProperty('height', (14409 + SHIFT_TOTAL) + 'px', 'important');
@@ -127,7 +127,7 @@
   // follows the same continuous rows, including titles and image captions.
   const ruledIds = [9100,9102,9103,1535,1536,1537,1538,1539,1540,1541,1542,1543,1544,
     1546,1547,1549,1550,1564,1583,1584,1586,1601,1602,1603,1604,1605,
-    1614,9004,9006,9010,9012,9013,9014,9015,9016,1621,1639,1640,1656,1657,1658,1659,1660,1661,1662,1663,
+    1614,9004,9006,9010,9012,9013,9014,9015,9016,1621,1639,1640,1650,1656,1657,1658,1659,1660,1661,1662,1663,
     1674,1675,1676,1677,1710,1711,1712,1713,9002,9003];
   const ruled = ruledIds.map(id => canvas.querySelector('[data-node-id="351:' + id + '"]')).concat([...canvas.querySelectorAll('.nu-ide-cap')]);
   ruled.forEach(el => {
