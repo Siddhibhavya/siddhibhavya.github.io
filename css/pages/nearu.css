@@ -118,7 +118,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-94 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:923px;font-style:normal;color:var(--espresso);font-size:32px;top:2976px;white-space:nowrap; }
 .nearu-page .nu-95 { position:absolute;height:572px;left:458px;border-radius:11px;top:1082px;width:890px; }
 .nearu-page .nu-96 { position:absolute;inset:0;overflow:hidden;border-radius:11px; }
-.nearu-page .nu-97 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:126px;line-height:0;left:392px;font-style:normal;color:var(--espresso);font-size:24px;top:3925px;width:400px;white-space:normal; }
+.nearu-page .nu-97 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:126px;line-height:0;left:392px;font-style:normal;color:var(--espresso);font-size:24px;top:4253px;width:400px;white-space:normal; }
 .nearu-page .nu-98 { line-height:41px;margin-bottom:0; }.nearu-page .nu-100 { position:absolute;height:120px;left:392px;top:3026px;width:370px; }
 .nearu-page .nu-101 { position:absolute;height:120px;left:923px;overflow:clip;top:3026px;width:203px; }
 .nearu-page .nu-101 .nu-102 { left:0;top:0;width:100%;height:100%; }   /* both logos 120px tall, captions sit under them */
@@ -128,7 +128,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-104 { position:absolute;height:121%;left:-51.18%;max-width:none;top:-10.47%;width:302.5%; }
 /* Figma shadows the transparent phone silhouette, not its rectangular image slot.
    CSS drop-shadow uses half the Figma blur radius (Gaussian standard deviation). */
-.nearu-page .nu-105 { position:absolute;height:371px;left:919px;filter:drop-shadow(0px 4px 2px rgba(0,0,0,0.25));top:3675px;width:186px; }
+.nearu-page .nu-105 { position:absolute;height:385px;left:915px;filter:drop-shadow(0px 4px 2px rgba(0,0,0,0.25));top:3616px;width:193px; }   /* B: same top and bottom as A, so the pair sits level on the grid */
 .nearu-page .nu-106 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:783px;font-style:normal;color:var(--espresso);font-size:24px;top:3995px;white-space:nowrap; }
 .nearu-page .nu-107 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;line-height:42px;left:1002px;font-style:normal;color:var(--espresso);font-size:24px;top:3628px;white-space:nowrap; }
 .nearu-page .nu-108 { overflow-wrap:break-word;position:absolute;font-family:var(--font-ui);font-weight:400;height:183px;line-height:41px;left:434px;font-style:normal;color:var(--espresso);font-size:24px;top:4086px;width:938px; }
@@ -659,7 +659,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 }
 
 /* Context: What kind of gigs? (pastel pills with a sketch beside each, two columns). Original-y values; the shift table moves them (class nu-gigs is excluded from the lower rows). */
-.nearu-page .nu-gigs-label { position: absolute; margin: 0; left: 434px; top: 1995px; width: 938px; font-family: var(--font-ui); font-weight: 700; font-size: 24px; line-height: 41px; color: var(--chestnut); }
+.nearu-page .nu-gigs-label { position: absolute; margin: 0; left: 434px; top: 1995px; width: 938px; font-family: 'Ancizar Sans Upright', var(--font-ui); font-style: normal; font-weight: 700; font-size: 24px; line-height: 41px; color: var(--chestnut); }
 .nearu-page .nu-gigs-table { position: absolute; left: 434px; top: 2077px; width: 938px; margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; grid-auto-rows: 82px; }
 .nu-gigs-table li { display: flex; align-items: center; gap: 20px; }
 .nu-gig-pill { box-sizing: border-box; border: 2px solid var(--espresso); display: inline-flex; align-items: center; justify-content: center; flex: none; min-width: 236px; height: 46px; padding: 0 24px; border-radius: 999px; font-family: var(--font-ui); font-weight: 400; font-size: 22px; line-height: 1; color: var(--espresso); }
@@ -681,3 +681,13 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 @media (max-width: 899px) { .nearu-page .nearu-mobile .nu-174 .nu-175 { display: none; } }
 
 .nearu-mobile .nearu-mobile-center { text-align: center; }   /* BRAND sits centred over the colour board */
+
+/* gig pills: the border is the darker tone of each pastel; the questions are upright, not italic */
+.nu-gig-pill.g-yellow { border-color: #e3b43f; }
+.nu-gig-pill.g-blue { border-color: #8fb1ec; }
+.nu-gig-pill.g-lav { border-color: #b4a7cf; }
+.nu-gig-pill.g-coral { border-color: #ea9ea1; }
+.nu-gig-pill.g-peach { border-color: #eaa970; }
+.nu-gig-pill.g-pink { border-color: #dd8d9d; }
+.nu-gig-pill.g-green { border-color: #8cc684; }
+.nu-gig-pill.g-mint { border-color: #82c6ba; }

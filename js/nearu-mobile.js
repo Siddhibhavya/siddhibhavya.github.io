@@ -332,6 +332,7 @@
   addEventListener('resize', () => { fit(); alignTags(); });   // belt and braces: some browsers report the final width only after load / rotation
   addEventListener('load', () => { fit(); alignTags(); drawReflLines(); });
   addEventListener('load', () => requestAnimationFrame(alignTags));
-  document.fonts.ready.then(drawReflLines);
+  document.fonts.ready.then(() => { fit(); alignTags(); drawReflLines(); });   // text metrics change when the fonts arrive: re-snap the plates and tags to the rules
+  addEventListener('load', () => setTimeout(() => { fit(); alignTags(); }, 400));   // and once more after late layout (images, scrollbar)
   fit();
 })();

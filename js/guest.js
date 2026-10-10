@@ -115,25 +115,113 @@
     );
   }
 
-  function renderGallery(stage, list, fresh) {
-    stage.querySelectorAll('.gc').forEach((el) => el.remove());
-    const GY = -221.167, PY = 46.755;                                    // the gallery page's grid: horizontal lines every 46.755px from y -221.17
-    const Y0 = 234 + PY;                                                // the cards start one grid row lower, to make room for the "Create something!" button above them
-    const X = [[83, 580], [77, 581]];                                   // Figma x (minus the 356px sidebar), tiny hand-placed offsets
-    list.forEach((c, i) => {
-      const row = Math.floor(i / 2), col = i % 2;
-      const el = cardEl(c, 'gallery');
-      if (fresh) el.classList.add('fresh');
-      el.style.left = X[row % 2][col] + 'px';
-      const top = Y0 + row * 350;
-      el.style.top = top + 'px';
-      const line = GY + Math.round((top + 285 - GY) / PY) * PY;         // the signature line lies on the nearest grid line; the name sits on it
-      el.style.setProperty('--ly', (line - top - 0.5).toFixed(2) + 'px');
-      stage.appendChild(el);
-    });
-    const rows = Math.ceil(list.length / 2);
-    stage.closest('.stage-wrap').style.setProperty('--sh', Math.ceil(Y0 + (rows - 1) * 350 + 395) + 'px');
+  /* The gallery is a room: one long wall you walk along sideways. Design units are 800 tall (css/pages/gallery.css scales them with --u).
+     The newest drawing is the big hero frame under its own lamp; the rest follow in wall groups ("bays") with a picture ledge now and then.
+     Slot = [x, y, outer width] inside the bay. A frame's height follows from its width: 0.7074 x width. */
+  const FH = (w) => w * 0.7074;
+  const BAYS = [
+    { w: 1320, lamps: [[360, 440], [900, 440]], fr: [[20, 150, 300], [20, 420, 220], [520, 170, 250], [500, 400, 310], [1010, 190, 260], [1030, 430, 200]] },
+    { w: 1250, lamps: [[300, 440], [820, 440]], ledge: [20, 540, 1180], fr: [[60, 130, 280], [600, 150, 230]], lean: [[110, 200, 0], [640, 170, -3], [900, 200, 2]], props: ['plant', 480], more: ['books', 860] },
+    { w: 1300, lamps: [[200, 440], [700, 440], [1110, 400]], fr: [[30, 200, 340], [570, 130, 220], [570, 360, 260], [1010, 170, 250], [1030, 400, 200]] }
+  ];
+  const STYLES = ['oak', 'black', 'gold', 'white'], TILT = [0, -1, 0, 1.2, 0, -0.8, 0.6];
+  const PROPS = {
+    plant: '<svg viewBox="0 0 120 190"><path d="M60 100C50 70 28 62 10 66c10 24 30 36 50 36zM60 100C70 62 92 48 112 50c-8 28-30 46-52 50zM60 100C58 70 60 40 64 14c10 24 6 56-4 86z" fill="#4c6b3c"/><path d="M28 108h64l-8 78H36z" fill="#b5654a"/><rect x="24" y="100" width="72" height="14" rx="3" fill="#c97a5c"/></svg>',
+    books: '<svg viewBox="0 0 180 120"><rect x="6" y="84" width="168" height="30" rx="2" fill="#7b2b3d"/><rect x="16" y="54" width="150" height="30" rx="2" fill="#2c2696"/><rect x="10" y="26" width="156" height="28" rx="2" fill="#d89b2a"/><rect x="20" y="88" width="100" height="4" fill="#f7e9dc" opacity=".7"/><rect x="30" y="58" width="80" height="4" fill="#f7e9dc" opacity=".7"/></svg>'
+  };
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const clean = (t) => String(t).replace(/[<>&"]/g, (s) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[s]));
+
+  /* a real frame: wood/black/gold/white moulding, mat, glass. A signed drawing gets a small signature card on the wall beside it (never on the frame). */
+  function frameHTML(c, o) {
+    const alt = 'A guest drawing' + (c.name ? ' signed ' + clean(c.name) : '');
+    const wire = o.wire && !o.lean ? '<svg class="fr-wire" viewBox="0 0 100 36" preserveAspectRatio="none" aria-hidden="true"><line x1="50" y1="2" x2="9" y2="36" vector-effect="non-scaling-stroke"/><line x1="50" y1="2" x2="91" y2="36" vector-effect="non-scaling-stroke"/></svg><i class="fr-nail" aria-hidden="true"></i>' : '';
+    const tape = !o.wire && !o.lean ? '<i class="fr-tape" aria-hidden="true" style="--tr:' + (o.i % 2 ? 4 : -5) + 'deg"></i>' : '';
+    const img = c.img && /^data:image\/(png|webp|jpeg);base64,/.test(c.img) ? '<img src="' + clean(c.img) + '" alt="' + alt + '" loading="' + (o.hero ? 'eager' : 'lazy') + '" decoding="async" draggable="false">' : '';
+    const date = Number(c.t) > 0 ? new Date(Number(c.t)) : null;
+    const dated = date && !isNaN(date) ? '<time datetime="' + date.toISOString() + '">' + date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + '</time>' : '';
+    const sig = c.name || dated ? '<figcaption class="fr-label">' + (c.name ? '<b>' + clean(c.name) + '</b>' : '') + dated + '</figcaption>' : '';
+    return '<figure tabindex="0" aria-label="' + (c.img ? alt : 'Empty frame') + '" class="fr fr-' + STYLES[o.i % 4] + (o.hero ? ' fr-hero' : '') + (o.lean ? ' ledge-fr' : '') + (o.fresh ? ' fresh' : '') + '" style="--x:' + r1(o.x) + ';--y:' + r1(o.y) + ';--w:' + o.w + ';--r:' + (o.r || 0) + 'deg;--tc:' + (Object.values(SWATCH).includes(c.color) ? c.color : SWATCH.red) + '">' +
+      wire + tape + '<div class="fr-body"><div class="fr-mat"><div class="fr-art">' + img + '</div></div></div>' + sig + '</figure>';
+  }
+  const lampHTML = (x, w, h) => '<div class="lamp" style="--lx:' + x + ';--lw:' + w + ';--lh:' + h + '"><div class="lamp-cone"></div><div class="lamp-pool"></div><svg class="lamp-body" viewBox="0 0 34 54" aria-hidden="true"><rect x="14" y="0" width="6" height="10" fill="#2a2623"/><rect x="5" y="8" width="24" height="40" rx="5" fill="#1b1817"/><rect x="7" y="10" width="5" height="34" rx="2" fill="#4a4540"/><ellipse cx="17" cy="48" rx="12" ry="4" fill="#fff0c4"/></svg></div>';
+
+  function renderGallery(room, list, fresh) {
+    const scroller = $('.room-scroll', room), track = $('.room-track', room);
+    let html = '<div class="room-wall"></div><div class="room-dado"></div><div class="room-rail"></div><div class="room-skirt"></div><div class="room-ceiling"></div><div class="room-trackbar"></div>';
+    const queue = list.slice();
+    let n = 0, ox = 1120;
+    // intro wall: the title lettered on the wall, then the newest drawing as the big hero under its own lamp
+    html += '<div class="wall-intro"><h1>Guest Gallery</h1><p>An art installation by my guests</p><a class="wall-more" href="guest-book">Create something!</a></div>';
+    const first = queue.shift();
+    if (first) html += lampHTML(780, 660, 600) + frameHTML(first, { i: n++, x: 500, y: 180, w: 560, hero: true, wire: true, fresh });
+    for (let b = 0; queue.length; b++) {
+      const bay = BAYS[b % BAYS.length];
+      bay.lamps.forEach(([lx, lw]) => { html += lampHTML(ox + lx, lw, 520); });
+      if (bay.ledge) html += '<div class="ledge" style="--x:' + (ox + bay.ledge[0]) + ';--y:' + bay.ledge[1] + ';--w:' + bay.ledge[2] + '"></div>';
+      bay.fr.forEach(([x, y, w]) => { const c = queue.shift(); if (c) { html += frameHTML(c, { i: n, x: ox + x, y, w, r: TILT[n % TILT.length], wire: n % 2 === 0, fresh }); n++; } });
+      if (bay.lean) bay.lean.forEach(([x, w, r]) => { const c = queue.shift(); if (c) { html += frameHTML(c, { i: n, x: ox + x, y: bay.ledge[1] - FH(w) + 2, w, r, lean: true, fresh }); n++; } });
+      if (bay.props) html += '<div class="prop" style="--x:' + (ox + bay.props[1]) + ';--y:' + bay.ledge[1] + ';--w:110">' + PROPS[bay.props[0]] + '</div>';
+      if (bay.more) html += '<div class="prop" style="--x:' + (ox + bay.more[1]) + ';--y:' + bay.ledge[1] + ';--w:150">' + PROPS[bay.more[0]] + '</div>';
+      ox += bay.w;
+    }
+    if (list.length <= 7) html += '<div class="ledge" style="--x:' + (ox - 580) + ';--y:570;--w:460"></div><div class="prop" style="--x:' + (ox - 480) + ';--y:570;--w:110">' + PROPS.plant + '</div><div class="prop" style="--x:' + (ox - 310) + ';--y:570;--w:150">' + PROPS.books + '</div>';
+    html += '<div class="wall-end" style="--x:' + (ox + 60) + '"><p>Add yours to the wall.</p><a class="wall-more" href="guest-book">Create something!</a></div>';
+    ox += 700;
+    track.style.width = 'calc(' + ox + 'px * var(--u))';
+    track.innerHTML = html;
+    wireRoom(room, scroller);
     if (window.SiddhiShell) window.SiddhiShell.fit();
+  }
+
+  /* scale (--u), progress, sideways wheel (until the ends, then the page scrolls on to the footer), mouse drag, arrow keys */
+  function wireRoom(room, scroller) {
+    const bar = $('.room-progress', room);
+    const size = () => room.style.setProperty('--u', (room.clientHeight / 800).toFixed(4));
+    const prog = () => { const m = scroller.scrollWidth - scroller.clientWidth; bar.style.setProperty('--p', (m > 0 ? (scroller.scrollLeft / m) * 100 : 100).toFixed(1) + '%'); };
+    size(); prog();
+    if (room._wired) return;
+    room._wired = true;
+    if (window.ResizeObserver) new ResizeObserver(() => { size(); prog(); }).observe(room); else addEventListener('resize', () => { size(); prog(); });
+    scroller.addEventListener('scroll', prog, { passive: true });
+    scroller.addEventListener('wheel', (e) => {
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;                          // pinch zoom / a real sideways swipe: leave it alone
+      const m = scroller.scrollWidth - scroller.clientWidth, x = scroller.scrollLeft;
+      if ((e.deltaY > 0 && x >= m - 1) || (e.deltaY < 0 && x <= 0)) return;                      // at either end the page itself carries on
+      e.preventDefault();
+      scroller.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? scroller.clientWidth : 1);
+    }, { passive: false });
+    let drag = null;
+    scroller.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button) return; drag = { x: e.clientX, l: scroller.scrollLeft, moved: false }; });
+    scroller.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) < 5) return;
+      if (!drag.moved) { drag.moved = true; scroller.setPointerCapture(e.pointerId); scroller.classList.add('dragging'); }
+      scroller.scrollLeft = drag.l - dx;
+    });
+    const release = () => { if (drag && drag.moved) setTimeout(() => scroller.classList.remove('dragging'), 0); drag = null; };
+    scroller.addEventListener('pointerup', release);
+    scroller.addEventListener('pointercancel', release);
+    scroller.addEventListener('click', (e) => { if (scroller.classList.contains('dragging')) { e.preventDefault(); e.stopPropagation(); } }, true);
+    const warm = (e) => {
+      const fr = e.target.closest('.fr'), lamps = [...room.querySelectorAll('.lamp')];
+      lamps.forEach((lamp) => lamp.classList.remove('is-warm'));
+      if (!fr) return;
+      const x = Number(fr.style.getPropertyValue('--x')) + Number(fr.style.getPropertyValue('--w')) / 2;
+      lamps.sort((a, b) => Math.abs(Number(a.style.getPropertyValue('--lx')) - x) - Math.abs(Number(b.style.getPropertyValue('--lx')) - x));
+      if (lamps[0]) lamps[0].classList.add('is-warm');
+    };
+    scroller.addEventListener('pointerover', warm);
+    scroller.addEventListener('focusin', warm);
+    scroller.addEventListener('pointerleave', () => room.querySelectorAll('.lamp').forEach((lamp) => lamp.classList.remove('is-warm')));
+    scroller.addEventListener('keydown', (e) => {
+      const step = scroller.clientWidth * 0.8, go = (left) => scroller.scrollBy({ left, behavior: reduce ? 'auto' : 'smooth' });
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(step); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(-step); }
+      else if (e.key === 'Home') { e.preventDefault(); scroller.scrollTo({ left: 0 }); }
+      else if (e.key === 'End') { e.preventDefault(); scroller.scrollTo({ left: scroller.scrollWidth }); }
+    });
   }
 
   /* Welcome Aboard: the stars and fish-bone patches are placed at random on every visit, in the margins around the card. Each one is put where it is
@@ -267,8 +355,8 @@
       const name = sig.value.trim().slice(0, 28);
       if (Words && !Words.isClean(name)) { hint.textContent = 'Let’s keep the signature friendly — try another name!'; shake(); return; }
       busy = true;
-      const out = document.createElement('canvas'); out.width = 642; out.height = 421;
-      const o = out.getContext('2d'); o.fillStyle = '#fff'; o.fillRect(0, 0, 642, 421); o.drawImage(pad, 0, 0, 642, 421);
+      const out = document.createElement('canvas'); out.width = pad.width; out.height = pad.height;
+      const o = out.getContext('2d'); o.fillStyle = '#fff'; o.fillRect(0, 0, out.width, out.height); o.drawImage(pad, 0, 0);
       const mine = { id: 'g' + Date.now(), color, name, img: out.toDataURL('image/png'), t: Date.now() };
       const past = (Guest.recent && Guest.recent.length ? Guest.recent.concat(SEEDS) : Store.everyone()).slice(0, 3);   // the previous three, read before adding ours
       Store.add(mine);
@@ -288,6 +376,7 @@
   }
 
   /* ------------------------------------------------------------------ 5 · Boot */
+  Object.assign(Guest, { frameHTML, lampHTML, roomProps: PROPS });
   if ($('#gallery')) initGallery();
   if ($('#pad')) initBook();
   /* Get the main page ready while the visitor is still drawing (idle time, a couple of seconds after this page has loaded), not only after they press
@@ -297,5 +386,5 @@
     if (document.readyState === 'complete') setTimeout(warmHome, 2000); else addEventListener('load', () => setTimeout(warmHome, 2000), { once: true });
   }
   // after an in-place page swap the shell calls this to build the gallery on the new content
-  (window.SiddhiPages = window.SiddhiPages || {}).gallery = () => { const g = $('#gallery'); if (g && !g.querySelector('.gc')) initGallery(); };
+  (window.SiddhiPages = window.SiddhiPages || {}).gallery = () => { const g = $('#gallery'); if (g && !g.querySelector('.fr')) initGallery(); };
 })();
