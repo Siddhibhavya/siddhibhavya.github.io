@@ -63,7 +63,7 @@ firebase/   the Firestore security rules + setup steps for the shared gallery
 - **The gooey Index ⇄ M.I.K.U tab.** The sidebar's folder tab isn't a picture — it's drawn in SVG and melts from one side to the other like liquid when you switch tabs (a blur + contrast trick, animated by hand so the leading edge shoots ahead and the trailing edge catches up).
 - **Welcome Aboard.** Draw a card, sign it on the line, pick a colour and press *Create*. Then everything happens in one unbroken take: the cards slide, two strings (a thick green one and a thin orange one, traced from my Figma frames) are pulled across the screen, "Thank You" rises, the strings are fed off to the right, and you're gently returned to the main site. Your card then joins the shared Guest Gallery for everyone to see.
 - **Things you can move on About.** The stars, the fish-bone patch and the dino can be picked up and thrown — they slide, bounce off the edges and tilt as you drag. Tap one and it spins or wobbles. (A little pill tells you this the first time you scroll.)
-- **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Syncletter, yellow for NearU, blue for NCFE — that follows you around.
+- **The "View case study" cursor.** Hover a project card and the cursor turns into a coloured pill — green for Flummox, yellow for NearU, blue for NCFE — that follows you around.
 
 Also: the default cursor is a little white star, and it glows on the dark parts of the site.
 
@@ -85,7 +85,7 @@ Setting it up from scratch is in [`firebase/SETUP.md`](firebase/SETUP.md).
 M.I.K.U lives entirely in your browser. There's **no AI service and nothing is sent anywhere** — it's a bot that talks like me using answers I wrote myself.
 
 1. **The question bank** (`js/bank.js`) is a big list of questions people might ask me — about design, my projects, hobbies, this website — each with alternate wordings and, if I've written one, my answer (and sometimes pictures).
-2. **Matching.** When you type a message, the bot scores it against every question by shared words, giving rarer words more weight ("Syncletter" counts for more than "the"). A strong match gets my answer; a near match gets a gentle "did you mean…?"; no match gets a friendly "ask me directly" with buttons to reach me.
+2. **Matching.** When you type a message, the bot scores it against every question by shared words, giving rarer words more weight ("Flummox" counts for more than "the"). A strong match gets my answer; a near match gets a gentle "did you mean…?"; no match gets a friendly "ask me directly" with buttons to reach me.
 3. **The jail.** Before matching, the bot checks whether someone is trying something they shouldn't — telling it to ignore its instructions, being rude, asking for private details like phone numbers or passwords, or asking it to do their homework or write code. Those get a cheeky, escalating "nope" instead of an answer, and a nudge back to talking about design.
 
 Unanswered questions are left blank on purpose: the bot would rather say *"I haven't written that one down yet"* than make something up about me.

@@ -52,7 +52,7 @@ body .main { position: relative; }               /* the sheet fills the page are
 
 /* Torn paper sheets tucked behind the My Work cards (assets/scrapbook/sheet-*.webp, made by tools/make-paper-sheets.js): rough fibrous edges, soft wrinkles, a faint
    grain, and a tone of their own (white / yellowish-cream / pale blue / pale green). Each sits just before its card in the markup and tilts with it: its angle is the
-   card's own angle plus --a, and on hover both straighten together. Syncletter's is Figma 481:213 (377x376, 21.73deg, centre 17.5px left / 8.4px above the card centre).
+   card's own angle plus --a, and on hover both straighten together. Flummox's is Figma 481:213 (377x376, 21.73deg, centre 17.5px left / 8.4px above the card centre).
    The canvas is 440px (the 377x376 sheet plus room for the torn edge). The shadow is a drop-shadow, so it follows the torn outline. */
 .card-sheet {
   --k: 1.07; --sz: 1; --e: calc(var(--sz) * var(--szm, 1)); position: absolute; z-index: 0; pointer-events: none;   /* --sz: size multiplier (about the sheet's centre) */
@@ -75,7 +75,7 @@ body .main { position: relative; }               /* the sheet fills the page are
 }
 .card-sheet[hidden] { display: none; }
 /* desktop only (mouse + two-column layout): hovering a card sets its paper swinging about the card's pin like a pendulum. Its bottom drags out to one side and settles lower in a
-   little arc (Syncletter's to the right, NearU's the opposite way: --swing is the angle), with an overshoot so it rocks into place. Phone / tablet layouts have no swing. */
+   little arc (Flummox's to the right, NearU's the opposite way: --swing is the angle), with an overshoot so it rocks into place. Phone / tablet layouts have no swing. */
 @media (hover: hover) and (pointer: fine) {
   body:not(.one-col) .card-sheet { transition: transform 1.1s cubic-bezier(0.25, 1.9, 0.45, 0.9); }
   body:not(.one-col) .card-sheet:has(+ .card:hover), body:not(.one-col) .card-sheet:has(+ .card:focus-visible) { transform: rotate(var(--swing, 0deg)); }

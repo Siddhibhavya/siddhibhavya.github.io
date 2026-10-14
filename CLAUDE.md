@@ -37,10 +37,10 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   optical center with their arrow. The panel hugs the actual section count.
   Preserve these defaults as copy, label lengths and section counts change.
   Center case-study pill labels in both axes inside their pill, with clear icon
-  spacing and a full-pill click target. Syncletter prototype pills extend to
+  spacing and a full-pill click target. Flummox prototype pills extend to
   the next lower grid rule; see the approved dimensions in the guidelines.
   Extend the shared shell hooks for new pages; the current implementation is
-  scoped to NearU and Syncletter. These approved standards take precedence
+  scoped to NearU and Flummox. These approved standards take precedence
   over older Figma chrome and do not need fresh approval.
 
 - **NON-NEGOTIABLE: highest quality for text, images and video.** Performance work may change *how*
@@ -54,7 +54,7 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   version of a page (desktop, tablet, phone). A phone/tablet layout may
   re-arrange them but must never remove, recolour or swap them for something
   else. Prefer showing the desktop composition (scaled or re-flowed) over
-  inventing a different one — Siddhi rejected a bespoke Syncletter phone layout
+  inventing a different one — Siddhi rejected a bespoke Flummox phone layout
   and kept the scaled desktop canvas.
 - **NON-NEGOTIABLE: grid alignment.** No case-study change is finished, and
   nothing may be committed or pushed, until the grid audit

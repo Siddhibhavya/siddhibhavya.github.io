@@ -6,15 +6,15 @@ class you need. Siddhi gives feedback in short messages and wants visible
 results fast — act, verify once, report briefly.
 
 ## State
-- Done + live: Syncletter (`work/syncletter.html`, `css/pages/syncletter.css`,
+- Done + live: Flummox (`work/syncletter.html`, `css/pages/syncletter.css`,
   `js/syncletter.js`), NearU (`work/nearu.html`, `css/pages/nearu.css`,
   `js/nearu.js`, `js/nearu-mobile.js`), the home/side-quests/about pages, the
   M.I.K.U bank (`js/bank.js`), résumé links (`js/config.js`).
 - Remaining: **NCFE redesign** (`work/ncfe-redesign.html`, still a placeholder)
   and **Are they Driving?** (`work/are-they-driving.html`, placeholder).
 - Figma file `Nc087O4ophE87f3EyMdcVh` ("Portfolio"). Frames: NearU `351:1516`,
-  Syncletter `419:964`, NCFE `438:3070`. **`438:3070` ("NCFE ") is currently a
-  copy of the Syncletter layout** (palette already synced to the website) —
+  Flummox `419:964`, NCFE `438:3070`. **`438:3070` ("NCFE ") is currently a
+  copy of the Flummox layout** (palette already synced to the website) —
   it is a structural starting point, not NCFE content. No Are they Driving
   frame was found: ask Siddhi for the node link, and for the real copy /
   images / links before building. Never invent content.
@@ -25,19 +25,19 @@ results fast — act, verify once, report briefly.
 Only finished case studies are public. NCFE – Redesign and Are they Driving? are hidden until Siddhi says so (Are they Driving? will
 become a different project). To hide/unhide, search the repo for `HIDDEN-UNTIL-READY`: `home.html` (cards carry `hidden`, wrapper has
 `hide-low`), `css/pages/work.css` (wrapper heights), `js/config.js` (`hidden: true` on the project), `js/bank.js` (`"hidden":true` on
-the ncfe-redesign-*, are-they-driving-* and projects-5 entries; projects-1 / projects-8 answers now only mention Syncletter and NearU),
+the ncfe-redesign-*, are-they-driving-* and projects-5 entries; projects-1 / projects-8 answers now only mention Flummox and NearU),
 `work/ncfe-redesign.html` / `work/are-they-driving.html` (noindex + redirect to home unless `?preview`). Never publish an unfinished
 project card or M.I.K.U answer for it.
-Original answers to restore: projects-1 "There are four on the index: Syncletter, NearU, NCFE - Redesign and Are they Driving? Pick one and
+Original answers to restore: projects-1 "There are four on the index: Flummox, NearU, NCFE - Redesign and Are they Driving? Pick one and
 I’ll tell you more." (+ the two extra buttons); projects-8 "…NCFE - Redesign and Are they Driving? are still on their way — for now their
 cards on My Work open a summary."
 
 ## Phone layouts
-Siddhi prefers Syncletter's original approach: the phone shows the scaled desktop canvas (no separate phone layout). A separate
-phone layout was tried and rejected — don't rebuild it for Syncletter. NearU keeps its own phone layout (`js/nearu-mobile.js`).
+Siddhi prefers Flummox's original approach: the phone shows the scaled desktop canvas (no separate phone layout). A separate
+phone layout was tried and rejected — don't rebuild it for Flummox. NearU keeps its own phone layout (`js/nearu-mobile.js`).
 
 ## Fastest way to build a case study
-1. Copy the closest finished page: Syncletter for a single-canvas page,
+1. Copy the closest finished page: Flummox for a single-canvas page,
    NearU when you also need a separate phone layout.
 2. Page skeleton: `<body class="<x>-page" data-shell="sidebar" data-toc='[…]'>`,
    a `.x-viewport > .x-canvas` (1448 wide, absolutely positioned children with
@@ -54,7 +54,7 @@ phone layout was tried and rejected — don't rebuild it for Syncletter. NearU k
   `--maroon #7b2b3d`, borders `#4a1a2c`, body text `--espresso #4a2e22`, light
   labels `--chestnut #5c3a21`, headings Museum Purple `#39265f`, highlights bold
   `var(--hl-red)` (`#8f2000`), Cosmic Ink `#1b0b2e`. Project colours only on
-  product elements (Syncletter teal `#075e54`; NearU yellow `#FEC12D`, blue
+  product elements (Flummox teal `#075e54`; NearU yellow `#FEC12D`, blue
   `#0D57CE`, black `#17120E`, cream `#FFFAEB`, coral `#FC5956`).
 - **Every text line sits on the paper grid** (desktop 41px rows/phase 14, phone
   28px/phase 20) and content is **centred in the beige area** (canvas x≈898/902).
@@ -104,7 +104,7 @@ own facts (no inventions), home card + Figma frame matched to the page,
 
 
 ## State after 2026-10-03 (read with CASE-STUDY-GUIDELINES.md section 9)
-- NearU and Syncletter are rebuilt: shorter copy, spider / loop / T-chart, persona on torn paper, memos, film + demo frame with call-outs, centred media. Open item: **recordings of each part of the NearU app** to replace the buyer/seller image, and the NearU prototype link (owner will supply).
+- NearU and Flummox are rebuilt: shorter copy, spider / loop / T-chart, persona on torn paper, memos, film + demo frame with call-outs, centred media. Open item: **recordings of each part of the NearU app** to replace the buyer/seller image, and the NearU prototype link (owner will supply).
 - Moving content: edit the shift tables (`SHIFTS`, `SYN_SHIFTS`), then run `tools/gaps.js` and `tools/grid-audit.js` at 1200 and 400px; fix gaps > ~100px and any overlap before committing.
 - A doc with the original (pre-edit) copy of both pages exists in Claude Docs ("Case studies: original copy"); git `94a7589` has the originals.
 

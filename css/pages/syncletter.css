@@ -1,7 +1,7 @@
 /* Ancizar Serif weights 600-900: the page used to request 400-900 from Google Fonts, which maps each of them to the same file (no synthetic bold). Same here. */
 @font-face { font-family: 'Ancizar Serif'; font-style: normal; font-weight: 600 900; font-display: swap; src: url(../../assets/fonts/AncizarSerif-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: 'Ancizar Serif'; font-style: normal; font-weight: 600 900; font-display: swap; src: url(../../assets/fonts/AncizarSerif-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-/* Syncletter case study — Figma canvas geometry (file Nc087O4ophE87f3EyMdcVh, node 419:964), scoped to this page.
+/* Flummox case study — Figma canvas geometry (file Nc087O4ophE87f3EyMdcVh, node 419:964), scoped to this page.
    Same technique as NearU: artwork stays on its original design canvas; text is live HTML; media uses local assets.
    The real sidebar/Contents nav is the shared one (data-shell="sidebar" + data-toc; js/shell.js + css/shell/sidebar.css) —
    nothing sidebar-specific lives here. */
@@ -106,10 +106,10 @@
 /* height matches the image's own aspect ratio (885:311) at this width, so cropping never eats into top/bottom —
    the old 309px came from the earlier hand-built mockup panel and doesn't match this flat export's proportions.
    left is snapped to the nearest grid line (450px); only the left corners curve (11px), right stays square. */
-.syn-14 { position: absolute; left: 450px; top: 50px; width: 919px; height: 323px; overflow: hidden; border-radius: 11px 0 0 11px; box-shadow: -38px 8px 24px rgba(0,0,0,.06); transition: scale .45s var(--ease-out); transform-origin: center; }
-/* Figma's own crop on this asset: trim ~1.24% off the right edge, not a plain aspect-ratio cover-fit */
-.syn-14-crop { position: absolute; inset: 0 1.24% 0 0; overflow: hidden; }
-.syn-14-crop img { position: absolute; left: 0; top: 0; width: 101.26%; height: 100%; max-width: none; display: block; }
+.syn-14 { position: absolute; left: 450px; top: 50px; width: 919px; height: 309px; overflow: hidden; border-radius: 11px 0 0 11px; box-shadow: -38px 8px 24px rgba(0,0,0,.06); transition: scale .45s var(--ease-out); transform-origin: center; }
+/* the header art is the 01 Concept frame (Figma 655:915), exported whole: no trimming */
+.syn-14-crop { position: absolute; inset: 0; overflow: hidden; }
+.syn-14-crop img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; display: block; }
 
 /* ---------- pills under the header ---------- */
 .syn-15a, .syn-15b { position: absolute; top: 391px; height: 33px; background: #e8ffe5; border: 1px solid #075e54; border-radius: 32.5px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; }
@@ -265,7 +265,7 @@
 
 /* supporting text under the Wireframes label */
 .syn-wf-text { position: absolute; left: 467px; top: 5728px; width: 836px; margin: 0; font-family: var(--font-ui); font-weight: 400; color: var(--espresso); font-size: 24px; line-height: 41px; }
-.syn-rec { position: absolute; left: 474px; top: 822px; width: 857px; height: 738px; border-radius: 20px; background: #075e54; border: 4px solid #02221e; box-sizing: border-box; overflow: hidden; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }   /* the "how it works" recording on a Syncletter-green frame, above the first Try prototype pill (everything below is pushed down by SYN_SHIFT in js/syncletter.js); phone frame is part of the footage */
+.syn-rec { position: absolute; left: 474px; top: 822px; width: 857px; height: 738px; border-radius: 20px; background: #075e54; border: 4px solid #02221e; box-sizing: border-box; overflow: hidden; box-shadow: -8px 10px 8px rgba(0, 0, 0, .25); }   /* the "how it works" recording on a Flummox-green frame, above the first Try prototype pill (everything below is pushed down by SYN_SHIFT in js/syncletter.js); phone frame is part of the footage */
 /* the green frame first plays the 24s film (nearly the full frame), then the film fades out and the phone demo with its call-outs fades in */
 .syn-rec .syn-intro-video { position: absolute; left: 50%; top: 50%; width: calc(100% - 44px); height: auto; aspect-ratio: 1440 / 646; translate: -50% -50%; border-radius: 12px; object-fit: cover; display: block; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
 .syn-rec.is-intro .syn-intro-video { opacity: 1; visibility: visible; transition-delay: 0s; }
@@ -336,13 +336,13 @@
   .syn-mobile .sm-heading { font-size: 20px; font-weight: 900; color: var(--heading); text-transform: uppercase; }
   .syn-mobile .sm-label { font-weight: 600; color: var(--chestnut); text-transform: uppercase; margin-bottom: 0; }
   .syn-mobile .sm-copy.sm-center, .syn-mobile .sm-copy.sm-center :is(p, span, div, li) { text-align: center; }   /* Problem Statement: label and statement centred, as on the desktop canvas */
-  .syn-mobile .sm-lede { font-family: var(--font-serif); font-size: 32px; line-height: 56px; font-weight: 400; color: #39265f; }   /* same face and size as the page title (Building Syncletter) */
+  .syn-mobile .sm-lede { font-family: var(--font-serif); font-size: 32px; line-height: 56px; font-weight: 400; color: #39265f; }   /* same face and size as the page title (Building Flummox) */
   .syn-mobile .sm-learnt { font-weight: 600; }
   .syn-mobile .sm-attrib { color: var(--chestnut); }
   .syn-mobile .syn-stat, .syn-mobile .syn-highlight { font-weight: 700; color: var(--hl-red); }
   /* artwork/pill clones: keep size, colours, SVG and hover; drop only the canvas position */
   .syn-mobile .sm-pos { position: relative !important; left: auto !important; top: auto !important; right: auto !important; bottom: auto !important; margin-left: auto; margin-right: auto; }
-  .syn-mobile .sm-hero { width: 100%; height: auto; aspect-ratio: 919 / 323; border-radius: 11px; }
+  .syn-mobile .sm-hero { width: 100%; height: auto; aspect-ratio: 919 / 309; border-radius: 11px; }
   .syn-mobile .sm-tags { display: flex; flex-wrap: wrap; gap: 6px; flex-wrap: wrap; justify-content: flex-start; width: 100%; max-width: 560px; }
   .syn-mobile .sm-tags > .sm-pos { margin: 0; max-width: 100%; height: 28px; width: auto; padding: 0 8px; flex: 0 0 auto; }
   .syn-mobile .sm-tags > .syn-15a { padding-left: 30px; }
@@ -434,7 +434,7 @@
 .syn-dec { position: relative; box-sizing: border-box; border-radius: 20px; padding: 26px 24px 22px; box-shadow: -7px 9px 7px rgba(0, 0, 0, .24); display: flex; flex-direction: column; }
 .syn-dec-a { background: #a3dcae; rotate: -1.3deg; }   /* light green from the spectrum; a slight tilt, a static rotation (no animated transform) so the text stays crisp */
 .syn-dec-b { background: #fbc7a0; rotate: 1.1deg; }    /* peach from the spectrum */
-.syn-dec .pin { position: absolute; left: calc(50% - 16.5px); top: -14px; width: 33px; height: 33px; border-radius: 50%; background: #a20000; box-shadow: 0 4px 4px rgba(0, 0, 0, .25); pointer-events: none; z-index: 3; }   /* the My Work thumbtack: red, the opposite of Syncletter green */
+.syn-dec .pin { position: absolute; left: calc(50% - 16.5px); top: -14px; width: 33px; height: 33px; border-radius: 50%; background: #a20000; box-shadow: 0 4px 4px rgba(0, 0, 0, .25); pointer-events: none; z-index: 3; }   /* the My Work thumbtack: red, the opposite of Flummox green */
 .syn-dec .pin::after { content: ''; position: absolute; left: 4px; top: 4px; width: 25px; height: 25px; border-radius: 50%; background: #6c0000; }
 .syn-dec-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .syn-dec-tag { font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; padding: 3px 12px; border: 2px solid #02221e; border-radius: 16px; white-space: nowrap; }

@@ -1,4 +1,4 @@
-/* Syncletter's independent case-study canvas: scaling + section-hash scroll, matching js/nearu.js's technique.
+/* Flummox's independent case-study canvas: scaling + section-hash scroll, matching js/nearu.js's technique.
    The sidebar (tabs, drawer, Contents scrollspy, chat, Resume pill) is the real shared one — js/shell.js owns it
    via body[data-shell="sidebar"] + body[data-toc]. This file only owns the canvas/paper scaling.
    No dedicated small-screen reflow yet (unlike NearU's js/nearu-mobile.js) — the canvas simply scales down to fit

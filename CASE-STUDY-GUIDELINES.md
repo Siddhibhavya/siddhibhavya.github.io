@@ -37,15 +37,15 @@ the next time the palette changes.
 inside it.** Roughly 75–85% of the visible interface on *every* page, case
 studies included, uses the global site palette. The portfolio never changes
 its colour identity to match the project being viewed. A visitor should feel
-"I'm still in Siddhi's portfolio, viewing the Syncletter exhibit" — not "I've
-entered the Syncletter website."
+"I'm still in Siddhi's portfolio, viewing the Flummox exhibit" — not "I've
+entered the Flummox website."
 
 **Site brand palette (as briefed):** Cosmic Ink `#1B0B2E`, Museum Purple
 `#39265F`, Archive Burgundy `#7b2b3d`, Gallery Cream `#FFF1DF`, Paper
 `#F7E9DC`, Ink Brown `#57443E`, Muted Ink `#8A746B`.
 **Migrated 2026-09-29:** these hexes are now the live values in `css/base.css` (`--plum`=Cosmic Ink, `--maroon`=Burgundy, `--brown`=Ink Brown, `--cream`/case-study paper=Gallery Cream, `--card`/`--pill`=Paper, headings=Museum Purple `#39265f`). Change them only in `base.css`, never per page.
 
-**Highlighted words (2026-09-29):** feature names and key insights inside case-study copy are bold `var(--hl-red)` (`#8f2000`, NearU's red two tones darker) on every case study — NearU and Syncletter share it. Don't hard-code the hex.
+**Highlighted words (2026-09-29):** feature names and key insights inside case-study copy are bold `var(--hl-red)` (`#8f2000`, NearU's red two tones darker) on every case study — NearU and Flummox share it. Don't hard-code the hex.
 
 **Case-study text browns (2026-09-29):** body copy uses `var(--espresso)` (`#4a2e22`, 11:1 on cream); lighter/secondary text (≤20px, small labels, captions, uppercase tags) uses `var(--chestnut)` (`#5c3a21`, 9:1). Don't hard-code either hex on a page.
 
@@ -71,15 +71,15 @@ colour allowed. Website → site palette.
 | Research paragraph | Site ink brown |
 | Large case-study headline | Site museum purple |
 | Page background, navigation, dividers | Site palette |
-| "Reply Cues" feature pill, Syncletter feature box, WhatsApp prototype, Syncletter icon | Syncletter teal/green |
+| "Reply Cues" feature pill, Flummox feature box, WhatsApp prototype, Flummox icon | Flummox teal/green |
 | NearU feature boxes, pills, branding demos, illustrations, product UI | NearU yellow/blue/black |
 
-Never turn a whole case-study page Syncletter-green or NearU-yellow/blue.
+Never turn a whole case-study page Flummox-green or NearU-yellow/blue.
 Apply this consistently to every case study, including all future projects.
 
 ### Approved case-study paper colours (2026-09-28)
 
-All case studies use the NearU/Syncletter paper background: **`#fff1df`**.
+All case studies use the NearU/Flummox paper background: **`#fff1df`**.
 Apply it consistently to the page, layout, viewport, canvas and mobile paper
 so exposed edges and section boundaries have no colour seams. This is distinct
 from `--cream` (`#fff1df`, sidebar text) and `--card` (`#f7e9dc`, shell cards).
@@ -119,7 +119,7 @@ This is **one shared component**, built once by `js/shell.js` + `css/shell/sideb
 ### Approved Contents navigation (2026-09-28)
 
 Use this behavior for every case study, regardless of section count or label
-length. NearU and Syncletter are the approved visual reference.
+length. NearU and Flummox are the approved visual reference.
 
 - Inactive labels share a left edge. The selected label slides inward to an
   **optical center with its arrow**. Animate `left`/`transform`; changing
@@ -161,7 +161,7 @@ length. NearU and Syncletter are the approved visual reference.
   bounds after fonts load. Keep neighboring pills clear when dimensions change.
 - Make the entire link pill clickable and keyboard focusable. Background,
   border and label hover together as one element, with reduced motion supported.
-- Syncletter's two **Try prototype** pills extend downward to the next horizontal
+- Flummox's two **Try prototype** pills extend downward to the next horizontal
   grid rule. Keep their top positions and set height from the grid phase/step:
   the current design-space bottoms are 793px and 7763px, giving heights of 47px
   and 48px. Recalculate from the grid if their position changes. Center the text
@@ -404,7 +404,7 @@ break the SPA feel the shell is built for.
 ### Typography
 - **Ancizar Sans** is the UI/body font everywhere — self-hosted from `assets/fonts/` (variable TTFs), declared in `css/base.css`. **Inter is gone from the project**: never add it back, and never link it from Google Fonts. Ancizar Serif (Google Fonts) stays for headings; Blank Script for the one decorative landing use; Noto Serif Devanagari only for the About page's Hindi greeting.
 - The family is declared with `size-adjust: 122%` + `ascent-override: 79.5%` + `descent-override: 19.7%` so it keeps the size, x-height and **baselines** the layouts were built on. Because of that, text already seated on grid rules stayed on them; re-measure (About paragraphs, case-study audit) if these numbers ever change.
-- **Regular and medium are upright. Bold / black (weight 600+) are italic** — done by mapping those weights to the italic file in `@font-face`, so no per-rule `font-style` is needed. A line that must be bold but upright uses `font-family: 'Ancizar Sans Upright'` (e.g. Syncletter's "I learnt, I wasn't the only one struggling!").
+- **Regular and medium are upright. Bold / black (weight 600+) are italic** — done by mapping those weights to the italic file in `@font-face`, so no per-rule `font-style` is needed. A line that must be bold but upright uses `font-family: 'Ancizar Sans Upright'` (e.g. Flummox's "I learnt, I wasn't the only one struggling!").
 
 ### Crisp text (non-negotiable)
 - Text inside a tilted card must be crisp at rest, not only on hover. A **transform animation inside (or overlapping) a rotated card makes the browser composite the card, which draws its text as a rotated bitmap (soft)**. Animate such things with `margin`/`top`, not `transform`. **Exception (2026-10-03): the My Work floating pills** use a `transform` keyframe on a `will-change: transform` layer (pill + text flattened into one GPU layer): the old `margin-top` drift snapped the text to whole pixels and read as stepped and "draggy"; smoothness won over a slight resample softness inside the tilt. Don't add `will-change`, `backface-visibility` or `translateZ` to cards.
@@ -414,10 +414,10 @@ break the SPA feel the shell is built for.
 
 ### Scrapbook (My Work + About Me; Figma 151:8359)
 - **Corners**: torn star-paper top-left (`assets/scrapbook/corner-tl.png`) on My Work and About Me; cardboard bottom-right (`corner-br.png`) on **My Work only**. About's corner is smaller so it never touches the title. Both are mirrored `<img class="scrap ...">` as the first children of `<main>`; the star paper has a **white line first, then a shadow beyond it** (`drop-shadow` chain, not box-shadow); the cardboard casts a soft shadow along its torn edge.
-- **Cards** (`css/pages/work.css`): 10px radius; every card has a **thumbtack** centred on its top edge, whose colour is the **opposite of the project's colour** (Syncletter green -> red, NearU orange -> blue, NCFE blue -> yellow, Are they Driving? red -> green) via `--pin` / `--pin-in` on the card. The hover "View case study" cursor pill stays (the background eye-star doodles on My Work were removed instead).
+- **Cards** (`css/pages/work.css`): 10px radius; every card has a **thumbtack** centred on its top edge, whose colour is the **opposite of the project's colour** (Flummox green -> red, NearU orange -> blue, NCFE blue -> yellow, Are they Driving? red -> green) via `--pin` / `--pin-in` on the card. The hover "View case study" cursor pill stays (the background eye-star doodles on My Work were removed instead).
 - **The torn paper sheets are DESKTOP-ONLY: they show on the two-column layout and are hidden (`display: none`) on the phone / small-tablet layout (`body.one-col`).** Siddhi asked for them gone on phone; they stay on desktop. Never clip them or add other phone variants.
-- **Torn paper sheet behind each card** (`<span class="card-sheet sheet-...">` placed immediately before its card; `.card-sheet` in `paper.css`): a generated image (`tools/make-paper-sheets.js` -> `assets/scrapbook/sheet-*.webp`, lossless) with rough fibrous edges, soft wrinkles, faint grain and **its own tone** — white (Syncletter), yellowish-cream lighter than the page (NearU), pale blue (NCFE), pale green (Driving). Per-card inline vars: `--x --y --r` (copy the card's), `--dx --dy` (sheet centre vs card centre), `--a` (sheet angle relative to the card), `--sz` (size), `--swing` (hover angle). Each sheet carries a soft `drop-shadow` that follows its torn outline.
-- **Swing (desktop only — mouse + two-column layout; none on phone/tablet/touch)**: hovering a card swings its sheet about the card's pin like a pendulum (its bottom drags out sideways and settles lower, with an overshoot). Syncletter's goes one way (`--swing:-9deg`), NearU's the opposite (`9deg`). **Upcoming cards follow the card above them: NCFE (under Syncletter) swings like Syncletter's but with its tip nearer the other edge (mirrored `--dx` / `--a`); Are they Driving? (under NearU) likewise.** On the phone layout the sheets are bigger/offset so they still show round the card (`body.one-col ...` overrides at the end of `paper.css`).
+- **Torn paper sheet behind each card** (`<span class="card-sheet sheet-...">` placed immediately before its card; `.card-sheet` in `paper.css`): a generated image (`tools/make-paper-sheets.js` -> `assets/scrapbook/sheet-*.webp`, lossless) with rough fibrous edges, soft wrinkles, faint grain and **its own tone** — white (Flummox), yellowish-cream lighter than the page (NearU), pale blue (NCFE), pale green (Driving). Per-card inline vars: `--x --y --r` (copy the card's), `--dx --dy` (sheet centre vs card centre), `--a` (sheet angle relative to the card), `--sz` (size), `--swing` (hover angle). Each sheet carries a soft `drop-shadow` that follows its torn outline.
+- **Swing (desktop only — mouse + two-column layout; none on phone/tablet/touch)**: hovering a card swings its sheet about the card's pin like a pendulum (its bottom drags out sideways and settles lower, with an overshoot). Flummox's goes one way (`--swing:-9deg`), NearU's the opposite (`9deg`). **Upcoming cards follow the card above them: NCFE (under Flummox) swings like Flummox's but with its tip nearer the other edge (mirrored `--dx` / `--a`); Are they Driving? (under NearU) likewise.** On the phone layout the sheets are bigger/offset so they still show round the card (`body.one-col ...` overrides at the end of `paper.css`).
 - Regenerate sheets with `node tools/make-paper-sheets.js` (needs `npm install sharp --no-save`; dev-only). Tear roughness is set by the displacement `scale` numbers in that file.
 
 ### Notifications
@@ -427,7 +427,7 @@ break the SPA feel the shell is built for.
 - `css/site.css` is a **generated bundle**: after editing `css/base.css`, `css/shell/*` or `css/pages/{work,decor,guest,quests,about}.css`, run `node tools/bundle-css.js` or `tools/check.js` fails with "css/site.css is stale". `nearu.css` / `syncletter.css` are linked directly, not bundled.
 - A `url()` inside a data-URI SVG trips the checker's `url()` scan: write it `u%72l(%23id)`.
 - Don't let two rules for one selector coexist in a file — the checker warns; merge them.
-- `data-start` on a `<video>` starts it at N seconds and loops back to N (used to skip the Syncletter demo's "create a room" intro without re-encoding).
+- `data-start` on a `<video>` starts it at N seconds and loops back to N (used to skip the Flummox demo's "create a room" intro without re-encoding).
 - Landing page (`index.html` + `css/pages/landing.css`, Figma 109:6512): tickets (`assets/landing/ticket-*.svg`) straighten on hover; "All aboard to the creative archives of" letters scatter away from the pointer; the orbit ellipse constants in `js/landing.js` (`PIVOT`, `EL`) must be re-fitted if the ring SVG changes.
 - About title (`js/about-title.js`): the name is ransom-note tiles that jumble for **3 s (every 0.25 s)** then settle, then an orange "!" mark (Figma 483:219, `assets/about/exclaim.svg`) jumps in tilted 26deg (tail on the "i"), holds, straightens and slides to stand to the right of the "i". The greeting types the Hindi word -> backspace -> "Hello!" over a 30 s pass, stays on "Hello!" for 2 min, then loops.
 
@@ -442,16 +442,16 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 - The Welcome Aboard / Thank You screens (`guest-book.html`) carry the paper veil and two small corners too. On Thank You the drifting stars and fish-bone patches spread over the whole screen but must never touch the text: `js/guest-anim.js` measures the real `.ov-thanks` box (not a hard-coded one) — re-check this whenever the font or type size changes.
 - Compact drawer: the subtitle ("Interaction design @ ANU") shares the name's left edge (`css/shell/compact.css`).
 
-## 9 · Lessons from the 2026-10-03 round (Syncletter + NearU rebuild)
+## 9 · Lessons from the 2026-10-03 round (Flummox + NearU rebuild)
 
 ### Moving content on the absolute canvas: whole-row shift tables
 - When copy grows or shrinks, don't edit 100 `top` values. Both canvases carry a **shift table** run before alignment: `SHIFTS` in `js/nearu.js`, `SYN_SHIFTS` in `js/syncletter.js`. Each entry is `[fromY, rows, exceptClass?]`; thresholds are in the **original Figma y**, all entries that match an element **add up**, and `rows` is a whole number of 41px rows so the paper rules stay aligned. The canvas height (`--flow-extra` / `height !important`) follows the sum.
 - The phone layouts clone nodes by **original** coordinates (cloned before the shifts run), so they are unaffected; new blocks must be cloned whole (`block()` in `js/nearu-mobile.js`) and reflow with their own CSS.
-- Elements placed at their final y in CSS (the Syncletter facts chip, the green frame, the NearU ideation art) are either below no threshold or excluded by class; say so in the comment next to the entry.
+- Elements placed at their final y in CSS (the Flummox facts chip, the green frame, the NearU ideation art) are either below no threshold or excluded by class; say so in the comment next to the entry.
 - After any copy change run **`tools/gaps.js`** (paste in the JS tool, or `fetch('/tools/gaps.js')` + `eval`): it lists every empty band taller than 110 canvas px. Target ~80–100px between blocks. Also scan for text boxes that overlap (see the snippet in the 2026-10-03 chat: `p,h1,h2,li` rect intersections).
 
 ### Centre media on the content area
-- Videos, diagrams, screenshots, plates and CTA pills centre on the content area to the right of the sidebar: **x = 900 on NearU, 902 on Syncletter** (not on the 448/434 text column). The Figma export left some blocks 20-40px left of it; `XSHIFTS` in `js/nearu.js` and the CSS `left` values fix them. Staggered side-by-side art (A/B phones, ideation videos) is judged as a composition.
+- Videos, diagrams, screenshots, plates and CTA pills centre on the content area to the right of the sidebar: **x = 900 on NearU, 902 on Flummox** (not on the 448/434 text column). The Figma export left some blocks 20-40px left of it; `XSHIFTS` in `js/nearu.js` and the CSS `left` values fix them. Staggered side-by-side art (A/B phones, ideation videos) is judged as a composition.
 
 ### Components added this round (copy the pattern, don't reinvent)
 - **Spider diagram** (`.nu-spider`, "How students sell today"): hub circle + three legs, SVG lines behind; phone = hub, then legs on a trunk line.
@@ -459,9 +459,9 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 - **Loop diagram** (`loopSVG()` in `js/nearu-mobile.js`): ring of boxes with solid curved arrows and a dark core with dashed arrows; one builder, `LOOP_WIDE` for the canvas, `LOOP_TALL` for phones. Text is real SVG text >= 16px.
 - **Persona on torn paper** (`.nu-persona`): paper = `sheet-white.webp` as a **mask** over a multiplied tan colour (`::after`) with a blurred copy as the shadow (`::before`); the filter route turned olive. Light beige type + light red highlights on the dark paper. The portrait frame hugs the illustration: the image is cropped with percentages (`left/top/width/height` on the `<img>`), and the ribbon (`nu-130`) and the Figma "Hi!" bubble (`assets/work/nearu/hi-bubble.svg`, node 520:16) are positioned in the same percentages.
 - **Insight memos** (`.nearu-insight`): NearU tints, tape strip, folded corner, no clip-path (it would clip the shadow). `p` line-heights stay on `.ins-problem`/`.ins-opp`; only inline children `inherit` (inheriting on the `p` pulled the 41px grid line-height in and misaligned the arrows).
-- **Project facts chip** sits **above** the Syncletter green frame (desktop and phone). Columns share one left edge each; "August 2026" must not wrap.
+- **Project facts chip** sits **above** the Flummox green frame (desktop and phone). Columns share one left edge each; "August 2026" must not wrap.
 
-### Syncletter recording frame
+### Flummox recording frame
 - One green frame (`.syn-rec`) plays the 24s film first (`.syn-intro-video`, `is-intro`), then fades to the phone demo (`.syn-demo`) whose call-outs appear. The `play`/`ended` capture handlers in `js/syncletter.js` gate the demo until the film ends.
 - **Call-outs** (`.syn-rec-tag` + SVG leader lines): labels only on the left/right of the phone; thin green line + ring drawn from the label to a point on the screen. Target points are **keyframed from the footage** (`data-kf="time:fx:fy|..."`, fractions of the phone video) because the card moves (keyboard). Measure with the canvas flood-fill used on 2026-10-03 (cream `#faf2ea` pixels, largest component). Measure label geometry with `offsetLeft/offsetTop` (they ignore the slide-in `translate`); toggling `.on` to measure made the labels flash.
 
@@ -479,7 +479,7 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 
 ## 10 · NearU prototype pop-up + phone brand board (2026-10-03)
 
-- **Try demo** (`.nu-demo`, desktop canvas + a clone in the phone layout) is the Syncletter "Try prototype" pill but a `<button data-nearu-demo>`: it opens `js/nearu-demo.js`'s pop-up (blue NearU frame, Restart/Close, Esc, focus kept inside, page scroll locked) instead of a new tab. Desktop pill: left 478, top 910, 850x47 (bottom on rule 957); the `[1030, 3]` shift row makes room and `.nu-demo` is skipped by the shift loop. Phone: full-screen pop-up (<= 520px), the prototype fills it; wider: the 402x874 prototype is scaled as one piece with a bezel ring.
+- **Try demo** (`.nu-demo`, desktop canvas + a clone in the phone layout) is the Flummox "Try prototype" pill but a `<button data-nearu-demo>`: it opens `js/nearu-demo.js`'s pop-up (blue NearU frame, Restart/Close, Esc, focus kept inside, page scroll locked) instead of a new tab. Desktop pill: left 478, top 910, 850x47 (bottom on rule 957); the `[1030, 3]` shift row makes room and `.nu-demo` is skipped by the shift loop. Phone: full-screen pop-up (<= 520px), the prototype fills it; wider: the 402x874 prototype is scaled as one piece with a bezel ring.
 - **The prototype is a built, static copy** in `prototype/nearu/` (source: React/Vite in `Downloads/NearU_onboarding_centered`). Refresh it with `node tools/sync-nearu-prototype.js` (local tool). Start states for recordings: `?screen=Explore|Search|Cart|Profile|Wishlist|Storefront|Analytics|Payouts|Checkout|Confirmed|Listings|Orders|OnboardingCreate|OnboardingMode|OnboardingVerify|OnboardingLogin|SellerSetup` and `&mode=seller`; the pop-up's Restart reloads a clean session. `tools/check.js` skips `prototype/`.
 - **Phone brand board** (`brandBoard()` in `js/nearu-mobile.js`, `.nearu-mobile-brand`): the scaled desktop swatches put every label under 16px, overlapped neighbours, and the display "Aa" spilled out because Futura is not installed on most phones (fallback fonts have different metrics). Swatches are real boxes (6 + 5 + 3 paper rows), labels 16px, text clipped inside its swatch. Never rely on an uninstalled brand font for sizing: give the box a fixed size and `overflow:hidden`.
 - Prototype icons: stand-alone icons share one 28px box (`--icon-lg`); SVGs are cropped tight to their drawing (the cart sat in a 59x34 canvas and looked tiny). The two search nav icons were missing from the export and were drawn to match.

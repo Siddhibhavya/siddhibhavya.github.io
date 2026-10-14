@@ -103,7 +103,7 @@
       'Let’s keep it kind. I’m happy to chat about my work, though.'
     ],
     repeat: [
-      'I’m going to keep saying no to that 😄 but I’ll happily talk about Syncletter, NearU or my skateboarding fails.',
+      'I’m going to keep saying no to that 😄 but I’ll happily talk about Flummox, NearU or my skateboarding fails.',
       'Same answer, promise. Want to hear about a project instead?'
     ]
   };
@@ -147,7 +147,7 @@
   const suggestable = (e) => !/^talk-/.test(e.id) && !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
 
   /* On a case-study page (work/<project>.html) the suggested questions are about that very project: its own topic in the bank (answered ones only). */
-  const PROJECT_TOPICS = { nearu: 'NearU', syncletter: 'Syncletter' };   // add the new project here (page slug -> its topic name in the bank)
+  const PROJECT_TOPICS = { nearu: 'NearU', syncletter: 'Flummox' };   // add the new project here (page slug -> its topic name in the bank)
   const projectTopic = () => { const m = /\/work\/([a-z0-9-]+)/i.exec(location.pathname); return m ? PROJECT_TOPICS[m[1].toLowerCase()] || null : null; };
   const projectQs = () => { const t = projectTopic(); return t ? BANK.filter((e) => e.cat === t && filled(e) && suggestable(e)).map((e) => e.q) : []; };
   const starters = (n) => {

@@ -23,7 +23,7 @@ graph TD
 ```
 
 ## Facts that never change
-- Figma file `Nc087O4ophE87f3EyMdcVh`; frames NearU `351:1516`, Syncletter `419:964`, NCFE `438:3070` (copy of Syncletter layout, not content).
+- Figma file `Nc087O4ophE87f3EyMdcVh`; frames NearU `351:1516`, Flummox `419:964`, NCFE `438:3070` (copy of Flummox layout, not content).
 - Palette only in `css/base.css`: paper `#fff1df`, maroon `#7b2b3d`, text `#4a2e22`, headings `#39265f`, highlight `--hl-red #8f2000`. Font Ancizar Sans only (never Inter), bold = italic by design.
 - Grid: desktop 41px rows phase 14, phone 28px phase 20; content centred in the beige area.
 - Quality is non-negotiable (no lossy re-encode, no smaller dimensions); *delivery* (lazy, deferred, cached) may change.

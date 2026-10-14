@@ -14,7 +14,7 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 ## Fonts
 - **Ancizar Sans, self-hosted TTFs** (`assets/fonts/`), declared in `css/base.css` with `size-adjust: 122%`, `ascent-override: 79.5%`, `descent-override: 19.7%`, `line-gap-override: 0%`. Why: layouts were built on Inter's size and baselines; these numbers keep text on the grid rules without re-measuring every page. Changing them means re-running the grid audit everywhere.
 - **Weights 600+ map to the italic file** in `@font-face`, so bold is italic with no per-rule `font-style`. Upright bold uses the separate family `'Ancizar Sans Upright'`.
-- **Ancizar Serif is now self-hosted (2026-10-05):** `assets/fonts/AncizarSerif-latin(.-ext).woff2` (the exact Google files, variable 400-500), `@font-face` in `css/base.css` without size-adjust so it renders as before (widths checked against the hosted font), Syncletter adds a 600-900 face so it still has no synthetic bold, the latin file is preloaded, and the Google stylesheet + preconnects are gone from every page except About (Noto Serif Devanagari fallback). (Old note, kept for context:) Ancizar Serif used to come from Google Fonts. The alignment scripts wait on `document.fonts.ready`; making that stylesheet non-blocking could let them measure before the font arrives and mis-align the grid. Self-host it instead if it needs speeding up.
+- **Ancizar Serif is now self-hosted (2026-10-05):** `assets/fonts/AncizarSerif-latin(.-ext).woff2` (the exact Google files, variable 400-500), `@font-face` in `css/base.css` without size-adjust so it renders as before (widths checked against the hosted font), Flummox adds a 600-900 face so it still has no synthetic bold, the latin file is preloaded, and the Google stylesheet + preconnects are gone from every page except About (Noto Serif Devanagari fallback). (Old note, kept for context:) Ancizar Serif used to come from Google Fonts. The alignment scripts wait on `document.fonts.ready`; making that stylesheet non-blocking could let them measure before the font arrives and mis-align the grid. Self-host it instead if it needs speeding up.
 
 ## Paper and grid
 - **Paper veil (`css/shell/paper.css`).** Every element that draws the grid becomes an isolated stacking context (`isolation: isolate`) with a `::before` at `z-index: -1`. That paints above the grid background and below all content, so layout and baselines never move. Case studies set `--paper-veil: #fff1df` so their approved colour is unchanged. Grain is two SVG `feTurbulence` data-URIs (alpha tuned down 20% then 30%).
@@ -54,22 +54,22 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **No lossy re-compression of images or video.** Delivery may change (caching, lazy loading, lossless WebP), quality may not.
 - **Lazy loading:** below-the-fold images get `loading="lazy" decoding="async"`. The first screenful stays eager.
 - **`100dvh` follows every `100vh`** for body, content area and landing, so iOS Safari's collapsing URL bar doesn't crop pages. The sticky sidebar stays `100vh` to avoid resize jitter.
-- **`data-start` on a `<video>`** starts it at N seconds and loops back to N, to skip Syncletter's "create a room" intro without re-encoding.
-- **Syncletter's transparent demo is WebM (VP9 alpha)** with a 2x variant selected by `media="(min-resolution: 1.5dppx)"`. Known gap: Safari/iOS may not render the alpha; an HEVC-with-alpha source would be needed.
+- **`data-start` on a `<video>`** starts it at N seconds and loops back to N, to skip Flummox's "create a room" intro without re-encoding.
+- **Flummox's transparent demo is WebM (VP9 alpha)** with a 2x variant selected by `media="(min-resolution: 1.5dppx)"`. Known gap: Safari/iOS may not render the alpha; an HEVC-with-alpha source would be needed.
 
 ## Case-study pages
-- **Phone layouts re-flow or scale the desktop composition; they never drop or recolour pills, animations or SVGs** (parity rule). Syncletter's phone view is the scaled desktop canvas on purpose.
+- **Phone layouts re-flow or scale the desktop composition; they never drop or recolour pills, animations or SVGs** (parity rule). Flummox's phone view is the scaled desktop canvas on purpose.
 - **Footers "Resume" opens the ATS resume** in a new tab (it used to open an email draft).
 - **Unfinished pages** (`ncfe-redesign.html`, `are-they-driving.html`) are noindex stubs that redirect home unless `?preview`. Search `HIDDEN-UNTIL-READY` to un-hide a project (card, sheet, bank entries together).
 
 ## 2026-10-03 case-study rebuild
 - **Shift tables instead of re-typing tops** (`SHIFTS` / `SYN_SHIFTS`): whole 41px rows, thresholds in original y, entries add up. Phone layouts clone by original y so they don't care.
-- **Media is centred on the content area** (x 900 NearU / 902 Syncletter), text stays on the text column.
-- **One green frame for film then demo** on Syncletter; call-out targets are keyframed from measured footage, not a single point.
+- **Media is centred on the content area** (x 900 NearU / 902 Flummox), text stays on the text column.
+- **One green frame for film then demo** on Flummox; call-out targets are keyframed from measured footage, not a single point.
 - **Persona paper is a mask over multiplied tan**, not a CSS filter (filter gave olive). Light type on dark paper.
 - **How students sell = spider diagram, User needs = T chart, Current ecosystem = loop diagram** (chart vocabulary from the user's "graphic organisers" sheet). Keep both T-chart columns equal in rows.
 - **Pruned**: 118 dead NearU CSS rules, unused card/mindmap JS, `syncletter/demo.mp4`, two bracket SVGs. No minification (no build step) and no media recompression.
-- **Syncletter decision cards** ("No AI implementation", "Scalability") sit above Reflection: filled cards (grid-exempt), teal border, label chips, key phrases bold red; Reflection onward is pushed down by the `[8300, 14]` entry in `SYN_SHIFTS`. Syncletter alignment also re-runs on `load` and when fonts finish (cold-cache first visits misaligned the headings).
+- **Flummox decision cards** ("No AI implementation", "Scalability") sit above Reflection: filled cards (grid-exempt), teal border, label chips, key phrases bold red; Reflection onward is pushed down by the `[8300, 14]` entry in `SYN_SHIFTS`. Flummox alignment also re-runs on `load` and when fonts finish (cold-cache first visits misaligned the headings).
 - **About greeting hugs its text** (no reserved width) so ", I am" stays close to Namaste/Hello.
 
 ## 2026-10-04 performance and robustness pass
