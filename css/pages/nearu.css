@@ -581,7 +581,6 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
 .nearu-page .nu-83 { position:absolute;height:166px;left:485px;border-radius:17px;top:2511px;width:304px; }
 .nearu-page .nu-84 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:auto;line-height:normal;left:1033px;font-style:normal;color:#fff1df;font-size:16px;top:2641px;width:163px;text-align:center; }
 .nearu-page .nu-85 { overflow-wrap:break-word;position:absolute;text-transform:capitalize;font-family:var(--font-ui);font-weight:500;height:auto;line-height:normal;left:832.5px;font-style:normal;color:#fff1df;font-size:16px;top:2641px;width:163px;text-align:center; }
-.nearu-page .nu-155 { position:absolute;left:1100px;top:2327px;width:24px;height:12px; }   /* same: px instead of % of the canvas height */
 
 /* ---------- Demo recordings (Solution: buyer + seller, Onboarding): text on the left, the phone recording on the right, no backing panel ---------- */
 /* The phone shell (ring, island, keys) is the pop-up's .nu-demo-screen; --s is the scale of the 402 x 874 handset (225px wide here). */

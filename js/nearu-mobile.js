@@ -245,7 +245,7 @@
   copy(s, 1536, 'nearu-mobile-subtitle'); copy(s, 1547); copy(s, 9100, 'nearu-mobile-label'); block(s, 9101, 'nearu-mobile-gigs'); copy(s, 9102, 'nearu-mobile-label'); copy(s, 9103);
   s = section('solution', 1538);
   copy(s, 1549);
-  plate(s, [1521,1522,1575,1577,1578,1579,1630], 480, 2270, 765, 407);   // the blue frame, logo chip, wordmark film and captions, as before
+  plate(s, [1521,1522,1575,1577,1578,1579], 480, 2270, 765, 407);   // the blue frame, logo chip, wordmark film and captions, as before
   const art = s.querySelector('.nearu-mobile-art-layers');   // the two phone slots hold the buyer / seller recordings
   ['.nu-rec-seller', '.nu-rec-buyer'].forEach(sel => art.append(canvas.querySelector(sel).cloneNode(true)));
   s = section('ideation', 1539);
