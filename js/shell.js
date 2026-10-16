@@ -281,7 +281,7 @@
     // it when 7 items at full size just don't fit that page's available height (e.g. the compact phone drawer).
     const BASE_FONT = 31, BASE_H = 38, MIN_FONT = 22, PAD = 30, GAP = 36, MIN_GAP = 8;   // 5px below "<-HOME"/the Figma reference (node 385:51), by request
     const spans = items.map((a) => a.querySelector('span'));
-    const slidingLabels = body.matches('.nearu-page, .syncletter-page');
+    const slidingLabels = body.matches('.nearu-page, .flummox-page');
     const connect = sidebar.querySelector('.connect');
     const range = document.createRange();
     function textWidth(span) {

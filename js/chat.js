@@ -147,7 +147,7 @@
   const suggestable = (e) => !/^talk-/.test(e.id) && !e.secret && !SECRET.test(e.q) && !(e.alts || []).some((a) => SECRET.test(a));
 
   /* On a case-study page (work/<project>.html) the suggested questions are about that very project: its own topic in the bank (answered ones only). */
-  const PROJECT_TOPICS = { nearu: 'NearU', syncletter: 'Flummox' };   // add the new project here (page slug -> its topic name in the bank)
+  const PROJECT_TOPICS = { nearu: 'NearU', flummox: 'Flummox' };   // add the new project here (page slug -> its topic name in the bank)
   const projectTopic = () => { const m = /\/work\/([a-z0-9-]+)/i.exec(location.pathname); return m ? PROJECT_TOPICS[m[1].toLowerCase()] || null : null; };
   const projectQs = () => { const t = projectTopic(); return t ? BANK.filter((e) => e.cat === t && filled(e) && suggestable(e)).map((e) => e.q) : []; };
   const starters = (n) => {
@@ -186,7 +186,7 @@
   function legacy(t) {
     const has = (...ws) => ws.some((x) => (x.length <= 3 ? new RegExp(String.raw`\b${x}\b`).test(t) : t.includes(x)));   // short keywords ('cv') must be whole words
     const about = (p) => ({ text: [`${p.title}, ${p.tag}.`, p.blurb, `Role: ${p.role}.`].concat(p.team ? [`Team: ${p.team}.`] : [], [`Timeline: ${p.time}`]).join('\n'), actions: [go(`Open ${p.title}`, p.href)] });
-    if (has('syncletter', 'jargon', 'idiom')) return about(P.syncletter);
+    if (has('flummox', 'jargon', 'idiom')) return about(P.flummox);
     if (has('nearu', 'near u', 'hyperlocal')) return about(P.nearu);
     if (P.ncfe && has('ncfe', 'financ')) return about(P.ncfe);
     if (has('ats')) return { text: 'What is the Job Description?', actions: [raw('Product designer', S.links.resumeAtsProduct), raw('Interaction designer', S.links.resumeAtsInteraction)] };

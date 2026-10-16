@@ -27,7 +27,7 @@ window.SITE = {
   // Text is verbatim from the Figma frames.
   projects: [
     {
-      id: 'syncletter', title: 'Flummox', tag: 'Product Design', href: 'work/syncletter.html',
+      id: 'flummox', title: 'Flummox', tag: 'Product Design', href: 'work/flummox.html',
       blurb: 'Flummox translates corporate jargon and idioms — helping users understand what a message means, how urgent it is, and how to reply.',
       role: 'Design, Dev', team: '', time: 'July 2026 – August 2026'
     },

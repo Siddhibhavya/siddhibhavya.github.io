@@ -5,8 +5,8 @@
    width on any screen, which reads small on phones; a mobile companion can follow later if that's worth building. */
 (function () {
   'use strict';
-  if (!document.body.classList.contains('syncletter-page')) return;
-  const viewport = document.querySelector('.syncletter-viewport');
+  if (!document.body.classList.contains('flummox-page')) return;
+  const viewport = document.querySelector('.flummox-viewport');
   const canvas = document.querySelector('.syn-canvas');
   if (!viewport || !canvas) return;
   // Whole paper rows moved in the canvas, thresholds in the ORIGINAL Figma y and added up per element:
@@ -30,7 +30,7 @@
   synMoves.forEach(([el, top]) => { el.style.top = top + 'px'; });
   canvas.style.setProperty('--flow-extra', SYN_SHIFT + 'px');
   window.synFlowExtra = SYN_SHIFT;
-  const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/syncletter.css's .syn-canvas comment
+  const CANVAS_H = 8804; // trimmed from the Figma frame's 8244 — see css/pages/flummox.css's .syn-canvas comment
   const CONTENT_W = 1092; // 1448 canvas width - 356 shared sidebar width
   const sectionFor = hash => document.getElementById((innerWidth < 900 ? 'mobile-' : '') + hash.slice(1));
   function fit() {
@@ -63,9 +63,9 @@
     '.syn-39', '.sp-intro', '.syn-40', '.syn-41', '.syn-dec-sub', '.syn-wf-text', '.syn-42', '.syn-43', '.syn-44', '.syn-45', '.syn-47', '.syn-flow-label',
     '.syn-el-1', '.syn-el-2', '.syn-el-3', '.syn-el-4', '.syn-el-5', '.syn-el-6', '.fc-b1', '.fc-b2']
     .map(sel => canvas.querySelector(sel)).filter(Boolean);
-  const GRID_PHASE = 14; // matches the 14px vertical offset in css/pages/syncletter.css's background-position
+  const GRID_PHASE = 14; // matches the 14px vertical offset in css/pages/flummox.css's background-position
   RULED.forEach(el => {
-    el.classList.add('syncletter-ruled');
+    el.classList.add('flummox-ruled');
     el.style.setProperty('--ruled-line', parseFloat(getComputedStyle(el).fontSize) > 41 ? '82px' : '41px');
   });
   function baseline(el) {
@@ -117,7 +117,7 @@
   };
   if (!lean) { if (document.readyState === 'complete') idleWarm(); else addEventListener('load', idleWarm); }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  const videos = [...document.querySelectorAll('.syncletter-video')];
+  const videos = [...document.querySelectorAll('.flummox-video')];
   const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting && !reduce.matches) target.play().catch(() => {});
     else target.pause();

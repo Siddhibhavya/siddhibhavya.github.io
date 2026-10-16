@@ -4,7 +4,7 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 
 ## Architecture
 - **Plain HTML/CSS/JS, no framework, no build step.** Siddhi edits files directly and publishes to GitHub Pages as is. The only generated file is `css/site.css`.
-- **`css/site.css` is generated** from `css/manifest.css` by `node tools/bundle-css.js`. Why: 14 chained `@import`s made a request waterfall. The bundler also minifies (comments and whitespace only, strings and `url()` untouched), 98 KB to 62 KB. `tools/check.js` fails with "css/site.css is stale" if you edit a source file and don't re-run it. `nearu.css` and `syncletter.css` are linked directly, not bundled.
+- **`css/site.css` is generated** from `css/manifest.css` by `node tools/bundle-css.js`. Why: 14 chained `@import`s made a request waterfall. The bundler also minifies (comments and whitespace only, strings and `url()` untouched), 98 KB to 62 KB. `tools/check.js` fails with "css/site.css is stale" if you edit a source file and don't re-run it. `nearu.css` and `flummox.css` are linked directly, not bundled.
 - **pjax shell (`js/shell.js`).** My Work, About, Side Quests and Guest Gallery swap `.main` in place via `fetch` so the sidebar and footer never reload. Each page registers an `init` in `window.SiddhiPages` that re-runs after a swap, so listeners must be idempotent (e.g. `about.js` guards its document listener with `body.dataset.hintDrag`). Any failure falls back to a normal navigation (`location.href`). The fetch has an 8s `AbortController` timeout so a stalled server can't leave the menu dead.
 - **`guard(name, fn)` in `shell.js`** wraps every boot step in try/catch, so one broken widget can't stop the rest of the page.
 - **Service worker (`sw.js`).** Network first for HTML/CSS/JS so a deploy shows immediately; stale-while-revalidate for images and fonts; video and audio left to the browser (range requests). Not registered on localhost (and unregistered there), so local edits are always live.
@@ -19,7 +19,7 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 ## Paper and grid
 - **Paper veil (`css/shell/paper.css`).** Every element that draws the grid becomes an isolated stacking context (`isolation: isolate`) with a `::before` at `z-index: -1`. That paints above the grid background and below all content, so layout and baselines never move. Case studies set `--paper-veil: #fff1df` so their approved colour is unchanged. Grain is two SVG `feTurbulence` data-URIs (alpha tuned down 20% then 30%).
 - **Nav card grain** is one `.sb-inner::after` with `mix-blend-mode: multiply`, not a background on the panel. Why: the cream is an SVG tab plus a CSS panel, and texturing them separately left a seam. One multiplied sheet over the whole card shows only on the cream.
-- **Text on the grid.** Every text node has its baseline on a paper rule (41px rows, phase 14 desktop; 28px, phase 20 phone). New text nodes must be registered in the page's ruled list (`RULED` in `js/syncletter.js`, `ruledIds` in `js/nearu.js`). `tools/grid-audit.js` is the gate: zero off-grid text at desktop and phone before any case-study commit.
+- **Text on the grid.** Every text node has its baseline on a paper rule (41px rows, phase 14 desktop; 28px, phase 20 phone). New text nodes must be registered in the page's ruled list (`RULED` in `js/flummox.js`, `ruledIds` in `js/nearu.js`). `tools/grid-audit.js` is the gate: zero off-grid text at desktop and phone before any case-study commit.
 - **`url(%23f)` inside a data-URI trips the checker's `url()` scan.** Write `u%72l(%23f)`.
 - **One rule per selector per file.** The checker warns on duplicates; merge them.
 
@@ -68,12 +68,12 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 - **One green frame for film then demo** on Flummox; call-out targets are keyframed from measured footage, not a single point.
 - **Persona paper is a mask over multiplied tan**, not a CSS filter (filter gave olive). Light type on dark paper.
 - **How students sell = spider diagram, User needs = T chart, Current ecosystem = loop diagram** (chart vocabulary from the user's "graphic organisers" sheet). Keep both T-chart columns equal in rows.
-- **Pruned**: 118 dead NearU CSS rules, unused card/mindmap JS, `syncletter/demo.mp4`, two bracket SVGs. No minification (no build step) and no media recompression.
+- **Pruned**: 118 dead NearU CSS rules, unused card/mindmap JS, `flummox/demo.mp4`, two bracket SVGs. No minification (no build step) and no media recompression.
 - **Flummox decision cards** ("No AI implementation", "Scalability") sit above Reflection: filled cards (grid-exempt), teal border, label chips, key phrases bold red; Reflection onward is pushed down by the `[8300, 14]` entry in `SYN_SHIFTS`. Flummox alignment also re-runs on `load` and when fonts finish (cold-cache first visits misaligned the headings).
 - **About greeting hugs its text** (no reserved width) so ", I am" stays close to Namaste/Hello.
 
 ## 2026-10-04 performance and robustness pass
-- **Minified copies, readable sources** (`tools/build-min.js`): `js/*.min.js` (esbuild, no top-level renaming), `css/intro.min.css` / `css/notfound.min.css` (landing and 404 become one file instead of an @import chain), `css/pages/syncletter.min.css`, and the already-minified `css/site.css`. `tools/check.js` fails when a `.min` is older than its source. `config.js` and `firebase-config.js` stay hand-edited and unminified. NearU waits until its WIP is committed (`--nearu`).
+- **Minified copies, readable sources** (`tools/build-min.js`): `js/*.min.js` (esbuild, no top-level renaming), `css/intro.min.css` / `css/notfound.min.css` (landing and 404 become one file instead of an @import chain), `css/pages/flummox.min.css`, and the already-minified `css/site.css`. `tools/check.js` fails when a `.min` is older than its source. `config.js` and `firebase-config.js` stay hand-edited and unminified. NearU waits until its WIP is committed (`--nearu`).
 - **WOFF2 for Ancizar Sans** (lossless, `format('woff2')` first, TTF kept as fallback): -190 KB on a cold load.
 - **Network-aware warming:** the case-study image warm-up and video pre-buffering are skipped on 2g/3g or `saveData`.
 - **Chat endpoint gets an 8 s abort** (it had none); the gallery already had 10 s timeouts, a 1-minute cache and a local fallback.
@@ -98,3 +98,8 @@ Why the code is the way it is. Each entry: what the code does, why, and what bre
 ## Checks before committing
 - `node tools/check.js` (zero errors), `node tools/bundle-css.js` after editing bundled CSS, and the grid audit at 1440px and 375px for every case-study page touched.
 - Commit only what was asked. The raw `Ancizar_Sans/` download is not published (the site uses `assets/fonts/`).
+
+## Naming
+- **The project is Flummox everywhere**, including file names, CSS/JS names, asset folders and classes (`work/flummox.html`, `css/pages/flummox.css`, `js/flummox*.js`, `assets/work/flummox/`). Old links to `work/syncletter` land on a one-line redirect stub (`work/syncletter.html`, `noindex`).
+- **One exception: the live prototype address `https://syncletter-67d17.web.app/`** is the Firebase-hosted PWA and cannot be renamed from this repo. Move it only when the PWA is redeployed under a new Firebase project.
+- **The intro film (`assets/work/flummox/jargon-to-clarity.mp4`) is built with code**, not edited: an HTML scene (Verdana + Inter, cards rebuilt in CSS) rendered frame by frame with headless Edge and encoded with libx264. To change a word, re-render rather than patch pixels.

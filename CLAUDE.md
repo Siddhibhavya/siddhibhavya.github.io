@@ -72,7 +72,7 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
      baseline on a paper rule: desktop 41px rows (phase 14px), phone 28px
      rows (phase 20px). Use whole-row line-heights and whole-row block
      heights, register new text nodes in the page's ruled list
-     (`RULED` in `js/syncletter.js`, `ruledIds` in `js/nearu.js`), and shift
+     (`RULED` in `js/flummox.js`, `ruledIds` in `js/nearu.js`), and shift
      content in whole rows (41 / 28). Measure the real baseline to verify —
      don't eyeball. See `CASE-STUDY-GUIDELINES.md` "Text must sit on the grid".
   2. **Content is centred in the beige content area**, not the whole canvas
@@ -89,7 +89,7 @@ state, Figma frame ids, the fast build recipe, and token-saving habits.
   already given.
 - Run `node tools/check.js` after every change; zero errors before calling
   something done.
-- **Pages load minified files** (`js/foo.min.js`, `css/intro.min.css`, `css/notfound.min.css`, `css/pages/syncletter.min.css`, and `css/site.css`). Edit the readable source, then run `node tools/build-min.js` (and `node tools/bundle-css.js` for bundled CSS); `check.js` errors if a `.min` file is older than its source. NearU files are not minified yet (`node tools/build-min.js --nearu` once its WIP is committed). Never hand-edit a `.min` file. Commit source + `.min` together.
+- **Pages load minified files** (`js/foo.min.js`, `css/intro.min.css`, `css/notfound.min.css`, `css/pages/flummox.min.css`, and `css/site.css`). Edit the readable source, then run `node tools/build-min.js` (and `node tools/bundle-css.js` for bundled CSS); `check.js` errors if a `.min` file is older than its source. NearU files are not minified yet (`node tools/build-min.js --nearu` once its WIP is committed). Never hand-edit a `.min` file. Commit source + `.min` together.
 - **Shared working tree:** another chat may have uncommitted work in the same repo (e.g. the NearU prototype). Before committing run `git status`, stage only your own files/hunks (`git apply --cached` on selected hunks if a file is shared), and leave the rest alone.
 - Commit only what was actually asked for or touched — don't stage unrelated
   in-progress work found elsewhere in the tree.

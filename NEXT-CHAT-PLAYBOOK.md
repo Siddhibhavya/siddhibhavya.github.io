@@ -6,8 +6,8 @@ class you need. Siddhi gives feedback in short messages and wants visible
 results fast — act, verify once, report briefly.
 
 ## State
-- Done + live: Flummox (`work/syncletter.html`, `css/pages/syncletter.css`,
-  `js/syncletter.js`), NearU (`work/nearu.html`, `css/pages/nearu.css`,
+- Done + live: Flummox (`work/flummox.html`, `css/pages/flummox.css`,
+  `js/flummox.js`), NearU (`work/nearu.html`, `css/pages/nearu.css`,
   `js/nearu.js`, `js/nearu-mobile.js`), the home/side-quests/about pages, the
   M.I.K.U bank (`js/bank.js`), résumé links (`js/config.js`).
 - Remaining: **NCFE redesign** (`work/ncfe-redesign.html`, still a placeholder)

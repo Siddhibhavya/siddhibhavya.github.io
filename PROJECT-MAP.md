@@ -15,7 +15,7 @@ graph TD
   DEV --> CSS[css/site.css generated from manifest.css via bundle-css.js]
   DEV --> MIN[.min.js/.min.css built by build-min.js; never hand-edit]
   SHELL --> PAGES[home / about / side-quests / guest-gallery swap in place]
-  CSG --> SYN[work/syncletter.html + js/syncletter.js - scaled desktop canvas, DONE]
+  CSG --> SYN[work/flummox.html + js/flummox.js - scaled desktop canvas, DONE]
   CSG --> NU[work/nearu.html + js/nearu.js + nearu-mobile.js - own phone layout, WIP files uncommitted]
   PLAY --> NCFE[ncfe-redesign HIDDEN-UNTIL-READY]
   PLAY --> NEWP[new project slot in home.html HIDDEN-UNTIL-READY]

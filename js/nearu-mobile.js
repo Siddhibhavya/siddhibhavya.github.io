@@ -301,7 +301,7 @@
   reflection(s);
 
   // Images retain reserved geometry, including before decode on a slow connection.
-  // the tag pills' bottom edge sits on a paper rule (28px rows, phase 20), like Syncletter's
+  // the tag pills' bottom edge sits on a paper rule (28px rows, phase 20), like Flummox's
   function alignTags() {
     if (innerWidth >= 900) return;
     tagRow.style.position = 'relative'; tagRow.style.top = '0px';

@@ -143,7 +143,7 @@ length. NearU and Flummox are the approved visual reference.
   use wrapping/adequate row height or an accessible scrolling list if needed;
   never clip labels, overlap rows/arrows, or cover Connect to force a fit.
 - Keep this behavior in the shared shell. The current approved implementation
-  is gated by `.nearu-page`/`.syncletter-page` in `sidebar.css` and `initToc()`.
+  is gated by `.nearu-page`/`.flummox-page` in `sidebar.css` and `initToc()`.
   When adding another case study, extend the shared case-study hook so it gets
   these defaults; do not assume `data-toc` alone currently enables them or copy
   the sidebar into the new page.
@@ -194,7 +194,7 @@ re-verified after each edit, not just when the page is first built.
 - Give text whole-row line-heights (41 / 28) and whole-row block heights, and
   shift blocks in whole rows, so every following line stays on a rule.
 - Register each new text node with the page's snapping code (`RULED` in
-  `js/syncletter.js`; `ruledIds` in `js/nearu.js`, which also snaps the phone
+  `js/flummox.js`; `ruledIds` in `js/nearu.js`, which also snaps the phone
   Reflection list as a unit).
 - Alignment runs once fonts load **and again after the page load event**:
   images and SVG art settle late and shift everything below them.
@@ -424,7 +424,7 @@ break the SPA feel the shell is built for.
 - Any toast/notification pill is centred on the **content area (the page minus the sidebar)**, not on the window: use `left: var(--notify-x, 50%)` with `transform: translateX(-50%)`. `--notify-x` is set in `js/shell.js` `fit()` (half the window when the sidebar is a drawer). The "You can move some elements" hint on About shows **once** (3 s, remembered for the session via `sessionStorage`), never in a loop.
 
 ### Build / tooling gotchas
-- `css/site.css` is a **generated bundle**: after editing `css/base.css`, `css/shell/*` or `css/pages/{work,decor,guest,quests,about}.css`, run `node tools/bundle-css.js` or `tools/check.js` fails with "css/site.css is stale". `nearu.css` / `syncletter.css` are linked directly, not bundled.
+- `css/site.css` is a **generated bundle**: after editing `css/base.css`, `css/shell/*` or `css/pages/{work,decor,guest,quests,about}.css`, run `node tools/bundle-css.js` or `tools/check.js` fails with "css/site.css is stale". `nearu.css` / `flummox.css` are linked directly, not bundled.
 - A `url()` inside a data-URI SVG trips the checker's `url()` scan: write it `u%72l(%23id)`.
 - Don't let two rules for one selector coexist in a file — the checker warns; merge them.
 - `data-start` on a `<video>` starts it at N seconds and loops back to N (used to skip the Flummox demo's "create a room" intro without re-encoding).
@@ -445,7 +445,7 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 ## 9 · Lessons from the 2026-10-03 round (Flummox + NearU rebuild)
 
 ### Moving content on the absolute canvas: whole-row shift tables
-- When copy grows or shrinks, don't edit 100 `top` values. Both canvases carry a **shift table** run before alignment: `SHIFTS` in `js/nearu.js`, `SYN_SHIFTS` in `js/syncletter.js`. Each entry is `[fromY, rows, exceptClass?]`; thresholds are in the **original Figma y**, all entries that match an element **add up**, and `rows` is a whole number of 41px rows so the paper rules stay aligned. The canvas height (`--flow-extra` / `height !important`) follows the sum.
+- When copy grows or shrinks, don't edit 100 `top` values. Both canvases carry a **shift table** run before alignment: `SHIFTS` in `js/nearu.js`, `SYN_SHIFTS` in `js/flummox.js`. Each entry is `[fromY, rows, exceptClass?]`; thresholds are in the **original Figma y**, all entries that match an element **add up**, and `rows` is a whole number of 41px rows so the paper rules stay aligned. The canvas height (`--flow-extra` / `height !important`) follows the sum.
 - The phone layouts clone nodes by **original** coordinates (cloned before the shifts run), so they are unaffected; new blocks must be cloned whole (`block()` in `js/nearu-mobile.js`) and reflow with their own CSS.
 - Elements placed at their final y in CSS (the Flummox facts chip, the green frame, the NearU ideation art) are either below no threshold or excluded by class; say so in the comment next to the entry.
 - After any copy change run **`tools/gaps.js`** (paste in the JS tool, or `fetch('/tools/gaps.js')` + `eval`): it lists every empty band taller than 110 canvas px. Target ~80–100px between blocks. Also scan for text boxes that overlap (see the snippet in the 2026-10-03 chat: `p,h1,h2,li` rect intersections).
@@ -462,7 +462,7 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 - **Project facts chip** sits **above** the Flummox green frame (desktop and phone). Columns share one left edge each; "August 2026" must not wrap.
 
 ### Flummox recording frame
-- One green frame (`.syn-rec`) plays the 24s film first (`.syn-intro-video`, `is-intro`), then fades to the phone demo (`.syn-demo`) whose call-outs appear. The `play`/`ended` capture handlers in `js/syncletter.js` gate the demo until the film ends.
+- One green frame (`.syn-rec`) plays the 24s film first (`.syn-intro-video`, `is-intro`), then fades to the phone demo (`.syn-demo`) whose call-outs appear. The `play`/`ended` capture handlers in `js/flummox.js` gate the demo until the film ends.
 - **Call-outs** (`.syn-rec-tag` + SVG leader lines): labels only on the left/right of the phone; thin green line + ring drawn from the label to a point on the screen. Target points are **keyframed from the footage** (`data-kf="time:fx:fy|..."`, fractions of the phone video) because the card moves (keyboard). Measure with the canvas flood-fill used on 2026-10-03 (cream `#faf2ea` pixels, largest component). Measure label geometry with `offsetLeft/offsetTop` (they ignore the slide-in `translate`); toggling `.on` to measure made the labels flash.
 
 ### Phone layout pitfalls found
@@ -507,8 +507,8 @@ Pill colours, invert/hover animations and every SVG must be present and identica
 
 ## 10 · Build, speed and shared-repo rules (2026-10-04)
 
-- **Pages load minified files.** After editing `js/foo.js` or a page stylesheet run `node tools/build-min.js` (and `node tools/bundle-css.js` for the bundled CSS). Pages link `js/foo.min.js`, `css/pages/syncletter.min.css`, `css/intro.min.css`, `css/notfound.min.css`, `css/site.css`. NearU's own files are linked unminified until its work is committed, then run `node tools/build-min.js --nearu` and switch its `<script>`/`<link>` tags to `.min`. `tools/check.js` errors when a `.min` is older than its source.
+- **Pages load minified files.** After editing `js/foo.js` or a page stylesheet run `node tools/build-min.js` (and `node tools/bundle-css.js` for the bundled CSS). Pages link `js/foo.min.js`, `css/pages/flummox.min.css`, `css/intro.min.css`, `css/notfound.min.css`, `css/site.css`. NearU's own files are linked unminified until its work is committed, then run `node tools/build-min.js --nearu` and switch its `<script>`/`<link>` tags to `.min`. `tools/check.js` errors when a `.min` is older than its source.
 - **Fonts are WOFF2** (`assets/fonts/AncizarSans*.woff2`, lossless, TTF kept as a fallback in `base.css`). Don't re-export lossy.
-- **Slow connections:** the case studies' image warm-up and video pre-buffering switch off on 2g/3g/`saveData`; keep that behaviour when changing the lazy-loading snippet in `js/nearu.js` / `js/syncletter.js`.
+- **Slow connections:** the case studies' image warm-up and video pre-buffering switch off on 2g/3g/`saveData`; keep that behaviour when changing the lazy-loading snippet in `js/nearu.js` / `js/flummox.js`.
 - **Audit before every push:** `tools/grid-audit.js` (desktop + phone), `tools/gaps.js` (stray gaps), `tools/overflow-audit.js` (`await window.deviceAudit()` on any same-origin page: no horizontal overflow 360-2560 px, no broken images), and a console check on each page.
 - **Shared working tree:** run `git status` first. If another chat has uncommitted work in a file you also edited, stage only your hunks (`git diff -U0 file`, filter hunks, `git apply --cached --unidiff-zero patch`). Files in this repo have mixed line endings (CRLF in some pages/CSS, LF in others): read/write with `newline=''` and keep each file's own style to avoid whole-file diffs.

@@ -507,7 +507,7 @@ body.nearu-page.compact.sb-open .sb-toggle { left: calc(356px * var(--sb-s) * 0.
   .nearu-mobile .nu-persona .nu-129 { width: min(262px, calc(100vw - 130px)); }
 }
 
-/* ---------- "Try demo" pill (same pill as Syncletter's Try prototype) + the prototype pop-up ---------- */
+/* ---------- "Try demo" pill (same pill as Flummox's Try prototype) + the prototype pop-up ---------- */
 /* Desktop: centred under the project chip and the demo film (centre x 903), bottom edge on a paper rule: 14 + 23*41 = 957, so top 910 + height 47. Placed at its final y; js/nearu.js skips it in the shift table. */
 .nearu-page .nu-demo { --pill-bg: #fff1df; --pill-edge: #4a1a2c; --pill-r: 49px; --pill-bw: 4px; position: absolute; left: 478px; top: 910px; width: 850px; height: 47px; padding: 0; border: 0; background: none; cursor: pointer; color: #39265f; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; isolation: isolate; transition: color .25s ease; }
 .nearu-page .nu-demo::before { content: ''; position: absolute; inset: 0; z-index: -1; box-sizing: border-box; background: var(--pill-bg); border: var(--pill-bw) solid var(--pill-edge); border-radius: var(--pill-r); transition: background-color .25s ease, scale .3s var(--ease-out); }

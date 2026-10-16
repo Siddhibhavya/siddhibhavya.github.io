@@ -1,12 +1,12 @@
 /* Flummox's phone/tablet layout (< 900px). Built from CLONES of the desktop nodes, so every image, SVG, pill (colours + hover animation),
    video and word of copy is the same as on desktop — only the arrangement changes (one centred column, text >= 16px on the 28px paper rules).
    The spectrum is the desktop SVG as is; the user flow is re-drawn as a linear chart with the same colours, shapes and arrow SVG.
-   The desktop canvas is hidden at this width by css/pages/syncletter.css ("phone layout"). */
+   The desktop canvas is hidden at this width by css/pages/flummox.css ("phone layout"). */
 (function () {
   'use strict';
-  if (!document.body.classList.contains('syncletter-page')) return;
+  if (!document.body.classList.contains('flummox-page')) return;
   const canvas = document.querySelector('.syn-canvas');
-  const viewport = document.querySelector('.syncletter-viewport');
+  const viewport = document.querySelector('.flummox-viewport');
   if (!canvas || !viewport) return;
   const mob = document.createElement('div');
   mob.className = 'syn-mobile';
